@@ -15,7 +15,7 @@
  <footer class="footer">
      <div class="footer__block block no-margin-bottom">
          <div class="container-fluid text-center">
-             <p class="no-margin-bottom">2021 &copy; Fat'Food. Design by <a href="">Group 6 - Project 1</a>.</p>
+             <p class="no-margin-bottom">2021 &copy; G6' Food. Design by <a href="">Group 6 - Project 1</a>.</p>
          </div>
      </div>
  </footer>

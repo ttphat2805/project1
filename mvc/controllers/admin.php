@@ -160,10 +160,6 @@ class Admin extends Controller
                         $price_value = $_POST['price_attribute'][$key];
                         $quantity_attr = $_POST['quantity_attribute'][$key];
 
-                        echo 'Giá'.$price_value;
-                        echo 'SL'.$quantity_attr;
-                        echo 'idprd'.$product_id;
-                        echo $value;
                         $this->product->insertproduct_type_attr($value, $product_id, $price_value, $quantity_attr);
                     }
                 } else {
@@ -202,6 +198,22 @@ class Admin extends Controller
                 "pages" => "adm_addproduct",
                 "category" => $this->category->getcategory(),
                 "size" => $this->attribute->getSize(),
+            ]
+        );
+    }
+
+    function infoproduct($id)
+    {
+        $this->view(
+            "master3",
+            [
+                "pages" => "adm_updateproduct",
+                "product" => $this->product->infoproduct($id),
+                "category" => $this->category->getcategory(),
+                "gallery" => $this->product->getimgproduct($id),
+                "size" => $this->attribute->getinfoSize($id),
+                "size_all" => $this->attribute->getSize(),
+                "product_type" =>$this->product->getproduct_type_id($id),
             ]
         );
     }

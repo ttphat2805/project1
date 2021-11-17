@@ -48,12 +48,13 @@
                         <label for="" class="label__css mt-2">Size:</label>
                         <?php
                         foreach ($data['size'] as $size) {
+
                         ?>
                             <div class="form-check">
                                 <label class="form-check-label">
                                     <input type="checkbox" name="size_value[]" id="<?= $size['value']?>"class="form-check-input" value="<?= $size['id'] ?>"><?= $size['value'] ?></label>
                             </div>
-                        <?php } ?>
+                        <?php }?>
                         <input type="button" value="Áp dụng" class="btn btn-secondary btn-rounded" id="btn_apply_attr">
                     </div>
                     <div class="form-group table_attr_hide" style="display:none;">

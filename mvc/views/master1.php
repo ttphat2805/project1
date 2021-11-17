@@ -231,7 +231,6 @@
                                             <label for="prod-size-L" class="sd">
                                                 <span>L</span>
                                             </label>
-
                                         </div>
                                         <div class="product-title">
                                             <h4 class="title-2"> <a href="product-details.html">Sản phẩm 1</a></h4>
@@ -262,7 +261,7 @@
                                     <div class="product-image">
                                         <a class="d-block" href="product-details.html">
                                             <img src="https://www.pizzaexpress.vn/wp-content/uploads/2019/12/P9rs1.jpg" alt="" class="product-image-1 w-100">
-                                           
+
                                         </a>
                                     </div>
                                     <div class="product-content">
@@ -301,8 +300,8 @@
                                 <div class="single-product position-relative">
                                     <div class="product-image">
                                         <a class="d-block" href="product-details.html">
-                                        <img src="https://www.pizzaexpress.vn/wp-content/uploads/2019/12/P9rs1.jpg" alt="" class="product-image-1 w-100">
-                                       
+                                            <img src="https://www.pizzaexpress.vn/wp-content/uploads/2019/12/P9rs1.jpg" alt="" class="product-image-1 w-100">
+
                                         </a>
                                     </div>
                                     <div class="product-content">
@@ -377,336 +376,54 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="product-wrapper col-lg-12 col-custom">
-                        <div class="product-slider" data-slick-options='{
-                    "slidesToShow": 4,
-                    "slidesToScroll": 1,
-                    "infinite": true,
-                    "arrows": false,
-                    "dots": false
-                    }' data-slick-responsive='[
-                    {"breakpoint": 1200, "settings": {
-                    "slidesToShow": 3
-                    }},
-                    {"breakpoint": 992, "settings": {
-                    "slidesToShow": 2
-                    }},
-                    {"breakpoint": 576, "settings": {
-                    "slidesToShow": 1
-                    }}
-                    ]'>
-                            <div class="single-item">
-                                <div class="single-product position-relative mb-30">
-                                    <div class="product-image">
-                                        <a class="d-block" href="product-details.html">
-                                        <img src="https://www.pizzaexpress.vn/wp-content/uploads/2019/12/P9rs1.jpg" alt="" class="product-image-1 w-100">
-
-                                        </a>
-                                    </div>
-                                    <div class="product-content">
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <div class="product-title">
-                                            <h4 class="title-2"> <a href="product-details.html">Sản phẩm 1</a></h4>
-                                        </div>
-                                        <div class="price-box">
-                                            <span class="regular-price ">$80.00</span>
-                                            <span class="old-price"><del>$90.00</del></span>
-                                        </div>
-                                    </div>
-                                    <div class="add-action d-flex position-absolute">
-                                        <a href="cart.html" title="Add To cart">
-                                            <i class="ion-bag"></i>
-                                        </a>
-                                        <a href="compare.html" title="Compare">
-                                            <i class="ion-ios-loop-strong"></i>
-                                        </a>
-                                        <a href="wishlist.html" title="Add To Wishlist">
-                                            <i class="ion-ios-heart-outline"></i>
-                                        </a>
-                                        <a href="#exampleModalCenter" data-toggle="modal" title="Quick View">
-                                            <i class="ion-eye"></i>
-                                        </a>
-                                    </div>
+                <div class="row shop_wrapper grid_4">
+                    <?php
+                    foreach ($data['products'] as $item):
+                    ?>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-custom product-area">
+                        <div class="single-product position-relative">
+                            <div class="product-image">
+                                <a class="d-block" href="<?php echo BASE_URL ?>/productdetail/show/<?=$item['idproduct']?>">
+                                    <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?=$item['image']?>" alt="" class="product-image-1 w-100">
+                                    <img src="" alt="" class="product-image-2 position-absolute w-100">
+                                </a>
+                            </div>
+                            <div class="product-content">
+                                <div class="product-rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
                                 </div>
-                                <div class="single-product position-relative">
-                                    <div class="product-image">
-                                        <a class="d-block" href="product-details.html">
-                                        <img src="https://www.pizzaexpress.vn/wp-content/uploads/2019/12/P9rs1.jpg" alt="" class="product-image-1 w-100">
-                                        </a>
-                                    </div>
-                                    <div class="product-content">
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <div class="product-title">
-                                            <h4 class="title-2"> <a href="product-details.html">Sản phẩm 2</a></h4>
-                                        </div>
-                                        <div class="price-box">
-                                            <span class="regular-price ">$80.00</span>
-                                            <span class="old-price"><del>$90.00</del></span>
-                                        </div>
-                                    </div>
-                                    <div class="add-action d-flex position-absolute">
-                                        <a href="cart.html" title="Add To cart">
-                                            <i class="ion-bag"></i>
-                                        </a>
-                                        <a href="compare.html" title="Compare">
-                                            <i class="ion-ios-loop-strong"></i>
-                                        </a>
-                                        <a href="wishlist.html" title="Add To Wishlist">
-                                            <i class="ion-ios-heart-outline"></i>
-                                        </a>
-                                        <a href="#exampleModalCenter" data-toggle="modal" title="Quick View">
-                                            <i class="ion-eye"></i>
-                                        </a>
-                                    </div>
+                                <div class="product-title">
+                                    <h4 class="title-2"> <a href="product-details.html"><?=$item['name']?></a></h4>
+                                </div>
+                                <div class="price-box">
+                                    <span class="regular-price "><?=number_format($item['price']);?></span>
+                                    <span class="old-price"><del><?=number_format($item['price']+15000);
+                                    ?></del></span>
                                 </div>
                             </div>
-                            <div class="single-item">
-                                <div class="single-product position-relative mb-30">
-                                    <div class="product-image">
-                                        <a class="d-block" href="product-details.html">
-                                        <img src="https://www.pizzaexpress.vn/wp-content/uploads/2019/12/P9rs1.jpg" alt="" class="product-image-1 w-100">
-
-                                        </a>
-                                    </div>
-                                    <div class="product-content">
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <div class="product-title">
-                                            <h4 class="title-2"> <a href="product-details.html">Sản phẩm 1</a></h4>
-                                        </div>
-                                        <div class="price-box">
-                                            <span class="regular-price ">$80.00</span>
-                                            <span class="old-price"><del>$90.00</del></span>
-                                        </div>
-                                    </div>
-                                    <div class="add-action d-flex position-absolute">
-                                        <a href="cart.html" title="Add To cart">
-                                            <i class="ion-bag"></i>
-                                        </a>
-                                        <a href="compare.html" title="Compare">
-                                            <i class="ion-ios-loop-strong"></i>
-                                        </a>
-                                        <a href="wishlist.html" title="Add To Wishlist">
-                                            <i class="ion-ios-heart-outline"></i>
-                                        </a>
-                                        <a href="#exampleModalCenter" data-toggle="modal" title="Quick View">
-                                            <i class="ion-eye"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="single-product position-relative">
-                                    <div class="product-image">
-                                        <a class="d-block" href="product-details.html">
-                                        <img src="https://www.pizzaexpress.vn/wp-content/uploads/2019/12/P9rs1.jpg" alt="" class="product-image-1 w-100">
-                                        </a>
-                                    </div>
-                                    <div class="product-content">
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <div class="product-title">
-                                            <h4 class="title-2"> <a href="product-details.html">Sản phẩm 2</a></h4>
-                                        </div>
-                                        <div class="price-box">
-                                            <span class="regular-price ">$80.00</span>
-                                            <span class="old-price"><del>$90.00</del></span>
-                                        </div>
-                                    </div>
-                                    <div class="add-action d-flex position-absolute">
-                                        <a href="cart.html" title="Add To cart">
-                                            <i class="ion-bag"></i>
-                                        </a>
-                                        <a href="compare.html" title="Compare">
-                                            <i class="ion-ios-loop-strong"></i>
-                                        </a>
-                                        <a href="wishlist.html" title="Add To Wishlist">
-                                            <i class="ion-ios-heart-outline"></i>
-                                        </a>
-                                        <a href="#exampleModalCenter" data-toggle="modal" title="Quick View">
-                                            <i class="ion-eye"></i>
-                                        </a>
-                                    </div>
-                                </div>
+                            <div class="add-action d-flex position-absolute">
+                                <a href="cart.html" title="Add To cart">
+                                    <i class="ion-bag"></i>
+                                </a>
+                                <a href="compare.html" title="Compare">
+                                    <i class="ion-ios-loop-strong"></i>
+                                </a>
+                                <a href="wishlist.html" title="Add To Wishlist">
+                                    <i class="ion-ios-heart-outline"></i>
+                                </a>
+                                <a href="#exampleModalCenter" data-toggle="modal" title="Quick View">
+                                    <i class="ion-eye"></i>
+                                </a>
                             </div>
-                            <div class="single-item">
-                                <div class="single-product position-relative mb-30">
-                                    <div class="product-image">
-                                        <a class="d-block" href="product-details.html">
-                                        <img src="https://www.pizzaexpress.vn/wp-content/uploads/2019/12/P9rs1.jpg" alt="" class="product-image-1 w-100">
-
-                                        </a>
-                                    </div>
-                                    <div class="product-content">
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <div class="product-title">
-                                            <h4 class="title-2"> <a href="product-details.html">Sản phẩm 1</a></h4>
-                                        </div>
-                                        <div class="price-box">
-                                            <span class="regular-price ">$80.00</span>
-                                            <span class="old-price"><del>$90.00</del></span>
-                                        </div>
-                                    </div>
-                                    <div class="add-action d-flex position-absolute">
-                                        <a href="cart.html" title="Add To cart">
-                                            <i class="ion-bag"></i>
-                                        </a>
-                                        <a href="compare.html" title="Compare">
-                                            <i class="ion-ios-loop-strong"></i>
-                                        </a>
-                                        <a href="wishlist.html" title="Add To Wishlist">
-                                            <i class="ion-ios-heart-outline"></i>
-                                        </a>
-                                        <a href="#exampleModalCenter" data-toggle="modal" title="Quick View">
-                                            <i class="ion-eye"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="single-product position-relative">
-                                    <div class="product-image">
-                                        <a class="d-block" href="product-details.html">
-                                        <img src="https://www.pizzaexpress.vn/wp-content/uploads/2019/12/P9rs1.jpg" alt="" class="product-image-1 w-100">
-                                        </a>
-                                    </div>
-                                    <div class="product-content">
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <div class="product-title">
-                                            <h4 class="title-2"> <a href="product-details.html">Sản phẩm 2</a></h4>
-                                        </div>
-                                        <div class="price-box">
-                                            <span class="regular-price ">$80.00</span>
-                                            <span class="old-price"><del>$90.00</del></span>
-                                        </div>
-                                    </div>
-                                    <div class="add-action d-flex position-absolute">
-                                        <a href="cart.html" title="Add To cart">
-                                            <i class="ion-bag"></i>
-                                        </a>
-                                        <a href="compare.html" title="Compare">
-                                            <i class="ion-ios-loop-strong"></i>
-                                        </a>
-                                        <a href="wishlist.html" title="Add To Wishlist">
-                                            <i class="ion-ios-heart-outline"></i>
-                                        </a>
-                                        <a href="#exampleModalCenter" data-toggle="modal" title="Quick View">
-                                            <i class="ion-eye"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="single-item">
-                                <div class="single-product position-relative mb-30">
-                                    <div class="product-image">
-                                        <a class="d-block" href="product-details.html">
-                                        <img src="https://www.pizzaexpress.vn/wp-content/uploads/2019/12/P9rs1.jpg" alt="" class="product-image-1 w-100">
-
-                                        </a>
-                                    </div>
-                                    <div class="product-content">
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <div class="product-title">
-                                            <h4 class="title-2"> <a href="product-details.html">Sản phẩm 1</a></h4>
-                                        </div>
-                                        <div class="price-box">
-                                            <span class="regular-price ">$80.00</span>
-                                            <span class="old-price"><del>$90.00</del></span>
-                                        </div>
-                                    </div>
-                                    <div class="add-action d-flex position-absolute">
-                                        <a href="cart.html" title="Add To cart">
-                                            <i class="ion-bag"></i>
-                                        </a>
-                                        <a href="compare.html" title="Compare">
-                                            <i class="ion-ios-loop-strong"></i>
-                                        </a>
-                                        <a href="wishlist.html" title="Add To Wishlist">
-                                            <i class="ion-ios-heart-outline"></i>
-                                        </a>
-                                        <a href="#exampleModalCenter" data-toggle="modal" title="Quick View">
-                                            <i class="ion-eye"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="single-product position-relative">
-                                    <div class="product-image">
-                                        <a class="d-block" href="product-details.html">
-                                        <img src="https://www.pizzaexpress.vn/wp-content/uploads/2019/12/P9rs1.jpg" alt="" class="product-image-1 w-100">
-                                        </a>
-                                    </div>
-                                    <div class="product-content">
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <div class="product-title">
-                                            <h4 class="title-2"> <a href="product-details.html">Sản phẩm 2</a></h4>
-                                        </div>
-                                        <div class="price-box">
-                                            <span class="regular-price ">$80.00</span>
-                                            <span class="old-price"><del>$90.00</del></span>
-                                        </div>
-                                    </div>
-                                    <div class="add-action d-flex position-absolute">
-                                        <a href="cart.html" title="Add To cart">
-                                            <i class="ion-bag"></i>
-                                        </a>
-                                        <a href="compare.html" title="Compare">
-                                            <i class="ion-ios-loop-strong"></i>
-                                        </a>
-                                        <a href="wishlist.html" title="Add To Wishlist">
-                                            <i class="ion-ios-heart-outline"></i>
-                                        </a>
-                                        <a href="#exampleModalCenter" data-toggle="modal" title="Quick View">
-                                            <i class="ion-eye"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            
                         </div>
                     </div>
+                    <?php
+                    endforeach;
+                    ?>
                 </div>
             </div>
         </div>

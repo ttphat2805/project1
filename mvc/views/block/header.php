@@ -8,7 +8,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-2 col-xl-2 col-sm-6 col-6 col-custom">
                             <div class="header-logo d-flex align-items-center">
-                                <a href="index.html">
+                                <a href="<?php echo BASE_URL; ?>">
                                     <img class="img-full" src="<?php echo BASE_URL; ?>/public/assets/images/logo/logo.png" alt="Header Logo" height="100px">
                                 </a>
                             </div>
@@ -397,20 +397,13 @@
                         <ul>
                             <li>
                                 <i class="fa fa-phone"></i>
-                                <a href="info@yourdomain.com">(1245) 2456 012</a>
+                                <a href="info@yourdomain.com">+84 364 303 994</a>
                             </li>
                             <li>
                                 <i class="fa fa-envelope"></i>
-                                <a href="info@yourdomain.com">info@yourdomain.com</a>
+                                <a href="info@yourdomain.com">G6Food@gmail.com</a>
                             </li>
                         </ul>
-                    </div>
-                    <div class="off-canvas-widget-social">
-                        <a title="Facebook-f" href="#"><i class="fa fa-facebook-f"></i></a>
-                        <a title="Twitter" href="#"><i class="fa fa-twitter"></i></a>
-                        <a title="Linkedin" href="#"><i class="fa fa-linkedin"></i></a>
-                        <a title="Youtube" href="#"><i class="fa fa-youtube"></i></a>
-                        <a title="Vimeo" href="#"><i class="fa fa-vimeo"></i></a>
                     </div>
                 </div>
                 <!-- offcanvas widget area end -->

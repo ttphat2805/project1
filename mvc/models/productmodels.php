@@ -17,7 +17,7 @@ class productmodels extends db
     }
     function getproductadmin()
     {
-        $query = "SELECT a.id as 'idproduct',a.name as 'nameproduct',a.image,a.description,a.status,b.id as 'idproduct_type',b.price,b.quantity,c.name as 'nameattr',c.value FROM products a inner join product_type b on b.product_id = a.id inner join attribute c on b.attribute_id = c.id group by a.id";
+        $query = "SELECT a.id as 'idproduct',a.name as 'nameproduct',a.categoryid as 'category_id',a.image,a.description,a.status,b.id as 'idproduct_type',b.price,b.quantity FROM products a inner join product_type b on b.product_id = a.id group by a.id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
@@ -59,6 +59,54 @@ class productmodels extends db
         return $stmt->fetch()['id'];
     
     }
+    function infoproduct($id)
+    {
+        $query = "SELECT * FROM products where id = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
 
-  
+    function getimgproduct($id){
+        $query = "SELECT * FROM prod_image where productid = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    function getproduct_type_id($id){
+        $query = "SELECT * FROM product_type where product_id = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
+    function getproduct_home(){
+        $query = "SELECT a.id as 'idproduct',a.name,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id group by a.id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    function getproductdetails($id){
+        $query = "SELECT b.id as 'idproduct',b.name,b.image,b.description,b.views,a.*,c.* FROM 
+        product_type a inner join products b on a.product_id = b.id inner join prod_image c on c.productid = b.id where b.id = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+    function getproductdetailall($id){
+        $query = "SELECT b.id as 'idproduct',b.name,b.image,b.description,b.views,a.*,c.* FROM 
+        product_type a inner join products b on a.product_id = b.id inner join prod_image c on c.productid = b.id where b.id = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+    function updateviews($id)
+    {
+        $query = "UPDATE products set views=views+1 where id=$id";
+        $dm = $this->conn->prepare($query);
+        $dm->execute();
+    }
+
 }

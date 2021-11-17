@@ -13,49 +13,24 @@
                         "asNavFor": ".pd-slider-nav"
                         }'>
                                 <div class="single-image border">
-                                    <a href="assets/images/product/large-size/1.jpg">
-                                        <img src="https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/08/32-1.png" alt="Product">
+                                    <a href="">
+                                        <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?php echo $data['productdetails']['image'] ?>" alt="Product">
                                     </a>
                                 </div>
+                            
+                                <?php
+                                foreach($data['productdetailall'] as $img):
+                                ?>
                                 <div class="single-image border">
-                                    <a href="assets/images/product/large-size/1.jpg">
-                                        <img src="https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/08/32-1.png" alt="Product">
+                                    <a href="">
+                                        <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery']?>" alt="Product">
                                     </a>
                                 </div>
-                                
-                                <div class="single-image border">
-                                    <a href="assets/images/product/large-size/2.jpg">
-                                        <img src="assets/images/product/large-size/2.jpg" alt="Product">
-                                    </a>
-                                </div>
-                                <div class="single-image border">
-                                    <a href="assets/images/product/large-size/3.jpg">
-                                        <img src="assets/images/product/large-size/3.jpg" alt="Product">
-                                    </a>
-                                </div>
-                                <div class="single-image border">
-                                    <a href="assets/images/product/large-size/4.jpg">
-                                        <img src="assets/images/product/large-size/4.jpg" alt="Product">
-                                    </a>
-                                </div>
-                                <div class="single-image border">
-                                    <a href="assets/images/product/large-size/5.jpg">
-                                        <img src="assets/images/product/large-size/5.jpg" alt="Product">
-                                    </a>
-                                </div>
-                                <div class="single-image border">
-                                    <a href="assets/images/product/large-size/6.jpg">
-                                        <img src="assets/images/product/large-size/6.jpg" alt="Product">
-                                    </a>
-                                </div>
-                                <div class="single-image border">
-                                    <a href="assets/images/product/large-size/7.jpg">
-                                        <img src="assets/images/product/large-size/7.jpg" alt="Product">
-                                    </a>
-                                </div>
+                            <?php endforeach; ?>
+                            
                             </div>
                             <div class="pd-slider-nav product-slider" data-slick-options='{
-                        "slidesToShow": 4,
+                        "slidesToShow": 3,
                         "asNavFor": ".product-details_slider",
                         "focusOnSelect": true,
                         "arrows" : false,
@@ -68,34 +43,29 @@
                             {"breakpoint":575, "settings": {"slidesToShow": 3}}
                         ]'>
                                 <div class="single-thumb border">
-                                    <img src="https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/08/32-1.png" alt="Product Thumnail">
+                                    <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?php echo $data['productdetails']['image'] ?>" alt="Product thumnail">
                                 </div>
+                            <?php
+                                foreach($data['productdetailall'] as $img):
+                            ?>
                                 <div class="single-thumb border">
-                                    <img src="https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/08/32-1.png" alt="Product Thumnail">
+                                    <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery']?>" alt="Product thumnail">
                                 </div>
-                                <div class="single-thumb border">
-                                    <img src="https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/08/32-1.png" alt="Product Thumnail">
-                                </div>
-                                <div class="single-thumb border">
-                                    <img src="https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/08/32-1.png" alt="Product Thumnail">
-                                </div>
-                                <div class="single-thumb border">
-                                    <img src="https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/08/32-1.png" alt="Product Thumnail">
-                                </div>
-                                <div class="single-thumb border">
-                                    <img src="https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/08/32-1.png" alt="Product Thumnail">
-                                </div>
+                            <?php endforeach; ?>
+                               
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-7 col-custom">
                         <div class="product-summery position-relative">
                             <div class="product-head mb-3">
-                                <h2 class="product-title">Sản phẩm 1</h2>
+                                <h2 class="product-title">
+                                <?php echo $data['productdetails']['name'] ?>
+                                </h2>
                             </div>
                             <div class="price-box mb-2">
-                                <span class="regular-price">$80.00</span>
-                                <span class="old-price"><del>$90.00</del></span>
+                                <span class="regular-price"> <?=number_format($data['productdetails']['price']) ?> VNĐ</span>
+                                <span class="old-price"><del><?=number_format($data['productdetails']['price']+15000)?> VNĐ</del></span>
                             </div>
                             <div class="product-rating mb-3">
                                 <i class="fa fa-star"></i>
@@ -105,19 +75,30 @@
                                 <i class="fa fa-star-o"></i>
                             </div>
                             <div class="sku mb-3">
-                                <span>Lượt xem: 1</span>
+                                <span>Lượt xem: <?php echo $data['productdetails']['views'] ?></span>
                             </div>
-                            <p class="desc-content mb-5">Mô tả.</p>
+                            <p class="desc-content mb-5">
+                                <?php echo $data['productdetails']['description'] ?>
+                            </p>
+                            <?php
+                            if($data['product_type']['attribute_id'] !== NULL){
+                            ?>
                             <div class="product-meta">
                                 <div class="product-size mb-4">
-                                    <span>Size :</span>
-                                    <a href="#"> <strong>S</strong></a>
-                                    <a href="#"> <strong>M</strong></a>
-                                    <a href="#"> <strong>L</strong></a>
-                                    <a href="#"> <strong>XL</strong></a>
+                                    <p>Size :</p>
+                                    <?php
+                                    foreach ($data['productdetailattr'] as $size):
+                                    ?>
+                                    <input class="" id="prod-size-<?=$size['value']?>" type="radio" name="option1" value="<?=$size['value']?>">
+                                    <label for="prod-size-<?=$size['value']?>" class="sd">
+                                        <span><?=$size['value']?></span>
+                                    </label>
+                                    <?php
+                                    endforeach;
+                                    ?>
                                 </div>
-
                             </div>
+                            <?php }?>
                             <div class="quantity-with_btn mb-4">
                                 <div class="quantity">
                                     <div class="cart-plus-minus">
@@ -126,14 +107,12 @@
                                         <div class="inc qtybutton">+</div>
                                     </div>
                                 </div>
-                                <div class="add-to_cart">
-                                    <a class="btn obrien-button primary-btn" href="cart.html">Add to cart</a>
-                                    <a class="btn obrien-button-2 treansparent-color pt-0 pb-0" href="wishlist.html">Add to wishlist</a>
+                            
+                            </div>
+                            <div class="add-to_cart mb-4">
+                                    <a class="btn obrien-button primary-btn" href="cart.html">Mua ngay</a>
+                                    <a class="btn obrien-button-2 treansparent-color pt-0 pb-0" href="wishlist.html">+ Yêu thích</a>
                                 </div>
-                            </div>
-                            <div class="buy-button mb-5">
-                                <a href="#" class="btn obrien-button-3 black-button">Buy it now</a>
-                            </div>
                             <div class="social-share mb-4">
                                 <span>Share :</span>
                                 <a href="#"><i class="fa fa-facebook-square facebook-color"></i></a>
@@ -383,7 +362,7 @@
                                 <div class="single-product position-relative">
                                     <div class="product-image">
                                         <a class="d-block" href="product-details.html">
-                                        <img src="https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/08/3-1.png" alt="" class="product-image-1 w-100">
+                                            <img src="https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/08/3-1.png" alt="" class="product-image-1 w-100">
                                             <img src="assets/images/product/4.jpg" alt="" class="product-image-2 position-absolute w-100">
                                         </a>
                                     </div>
@@ -423,7 +402,7 @@
                                 <div class="single-product position-relative">
                                     <div class="product-image">
                                         <a class="d-block" href="product-details.html">
-                                        <img src="https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/08/3-1.png" alt="" class="product-image-1 w-100">
+                                            <img src="https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/08/3-1.png" alt="" class="product-image-1 w-100">
                                             <img src="assets/images/product/6.jpg" alt="" class="product-image-2 position-absolute w-100">
                                         </a>
                                     </div>
@@ -466,7 +445,7 @@
                                 <div class="single-product position-relative">
                                     <div class="product-image">
                                         <a class="d-block" href="product-details.html">
-                                        <img src="https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/08/3-1.png" alt="" class="product-image-1 w-100">
+                                            <img src="https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/08/3-1.png" alt="" class="product-image-1 w-100">
                                             <img src="assets/images/product/8.jpg" alt="" class="product-image-2 position-absolute w-100">
                                         </a>
                                     </div>
@@ -506,7 +485,7 @@
                                 <div class="single-product position-relative">
                                     <div class="product-image">
                                         <a class="d-block" href="product-details.html">
-                                        <img src="https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/08/3-1.png" alt="" class="product-image-1 w-100">
+                                            <img src="https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/08/3-1.png" alt="" class="product-image-1 w-100">
                                             <img src="assets/images/product/10.jpg" alt="" class="product-image-2 position-absolute top-0 left-0">
                                         </a>
                                     </div>

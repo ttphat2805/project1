@@ -32,4 +32,18 @@ Class attributemodels extends db{
         $stmt->execute();
         return $stmt->fetchAll();
     }
+
+    function getinfoSize($id){
+        $query = "SELECT * FROM product_type where product_id = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    function getproduct_detail_attr($id){
+        $query = "SELECT a.*,b.id as 'idattr',b.value,b.name from attribute b inner join product_type a on b.id = a.attribute_id where a.product_id = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 }
