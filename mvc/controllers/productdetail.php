@@ -33,6 +33,7 @@ class productdetail extends Controller
     }
 
     function change_price($size){
-
+        $hi = $this->attribute->getsizedetail($size);
+        print_r($hi);
     }
 }

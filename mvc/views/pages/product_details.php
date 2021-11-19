@@ -89,7 +89,7 @@
                                     <?php
                                     foreach ($data['productdetailattr'] as $size):
                                     ?>
-                                    <input class="" id="prod-size-<?=$size['value']?>" type="radio" name="option1" value="<?=$size['value']?>">
+                                    <input  id="prod-size-<?=$size['value']?>" type="radio" name="option1" value="<?=$size['value']?>" >
                                     <label for="prod-size-<?=$size['value']?>" class="sd">
                                         <span><?=$size['value']?></span>
                                     </label>
@@ -532,13 +532,13 @@
     $(document).ready(function(){
         $(".product-meta").click(function(){
             let size = $('input[name="option1"]:checked').val();
+            alert(`<?php echo BASE_URL?>/productdetail/change_price/${size}`);
             $.ajax({
-            url:"",
+            url:`<?php echo BASE_URL?>/productdetail/change_price/${size}`,
             method:"POST",
-            data:{
-
-            },
+            data: "price",
             success:function(data){
+                console.log(data);
                 $('#quantityhere').html(data);
             }
         });
