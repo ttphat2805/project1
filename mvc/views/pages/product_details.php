@@ -527,3 +527,21 @@
             </div>
         </div>
         <!-- Product Area End Here -->
+
+<script>
+    $(document).ready(function(){
+        $(".product-meta").click(function(){
+            let size = $('input[name="option1"]:checked').val();
+            $.ajax({
+            url:"",
+            method:"POST",
+            data:{
+
+            },
+            success:function(data){
+                $('#quantityhere').html(data);
+            }
+        });
+        })
+    })
+</script>

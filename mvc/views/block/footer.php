@@ -1,8 +1,13 @@
  <!-- JS
 ============================================ -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
  <!-- Ion icons -->
- 
+ <script>
+    $(document).ready(function() {
+        
+    })
+</script>
  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <!-- jQuery JS -->

@@ -31,4 +31,8 @@ class productdetail extends Controller
             ]
         );
     }
+
+    function change_price($size){
+
+    }
 }
