@@ -30,7 +30,7 @@ class productmodels extends db
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
     }
-    function insertproduct_type_attr($value, $product_id,$price_attr,$quantity_attr)
+    function insertproduct_type_attr($value, $product_id, $price_attr, $quantity_attr)
     {
         $query = "INSERT INTO product_type(attribute_id,product_id,price,quantity) 
             values ('$value','$product_id','$price_attr','$quantity_attr')";
@@ -38,7 +38,7 @@ class productmodels extends db
         $stmt->execute();
     }
 
-    function insertproduct_type($product_id,$price_attr,$quantity_attr)
+    function insertproduct_type($product_id, $price_attr, $quantity_attr)
     {
         $query = "insert into product_type(product_id,price,quantity) 
             values ('$product_id','$price_attr','$quantity_attr')";
@@ -46,18 +46,19 @@ class productmodels extends db
         $stmt->execute();
     }
 
-    function insertlistimg($productid, $final_image){
+    function insertlistimg($productid, $final_image)
+    {
         $query = "INSERT INTO prod_image(productid,gallery) values ('$productid','$final_image')";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
     }
 
-    function selectidproduct(){
+    function selectidproduct()
+    {
         $query = "SELECT id from products order by id desc limit 1";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetch()['id'];
-    
     }
     function infoproduct($id)
     {
@@ -67,35 +68,40 @@ class productmodels extends db
         return $stmt->fetch();
     }
 
-    function getimgproduct($id){
+    function getimgproduct($id)
+    {
         $query = "SELECT * FROM prod_image where productid = $id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
     }
 
-    function getproduct_type_id($id){
+    function getproduct_type_id($id)
+    {
         $query = "SELECT * FROM product_type where product_id = $id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetch();
     }
 
-    function getproduct_home(){
+    function getproduct_home()
+    {
         $query = "SELECT a.id as 'idproduct',a.name,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id group by a.id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
     }
 
-    function getproductdetails($id){
+    function getproductdetails($id)
+    {
         $query = "SELECT b.id as 'idproduct',b.name,b.image,b.description,b.views,a.*,c.* FROM 
         product_type a inner join products b on a.product_id = b.id inner join prod_image c on c.productid = b.id where b.id = $id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetch();
     }
-    function getproductdetailall($id){
+    function getproductdetailall($id)
+    {
         $query = "SELECT b.id as 'idproduct',b.name,b.image,b.description,b.views,a.*,c.* FROM 
         product_type a inner join products b on a.product_id = b.id inner join prod_image c on c.productid = b.id where b.id = $id";
         $stmt = $this->conn->prepare($query);
@@ -116,6 +122,24 @@ class productmodels extends db
         $dm->execute();
     }
 
-    
 
-}
+    function updateproduct($categoryid, $name, $imageName, $description, $status,$id)
+    {
+        $query = "UPDATE products SET categoryid =?, name = ?,image = ? ,description = ?, status = ? where id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$categoryid, $name, $imageName, $description, $status,$id]);
+    }
+
+    function delete_product_type($id){
+        $query = "DELETE FROM product_type WHERE product_id = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+    }
+
+
+    function delete_image($id){
+        $query = "DELETE FROM prod_image WHERE productid = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+    }
+
