@@ -18,12 +18,12 @@ class Home extends Controller
     }
 
 
-    function productdetails()
+    function error()
     {
         $this->view(
             "master2",
             [
-                "pages" => "product_details",
+                "pages" => "error404",
             ]
         );
     }

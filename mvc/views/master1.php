@@ -36,7 +36,9 @@
 </head>
 
 <body>
-
+    <div class="loader_pizza">
+        <img src="<?php echo BASE_URL; ?>/public/assets/images/loader.gif" alt="">
+    </div>
     <div class="home-wrapper home-1">
         <!-- HEADER: START -->
         <?php
