@@ -64,7 +64,7 @@
                                 </h2>
                             </div>
                             <div class="price-box mb-2">
-                                <span class="regular-price"> <?=number_format($data['productdetails']['price']) ?> VNĐ</span>
+                                <span class="regular-price"><span class="price-view">1</span> VNĐ</span>
                                 <span class="old-price"><del><?=number_format($data['productdetails']['price']+15000)?> VNĐ</del></span>
                             </div>
                             <div class="product-rating mb-3">
@@ -90,7 +90,7 @@
                                     foreach ($data['productdetailattr'] as $size):
                                     ?>
                                     <input  id="prod-size-<?=$size['value']?>" type="radio" name="option1" value="<?=$size['value']?>" >
-                                    <label for="prod-size-<?=$size['value']?>" class="sd">
+                                    <label for="prod-size-<?=$size['value']?>" class="sd btn-value-size" id="<?=$size['value']?>" >
                                         <span><?=$size['value']?></span>
                                     </label>
                                     <?php
@@ -530,18 +530,19 @@
 
 <script>
     $(document).ready(function(){
-        $(".product-meta").click(function(){
-            let size = $('input[name="option1"]:checked').val();
-            alert(`<?php echo BASE_URL?>/productdetail/change_price/${size}`);
+        $(".btn-value-size").click(function(){
+            let size = $(this).attr('id');
             $.ajax({
-            url:`<?php echo BASE_URL?>/productdetail/change_price/${size}`,
+            url:`<?= BASE_URL ?>/productdetail/change_price/${size}`,
             method:"POST",
-            data: "price",
+            data:{
+                'size': size,
+            },
             success:function(data){
-                console.log(data);
-                $('#quantityhere').html(data);
+                alert(data)
+                $('.price-view').html(data);
             }
-        });
+        }); 
         })
     })
 </script>
