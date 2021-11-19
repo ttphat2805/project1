@@ -28,6 +28,7 @@
 
     <!-- Main JS -->
     <script src="<?php echo BASE_URL; ?>/public/assets/js/main.js"></script>
+    <script src="<?php echo BASE_URL; ?>/public/assets/js/custom.js"></script>
 
 <footer class="footer-area">
     <div class="footer-widget-area">
