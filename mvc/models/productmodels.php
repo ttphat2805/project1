@@ -102,6 +102,13 @@ class productmodels extends db
         $stmt->execute();
         return $stmt->fetchAll();
     }
+
+    function get_gallery_image($id){
+        $query = "SELECT * FROM prod_image where productid = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
     function updateviews($id)
     {
         $query = "UPDATE products set views=views+1 where id=$id";

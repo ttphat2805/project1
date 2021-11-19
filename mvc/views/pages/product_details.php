@@ -19,7 +19,7 @@
                                 </div>
                             
                                 <?php
-                                foreach($data['productdetailall'] as $img):
+                                foreach($data['gallery'] as $img):
                                 ?>
                                 <div class="single-image border">
                                     <a href="">
@@ -46,7 +46,7 @@
                                     <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?php echo $data['productdetails']['image'] ?>" alt="Product thumnail">
                                 </div>
                             <?php
-                                foreach($data['productdetailall'] as $img):
+                                foreach($data['gallery'] as $img):
                             ?>
                                 <div class="single-thumb border">
                                     <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery']?>" alt="Product thumnail">
