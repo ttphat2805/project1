@@ -61,7 +61,7 @@
                                         </a>
                                         <div class="login-register-wrapper dropdown-sidemenu dropdown-hover-2">
                                             <ul class="">
-                                                <li> <a href="">Đăng nhập</a> </li>
+                                                <li> <a href="<?php echo BASE_URL.'/auth/login' ?>">Đăng nhập</a> </li>
                                                 <li> <a href="">Đăng ký</a> </li>
                                             </ul>
                                         </div>
