@@ -265,7 +265,6 @@ class Admin extends Controller
                     $quantity = $_POST['quantity'];
                     $this->product->insertproduct_type($id, $price, $quantity);
                 }
-<<<<<<< HEAD
                 // if (!isset($galleryName)) {
                 //     $this->product->delete_image($id);
                 //     foreach ($_FILES['gallery']['tmp_name'] as $key => $value) {
@@ -293,34 +292,6 @@ class Admin extends Controller
         }
     }
 
-=======
-                if (!isset($galleryName)) {
-                    $this->product->delete_image($id);
-                    foreach ($_FILES['gallery']['tmp_name'] as $key => $value) {
-                        $galleryName = $_FILES['gallery']['name'][$key];
-                        $galleryTemp = $_FILES['gallery']['tmp_name'][$key];
-                        // if (empty($galleryName)) {
-                        //     $galleryName = $_POST['gallery1'];
-                        // }
-                        // echo $_POST['gallery1'];
-                        $ext = pathinfo($galleryName, PATHINFO_EXTENSION);
-                        // echo $ext.'duoi file';
-                        // print_r($galleryName);
-                        $final_image = '';
-
-                        if (in_array($ext, $extension)) {
-                            $newgalleryName = time() . '_' . $galleryName;
-                            // echo $newgalleryName;
-                            move_uploaded_file($galleryTemp, $store . $newgalleryName);
-                            $final_image = $newgalleryName;
-                            $this->product->insertlistimg($id, $final_image);
-                        }
-                    }
-                }
-            }
-        }
-    }
->>>>>>> e9f19d695b72234c80bd808beb64e7becf520271
 
 
     // END - PRODUCT
