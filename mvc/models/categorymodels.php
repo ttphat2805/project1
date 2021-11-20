@@ -13,8 +13,10 @@ class categorymodels extends db{
         return $stmt->rowCount();
     }
     function addcategory($name,$status){
-        $query = "insert category(name,status) values ('$name','$status')";
+        $query = "insert category(name,status) values (:name,:status)";
         $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(":name",$name,PDO::PARAM_STR);
+        $stmt->bindValue(":status",$name,PDO::PARAM_INT);
         $stmt->execute();
         return $stmt;
     }

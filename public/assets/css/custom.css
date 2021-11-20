@@ -45,10 +45,14 @@
     cursor: pointer;
 }
 
+/* css những dòng lỗi */
+.error{
+    font-style: italic;
+    display: block;
+    margin: 0 auto;
 .loader_pizza img {
     position: absolute;
     left: 50%;
     top: 100%;
     transform: translate(-50%, -50%);
     z-index: 100;
-}
