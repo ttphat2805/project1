@@ -112,7 +112,7 @@
                                 </div>
                             </div>
                             <div class="add-to_cart mb-4">
-                                <a class="btn obrien-button primary-btn" href="cart.html">Mua ngay</a>
+                                <a class="btn obrien-button primary-btn" href="<?=BASE_URL?>/cart">Mua ngay</a>
                                 <a class="btn obrien-button-2 treansparent-color pt-0 pb-0" href="wishlist.html">+ Yêu thích</a>
                             </div>
                             <div class="social-share mb-4">
