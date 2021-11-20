@@ -94,8 +94,7 @@ class productmodels extends db
 
     function getproductdetails($id)
     {
-        $query = "SELECT b.id as 'idproduct',b.name,b.image,b.description,b.views,a.*,c.* FROM 
-        product_type a inner join products b on a.product_id = b.id inner join prod_image c on c.productid = b.id where b.id = $id";
+        $query = "SELECT a.quantity,b.id as 'idproduct',b.name,b.image,b.description,b.views,a.*,c.* FROM product_type a inner join products b on a.product_id = b.id inner join prod_image c on c.productid = b.id where b.id = $id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetch();

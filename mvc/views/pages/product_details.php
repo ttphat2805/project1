@@ -80,7 +80,9 @@
                             <p class="desc-content mb-5">
                                 <?php echo $data['productdetails']['description'] ?>
                             </p>
-                            <div>Số lượng còn lại là: <span class="quantity_view"></span></div>
+                            <div>Số lượng còn lại là: <span class="quantity_view">
+                            <?php echo $data['productdetails']['quantity'] ?>
+                            </span></div>
                             <?php
                             if ($data['product_type']['attribute_id'] !== NULL) {
                             ?>
@@ -110,7 +112,7 @@
                                 </div>
                             </div>
                             <div class="add-to_cart mb-4">
-                                <a class="btn obrien-button primary-btn" href="cart.html">Mua ngay</a>
+                                <a class="btn obrien-button primary-btn" href="<?=BASE_URL?>/cart">Mua ngay</a>
                                 <a class="btn obrien-button-2 treansparent-color pt-0 pb-0" href="wishlist.html">+ Yêu thích</a>
                             </div>
                             <div class="social-share mb-4">
