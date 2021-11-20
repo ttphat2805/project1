@@ -44,3 +44,10 @@
     text-align: center;
     cursor: pointer;
 }
+
+/* css những dòng lỗi */
+.error{
+    font-style: italic;
+    display: block;
+    margin: 0 auto;
+}
