@@ -52,3 +52,32 @@
     transform: translate(-50%, -50%);
     z-index: 100;
 }
+
+.cart-item-wrapper {
+    background-color: lightblue;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+.obrien-button {
+    font-size: 16px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+
+/* Track */
+
+ ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+
+/* Handle */
+
+ ::-webkit-scrollbar-thumb {
+    background: #E98C81;
+    border-radius: 10px;
+}

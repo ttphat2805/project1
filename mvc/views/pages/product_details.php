@@ -80,7 +80,9 @@
                             <p class="desc-content mb-5">
                                 <?php echo $data['productdetails']['description'] ?>
                             </p>
-                            <div>Số lượng còn lại là: <span class="quantity_view"></span></div>
+                            <div>Số lượng còn lại là: <span class="quantity_view">
+                            <?php echo $data['productdetails']['quantity'] ?>
+                            </span></div>
                             <?php
                             if ($data['product_type']['attribute_id'] !== NULL) {
                             ?>
