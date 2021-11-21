@@ -280,6 +280,7 @@ class Admin extends Controller
                     $quantity = $_POST['quantity'];
                     $this->product->insertproduct_type($id, $price, $quantity);
                 }
+
                 // $this->product->delete_image($id);
                 if (!empty($_FILES['gallery'])) {
                     foreach ($_FILES['gallery']['tmp_name'] as $key => $value) {
@@ -303,6 +304,7 @@ class Admin extends Controller
             }
         }
     }
+
 
 
     // END - PRODUCT
