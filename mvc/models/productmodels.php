@@ -46,9 +46,9 @@ class productmodels extends db
         $stmt->execute();
     }
 
-    function insertlistimg($productid, $final_image)
+    function insertlistimg($id, $final_image)
     {
-        $query = "INSERT INTO prod_image(productid,gallery) values ('$productid','$final_image')";
+        $query = "INSERT INTO prod_image(productid,gallery) values ('$id','$final_image')";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
     }
@@ -122,24 +122,35 @@ class productmodels extends db
     }
 
 
-    function updateproduct($categoryid, $name, $imageName, $description, $status,$id)
+    function updateproduct($categoryid, $name, $description, $status,$id)
     {
-        $query = "UPDATE products SET categoryid =?, name = ?,image = ? ,description = ?, status = ? where id = ?";
+        $query = "UPDATE products SET categoryid =?, name = ?,description = ?, status = ? where id = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->execute([$categoryid, $name, $imageName, $description, $status,$id]);
+        $stmt->execute([$categoryid, $name,  $description, $status,$id]);
     }
 
+    function updateimg($imgname){
+        $query = "UPDATE products set image = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$imgname]);
+    }
     function delete_product_type($id){
         $query = "DELETE FROM product_type WHERE product_id = $id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
     }
 
-
-    function delete_image($id){
-        $query = "DELETE FROM prod_image WHERE productid = $id";
+    function getgallery($id){
+        $query = "SELECT * FROM prod_image WHERE productid = $id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
+        return $stmt->fetchAll();
+        
+    }
+    function delete_image($id){
+        $query = "DELETE FROM prod_image WHERE id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$id]);
     }
 
 }

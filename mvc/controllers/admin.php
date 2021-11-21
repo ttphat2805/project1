@@ -202,6 +202,23 @@ class Admin extends Controller
             ]
         );
     }
+    function load_gallery($id){
+        $output = '<div class="list_gallery" onclick="getIdimg();">';
+
+        $getgallery = $this->product->getgallery($id);
+        foreach($getgallery as $img){
+            $output .= '<input type="radio" name="closegallery" id="radio1" value="'.$img['id'].'" class="radio-close">
+            <label for="radio1" class="radio-close"><i class="fal fa-times"></i></label>
+            <img src="'.BASE_URL.'/public/assets/images/product/'.$img['gallery'].'" alt="Ảnh không tồn tại !" width="100px" height="100px">
+            <input type="hidden" name="gallery1" class="form-control" value="'.$img['gallery'].'">';
+        }
+        $output .= '</div>';
+        echo $output;
+    }
+    function delimg($idimg){
+        $this->product->delete_image($idimg);
+    }
+
 
     function infoproduct($id)
     {
@@ -227,31 +244,29 @@ class Admin extends Controller
             if ($check != 0) {
                 $_SESSION['toastr-code'] = "warning";
                 $_SESSION['toastr-noti'] = "Đã tồn tại danh mục này";
+                header('Location: ' . BASE_URL . '/admin/infoproduct/'.$id);
             } else {
-
                 $categoryid = $_POST['categoryid'];
                 $description = $_POST['description'];
                 $status = $_POST['status'];
-
                 //Xử lý phần ảnh!!!!
                 $extension = array('jpeg', 'jpg', 'png', 'gif', 'webp');
                 $store = "public/assets/images/product/";
                 $imageName = $_FILES['image']['name'];
                 $imageTemp = $_FILES['image']['tmp_name'];
-                if (empty($imageName)) {
-                    $imageName = $_POST['image1'];
+                $this->product->updateproduct($categoryid, $name, $description, $status, $id);
+                if (!empty($imageName)) {
+                    $ext = pathinfo($imageName, PATHINFO_EXTENSION);
+                    if (in_array($ext, $extension)) {
+                        $imageName = time() . '_' . $imageName;
+                        move_uploaded_file($imageTemp, $store . $imageName);
+                        $this->product->updateimg($imageName);
+                    }
                 }
-                $ext = pathinfo($imageName, PATHINFO_EXTENSION);
-                if (in_array($ext, $extension)) {
-                    $imageName = time() . '_' . $imageName;
-                    move_uploaded_file($imageTemp, $store . $imageName);
-                    $this->product->updateproduct($categoryid, $name, $imageName, $description, $status, $id);
-                }
-                $product_id = $this->product->selectidproduct();
                 if ($categoryid !== 19) {
                     $this->product->delete_product_type($id);
                 }
-                if($categoryid == 19){
+                if ($categoryid == 19) {
                     $size_value = $_POST['size_value'];
                     $this->product->delete_product_type($id);
                     foreach ($size_value as $key => $value) {
@@ -265,20 +280,13 @@ class Admin extends Controller
                     $quantity = $_POST['quantity'];
                     $this->product->insertproduct_type($id, $price, $quantity);
                 }
-                if (!isset($galleryName)) {
-                    $this->product->delete_image($id);
+                // $this->product->delete_image($id);
+                if (!empty($_FILES['gallery'])) {
                     foreach ($_FILES['gallery']['tmp_name'] as $key => $value) {
                         $galleryName = $_FILES['gallery']['name'][$key];
                         $galleryTemp = $_FILES['gallery']['tmp_name'][$key];
-                        // if (empty($galleryName)) {
-                        //     $galleryName = $_POST['gallery1'];
-                        // }
-                        // echo $_POST['gallery1'];
                         $ext = pathinfo($galleryName, PATHINFO_EXTENSION);
-                        // echo $ext.'duoi file';
-                        // print_r($galleryName);
                         $final_image = '';
-
                         if (in_array($ext, $extension)) {
                             $newgalleryName = time() . '_' . $galleryName;
                             // echo $newgalleryName;
@@ -288,6 +296,10 @@ class Admin extends Controller
                         }
                     }
                 }
+                $_SESSION['toastr-code'] = "success";
+                $_SESSION['toastr-noti'] = "Cập nhật thành công";
+                header('Location: ' . BASE_URL . '/admin/infoproduct/'.$id);
+                exit();
             }
         }
     }

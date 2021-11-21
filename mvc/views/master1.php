@@ -219,6 +219,7 @@
                                     <div class="label-product">
                                         <span class="label-sale position-absolute text-uppercase text-white text-center d-block">Soldout</span>
                                     </div>
+                                    
                                     <div class="product-content">
                                         <div class="product-size mb-2">
                                             <p>Size :</p>
@@ -392,13 +393,13 @@
                                 </a>
                             </div>
                             <div class="product-content">
-                                <div class="product-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </div>
+                            <div class="product-size mb-2">
+                                <p>Size :</p>
+                                <input class="" id="prod-size-S" type="radio" name="option1" value="S">
+                                    <label for="prod-size-S" class="sd">
+                                        <span>S</span>
+                                    </label>
+                                        </div>
                                 <div class="product-title">
                                     <h4 class="title-2"> <a href="product-details.html"><?=$item['name']?></a></h4>
                                 </div>
