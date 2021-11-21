@@ -48,7 +48,6 @@
                         <label for="" class="label__css mt-2">Size:</label>
                         <?php
                         foreach ($data['size'] as $size) {
-
                         ?>
                             <div class="form-check">
                                 <label class="form-check-label">
@@ -131,6 +130,7 @@
 
         // console.log(arraySize.length);
         var Size = '';
+        
         for (var i = 0; i < arraySize.length; i++) {
             Size += `<tr>
                     <td>${arraySize[i]}</td>

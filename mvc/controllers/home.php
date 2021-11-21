@@ -13,6 +13,7 @@ class Home extends Controller
             "master1",
             [
                 "products" => $this->product->getproduct_home(),
+
             ]
         );
     }

@@ -6,7 +6,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Admin</title>
-    <!-- plugins:css -->
+        <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.15.3/css/all.css">
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo BASE_URL; ?>/public/assets/images/logoweb.png">
     <link rel="stylesheet" href=" <?php echo BASE_URL; ?>/public/assetsadmin/vendors/mdi/css/materialdesignicons.min.css">
     <!-- endinject -->

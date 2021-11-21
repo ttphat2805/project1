@@ -57,6 +57,9 @@
                         </div>
                     </div>
                     <div class="col-lg-7 col-custom">
+                    <form action="<?=BASE_URL?>/cart/addcart/<?=$data['productdetails']['idproduct']?>" method="post">
+                        <input type="hidden" value="<?=$data['productdetails']['idproduct']?>">
+                        <input type="hidden" value="<?=$data['productdetails']['name']?>">
                         <div class="product-summery position-relative">
                             <div class="product-head mb-3">
                                 <h2 class="product-title">
@@ -112,7 +115,7 @@
                                 </div>
                             </div>
                             <div class="add-to_cart mb-4">
-                                <a class="btn obrien-button primary-btn" href="<?=BASE_URL?>/cart">Mua ngay</a>
+                                <input type="submit" value="Mua ngay" name="btn_submit" class="btn obrien-button primary-btn" href="">
                                 <a class="btn obrien-button-2 treansparent-color pt-0 pb-0" href="wishlist.html">+ Yêu thích</a>
                             </div>
                             <div class="social-share mb-4">
@@ -123,6 +126,7 @@
                                 <a href="#"><i class="fa fa-pinterest-square pinterest-color"></i></a>
                             </div>
                         </div>
+                    </form>
                     </div>
                 </div>
                 <div class="row mt-no-text">
@@ -529,8 +533,7 @@
             </div>
         </div>
         <!-- Product Area End Here -->
-
-        <script>
+<script>
             $(document).ready(function() {
                 $(".btn-value-size").click(function() {
                     let size = $(this).attr('id');

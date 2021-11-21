@@ -34,23 +34,20 @@
                     </div>
                     <div class="form-group input_price">
                         <label for="" class="label__css ">Giá</label>
-                        <input type="number" min="10" name="price" class="form-control">
+                        <input type="number" min="10" name="price" value="<?php echo $data['product_type']['price'] ?>" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="" class="label__css">Ảnh</label><br />
                         <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?php echo $data['product']['image'] ?>" alt="Ảnh không tồn tại !" width="250" height="200px">
                         <input type="file" name="image" class="form-control">
-                        <input type="hidden" name="image1" class="form-control" value="<?php echo $data['product']['image'] ?>">
+
                     </div>
                     <div class="form-group">
+                                                                    
                         <label for="" class="label__css">Thư viện ảnh</label><br />
-                        <?php foreach ($data['gallery'] as $img) {
-                        ?>
-                            <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?php echo $img['gallery'] ?>" alt="Ảnh không tồn tại !" width="100px" height="100px">
-                            <input type="hidden" name="gallery1" class="form-control" value="<?php echo $img['gallery'] ?>">
-                        <?php
-                        } ?>
-                        <input type="file" name="gallery[]"  multiple class="form-control">
+                        <div class="gallery_img">
+                        </div>
+                        <input type="file" name="gallery[]" multiple class="form-control">
                         
                     </div>
                     <div class="form-group input_quantity">
@@ -105,7 +102,7 @@
                             </label>
                         </div><br>
                     </div>
-                    <input type="submit" value="Thêm" name="btn__submit" class="btn btn-primary">
+                    <input type="submit" value="Cập nhật" name="btn__submit" class="btn btn-primary">
                     <a href="<?php echo BASE_URL ?>/admin/showproduct" class="btn btn-dark">Trở về</a>
                 </form>
             </div>
@@ -157,19 +154,50 @@
                 }
             }
         }
-        // foreach ($data['size'] as $value) {
 
         // console.log(arraySize.length); 
+   <?php     foreach ($data['size'] as $value) {?>
+
         var Size = '';
 
 
         for (var i = 0; i < arraySize.length; i++) {
             Size += `<tr>
                     <td>${arraySize[i]}</td>
-                    <td><input type="number" name="price_attribute[]"  class="form-control id="css_custom-hide"></td>
-                    <td><input type="number"  name="quantity_attribute[]" class="form-control id="css_custom-hide"></td>
+                    <td><input type="number" name="price_attribute[]"  value="<?=$size['price']?>" class="form-control id="css_custom-hide"></td>
+                    <td><input type="number"  name="quantity_attribute[]" value="<?=$size['quantity']?>"  class="form-control id="css_custom-hide"></td>
                     </tr>`
         }
         table_tbody_js.html(Size);
+        <?php }?>
     })
+
+    function load_gallery(){
+            var id = $('input[name="id"]').val();
+            $.ajax({
+            url: `<?= BASE_URL ?>/admin/load_gallery/${id}`,
+            method: "POST",
+            data: {
+                'id': id,
+            },
+            success: function(data) {
+                console.log(data);
+                $('.gallery_img').html(data);
+            }
+            });
+    }
+    load_gallery();
+    function getIdimg(){
+            let idimg= $('input[name="closegallery"]:checked').val();
+            $.ajax({
+                url:`<?=BASE_URL?>/admin/delimg/${idimg}`,
+                method:"POST",
+                data:{
+                    'idimg':idimg
+                },
+                success:function(data){
+                    load_gallery();
+                }
+            });
+        }
 </script>

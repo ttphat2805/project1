@@ -5,6 +5,8 @@ class cart extends Controller
     {
     }
     function Show()
+
+
     {
         $this->view(
             "master2",
@@ -13,5 +15,7 @@ class cart extends Controller
             ]
         );
     }
+
+
 
 }
