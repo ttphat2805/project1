@@ -207,8 +207,8 @@ class Admin extends Controller
 
         $getgallery = $this->product->getgallery($id);
         foreach($getgallery as $img){
-            $output .= '<input type="radio" name="closegallery" id="radio1" value="'.$img['id'].'" class="radio-close">
-            <label for="radio1" class="radio-close"><i class="fal fa-times"></i></label>
+            $output .= '<input type="radio" name="closegallery" id="radio_'.$img['id'].'" value="'.$img['id'].'" class="radio-close">
+            <label for="radio_'.$img['id'].'" class="radio-close"><i class="fal fa-times"></i></label>
             <img src="'.BASE_URL.'/public/assets/images/product/'.$img['gallery'].'" alt="Ảnh không tồn tại !" width="100px" height="100px">
             <input type="hidden" name="gallery1" class="form-control" value="'.$img['gallery'].'">';
         }
