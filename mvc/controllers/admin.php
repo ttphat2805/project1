@@ -306,7 +306,15 @@ class Admin extends Controller
     }
 
 
-
+    function deleteproduct($id){
+        $this->product->delete_product('prod_image','productid',$id);
+        $this->product->delete_product('product_type','product_id',$id);
+        $this->product->delete_product('products','id',$id);
+        $_SESSION['toastr-code'] = "success";
+        $_SESSION['toastr-noti'] = "Xóa thành công";
+        header('Location: ' . BASE_URL . '/admin/showproduct');
+        exit();
+    }
     // END - PRODUCT
 
 
