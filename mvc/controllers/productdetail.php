@@ -33,20 +33,20 @@ class productdetail extends Controller
     }
 
     function change_price($size){
-        $size = $this->attribute->getsizedetail($size);
+        $size = $this->attribute->getsizedetail('price',$size);
         $output = number_format($size);
         echo $output;
     }
 
     function change_oldprice($size){
-        $hi = $this->attribute->getsizedetail($size);
+        $hi = $this->attribute->getsizedetail('price',$size);
         $hi += 12500;
         $output = number_format($hi);
         echo $output;
     }
 
     function change_quantitysize($size){
-        $hi = $this->attribute->getquantitysize($size);
+        $hi = $this->attribute->getsizedetail('quantity',$size);
         echo $hi;
     }
 

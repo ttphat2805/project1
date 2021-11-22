@@ -26,6 +26,8 @@
     <script src="<?php echo BASE_URL; ?>/public/assets/js/main.js"></script>
     <script src="<?php echo BASE_URL; ?>/public/assets/js/custom.js"></script>
     <script src="<?php echo BASE_URL; ?>/public/assets/js/product.js"></script>
+    <script src="<?php echo BASE_URL; ?>/public/assets/js/cart.js"></script>
+
 
 
 <footer class="footer-area">

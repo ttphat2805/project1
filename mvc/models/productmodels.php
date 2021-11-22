@@ -26,9 +26,12 @@ class productmodels extends db
     function insertproduct($categoryid, $name, $imageName, $description, $status)
     {
         $query = "INSERT INTO products(categoryid,name,image,description,status) 
-            values ('$categoryid','$name','$imageName','$description','$status')";
+            values ('$categoryid',:name,'$imageName','$description','$status')";
         $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(":name",$name,PDO::PARAM_STR);
         $stmt->execute();
+        return $stmt;
+
     }
     function insertproduct_type_attr($value, $product_id, $price_attr, $quantity_attr)
     {
@@ -86,7 +89,15 @@ class productmodels extends db
 
     function getproduct_home()
     {
-        $query = "SELECT a.id as 'idproduct',a.name,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id group by a.id";
+        $query = "SELECT a.id as 'idproduct',a.name,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id group by a.id ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    function getproduct_trend()
+    {
+        $query = "SELECT a.id as 'idproduct',a.name,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id group by a.id order by views desc limit 10";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
