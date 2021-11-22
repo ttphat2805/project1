@@ -189,7 +189,6 @@
     load_gallery();
     function getIdimg(){
             let idimg= $('input[name="closegallery"]:checked').val();
-            alert(idimg);
             $.ajax({
                 url:`<?=BASE_URL?>/admin/delimg/${idimg}`,
                 method:"POST",
