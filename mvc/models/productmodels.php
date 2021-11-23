@@ -23,12 +23,14 @@ class productmodels extends db
         return $stmt->fetchAll();
     }
 
-    function insertproduct($categoryid, $name, $imageName, $description, $status)
+    function insertproduct($categoryid, $name, $name_slug, $imageName, $description, $status)
     {
-        $query = "INSERT INTO products(categoryid,name,image,description,status) 
-            values ('$categoryid','$name','$imageName','$description','$status')";
+        $query = "INSERT INTO products(categoryid,name,slug,image,description,status) 
+            values ('$categoryid',:name,'$name_slug','$imageName','$description','$status')";
         $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(":name", $name, PDO::PARAM_STR);
         $stmt->execute();
+        return $stmt;
     }
     function insertproduct_type_attr($value, $product_id, $price_attr, $quantity_attr)
     {
@@ -86,7 +88,15 @@ class productmodels extends db
 
     function getproduct_home()
     {
-        $query = "SELECT a.id as 'idproduct',a.name,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id group by a.id";
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.status = 1 group by a.id ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    function getproduct_trend()
+    {
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.status = 1 group by a.id order by views desc limit 10";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
@@ -94,7 +104,7 @@ class productmodels extends db
 
     function getproductdetails($id)
     {
-        $query = "SELECT a.quantity,b.id as 'idproduct',b.name,b.image,b.description,b.views,a.*,c.* FROM product_type a inner join products b on a.product_id = b.id inner join prod_image c on c.productid = b.id where b.id = $id";
+        $query = "SELECT a.quantity,b.id as 'idproduct',b.name,b.slug,b.image,b.description,b.views,a.*,c.* FROM product_type a inner join products b on a.product_id = b.id inner join prod_image c on c.productid = b.id where b.id = $id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetch();
@@ -108,11 +118,18 @@ class productmodels extends db
         return $stmt->fetchAll();
     }
 
-    function get_gallery_image($id){
+    function get_gallery_image($id)
+    {
         $query = "SELECT * FROM prod_image where productid = $id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
+    }
+    function getProductId($slug) {
+        $query = "SELECT id FROM `products` WHERE slug = '$slug' and status = 1";
+        $result = $this->conn->prepare($query);
+        $result->execute();
+        return $result->fetch()['id'];
     }
     function updateviews($id)
     {
@@ -122,42 +139,37 @@ class productmodels extends db
     }
 
 
-    function updateproduct($categoryid, $name, $description, $status,$id)
+    function updateproduct($categoryid, $name, $name_slug, $description, $status, $id)
     {
-        $query = "UPDATE products SET categoryid =?, name = ?,description = ?, status = ? where id = ?";
+        $query = "UPDATE products SET categoryid =?, name = ?,slug = ?, description = ?, status = ? where id = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->execute([$categoryid, $name,  $description, $status,$id]);
+        $stmt->execute([$categoryid, $name, $name_slug,  $description, $status, $id]);
     }
 
-    function updateimg($imgname){
+    function updateimg($imgname)
+    {
         $query = "UPDATE products set image = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->execute([$imgname]);
     }
-    function delete_product_type($id){
+    function delete_product_type($id)
+    {
         $query = "DELETE FROM product_type WHERE product_id = $id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
     }
 
-    function getgallery($id){
+    function getgallery($id)
+    {
         $query = "SELECT * FROM prod_image WHERE productid = $id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
-        
     }
-    function delete_image($id){
+    function delete_image($id)
+    {
         $query = "DELETE FROM prod_image WHERE id = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->execute([$id]);
     }
-
-    function delete_product($table, $where, $id){
-        $query = "DELETE FROM $table WHERE $where = $id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-    }
-
-
 }
