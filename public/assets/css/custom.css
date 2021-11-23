@@ -84,3 +84,7 @@
         background: #E98C81;
         border-radius: 10px;
     }
+    
+    .contact-us-area {
+        overflow: hidden;
+    }
