@@ -26,8 +26,13 @@ class productmodels extends db
     function insertproduct($categoryid, $name, $imageName, $description, $status)
     {
         $query = "INSERT INTO products(categoryid,name,image,description,status) 
-            values ('$categoryid','$name','$imageName','$description','$status')";
+            values (:categoryid,:name,:imageName,:description,:status)";
         $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(":categoryid",$categoryid,PDO::PARAM_INT);
+        $stmt->bindValue(":name",$name,PDO::PARAM_STR);
+        $stmt->bindValue(":imageName",$imageName,PDO::PARAM_STR);
+        $stmt->bindValue(":description",$description,PDO::PARAM_STR);
+        $stmt->bindValue(":status",$status,PDO::PARAM_INT);
         $stmt->execute();
     }
     function insertproduct_type_attr($value, $product_id,$price_attr,$quantity_attr)
