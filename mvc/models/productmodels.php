@@ -146,11 +146,11 @@ class productmodels extends db
         $stmt->execute([$categoryid, $name, $name_slug,  $description, $status, $id]);
     }
 
-    function updateimg($imgname)
+    function updateimg($imgname,$id)
     {
-        $query = "UPDATE products set image = ?";
+        $query = "UPDATE products set image = ? where id = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->execute([$imgname]);
+        $stmt->execute([$imgname,$id]);
     }
     function delete_product_type($id)
     {

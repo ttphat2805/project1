@@ -188,8 +188,12 @@ class Admin extends Controller
                             $newgalleryName = time() . '_' . $galleryName;
                             move_uploaded_file($galleryTemp, $store . $newgalleryName);
                             $final_image = $newgalleryName;
-
                             $this->product->insertlistimg($product_id, $final_image);
+                        }else{
+                            $_SESSION['toastr-code'] = "warning";
+                            $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
+                            header('Location: ' . BASE_URL . '/admin/addproduct');
+                            exit();
                         }
                     }
 
@@ -271,11 +275,12 @@ class Admin extends Controller
                     if (in_array($ext, $extension)) {
                         $imageName = time() . '_' . $imageName;
                         move_uploaded_file($imageTemp, $store . $imageName);
-                        $this->product->updateimg($imageName);
+                        $this->product->updateimg($imageName,$id);
+                        $_SESSION['toastr-code'] = "info";
+                        $_SESSION['toastr-noti'] = "OK";
                     }else{
                         $_SESSION['toastr-code'] = "warning";
                         $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
-                        header('Location: ' . BASE_URL . '/admin/infoproduct/' . $id);
                     }
                 }
                 if ($categoryid !== 19) {
@@ -309,6 +314,11 @@ class Admin extends Controller
                             move_uploaded_file($galleryTemp, $store . $newgalleryName);
                             $final_image = $newgalleryName;
                             $this->product->insertlistimg($id, $final_image);
+                        }else{
+                            $_SESSION['toastr-code'] = "info";
+                            $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
+                            header('Location: ' . BASE_URL . '/admin/infoproduct/' . $id);
+                            exit();
                         }
                     }
                 }
@@ -412,8 +422,6 @@ class Admin extends Controller
     }
 
     // END - ATTRIBUTE
-
-
 
 
 }
