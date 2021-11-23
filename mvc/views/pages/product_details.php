@@ -14,7 +14,7 @@
                         }'>
                                 <div class="single-image border">
                                     <a href="">
-                                        <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?php echo $data['productdetails']['image'] ?>" alt="Product">
+                                        <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?=$data['productdetails']['image'] ?>" alt="Product">
                                     </a>
                                 </div>
 

@@ -38,13 +38,14 @@ class Admin extends Controller
     {
         if (isset($_POST['btn__submit'])) {
             $name = $_POST['name'];
+            $name_slug = change_slug($name);
             $status = $_POST['status'];
             $check = $this->category->checkexistname('category', $name);
             if ($check == 1) {
                 $_SESSION['toastr-code'] = "warning";
                 $_SESSION['toastr-noti'] = "Đã tồn tại tên danh mục này";
             } else {
-                $this->category->addcategory($name, $status);
+                $this->category->addcategory($name,$name_slug, $status);
                 $_SESSION['toastr-code'] = "success";
                 $_SESSION['toastr-noti'] = "Thêm thành công";
                 header('Location:' . BASE_URL . '/admin/showcategory');
@@ -79,13 +80,14 @@ class Admin extends Controller
         if (isset($_POST['btn__submit'])) {
             $id = $_POST['id'];
             $name = $_POST['name'];
+            $name_slug = change_slug($name);
             $status = $_POST['status'];
             $check = $this->category->checkexistname('category', $name, $id);
             if ($check != 0) {
                 $_SESSION['toastr-code'] = "warning";
                 $_SESSION['toastr-noti'] = "Đã tồn tại danh mục này";
             } else {
-                $this->category->updatecategory($id, $name, $status);
+                $this->category->updatecategory($name, $name_slug, $status,$id);
                 $_SESSION['toastr-code'] = "success";
                 $_SESSION['toastr-noti'] = "Cập nhật thành công";
             }

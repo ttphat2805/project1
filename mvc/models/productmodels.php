@@ -88,7 +88,7 @@ class productmodels extends db
 
     function getproduct_home()
     {
-        $query = "SELECT a.id as 'idproduct',a.name,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id group by a.id ";
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id group by a.id where status = 1";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
@@ -96,7 +96,7 @@ class productmodels extends db
 
     function getproduct_trend()
     {
-        $query = "SELECT a.id as 'idproduct',a.name,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id group by a.id order by views desc limit 10";
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id group by a.id order by views desc limit 10";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
@@ -104,7 +104,7 @@ class productmodels extends db
 
     function getproductdetails($id)
     {
-        $query = "SELECT a.quantity,b.id as 'idproduct',b.name,b.image,b.description,b.views,a.*,c.* FROM product_type a inner join products b on a.product_id = b.id inner join prod_image c on c.productid = b.id where b.id = $id";
+        $query = "SELECT a.quantity,b.id as 'idproduct',b.name,b.slug,b.image,b.description,b.views,a.*,c.* FROM product_type a inner join products b on a.product_id = b.id inner join prod_image c on c.productid = b.id where b.id = $id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetch();
@@ -124,6 +124,12 @@ class productmodels extends db
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
+    }
+    function getProductId($slug) {
+        $query = "SELECT id FROM `products` WHERE slug = '$slug' and status = 1";
+        $result = $this->conn->prepare($query);
+        $result->execute();
+        return $result->fetch()['id'];
     }
     function updateviews($id)
     {

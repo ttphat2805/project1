@@ -153,7 +153,7 @@
                         <div class="single-item">
                                 <div class="single-product position-relative">
                                     <div class="product-image">
-                                        <a class="d-block" href="<?php echo BASE_URL ?>/productdetail/show/<?=$trend['idproduct']?>">
+                                        <a class="d-block" href="<?php echo BASE_URL ?>/productdetail/show/<?=$trend['slug']?>">
                                             <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?=$trend['image']?>" alt="" class="product-image-1 w-100">
                                         </a>
                                     </div>
@@ -187,7 +187,7 @@
                                     
                                     }?>
                                         <div class="product-title">
-                                            <h4 class="title-2"> <a href="<?php echo BASE_URL ?>/productdetail/show/<?=$trend['idproduct']?>"><?=$trend['name']?></a></h4>
+                                            <h4 class="title-2"> <a href="<?php echo BASE_URL ?>/productdetail/show/<?=$trend['slug']?>"><?=$trend['name']?></a></h4>
                                         </div>
                                         <div class="price-box">
                                         <span class="regular-price "><?=number_format($trend['price']);?></span>
@@ -264,7 +264,7 @@
                     <div class="col-lg-3 col-md-6 col-sm-6 col-custom product-area">
                         <div class="single-product position-relative">
                             <div class="product-image">
-                                <a class="d-block" href="<?php echo BASE_URL ?>/productdetail/show/<?=$item['idproduct']?>">
+                                <a class="d-block" href="<?php echo BASE_URL ?>/productdetail/show/<?=$item['slug']?>">
                                     <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?=$item['image']?>" alt="" class="product-image-1 w-100">
                                     <img src="" alt="" class="product-image-2 position-absolute w-100">
                                 </a>
@@ -292,7 +292,7 @@
                                     
                                     }?>
                                 <div class="product-title">
-                                    <h4 class="title-2"> <a href="product-details.html"><?=$item['name']?></a></h4>
+                                    <h4 class="title-2"> <a href="<?php echo BASE_URL ?>/productdetail/show/<?=$item['slug']?>"><?=$item['name']?></a></h4>
                                 </div>
                                 <div class="price-box">
                                 <span class="regular-price"><span class="price-view"><?= number_format($item['price']) ?> </span> VNĐ</span>
