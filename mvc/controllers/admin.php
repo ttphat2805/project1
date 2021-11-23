@@ -215,11 +215,12 @@ class Admin extends Controller
         $output = '<div class="list_gallery" onclick="getIdimg();">';
 
         $getgallery = $this->product->getgallery($id);
-        foreach ($getgallery as $img) {
-            $output .= '<input type="radio" name="closegallery" id="radio1" value="' . $img['id'] . '" class="radio-close">
-            <label for="radio1" class="radio-close"><i class="fal fa-times"></i></label>
-            <img src="' . BASE_URL . '/public/assets/images/product/' . $img['gallery'] . '" alt="Ảnh không tồn tại !" width="100px" height="100px">
-            <input type="hidden" name="gallery1" class="form-control" value="' . $img['gallery'] . '">';
+
+        foreach($getgallery as $img){
+            $output .= '<input type="radio" name="closegallery" id="radio_'.$img['id'].'" value="'.$img['id'].'" class="radio-close">
+            <label for="radio_'.$img['id'].'" class="radio-close"><i class="fal fa-times"></i></label>
+            <img src="'.BASE_URL.'/public/assets/images/product/'.$img['gallery'].'" alt="Ảnh không tồn tại !" width="100px" height="100px">
+            <input type="hidden" name="gallery1" class="form-control" value="'.$img['gallery'].'">';
         }
         $output .= '</div>';
         echo $output;
@@ -321,7 +322,15 @@ class Admin extends Controller
     }
 
 
-
+    function deleteproduct($id){
+        $this->product->delete_product('prod_image','productid',$id);
+        $this->product->delete_product('product_type','product_id',$id);
+        $this->product->delete_product('products','id',$id);
+        $_SESSION['toastr-code'] = "success";
+        $_SESSION['toastr-noti'] = "Xóa thành công";
+        header('Location: ' . BASE_URL . '/admin/showproduct');
+        exit();
+    }
     // END - PRODUCT
 
 
