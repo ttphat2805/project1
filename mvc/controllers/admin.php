@@ -248,6 +248,7 @@ class Admin extends Controller
         if (isset($_POST['btn__submit'])) {
             $id = $_POST['id'];
             $name = $_POST['name'];
+            $name_slug = change_slug($name);
             $check = $this->category->checkexistname('products', $name, $id);
             if ($check != 0) {
                 $_SESSION['toastr-code'] = "warning";
@@ -262,7 +263,7 @@ class Admin extends Controller
                 $store = "public/assets/images/product/";
                 $imageName = $_FILES['image']['name'];
                 $imageTemp = $_FILES['image']['tmp_name'];
-                $this->product->updateproduct($categoryid, $name, $description, $status, $id);
+                $this->product->updateproduct($categoryid, $name,$name_slug, $description, $status, $id);
                 if (!empty($imageName)) {
                     $ext = pathinfo($imageName, PATHINFO_EXTENSION);
                     if (in_array($ext, $extension)) {
