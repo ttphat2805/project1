@@ -23,10 +23,10 @@ class productmodels extends db
         return $stmt->fetchAll();
     }
 
-    function insertproduct($categoryid, $name, $imageName, $description, $status)
+    function insertproduct($categoryid, $name,$name_slug, $imageName, $description, $status)
     {
-        $query = "INSERT INTO products(categoryid,name,image,description,status) 
-            values ('$categoryid',:name,'$imageName','$description','$status')";
+        $query = "INSERT INTO products(categoryid,name,slug,image,description,status) 
+            values ('$categoryid',:name,'$name_slug','$imageName','$description','$status')";
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(":name",$name,PDO::PARAM_STR);
         $stmt->execute();

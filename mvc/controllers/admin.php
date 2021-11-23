@@ -135,6 +135,7 @@ class Admin extends Controller
                 $_SESSION['toastr-code'] = "warning";
                 $_SESSION['toastr-noti'] = "Đã tồn tại tên này";
             } else {
+                $name_slug = change_slug($name);
                 $categoryid = $_POST['categoryid'];
                 if (isset($_POST['price'])) {
                     $price = $_POST['price'];
@@ -151,7 +152,7 @@ class Admin extends Controller
                 if (in_array($ext, $extension)) {
                     $imageName = time() . '_' . $imageName;
                     move_uploaded_file($imageTemp, $store . $imageName);
-                    $this->product->insertproduct($categoryid, $name, $imageName, $description, $status);
+                    $this->product->insertproduct($categoryid, $name,$name_slug, $imageName, $description, $status);
                 }else{
                     $_SESSION['toastr-code'] = "warning";
                     $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
