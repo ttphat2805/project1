@@ -172,4 +172,13 @@ class productmodels extends db
         $stmt = $this->conn->prepare($query);
         $stmt->execute([$id]);
     }
+
+
+    function delete_product($table, $where, $id){
+        $query = "DELETE FROM $table WHERE $where = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+    }
+
 }
+

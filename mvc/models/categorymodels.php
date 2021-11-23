@@ -12,11 +12,11 @@ class categorymodels extends db{
         $stmt->execute([$name,$id]);
         return $stmt->rowCount();
     }
-    function addcategory($name,$status){
-        $query = "insert category(name,status) values (:name,:status)";
+    function addcategory($name,$name_slug,$status){
+        $query = "insert category(name,slug,status) values (:name,:slug,$status)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(":name",$name,PDO::PARAM_STR);
-        $stmt->bindValue(":status",$name,PDO::PARAM_INT);
+        $stmt->bindValue(":slug",$name_slug,PDO::PARAM_STR);
         $stmt->execute();
         return $stmt;
     }
@@ -27,10 +27,10 @@ class categorymodels extends db{
         return $stmt->fetch();
     }
 
-    function updatecategory($id, $name, $status){
-        $query = "update category set name= ?,status= ? where id= ?";
+    function updatecategory($name, $name_slug, $status,$id){
+        $query = "update category set name= ?,slug = ?, status= ? where id= ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->execute([$name,$status,$id]);
+        $stmt->execute([$name,$name_slug,$status,$id]);
     }
 
     function delcategory($id){
