@@ -1,5 +1,5 @@
 <div class="page-header">
-    <h3 class="page-title">Danh mục</h3>
+    <h3 class="page-title">Thuộc tính</h3>
 </div>
 <div class="row">
     <div class="col-lg-12 grid-margin stretch-card">
@@ -30,7 +30,7 @@
                                     <td><?= $item['value'] ?></td>
                                     <td>
                                         <a class="btn btn-primary" href="<?php echo BASE_URL ?>/admin/infoattribute/<?= $item['id'] ?>">Sửa</a>
-                                        <a class="btn btn-danger btn__delete" href="<?php echo BASE_URL ?>/admin/delcategory/<?= $item['id'] ?>">Xóa</a>
+                                        <a class="btn btn-danger btn__delete" href="<?php echo BASE_URL ?>/admin/deleteattribute/<?= $item['id'] ?>">Xóa</a>
                                     </td>
                                 </tr>
                             <?php

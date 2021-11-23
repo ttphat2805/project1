@@ -1,12 +1,12 @@
 <div class="page-header ">
-    <h3 class="page-title center_page-header"> Danh mục </h3>
+    <h3 class="page-title center_page-header"> Thuộc tính </h3>
 </div>
 <div class="row center_modal">
     <div class="col-md-6 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">
-                    Thêm danh mục
+                    Thêm thuộc tính
                 </h4>
                 <!-- <p class="card-description"> Basic form layout </p> -->
                 <form class="forms-sample" method="POST">

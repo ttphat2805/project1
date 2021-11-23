@@ -38,13 +38,14 @@ class Admin extends Controller
     {
         if (isset($_POST['btn__submit'])) {
             $name = $_POST['name'];
+            $name_slug = change_slug($name);
             $status = $_POST['status'];
             $check = $this->category->checkexistname('category', $name);
             if ($check == 1) {
                 $_SESSION['toastr-code'] = "warning";
                 $_SESSION['toastr-noti'] = "Đã tồn tại tên danh mục này";
             } else {
-                $this->category->addcategory($name, $status);
+                $this->category->addcategory($name,$name_slug, $status);
                 $_SESSION['toastr-code'] = "success";
                 $_SESSION['toastr-noti'] = "Thêm thành công";
                 header('Location:' . BASE_URL . '/admin/showcategory');
@@ -79,13 +80,14 @@ class Admin extends Controller
         if (isset($_POST['btn__submit'])) {
             $id = $_POST['id'];
             $name = $_POST['name'];
+            $name_slug = change_slug($name);
             $status = $_POST['status'];
             $check = $this->category->checkexistname('category', $name, $id);
             if ($check != 0) {
                 $_SESSION['toastr-code'] = "warning";
                 $_SESSION['toastr-noti'] = "Đã tồn tại danh mục này";
             } else {
-                $this->category->updatecategory($id, $name, $status);
+                $this->category->updatecategory($name, $name_slug, $status,$id);
                 $_SESSION['toastr-code'] = "success";
                 $_SESSION['toastr-noti'] = "Cập nhật thành công";
             }
@@ -135,6 +137,7 @@ class Admin extends Controller
                 $_SESSION['toastr-code'] = "warning";
                 $_SESSION['toastr-noti'] = "Đã tồn tại tên này";
             } else {
+                $name_slug = change_slug($name);
                 $categoryid = $_POST['categoryid'];
                 if (isset($_POST['price'])) {
                     $price = $_POST['price'];
@@ -151,7 +154,12 @@ class Admin extends Controller
                 if (in_array($ext, $extension)) {
                     $imageName = time() . '_' . $imageName;
                     move_uploaded_file($imageTemp, $store . $imageName);
-                    $this->product->insertproduct($categoryid, $name, $imageName, $description, $status);
+                    $this->product->insertproduct($categoryid, $name,$name_slug, $imageName, $description, $status);
+                }else{
+                    $_SESSION['toastr-code'] = "warning";
+                    $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
+                    header('Location: ' . BASE_URL . '/admin/addproduct');
+                    exit();
                 }
                 $product_id = $this->product->selectidproduct();
 
@@ -202,10 +210,12 @@ class Admin extends Controller
             ]
         );
     }
-    function load_gallery($id){
+    function load_gallery($id)
+    {
         $output = '<div class="list_gallery" onclick="getIdimg();">';
 
         $getgallery = $this->product->getgallery($id);
+
         foreach($getgallery as $img){
             $output .= '<input type="radio" name="closegallery" id="radio_'.$img['id'].'" value="'.$img['id'].'" class="radio-close">
             <label for="radio_'.$img['id'].'" class="radio-close"><i class="fal fa-times"></i></label>
@@ -215,7 +225,8 @@ class Admin extends Controller
         $output .= '</div>';
         echo $output;
     }
-    function delimg($idimg){
+    function delimg($idimg)
+    {
         $this->product->delete_image($idimg);
     }
 
@@ -240,11 +251,12 @@ class Admin extends Controller
         if (isset($_POST['btn__submit'])) {
             $id = $_POST['id'];
             $name = $_POST['name'];
+            $name_slug = change_slug($name);
             $check = $this->category->checkexistname('products', $name, $id);
             if ($check != 0) {
                 $_SESSION['toastr-code'] = "warning";
                 $_SESSION['toastr-noti'] = "Đã tồn tại danh mục này";
-                header('Location: ' . BASE_URL . '/admin/infoproduct/'.$id);
+                header('Location: ' . BASE_URL . '/admin/infoproduct/' . $id);
             } else {
                 $categoryid = $_POST['categoryid'];
                 $description = $_POST['description'];
@@ -254,13 +266,17 @@ class Admin extends Controller
                 $store = "public/assets/images/product/";
                 $imageName = $_FILES['image']['name'];
                 $imageTemp = $_FILES['image']['tmp_name'];
-                $this->product->updateproduct($categoryid, $name, $description, $status, $id);
+                $this->product->updateproduct($categoryid, $name,$name_slug, $description, $status, $id);
                 if (!empty($imageName)) {
                     $ext = pathinfo($imageName, PATHINFO_EXTENSION);
                     if (in_array($ext, $extension)) {
                         $imageName = time() . '_' . $imageName;
                         move_uploaded_file($imageTemp, $store . $imageName);
                         $this->product->updateimg($imageName);
+                    }else{
+                        $_SESSION['toastr-code'] = "warning";
+                        $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
+                        header('Location: ' . BASE_URL . '/admin/infoproduct/' . $id);
                     }
                 }
                 if ($categoryid !== 19) {
@@ -299,7 +315,7 @@ class Admin extends Controller
                 }
                 $_SESSION['toastr-code'] = "success";
                 $_SESSION['toastr-noti'] = "Cập nhật thành công";
-                header('Location: ' . BASE_URL . '/admin/infoproduct/'.$id);
+                header('Location: ' . BASE_URL . '/admin/infoproduct/' . $id);
                 exit();
             }
         }
@@ -359,7 +375,7 @@ class Admin extends Controller
             [
                 "pages" => "adm_updateattr",
                 "attribute" => $this->attribute->infoattribute($id),
-
+                "category" => $this->category->getcategory(),
             ]
         );
     }
@@ -368,14 +384,32 @@ class Admin extends Controller
     {
         if (isset($_POST['btn__submit'])) {
             $id = $_POST['id'];
-            $name = $_POST['name'];
-            $value = $_POST['value'];
+            $name = $_POST['name_value'];
+            $value = $_POST['attr_value'];
             $this->attribute->updateattribute($name, $value, $id);
             $_SESSION['toastr-code'] = "success";
             $_SESSION['toastr-noti'] = "Cập nhật thành công";
             header('Location: ' . BASE_URL . '/admin/showattr');
             exit();
         }
+    }
+
+    function deleteattribute($id)
+    {
+        $attribute_id = $this->attribute->getproduct_type();
+        foreach ($attribute_id as $item) {
+            if ($item['attribute_id'] === $id) {
+                $_SESSION['toastr-code'] = "error";
+                $_SESSION['toastr-noti'] = "Không thể xóa, đã có sản phẩm chứa thuộc tính này";
+                header('Location: ' . BASE_URL . '/admin/showattr');
+                exit();
+            }
+        }
+        $this->attribute->deleteattribute($id);
+        $_SESSION['toastr-code'] = "success";
+        $_SESSION['toastr-noti'] = "Xóa thành công";
+        header('Location: ' . BASE_URL . '/admin/showattr');
+        exit();
     }
 
     // END - ATTRIBUTE

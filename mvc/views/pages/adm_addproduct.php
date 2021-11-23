@@ -113,13 +113,11 @@
         $('.table_attr_hide').show();
 
         var input_checkbox = $('.form-check-input');
-        console.log(input_checkbox);
         var arraySize = [];
         var table_tbody_js = $('.table_tbody_js');
         for (var i = 0; i < input_checkbox.length; i++) {
             if (input_checkbox[i].checked === true) {
                 var value_checkbox = input_checkbox[i].id;
-                console.log(value_checkbox);
                 if (!arraySize.includes(value_checkbox)) {
                     arraySize.push(value_checkbox);
                 } else if (arraySize.includes(value_checkbox)) {

@@ -115,7 +115,6 @@
         $('.input_price').hide();
         $('.input_quantity').hide();
         $('.input_size_attr').show();
-
     } else {
         $('.input_price').show();
         $('.input_quantity').show();
