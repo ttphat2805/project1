@@ -17,17 +17,17 @@
                                         <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?php echo $data['productdetails']['image'] ?>" alt="Product">
                                     </a>
                                 </div>
-                            
+
                                 <?php
-                                foreach($data['productdetailall'] as $img):
+                                foreach ($data['gallery'] as $img) :
                                 ?>
-                                <div class="single-image border">
-                                    <a href="">
-                                        <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery']?>" alt="Product">
-                                    </a>
-                                </div>
-                            <?php endforeach; ?>
-                            
+                                    <div class="single-image border">
+                                        <a href="">
+                                            <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery'] ?>" alt="Product">
+                                        </a>
+                                    </div>
+                                <?php endforeach; ?>
+
                             </div>
                             <div class="pd-slider-nav product-slider" data-slick-options='{
                         "slidesToShow": 3,
@@ -45,14 +45,14 @@
                                 <div class="single-thumb border">
                                     <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?php echo $data['productdetails']['image'] ?>" alt="Product thumnail">
                                 </div>
-                            <?php
-                                foreach($data['productdetailall'] as $img):
-                            ?>
-                                <div class="single-thumb border">
-                                    <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery']?>" alt="Product thumnail">
-                                </div>
-                            <?php endforeach; ?>
-                               
+                                <?php
+                                foreach ($data['gallery'] as $img) :
+                                ?>
+                                    <div class="single-thumb border">
+                                        <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery'] ?>" alt="Product thumnail">
+                                    </div>
+                                <?php endforeach; ?>
+
                             </div>
                         </div>
                     </div>
@@ -60,12 +60,12 @@
                         <div class="product-summery position-relative">
                             <div class="product-head mb-3">
                                 <h2 class="product-title">
-                                <?php echo $data['productdetails']['name'] ?>
+                                    <?php echo $data['productdetails']['name'] ?>
                                 </h2>
                             </div>
                             <div class="price-box mb-2">
-                                <span class="regular-price"> <?=number_format($data['productdetails']['price']) ?> VNĐ</span>
-                                <span class="old-price"><del><?=number_format($data['productdetails']['price']+15000)?> VNĐ</del></span>
+                                <span class="regular-price"><span class="price-view"><?= number_format($data['productdetails']['price']) ?> </span> VNĐ</span>
+                                <span class="old-price"><del class="oldprice-view"><?= number_format($data['productdetails']['price'] + 12500) ?></del>VNĐ</span>
                             </div>
                             <div class="product-rating mb-3">
                                 <i class="fa fa-star"></i>
@@ -80,25 +80,26 @@
                             <p class="desc-content mb-5">
                                 <?php echo $data['productdetails']['description'] ?>
                             </p>
+                            <div>Số lượng còn lại là: <span class="quantity_view"></span></div>
                             <?php
-                            if($data['product_type']['attribute_id'] !== NULL){
+                            if ($data['product_type']['attribute_id'] !== NULL) {
                             ?>
-                            <div class="product-meta">
-                                <div class="product-size mb-4">
-                                    <p>Size :</p>
-                                    <?php
-                                    foreach ($data['productdetailattr'] as $size):
-                                    ?>
-                                    <input class="" id="prod-size-<?=$size['value']?>" type="radio" name="option1" value="<?=$size['value']?>">
-                                    <label for="prod-size-<?=$size['value']?>" class="sd">
-                                        <span><?=$size['value']?></span>
-                                    </label>
-                                    <?php
-                                    endforeach;
-                                    ?>
+                                <div class="product-meta">
+                                    <div class="product-size mb-4">
+                                        <p>Size :</p>
+                                        <?php
+                                        foreach ($data['productdetailattr'] as $size) :
+                                        ?>
+                                            <input id="prod-size-<?= $size['value'] ?>" type="radio" name="option1" value="<?= $size['value'] ?>">
+                                            <label for="prod-size-<?= $size['value'] ?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
+                                                <span><?= $size['value'] ?></span>
+                                            </label>
+                                        <?php
+                                        endforeach;
+                                        ?>
+                                    </div>
                                 </div>
-                            </div>
-                            <?php }?>
+                            <?php } ?>
                             <div class="quantity-with_btn mb-4">
                                 <div class="quantity">
                                     <div class="cart-plus-minus">
@@ -107,12 +108,11 @@
                                         <div class="inc qtybutton">+</div>
                                     </div>
                                 </div>
-                            
                             </div>
                             <div class="add-to_cart mb-4">
-                                    <a class="btn obrien-button primary-btn" href="cart.html">Mua ngay</a>
-                                    <a class="btn obrien-button-2 treansparent-color pt-0 pb-0" href="wishlist.html">+ Yêu thích</a>
-                                </div>
+                                <a class="btn obrien-button primary-btn" href="cart.html">Mua ngay</a>
+                                <a class="btn obrien-button-2 treansparent-color pt-0 pb-0" href="wishlist.html">+ Yêu thích</a>
+                            </div>
                             <div class="social-share mb-4">
                                 <span>Share :</span>
                                 <a href="#"><i class="fa fa-facebook-square facebook-color"></i></a>
@@ -527,3 +527,56 @@
             </div>
         </div>
         <!-- Product Area End Here -->
+
+        <script>
+            $(document).ready(function() {
+                $(".btn-value-size").click(function() {
+                    let size = $(this).attr('id');
+                    $.ajax({
+                        url: `<?= BASE_URL ?>/productdetail/change_price/${size}`,
+                        method: "POST",
+                        data: {
+                            'size': size,
+                        },
+                        success: function(data) {
+                            console.log(data);
+                            $('.price-view').html(data);
+                        }
+                    });
+                })
+            })
+
+
+            $(document).ready(function() {
+                $(".btn-value-size").click(function() {
+                    let size = $(this).attr('id');
+                    $.ajax({
+                        url: `<?= BASE_URL ?>/productdetail/change_oldprice/${size}`,
+                        method: "POST",
+                        data: {
+                            'size': size,
+                        },
+                        success: function(data) {
+                            $('.oldprice-view').html(data);
+                        }
+                    });
+                })
+            })
+
+
+            $(document).ready(function() {
+                $(".btn-value-size").click(function() {
+                    let size = $(this).attr('id');
+                    $.ajax({
+                        url: `<?= BASE_URL ?>/productdetail/change_quantitysize/${size}`,
+                        method: "POST",
+                        data: {
+                            'size': size,
+                        },
+                        success: function(data) {
+                            $('.quantity_view').html(data);
+                        }
+                    });
+                })
+            })
+        </script>

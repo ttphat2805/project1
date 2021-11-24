@@ -31,11 +31,14 @@
 
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/style.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/custom.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </head>
 
 <body>
-
+    <div class="loader_pizza">
+        <img src="<?php echo BASE_URL; ?>/public/assets/images/loader.gif" alt="">
+    </div>
     <div class="home-wrapper home-1">
         <!-- HEADER: START -->
         <?php

@@ -1,8 +1,4 @@
- <!-- JS
-============================================ -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
- <!-- Ion icons -->
- 
+
  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <!-- jQuery JS -->
@@ -30,6 +26,7 @@
     <script src="<?php echo BASE_URL; ?>/public/assets/js/main.js"></script>
     <link rel="stylesheet" href=" <?php echo BASE_URL; ?>/public/assets/toastr/toastr.min.css"> 
     <script src="<?php echo BASE_URL; ?>/public/assets/toastr/toastr.min.js"></script>
+    <script src="<?php echo BASE_URL; ?>/public/assets/js/custom.js"></script>
 
 <footer class="footer-area">
     <div class="footer-widget-area">
