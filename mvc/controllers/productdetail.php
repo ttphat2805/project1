@@ -30,7 +30,6 @@ class productdetail extends Controller
     {
         // print_r($this->product->getproduct_type_id($id));
         $id = $this->product->getProductId($slug);
-        print_r($this->product->getproductdetails($slug));
         $this->view(
             "master2",
             [
