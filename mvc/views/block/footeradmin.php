@@ -72,3 +72,7 @@
             unset($_SESSION['toastr-noti']);
         }
     ?>
+
+<script>
+<?php echo "let SITE_URL = '" . BASE_URL . "';"; ?>
+</script>

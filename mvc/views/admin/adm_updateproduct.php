@@ -145,30 +145,35 @@
         for (var i = 0; i < input_checkbox.length; i++) {
             if (input_checkbox[i].checked === true) {
                 var value_checkbox = input_checkbox[i].id;
-                console.log(value_checkbox);
+                var value_sizes = input_checkbox[i].value;
                 if (!arraySize.includes(value_checkbox)) {
-                    arraySize.push(value_checkbox);
-                } else if (arraySize.includes(value_checkbox)) {
-                    arraySize.splice(arraySize.indexOf(`${value_checkbox}`), 1)
+                    arraySize.push([value_checkbox,value_sizes]);
                 }
             }
-        }
+        }   
 
-        // console.log(arraySize.length); 
-   <?php     foreach ($data['size'] as $value) {?>
 
+        <?php 
+        echo "let sizes = '" . json_encode($data['size']) . "';";
+        ?>
+        
+        sizes = JSON.parse(sizes);
         var Size = '';
-
-
         for (var i = 0; i < arraySize.length; i++) {
+            var values = ['',''];
+            if(i <= sizes.length-1){
+            if(sizes[i].attribute_id == arraySize[i][1] ) { 
+                values = [sizes[i].price,sizes[i].quantity];
+            }}
             Size += `<tr>
-                    <td>${arraySize[i]}</td>
-                    <td><input type="number" name="price_attribute[]"  value="<?=$size['price']?>" class="form-control id="css_custom-hide"></td>
-                    <td><input type="number"  name="quantity_attribute[]" value="<?=$size['quantity']?>"  class="form-control id="css_custom-hide"></td>
+                    <td>${arraySize[i][0]}</td>
+                    <td><input type="number" name="price_attribute[]"  value="${values[0]}" class="form-control id="css_custom-hide"></td>
+                    <td><input type="number"  name="quantity_attribute[]" value="${values[1]}"  class="form-control id="css_custom-hide"></td>
                     </tr>`
         }
         table_tbody_js.html(Size);
-        <?php }?>
+        <?php 
+        ?>
     })
 
     function load_gallery(){

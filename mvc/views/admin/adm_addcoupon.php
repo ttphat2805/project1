@@ -115,7 +115,7 @@
         $("#discout").on('keyup', function() {
             var n = parseInt($(this).val().replace(/\D/g, ''), 10);
             if (n >= 0) {
-                $('#discout').val(n.toLocaleString("de-DE"));
+                $('#discout').val(n.toLocaleString("it-IT"));
                 $('#discout_new').val(n);
             }
             if (isNaN(n)) {
@@ -127,7 +127,7 @@
         $("#min_order").on('keyup', function() {
             var n = parseInt($(this).val().replace(/\D/g, ''), 10);
             if (n >= 0) {
-                $('#min_order').val(n.toLocaleString("de-DE"));
+                $('#min_order').val(n.toLocaleString("it-IT"));
                 $('#min_order_new').val(n);
             }
             if (isNaN(n)) {
