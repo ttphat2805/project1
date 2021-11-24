@@ -259,7 +259,7 @@ class Admin extends Controller
             $check = $this->category->checkexistname('products', $name, $id);
             if ($check != 0) {
                 $_SESSION['toastr-code'] = "warning";
-                $_SESSION['toastr-noti'] = "Đã tồn tại danh mục này";
+                $_SESSION['toastr-noti'] = "Đã tồn tại sản phẩm này";
                 header('Location: ' . BASE_URL . '/admin/infoproduct/' . $id);
             } else {
                 $categoryid = $_POST['categoryid'];
@@ -433,11 +433,28 @@ class Admin extends Controller
         );
     }
 
-    // --- add
+    // --- add  
 
     function addcoupon()
     {
+        if(isset($_POST['btn__submit'])){
+            $name = $_POST['name'];
+            $code = $_POST['code'];
+            $type = $_POST['type'];
+            $value = $_POST['coupon_value'];
+            $quantity = $_POST['quantity'];
+            $min_order = $_POST['min_order'];
+            $date_created = $_POST['date_created'];
+            $date_out = $_POST['date_out'];
+            $status = $_POST['status'];
+            if($name == '' || $code == '' || $type == '' || $value == '' || $quantity == '' || $min_order == '' || $date_created == '' || $date_out == ''){
+                $_SESSION['toastr-code'] = "info";
+                $_SESSION['toastr-noti'] = "Vui lòng nhập đầy đủ thông tin";
+            }
+            
 
+            
+        }
 
         $this->view(
             "master3",
@@ -447,6 +464,7 @@ class Admin extends Controller
         );
     }
 
+    // --- get coupon
     function getcoupon()
     {
         $chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";

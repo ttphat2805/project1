@@ -7,7 +7,7 @@
  <script src=" <?php echo BASE_URL; ?>/public/assetsadmin/js/settings.js"></script>
  <script src=" <?php echo BASE_URL; ?>/public/assetsadmin/js/todolist.js"></script>
  <script src=" <?php echo BASE_URL; ?>/public/assetsadmin/js/dashboard.js"></script>
-<!-- SWEET ALERT - TOASTR -->
+ <!-- SWEET ALERT - TOASTR -->
  <link rel="stylesheet" href=" <?php echo BASE_URL; ?>/public/assets/sweetalert/sweetalert2.min.css">
  <link rel="stylesheet" href=" <?php echo BASE_URL; ?>/public/assets/toastr/toastr.min.css">
  <script src="<?php echo BASE_URL; ?>/public/assets/sweetalert/sweetalert2.all.min.js"></script>
