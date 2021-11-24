@@ -50,7 +50,7 @@
                     </div>
                     <div class="form-group">
                         <label for="" class="label__css">Ngày hết hạn</label>
-                        <input type="date" name="date_out" date="y-m-d" class="form-control" id="value2">
+                        <input type="date" name="date_out" min="<?= date('Y-m-d'); ?>" class="form-control" id="value2">
                     </div>
                     <div class="form-group">
                         <label for="" class="label__css">Trạng thái</label><br />

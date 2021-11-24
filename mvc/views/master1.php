@@ -147,7 +147,6 @@
                         }}
                         ]'>
                         <?php
-                   
                         foreach ($data['product_trends'] as $trend):
                         ?>
                         <div class="single-item">
