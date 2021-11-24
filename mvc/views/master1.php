@@ -94,7 +94,25 @@
                 </div>
             </div>
         </div>
+        <?php
+        Class homepage extends db{
+            function getproduct_detail_attr($id){
+                $query = "SELECT a.*,b.id as 'idattr',b.value,b.name from attribute b inner join product_type a on b.id = a.attribute_id where a.product_id = $id";
+                $stmt = $this->conn->prepare($query);
+                $stmt->execute();
+                return $stmt->fetchAll();
+            }
+            function getproduct_type_id($id)
+            {
+                $query = "SELECT * FROM product_type where product_id = $id";
+                $stmt = $this->conn->prepare($query);
+                $stmt->execute();
+                return $stmt->fetch();
+            }
+        }
+        $homepage = new homepage();
 
+        ?>
         <!-- Feature Area End Here -->
         <!-- Product Area Start Here -->
         <div class="product-area">
@@ -128,12 +146,14 @@
                         "slidesToShow": 1
                         }}
                         ]'>
-                            <div class="single-item">
+                        <?php
+                        foreach ($data['product_trends'] as $trend):
+                        ?>
+                        <div class="single-item">
                                 <div class="single-product position-relative">
                                     <div class="product-image">
-                                        <a class="d-block" href="product-details.html">
-                                            <img src="https://www.pizzaexpress.vn/wp-content/uploads/2019/12/P10rs1.jpg" alt="" class="product-image-1 w-100">
-                                            <!-- <img src="http://pngimg.com/uploads/pizza/small/pizza_PNG7109.png" alt="" class="product-image-2 position-absolute w-100"> -->
+                                        <a class="d-block" href="<?php echo BASE_URL ?>/productdetail/show/<?=$trend['slug']?>">
+                                            <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?=$trend['image']?>" alt="" class="product-image-1 w-100">
                                         </a>
                                     </div>
                                     <div class="product-content">
@@ -144,103 +164,34 @@
                                             <i class="fa fa-star-o"></i>
                                             <i class="fa fa-star-o"></i>
                                         </div>
-                                        <div class="product-title">
-                                            <h4 class="title-2"> <a href="product-details.html">Sản phẩm 1</a></h4>
-                                        </div>
-                                        <div class="price-box">
-                                            <span class="regular-price ">$80.00</span>
-                                            <span class="old-price"><del>$90.00</del></span>
-                                        </div>
-                                    </div>
-                                    <div class="add-action d-flex position-absolute">
-                                        <a href="cart.html" title="Add To cart">
-                                            <i class="ion-bag"></i>
-                                        </a>
-                                        <a href="compare.html" title="Compare">
-                                            <i class="ion-ios-loop-strong"></i>
-                                        </a>
-                                        <a href="wishlist.html" title="Add To Wishlist">
-                                            <i class="ion-ios-heart-outline"></i>
-                                        </a>
-                                        <a href="#exampleModalCenter" data-toggle="modal" title="Quick View">
-                                            <i class="ion-eye"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="single-item">
-                                <div class="single-product position-relative">
-                                    <div class="product-image">
-                                        <a class="d-block" href="product-details.html">
-                                            <img src="https://www.pizzaexpress.vn/wp-content/uploads/2019/12/P9rs1.jpg" alt="" class="product-image-1 w-100">
-                                            <!-- <img src="https://www.pizzaexpress.vn/wp-content/uploads/2019/12/P10rs1.jpg" alt="" class="product-image-2 position-absolute w-100"> -->
-                                        </a>
-                                    </div>
-                                    <div class="product-content">
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <div class="product-title">
-                                            <h4 class="title-2"> <a href="product-details.html">Sản phẩm 1</a></h4>
-                                        </div>
-                                        <div class="price-box">
-                                            <span class="regular-price ">$80.00</span>
-                                            <span class="old-price"><del>$90.00</del></span>
-                                        </div>
-                                    </div>
-                                    <div class="add-action d-flex position-absolute">
-                                        <a href="cart.html" title="Add To cart">
-                                            <i class="ion-bag"></i>
-                                        </a>
-                                        <a href="compare.html" title="Compare">
-                                            <i class="ion-ios-loop-strong"></i>
-                                        </a>
-                                        <a href="wishlist.html" title="Add To Wishlist">
-                                            <i class="ion-ios-heart-outline"></i>
-                                        </a>
-                                        <a href="#exampleModalCenter" data-toggle="modal" title="Quick View">
-                                            <i class="ion-eye"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="single-item">
-                                <div class="single-product position-relative">
-                                    <div class="product-image">
-                                        <a class="d-block" href="product-details.html">
-                                            <img src="https://www.pizzaexpress.vn/wp-content/uploads/2019/12/P9rs1.jpg" alt="" class="product-image-1 w-100">
-
-                                        </a>
-                                    </div>
-                                    <div class="label-product">
-                                        <span class="label-sale position-absolute text-uppercase text-white text-center d-block">Soldout</span>
-                                    </div>
-                                    <div class="product-content">
-                                        <div class="product-size mb-2">
-                                            <p>Size :</p>
-                                            <input class="" id="prod-size-S" type="radio" name="option1" value="S">
-                                            <label for="prod-size-S" class="sd">
-                                                <span>S</span>
+                                        <?php
+                                        $product_attr = $homepage->getproduct_detail_attr($trend['idproduct']);
+                                        $attr_id = $homepage->getproduct_type_id($trend['idproduct']);
+                                if ($attr_id['attribute_id'] !== NULL) {
+                                ?>
+                                    <div class="product-size mb-4">
+                                        <p>Size :</p>
+                                        <?php
+                                        foreach ($product_attr as $size) :
+                                        ?>
+                                            <input id="prod-size-<?= $size['value']?>-<?=$trend['idproduct']?>" type="radio" name="option1" value="<?= $size['value'] ?>">
+                                            <label for="prod-size-<?= $size['value']?>-<?=$trend['idproduct']?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
+                                                <span><?= $size['value'] ?></span>
                                             </label>
-                                            <input class="" id="prod-size-M" type="radio" name="option1" value="M">
-                                            <label for="prod-size-M" class="sd">
-                                                <span>M</span>
-                                            </label>
-                                            <input class="" id="prod-size-L" type="radio" name="option1" value="L">
-                                            <label for="prod-size-L" class="sd">
-                                                <span>L</span>
-                                            </label>
-                                        </div>
+                                        <?php
+                                        endforeach;
+                                        ?>
+                                    </div>
+                                    <?php
+                                    
+                                    }?>
                                         <div class="product-title">
-                                            <h4 class="title-2"> <a href="product-details.html">Sản phẩm 1</a></h4>
+                                            <h4 class="title-2"> <a href="<?php echo BASE_URL ?>/productdetail/show/<?=$trend['slug']?>"><?=$trend['name']?></a></h4>
                                         </div>
                                         <div class="price-box">
-                                            <span class="regular-price ">$80.00</span>
-                                            <span class="old-price"><del>$90.00</del></span>
+                                        <span class="regular-price "><?=number_format($trend['price']);?></span>
+                                    <span class="old-price"><del><?=number_format($trend['price']+15000);
+                                    ?></del></span>
                                         </div>
                                     </div>
                                     <div class="add-action d-flex position-absolute">
@@ -259,86 +210,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="single-item">
-                                <div class="single-product position-relative">
-                                    <div class="product-image">
-                                        <a class="d-block" href="product-details.html">
-                                            <img src="https://www.pizzaexpress.vn/wp-content/uploads/2019/12/P9rs1.jpg" alt="" class="product-image-1 w-100">
+                        
 
-                                        </a>
-                                    </div>
-                                    <div class="product-content">
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <div class="product-title">
-                                            <h4 class="title-2"> <a href="product-details.html">Sản phẩm 1</a></h4>
-                                        </div>
-                                        <div class="price-box">
-                                            <span class="regular-price ">$80.00</span>
-                                            <span class="old-price"><del>$90.00</del></span>
-                                        </div>
-                                    </div>
-                                    <div class="add-action d-flex position-absolute">
-                                        <a href="cart.html" title="Add To cart">
-                                            <i class="ion-bag"></i>
-                                        </a>
-                                        <a href="compare.html" title="Compare">
-                                            <i class="ion-ios-loop-strong"></i>
-                                        </a>
-                                        <a href="wishlist.html" title="Add To Wishlist">
-                                            <i class="ion-ios-heart-outline"></i>
-                                        </a>
-                                        <a href="#exampleModalCenter" data-toggle="modal" title="Quick View">
-                                            <i class="ion-eye"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="single-item">
-                                <div class="single-product position-relative">
-                                    <div class="product-image">
-                                        <a class="d-block" href="product-details.html">
-                                            <img src="https://www.pizzaexpress.vn/wp-content/uploads/2019/12/P9rs1.jpg" alt="" class="product-image-1 w-100">
-
-                                        </a>
-                                    </div>
-                                    <div class="product-content">
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <div class="product-title">
-                                            <h4 class="title-2"> <a href="product-details.html">Sản phẩm 1</a></h4>
-                                        </div>
-                                        <div class="price-box">
-                                            <span class="regular-price ">$80.00</span>
-                                            <span class="old-price"><del>$90.00</del></span>
-                                        </div>
-                                    </div>
-                                    <div class="add-action d-flex position-absolute">
-                                        <a href="cart.html" title="Add To cart">
-                                            <i class="ion-bag"></i>
-                                        </a>
-                                        <a href="compare.html" title="Compare">
-                                            <i class="ion-ios-loop-strong"></i>
-                                        </a>
-                                        <a href="wishlist.html" title="Add To Wishlist">
-                                            <i class="ion-ios-heart-outline"></i>
-                                        </a>
-                                        <a href="#exampleModalCenter" data-toggle="modal" title="Quick View">
-                                            <i class="ion-eye"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+                        <?php
+                        endforeach;
+                        ?>
+                        
                         </div>
                     </div>
                 </div>
@@ -386,26 +263,39 @@
                     <div class="col-lg-3 col-md-6 col-sm-6 col-custom product-area">
                         <div class="single-product position-relative">
                             <div class="product-image">
-                                <a class="d-block" href="<?php echo BASE_URL ?>/productdetail/show/<?=$item['idproduct']?>">
+                                <a class="d-block" href="<?php echo BASE_URL ?>/productdetail/show/<?=$item['slug']?>">
                                     <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?=$item['image']?>" alt="" class="product-image-1 w-100">
                                     <img src="" alt="" class="product-image-2 position-absolute w-100">
                                 </a>
                             </div>
                             <div class="product-content">
-                                <div class="product-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </div>
+                                <?php
+                            $product_attr = $homepage->getproduct_detail_attr($item['idproduct']);
+                            $attr_id = $homepage->getproduct_type_id($item['idproduct']);
+                                if ($attr_id['attribute_id'] !== NULL) {
+                                ?>
+                                    <div class="product-size mb-4">
+                                        <p>Size :</p>
+                                        <?php
+                                        foreach ($product_attr as $size) :
+                                        ?>
+                                            <input id="prod-size-<?= $size['value']?>-<?=$item['idproduct']?>" type="radio" name="option1" value="<?= $size['value'] ?>">
+                                            <label for="prod-size-<?= $size['value']?>-<?=$item['idproduct']?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
+                                                <span><?= $size['value'] ?></span>
+                                            </label>
+                                        <?php
+                                        endforeach;
+                                        ?>
+                                    </div>
+                                    <?php
+                                    
+                                    }?>
                                 <div class="product-title">
-                                    <h4 class="title-2"> <a href="product-details.html"><?=$item['name']?></a></h4>
+                                    <h4 class="title-2"> <a href="<?php echo BASE_URL ?>/productdetail/show/<?=$item['slug']?>"><?=$item['name']?></a></h4>
                                 </div>
                                 <div class="price-box">
-                                    <span class="regular-price "><?=number_format($item['price']);?></span>
-                                    <span class="old-price"><del><?=number_format($item['price']+15000);
-                                    ?></del></span>
+                                <span class="regular-price"><span class="price-view"><?= number_format($item['price']) ?> </span> VNĐ</span>
+                                    <span class="old-price"><del class="oldprice-view"><?= number_format($item['price'] + 12500) ?></del>VNĐ</span>
                                 </div>
                             </div>
                             <div class="add-action d-flex position-absolute">
@@ -634,8 +524,6 @@
         <i class="ion-chevron-up"></i>
     </a>
     <!-- Scroll to Top End -->
-
-
 </body>
 
 </html>

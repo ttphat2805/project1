@@ -6,7 +6,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Admin</title>
-    <!-- plugins:css -->
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.15.3/css/all.css">
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo BASE_URL; ?>/public/assets/images/logoweb.png">
     <link rel="stylesheet" href=" <?php echo BASE_URL; ?>/public/assetsadmin/vendors/mdi/css/materialdesignicons.min.css">
     <!-- endinject -->
@@ -22,12 +23,11 @@
 </head>
 
 <body>
-
     <div class="container-scroller">
         <!-- partial:partials/_sidebar.html -->
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-                <a class="sidebar-brand brand-logo" href="index.html"><img src=" <?php echo BASE_URL; ?>/public/assetsadmin/image/logo-white.png" alt="logo" /></a>
+                <a class="sidebar-brand brand-logo" href="<?php echo BASE_URL; ?>/admin"><img src=" <?php echo BASE_URL; ?>/public/assetsadmin/image/logo-white.png" alt="logo" /></a>
                 <a class="sidebar-brand brand-logo-mini" href="index.html"><img src=" <?php echo BASE_URL; ?>/public/assetsadmin/image/logo-white.png" alt="logo" /></a>
             </div>
             <ul class="nav">
@@ -124,6 +124,14 @@
                             <i class="mdi mdi-format-size"></i>
                         </span>
                         <span class="menu-title">Thuộc tính</span>
+                    </a>
+                </li>
+                <li class="nav-item menu-items">
+                    <a class="nav-link" href="<?php echo BASE_URL; ?>/admin/showcoupon">
+                        <span class="menu-icon">
+                            <i class="mdi mdi-format-size"></i>
+                        </span>
+                        <span class="menu-title">Mã giảm giá</span>
                     </a>
                 </li>
                 <li class="nav-item menu-items">
@@ -368,25 +376,16 @@
             <div class="main-panel">
                 <div class="content-wrapper">
                     <?php
-                    require_once './mvc/views/pages/' . $data['pages'] . '.php';
+                    require_once './mvc/views/admin/' . $data['pages'] . '.php';
                     ?>
 
                 </div>
-                <!-- content-wrapper ends -->
-                <!-- partial:partials/_footer.html -->
                 <?php
                 require_once './mvc/views/block/footeradmin.php';
                 ?>
-                <!-- partial -->
             </div>
-
-            <!-- main-panel ends -->
         </div>
-        <!-- page-body-wrapper ends -->
-
     </div>
-
-   
 </body>
 
 </html>
