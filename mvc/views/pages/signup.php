@@ -8,18 +8,26 @@
                                 <h2 class="title-4 mb-2">Create Account</h2>
                                 <p class="desc-content">Please Register using account detail bellow.</p>
                             </div>
-                            <form action="#" method="post">
+                            <form action="<?php echo BASE_URL.'/auth/register' ?>" method="post">
                                 <div class="single-input-item mb-3">
-                                    <input type="text" placeholder="First Name">
+                                    <input type="text" name="firstname" placeholder="First Name">
+                                    <span class="text-danger error"><?php echo $data['data']['first_name_error'] ?></span>
                                 </div>
                                 <div class="single-input-item mb-3">
-                                    <input type="text" placeholder="Last Name">
+                                    <input type="text" name="lastname" placeholder="Last Name">
+                                    <span class="text-danger error"><?php echo $data['data']['last_name_error'] ?></span>
                                 </div>
                                 <div class="single-input-item mb-3">
-                                    <input type="email" placeholder="Email or Username">
+                                    <input type="email" name="email" placeholder="Email or Username">
+                                    <span class="text-danger error"><?php echo $data['data']['email_error'] ?></span>
                                 </div>
                                 <div class="single-input-item mb-3">
-                                    <input type="password" placeholder="Enter your Password">
+                                    <input type="password" name="pass" placeholder="Enter your Password">
+                                    <span class="text-danger error"><?php echo $data['data']['pass_error'] ?></span>
+                                </div>
+                                <div class="single-input-item mb-3">
+                                    <input type="password" name="repass" placeholder="Confirm Password">
+                                    <span class="text-danger error"><?php echo $data['data']['repass_error'] ?></span>
                                 </div>
                                 <div class="single-input-item mb-3">
                                     <div class="login-reg-form-meta d-flex align-items-center justify-content-between">

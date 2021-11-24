@@ -13,17 +13,18 @@ class Home extends Controller
             "master1",
             [
                 "products" => $this->product->getproduct_home(),
+                "product_trends"=>$this->product->getproduct_trend(),
             ]
         );
     }
 
 
-    function productdetails()
+    function error()
     {
         $this->view(
             "master2",
             [
-                "pages" => "product_details",
+                "pages" => "error404",
             ]
         );
     }
