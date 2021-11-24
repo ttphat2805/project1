@@ -249,6 +249,7 @@ class Admin extends Controller
             ]
         );
     }
+
     function updateproduct()
     {
         if (isset($_POST['btn__submit'])) {
@@ -275,12 +276,11 @@ class Admin extends Controller
                     if (in_array($ext, $extension)) {
                         $imageName = time() . '_' . $imageName;
                         move_uploaded_file($imageTemp, $store . $imageName);
-                        $this->product->updateimg($imageName, $id);
-                        $_SESSION['toastr-code'] = "info";
-                        $_SESSION['toastr-noti'] = "OK";
+                        $this->product->updateimg($imageName);
                     } else {
                         $_SESSION['toastr-code'] = "warning";
                         $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
+                        header('Location: ' . BASE_URL . '/admin/infoproduct/' . $id);
                     }
                 }
                 if ($categoryid !== 19) {
@@ -301,46 +301,6 @@ class Admin extends Controller
                     $this->product->insertproduct_type($id, $price, $quantity);
                 }
 
-    function updateproductt()
-    {
-        if (isset($_POST['btn__submit'])) {
-            $id = $_POST['id'];
-            $name = $_POST['name'];
-            $check = $this->category->checkexistname('products', $name, $id);
-            if ($check != 0) {
-                $_SESSION['toastr-code'] = "warning";
-                $_SESSION['toastr-noti'] = "Đã tồn tại danh mục này";
-            } else {
-
-                $categoryid = $_POST['categoryid'];
-                $description = $_POST['description'];
-                $status = $_POST['status'];
-
-                //Xử lý phần ảnh!!!!
-                $extension = array('jpeg', 'jpg', 'png', 'gif', 'webp');
-                $store = "public/assets/images/product/";
-                $imageName = $_FILES['image']['name'];
-                $imageTemp = $_FILES['image']['tmp_name'];
-                if (empty($imageName)) {
-                    $imageName = $_POST['image1'];
-                }
-                $ext = pathinfo($imageName, PATHINFO_EXTENSION);
-                if (in_array($ext, $extension)) {
-                    $imageName = time() . '_' . $imageName;
-                    move_uploaded_file($imageTemp, $store . $imageName);
-                    $this->product->updateproduct($categoryid, $name, $imageName, $description, $status, $id);
-                }
-                $product_id = $this->product->selectidproduct();
-                if ($categoryid !== 19) {
-                    $this->product->delete_product_type($id);
-                }
-                if($categoryid == 19){
-                    $size_value = $_POST['size_value'];
-                    $this->product->delete_product_type($id);
-                    foreach ($size_value as $key => $value) {
-                        $price_value = $_POST['price_attribute'][$key];
-                        $quantity_attr = $_POST['quantity_attribute'][$key];
-                        $this->product->insertproduct_type_attr($value, $id, $price_value, $quantity_attr);
                 // $this->product->delete_image($id);
                 if (!empty($_FILES['gallery'])) {
                     foreach ($_FILES['gallery']['tmp_name'] as $key => $value) {
@@ -354,11 +314,6 @@ class Admin extends Controller
                             move_uploaded_file($galleryTemp, $store . $newgalleryName);
                             $final_image = $newgalleryName;
                             $this->product->insertlistimg($id, $final_image);
-                        } else {
-                            $_SESSION['toastr-code'] = "info";
-                            $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
-                            header('Location: ' . BASE_URL . '/admin/infoproduct/' . $id);
-                            exit();
                         }
                     }
                 }
@@ -369,6 +324,7 @@ class Admin extends Controller
             }
         }
     }
+
 
 
     function deleteproduct($id)
