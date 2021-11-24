@@ -10,10 +10,12 @@
                             </div>
                             <form action="#" method="post">
                                 <div class="single-input-item mb-3">
-                                    <input type="email" placeholder="Email or Username">
+                                    <input type="email" name="email" placeholder="Email or Username">
+                                    <span class="text-danger error"><?php echo $data['data']['username_error'] ?></span>
                                 </div>
                                 <div class="single-input-item mb-3">
-                                    <input type="password" placeholder="Enter your Password">
+                                    <input type="password" name="pass" placeholder="Enter your Password">
+                                    <span class="text-danger error"><?php echo $data['data']['pass_error'] ?></span>
                                 </div>
                                 <div class="single-input-item mb-3">
                                     <div class="login-reg-form-meta d-flex align-items-center justify-content-between">
@@ -23,14 +25,17 @@
                                                 <label class="custom-control-label" for="rememberMe">Remember Me</label>
                                             </div>
                                         </div>
-                                        <a href="#" class="forget-pwd mb-3">Forget Password?</a>
+                                        <a href="<?php echo BASE_URL ?>/auth/forgetpass/" class="forget-pwd mb-3">Forget Password?</a>
                                     </div>
                                 </div>
                                 <div class="single-input-item mb-3">
-                                    <button class="btn obrien-button-2 primary-color">Login</button>
+                                    <button class="btn obrien-button-2 primary-color">Login</button><br>
+                                    <a href="https://www.facebook.com/v12.0/dialog/oauth?client_id=4520117901402470&redirect_uri=<?php echo BASE_URL; ?>/auth/facebooklogin&scope=public_profile">Facebooklogin</a><br>
+                                    <a href="<?php echo $data['data']['google_login_url'] ?>">Login with Google</a>
                                 </div>
                                 <div class="single-input-item">
-                                    <a href="register.html">Creat Account</a>
+                                    <a href="<?php echo BASE_URL ?>/auth/register">Creat Account</a><br>
+                                    <a href="<?php echo BASE_URL ?>/auth/changePassword">Change Password</a>
                                 </div>
                             </form>
                         </div>
