@@ -10,6 +10,8 @@ class products extends Controller
             "master2",
             [
                 "pages" => "products",
+                "products" => $this->product->getproduct_home(),
+                "product_trends"=>$this->product->getproduct_trend(),
             ]
         );
     }

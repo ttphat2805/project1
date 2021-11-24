@@ -1,12 +1,12 @@
 <div class="page-header">
-    <h3 class="page-title">Danh mục</h3>
+    <h3 class="page-title">Mã giảm giá </h3>
 </div>
 <div class="row">
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">
-                    <a class="btn btn-success create-new-button" href="<?php echo BASE_URL ?>/admin/addcategory"> + Thêm danh mục</a>
+                    <a class="btn btn-success create-new-button" href="<?php echo BASE_URL ?>/admin/addcoupon"> + Thêm mã giảm giá</a>
                 </h4>
                 </p>
                 <div class="table-responsive">
@@ -45,26 +45,3 @@
 
 </div>
 
-<!-- AJAX
-<script>
-    // DEL CATEGORY
-    $(document).on('click', '.click_delete', function() {
-        var id = $(this).data('id_xoa');
-        $check = confirm("có chắc không ?");
-        if ($check) {
-            $.ajax({
-                url: "<?php echo BASE_URL ?>/admin/delcategory",
-                method: "POST",
-                data: {
-                    id: id
-                },
-                success: function(data) {
-                    alert('Xóa OK');
-                }
-            })
-        }else{
-            return;
-        }
-
-    })
-</script> -->

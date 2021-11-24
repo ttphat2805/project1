@@ -45,7 +45,7 @@ class Admin extends Controller
                 $_SESSION['toastr-code'] = "warning";
                 $_SESSION['toastr-noti'] = "Đã tồn tại tên danh mục này";
             } else {
-                $this->category->addcategory($name,$name_slug, $status);
+                $this->category->addcategory($name, $name_slug, $status);
                 $_SESSION['toastr-code'] = "success";
                 $_SESSION['toastr-noti'] = "Thêm thành công";
                 header('Location:' . BASE_URL . '/admin/showcategory');
@@ -87,7 +87,7 @@ class Admin extends Controller
                 $_SESSION['toastr-code'] = "warning";
                 $_SESSION['toastr-noti'] = "Đã tồn tại danh mục này";
             } else {
-                $this->category->updatecategory($name, $name_slug, $status,$id);
+                $this->category->updatecategory($name, $name_slug, $status, $id);
                 $_SESSION['toastr-code'] = "success";
                 $_SESSION['toastr-noti'] = "Cập nhật thành công";
             }
@@ -154,8 +154,8 @@ class Admin extends Controller
                 if (in_array($ext, $extension)) {
                     $imageName = time() . '_' . $imageName;
                     move_uploaded_file($imageTemp, $store . $imageName);
-                    $this->product->insertproduct($categoryid, $name,$name_slug, $imageName, $description, $status);
-                }else{
+                    $this->product->insertproduct($categoryid, $name, $name_slug, $imageName, $description, $status);
+                } else {
                     $_SESSION['toastr-code'] = "warning";
                     $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
                     header('Location: ' . BASE_URL . '/admin/addproduct');
@@ -189,7 +189,7 @@ class Admin extends Controller
                             move_uploaded_file($galleryTemp, $store . $newgalleryName);
                             $final_image = $newgalleryName;
                             $this->product->insertlistimg($product_id, $final_image);
-                        }else{
+                        } else {
                             $_SESSION['toastr-code'] = "warning";
                             $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
                             header('Location: ' . BASE_URL . '/admin/addproduct');
@@ -220,8 +220,8 @@ class Admin extends Controller
 
         $getgallery = $this->product->getgallery($id);
         foreach ($getgallery as $img) {
-            $output .= '<input type="radio" name="closegallery" id="radio_'.$img['id'].'" value="' . $img['id'] . '" class="radio-close">
-            <label for="radio_'.$img['id'].'" class="radio-close"><i class="fal fa-times"></i></label>
+            $output .= '<input type="radio" name="closegallery" id="radio_' . $img['id'] . '" value="' . $img['id'] . '" class="radio-close">
+            <label for="radio_' . $img['id'] . '" class="radio-close"><i class="fal fa-times"></i></label>
             <img src="' . BASE_URL . '/public/assets/images/product/' . $img['gallery'] . '" alt="Ảnh không tồn tại !" width="100px" height="100px">
             <input type="hidden" name="gallery1" class="form-control" value="' . $img['gallery'] . '">';
         }
@@ -269,16 +269,16 @@ class Admin extends Controller
                 $store = "public/assets/images/product/";
                 $imageName = $_FILES['image']['name'];
                 $imageTemp = $_FILES['image']['tmp_name'];
-                $this->product->updateproduct($categoryid, $name,$name_slug, $description, $status, $id);
+                $this->product->updateproduct($categoryid, $name, $name_slug, $description, $status, $id);
                 if (!empty($imageName)) {
                     $ext = pathinfo($imageName, PATHINFO_EXTENSION);
                     if (in_array($ext, $extension)) {
                         $imageName = time() . '_' . $imageName;
                         move_uploaded_file($imageTemp, $store . $imageName);
-                        $this->product->updateimg($imageName,$id);
+                        $this->product->updateimg($imageName, $id);
                         $_SESSION['toastr-code'] = "info";
                         $_SESSION['toastr-noti'] = "OK";
-                    }else{
+                    } else {
                         $_SESSION['toastr-code'] = "warning";
                         $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
                     }
@@ -314,7 +314,7 @@ class Admin extends Controller
                             move_uploaded_file($galleryTemp, $store . $newgalleryName);
                             $final_image = $newgalleryName;
                             $this->product->insertlistimg($id, $final_image);
-                        }else{
+                        } else {
                             $_SESSION['toastr-code'] = "info";
                             $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
                             header('Location: ' . BASE_URL . '/admin/infoproduct/' . $id);
@@ -331,10 +331,11 @@ class Admin extends Controller
     }
 
 
-    function deleteproduct($id){
-        $this->product->delete_product('prod_image','productid',$id);
-        $this->product->delete_product('product_type','product_id',$id);
-        $this->product->delete_product('products','id',$id);
+    function deleteproduct($id)
+    {
+        $this->product->delete_product('prod_image', 'productid', $id);
+        $this->product->delete_product('product_type', 'product_id', $id);
+        $this->product->delete_product('products', 'id', $id);
         $_SESSION['toastr-code'] = "success";
         $_SESSION['toastr-noti'] = "Xóa thành công";
         header('Location: ' . BASE_URL . '/admin/showproduct');
@@ -423,5 +424,42 @@ class Admin extends Controller
 
     // END - ATTRIBUTE
 
+    // START - COUPON
 
+    // --- show
+    function showcoupon()
+    {
+        $this->view(
+            "master3",
+            [
+                "pages" => "adm_showcoupon",
+            ]
+        );
+    }
+
+    // --- add
+
+    function addcoupon()
+    {
+
+
+        $this->view(
+            "master3",
+            [
+                "pages" => "adm_addcoupon",
+            ]
+        );
+    }
+
+    function getcoupon()
+    {
+        $chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $res = "G6";
+        for ($i = 0; $i < 5; $i++) {
+            $res .= $chars[mt_rand(0, strlen($chars) - 1)];
+        }
+        echo $res;
+    }
+
+    // END - COUPON
 }
