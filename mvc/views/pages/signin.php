@@ -30,7 +30,8 @@
                                 </div>
                                 <div class="single-input-item mb-3">
                                     <button class="btn obrien-button-2 primary-color">Login</button><br>
-                                    <a href="https://www.facebook.com/v12.0/dialog/oauth?client_id=4520117901402470&redirect_uri=<?php echo BASE_URL; ?>/auth/facebooklogin&scope=public_profile">Facebooklogin</a>
+                                    <a href="https://www.facebook.com/v12.0/dialog/oauth?client_id=4520117901402470&redirect_uri=<?php echo BASE_URL; ?>/auth/facebooklogin&scope=public_profile">Facebooklogin</a><br>
+                                    <a href="<?php echo $data['data']['google_login_url'] ?>">Login with Google</a>
                                 </div>
                                 <div class="single-input-item">
                                     <a href="<?php echo BASE_URL ?>/auth/register">Creat Account</a><br>

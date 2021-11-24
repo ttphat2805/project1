@@ -74,4 +74,47 @@ class usermodels extends db {
 
         return $query->rowCount();
     }
+
+    public function createFacebookAccount($user_info) {
+        $this->insertMember($user_info->name,'');
+        $sql = "INSERT INTO `facebook_account`(`memberid`, `facebook_id`) values (LAST_INSERT_ID(),:id)";
+        $query = $this->conn->prepare($sql);
+        $query->bindValue(":id",$user_info->id, PDO::PARAM_INT);
+        try{
+            $query->execute();
+        } catch (Exception $e){
+            echo $e->getMessage();
+        }
+    }
+
+    public function createGoogleAccount($user_info) {
+        $this->insertMember($user_info['name'],'');
+        $sql = "INSERT INTO `google_account`(`memberid`, `google_id`) values (LAST_INSERT_ID(),:id)";
+        $query = $this->conn->prepare($sql);
+        $query->bindValue(":id",$user_info['sub'], PDO::PARAM_INT);
+        try{
+            $query->execute();
+        } catch (Exception $e){
+            echo $e->getMessage();
+        }
+    }
+
+    public function findGoogleAccount($id) {
+        $sql = "select * from `google_account` where `google_id` like :id";
+        $query = $this->conn->prepare($sql);
+        $query->bindValue(":id",$id,PDO::PARAM_INT);
+        $query->execute();
+
+        return $query->rowCount();
+    }
+
+    public function getInforSocailAcccount($id, $table) {
+        $table_name = $table.'_account';
+        $table_id = $table.'_id';
+        $sql = "select B.id, B.fullname, B.mobile, B.email from `$table_name` A inner join `member` B on A.memberid = B.id where A.$table_id = $id ";
+        $query = $this->conn->prepare($sql);
+        $query->execute();
+
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

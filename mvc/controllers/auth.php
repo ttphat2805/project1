@@ -42,18 +42,91 @@ class Auth extends Controller{
             $user_info = json_decode($user_info);
             if( $this->User->findFacebookAccount($user_info->id) == 0 ){
                 $this->User->createFacebookAccount($user_info);
+                $user_social_account_info = $this->User->getInforSocailAcccount($user_info->id, 'facebook');
+                $_SESSION['user_infor']['user_id'] = $user_social_account_info[0]['id'];
+                $_SESSION['user_infor']['user_name'] = $user_social_account_info[0]['fullname'];
+                $_SESSION['user_infor']['user_phone'] = $user_social_account_info[0]['mobile'];
+                $_SESSION['user_infor']['user_email'] = $user_social_account_info[0]['email'];
+                $_SESSION['toastr-code'] = "success";
+                $_SESSION['toastr-noti'] = "đăng nhập thành công";
+                header("Location: ".BASE_URL);
             }else{
-                
+                $user_social_account_info = $this->User->getInforSocailAcccount($user_info->id, 'facebook');
+                $_SESSION['user_infor']['user_id'] = $user_social_account_info[0]['id'];
+                $_SESSION['user_infor']['user_name'] = $user_social_account_info[0]['fullname'];
+                $_SESSION['user_infor']['user_phone'] = $user_social_account_info[0]['mobile'];
+                $_SESSION['user_infor']['user_email'] = $user_social_account_info[0]['email'];
+                $_SESSION['toastr-code'] = "success";
+                $_SESSION['toastr-noti'] = "đăng nhập thành công";
+                header("Location: ".BASE_URL);
             }
           }
     }
 
+    private function createClientGoogleObject() {
+        require_once dirname(dirname(__FILE__)).'/core/google/vendor/autoload.php';
+
+        $client = new Google_Client();
+        $client->setClientId('370384614506-q53opk025rn27pqrqci8q1kajv691985.apps.googleusercontent.com');
+        $client->setClientSecret('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');
+        $client->setRedirectUri('http://localhost/project1/auth/verifyTokenGG');
+        $client->setAccessType('offline');
+        $client->addScope('profile');
+        $client->addScope('email');
+
+        return $client;
+    }
+
+    public function verifyTokenGG () {
+        $client = $this->createClientGoogleObject();
+        if(isset($_GET['code'])) {
+            $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+            $client->setAccessToken($token['access_token']);
+
+            try{
+                $google_account_info = $client->verifyIdToken($token['id_token']);
+                var_dump($google_account_info);
+                
+                if( $this->User->findGoogleAccount($google_account_info['sub']) == 0 ){
+                    $this->User->createGoogleAccount($google_account_info);
+                    $user_social_account_info = $this->User->getInforSocailAcccount($google_account_info['sub'], 'google');
+                    $_SESSION['user_infor']['user_id'] = $user_social_account_info[0]['id'];
+                    $_SESSION['user_infor']['user_name'] = $user_social_account_info[0]['fullname'];
+                    $_SESSION['user_infor']['user_phone'] = $user_social_account_info[0]['mobile'];
+                    $_SESSION['user_infor']['user_email'] = $user_social_account_info[0]['email'];
+                    $_SESSION['toastr-code'] = "success";
+                    $_SESSION['toastr-noti'] = "đăng nhập thành công";
+                    header("Location: ".BASE_URL);
+                }else{
+                    $user_social_account_info = $this->User->getInforSocailAcccount($google_account_info['sub'], 'google');
+                    $_SESSION['user_infor']['user_id'] = $user_social_account_info[0]['id'];
+                    $_SESSION['user_infor']['user_name'] = $user_social_account_info[0]['fullname'];
+                    $_SESSION['user_infor']['user_phone'] = $user_social_account_info[0]['mobile'];
+                    $_SESSION['user_infor']['user_email'] = $user_social_account_info[0]['email'];
+                    $_SESSION['toastr-code'] = "success";
+                    $_SESSION['toastr-noti'] = "đăng nhập thành công";
+                    header("Location: ".BASE_URL);
+                }
+
+            } catch (Exception $e) {
+
+                echo $e->getMessage();
+            }
+        }
+    }
+    public function loginGoogle () {
+        
+    }
+
     public function login(){
+        $google_client = $this->createClientGoogleObject();
+        $google_login_url = $google_client->createAuthUrl();
         $data = [
             "username" => '',
             "pass" => '',
             "username_error" => '',
-            "pass_error" => ''
+            "pass_error" => '',
+            'google_login_url' => $google_login_url
         ];
         
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -254,6 +327,8 @@ class Auth extends Controller{
                     } else {
                         if ($new_pass == $confirm_new_pass){
                             $this->User->changePassword($email,$new_pass);
+                            $_SESSION['toastr-code'] = "success";
+                            $_SESSION['toastr-noti'] = "Thêm thành công";
                         } else {
                             $data['confirmpass_error'] = "mật khẩu không khớp";
                         }
