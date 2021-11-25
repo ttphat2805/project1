@@ -433,6 +433,7 @@ class Admin extends Controller
             "master3",
             [
                 "pages" => "adm_showcoupon",
+                "coupon"=> $this->coupon->getcouponhome(),
             ]
         );
     }

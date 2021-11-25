@@ -8,4 +8,11 @@ class couponmodels extends db
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
     }
+
+    function getcouponhome(){
+        $query = "SELECT * FROM coupon";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 }
