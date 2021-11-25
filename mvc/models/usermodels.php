@@ -69,7 +69,7 @@ class usermodels extends db {
     public function findFacebookAccount($id) {
         $sql = "select * from `facebook_account` where `facebook_id` like :id";
         $query = $this->conn->prepare($sql);
-        $query->bindValue(":id",$id,PDO::PARAM_INT);
+        $query->bindValue(":id",$id,PDO::PARAM_STR);
         $query->execute();
 
         return $query->rowCount();
