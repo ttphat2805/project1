@@ -460,6 +460,8 @@ class Admin extends Controller
 
                 $_SESSION['toastr-code'] = "success";
                 $_SESSION['toastr-noti'] = "Thêm thành công mã giảm giá";
+                header('Location: ' . BASE_URL . '/admin/showcoupon');
+
             }
          
         }
