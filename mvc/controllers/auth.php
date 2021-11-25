@@ -130,7 +130,7 @@ class Auth extends Controller
             "pass" => '',
             "username_error" => '',
             "pass_error" => '',
-            // 'google_login_url' => $google_login_url
+            'google_login_url' => $google_login_url
         ];
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
