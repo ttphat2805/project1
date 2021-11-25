@@ -156,15 +156,17 @@
         <?php 
         echo "let sizes = '" . json_encode($data['size']) . "';";
         ?>
-        
+
         sizes = JSON.parse(sizes);
+
         var Size = '';
         for (var i = 0; i < arraySize.length; i++) {
             var values = ['',''];
             if(i <= sizes.length-1){
-            if(sizes[i].attribute_id == arraySize[i][1] ) { 
+            // if(sizes[i].attribute_id == arraySize[i][1] ) { 
                 values = [sizes[i].price,sizes[i].quantity];
-            }}
+            // }}
+            }
             Size += `<tr>
                     <td>${arraySize[i][0]}</td>
                     <td><input type="number" name="price_attribute[]"  value="${values[0]}" class="form-control id="css_custom-hide"></td>
