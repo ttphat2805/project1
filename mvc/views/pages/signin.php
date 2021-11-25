@@ -25,7 +25,7 @@
                                     <div class="login-reg-form-meta d-flex align-items-center justify-content-between">
                                         <div class="remember-meta mb-3">
                                             <div class="forget-password">
-                                            <span>Bạn chưa có tài khoản?</span> <a href="<?php echo BASE_URL ?>/auth/register" style="color:#E98C81" class="sign-up">Đăng ký</a>
+                                                <span>Bạn chưa có tài khoản?</span> <a href="<?php echo BASE_URL ?>/auth/register" style="color:#E98C81" class="sign-up">Đăng ký</a>
                                             </div>
                                         </div>
                                         <a href="<?php echo BASE_URL ?>/auth/forgetpass/" class="forget-pwd mb-3">Quên mật khẩu?</a>
@@ -40,4 +40,3 @@
                 </div>
             </div>
         </div>
-        <!-- Login Area End Here -->

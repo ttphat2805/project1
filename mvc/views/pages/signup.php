@@ -8,7 +8,7 @@
                                 <h2 class="title-4 mb-2">Đăng ký</h2>
                                 <p class="desc-content"></p>
                             </div>
-                            <form action="<?php echo BASE_URL.'/auth/register' ?>" method="post">
+                            <form action="<?php echo BASE_URL . '/auth/register' ?>" method="post">
                                 <div class="single-input-item mb-3">
                                     <input type="text" name="firstname" placeholder="Nhập họ...">
                                     <span class="text-danger error"><?php echo $data['data']['first_name_error'] ?></span>
@@ -30,10 +30,10 @@
                                     <span class="text-danger error"><?php echo $data['data']['repass_error'] ?></span>
                                 </div>
                                 <div class="single-input-item mb-3">
-                                <div class="login-reg-form-meta d-flex align-items-center justify-content-between">
+                                    <div class="login-reg-form-meta d-flex align-items-center justify-content-between">
                                         <div class="remember-meta mb-3">
                                             <div class="forget-password">
-                                            <span>Bạn đã có tài khoản?</span> <a href="<?php echo BASE_URL . '/auth/login' ?>" style="color:#E98C81" class="sign-up">Đăng nhập</a>
+                                                <span>Bạn đã có tài khoản?</span> <a href="<?php echo BASE_URL . '/auth/login' ?>" style="color:#E98C81" class="sign-up">Đăng nhập</a>
                                             </div>
                                         </div>
                                     </div>
@@ -47,4 +47,3 @@
                 </div>
             </div>
         </div>
-        <!-- Login Area End Here -->

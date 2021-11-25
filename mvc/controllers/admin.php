@@ -6,12 +6,16 @@ class Admin extends Controller
     public $member;
     public $cart;
     public $attribute;
+    public $coupon;
+
 
     function __construct()
     {
         $this->product = $this->model("productmodels");
         $this->category = $this->model("categorymodels");
         $this->attribute = $this->model("attributemodels");
+        $this->coupon = $this->model("couponmodels");
+
     }
     function show()
     {
@@ -441,19 +445,22 @@ class Admin extends Controller
             $name = $_POST['name'];
             $code = $_POST['code'];
             $type = $_POST['type'];
-            $value = $_POST['coupon_value'];
+            $discout = $_POST['coupon_value'];
             $quantity = $_POST['quantity'];
             $min_order = $_POST['min_order'];
             $date_created = $_POST['date_created'];
             $date_out = $_POST['date_out'];
             $status = $_POST['status'];
-            if($name == '' || $code == '' || $type == '' || $value == '' || $quantity == '' || $min_order == '' || $date_created == '' || $date_out == ''){
+            if($name == '' || $code == '' || $type == '' || $discout == '' || $quantity == '' || $min_order == '' || $date_created == '' || $date_out == ''){
                 $_SESSION['toastr-code'] = "info";
                 $_SESSION['toastr-noti'] = "Vui lòng nhập đầy đủ thông tin";
-            }
-            
+            }else{
+                $this->coupon->insertcoupon($name, $code, $discout, $type, $min_order, $quantity, $date_created, $date_out,$status);
 
-            
+                $_SESSION['toastr-code'] = "success";
+                $_SESSION['toastr-noti'] = "Thêm thành công mã giảm giá";
+            }
+         
         }
 
         $this->view(
