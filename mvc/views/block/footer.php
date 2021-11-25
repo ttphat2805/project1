@@ -1,8 +1,4 @@
- <!-- JS
-============================================ -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
- <!-- Ion icons -->
- 
+
  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <!-- jQuery JS -->
@@ -28,6 +24,13 @@
 
     <!-- Main JS -->
     <script src="<?php echo BASE_URL; ?>/public/assets/js/main.js"></script>
+    <link rel="stylesheet" href=" <?php echo BASE_URL; ?>/public/assets/toastr/toastr.min.css"> 
+    <script src="<?php echo BASE_URL; ?>/public/assets/toastr/toastr.min.js"></script>
+    <script src="<?php echo BASE_URL; ?>/public/assets/js/custom.js"></script>
+    <script src="<?php echo BASE_URL; ?>/public/assets/js/product.js"></script>
+    <script src="<?php echo BASE_URL; ?>/public/assets/js/cart.js"></script>
+
+
 
 <footer class="footer-area">
     <div class="footer-widget-area">
@@ -131,3 +134,40 @@
         </div>
     </div>
 </footer>
+<script>
+     // TOASTR
+     <?php
+        if (isset($_SESSION['toastr-code']) && $_SESSION['toastr-noti'] != '') {
+        ?>
+         window.addEventListener('load', function() {
+             $(document).ready(function() {
+                 toastr.options = {
+                     "closeButton": true,
+                     "debug": false,
+                     "newestOnTop": false,
+                     "progressBar": true,
+                     "positionClass": "toast-top-right",
+                     "preventDuplicates": false,
+                     "onclick": null,
+                     "showDuration": "300",
+                     "hideDuration": "1000",
+                     "timeOut": "5000",
+                     "extendedTimeOut": "1000",
+                     "showEasing": "swing",
+                     "hideEasing": "linear",
+                     "showMethod": "fadeIn",
+                     "hideMethod": "fadeOut"
+                 }
+                 toastr["<?php echo $_SESSION['toastr-code'] ?>"]("<?php echo $_SESSION['toastr-noti'] ?>")
+             })
+         })
+ </script>
+ <?php
+            unset($_SESSION['toastr-code']);
+            unset($_SESSION['toastr-noti']);
+        }
+    ?>
+
+<script>
+<?php echo "let SITE_URL = '" . BASE_URL . "';"; ?>
+</script>

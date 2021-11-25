@@ -11,4 +11,3 @@
             $this->conn = new PDO("mysql:host=$this->host; dbname=$this->dbname; charset=utf8", $this->username, $this->password);   
         }
     }
-    define('BASE_URL','http://localhost/project1');

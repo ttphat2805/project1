@@ -16,6 +16,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/vendor/bootstrap.min.css">
     <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.15.3/css/all.css">
+
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/vendor/font.awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/vendor/ionicons.min.css">
@@ -34,6 +36,7 @@
     <!-- Main Style CSS (Please use minify version for better website load performance) -->
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/style.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/custom.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/style.min.css"> -->
 </head>
