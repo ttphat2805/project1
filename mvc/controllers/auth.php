@@ -1,46 +1,49 @@
-<?php 
+<?php
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-require_once dirname(dirname(__FILE__)).'/core/PHPMailer/vendor/autoload.php';
-class Auth extends Controller{
-    
+require_once dirname(dirname(__FILE__)) . '/core/PHPMailer/vendor/autoload.php';
+class Auth extends Controller
+{
+
     public function __construct()
     {
         $this->mail = new PHPMailer(true);
         $this->User = $this->model('usermodels');
     }
 
-    public function facebooklogin(){
-        if(isset($_GET['code'])){
+    public function facebooklogin()
+    {
+        if (isset($_GET['code'])) {
             $secret = "cae98d72b03cd738ceca1dace2ec6d75";
             $client_id = '4520117901402470';
-            $redirect_url = BASE_URL."/auth/facebooklogin";
+            $redirect_url = BASE_URL . "/auth/facebooklogin";
             $code = $_GET['code'];
             $facebook_access_token_url = "https://graph.facebook.com/v12.0/oauth/access_token?client_id=$client_id&redirect_uri=$redirect_url&client_secret=$secret&code=$code";
             $call = curl_init();
-            curl_setopt($call,CURLOPT_URL,$facebook_access_token_url);
-            curl_setopt($call,CURLOPT_RETURNTRANSFER,1);
-            curl_setopt($call,CURLOPT_SSL_VERIFYPEER,false);
+            curl_setopt($call, CURLOPT_URL, $facebook_access_token_url);
+            curl_setopt($call, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($call, CURLOPT_SSL_VERIFYPEER, false);
             $response = curl_exec($call);
             $response = json_decode($response);
             $response = $response->access_token;
             curl_close($call);
-        
+
             $url_get_info_user = "https://graph.facebook.com/me?access_token=$response";
-        
+
             $call = curl_init();
-            curl_setopt($call,CURLOPT_URL,$url_get_info_user);
-            curl_setopt($call,CURLOPT_RETURNTRANSFER,1);
-            curl_setopt($call,CURLOPT_SSL_VERIFYPEER,false);
-        
+            curl_setopt($call, CURLOPT_URL, $url_get_info_user);
+            curl_setopt($call, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($call, CURLOPT_SSL_VERIFYPEER, false);
+
             $user_info = curl_exec($call);
             curl_close($call);
 
             // kiểm tra tài khoản facebook này đã tồn tại hay chưa
             $user_info = json_decode($user_info);
-            if( $this->User->findFacebookAccount($user_info->id) == 0 ){
+            if ($this->User->findFacebookAccount($user_info->id) == 0) {
                 $this->User->createFacebookAccount($user_info);
                 $user_social_account_info = $this->User->getInforSocailAcccount($user_info->id, 'facebook');
                 $_SESSION['user_infor']['user_id'] = $user_social_account_info[0]['id'];
@@ -49,22 +52,23 @@ class Auth extends Controller{
                 $_SESSION['user_infor']['user_email'] = $user_social_account_info[0]['email'];
                 $_SESSION['toastr-code'] = "success";
                 $_SESSION['toastr-noti'] = "đăng nhập thành công";
-                header("Location: ".BASE_URL);
-            }else{
+                header("Location: " . BASE_URL);
+            } else {
                 $user_social_account_info = $this->User->getInforSocailAcccount($user_info->id, 'facebook');
                 $_SESSION['user_infor']['user_id'] = $user_social_account_info[0]['id'];
                 $_SESSION['user_infor']['user_name'] = $user_social_account_info[0]['fullname'];
                 $_SESSION['user_infor']['user_phone'] = $user_social_account_info[0]['mobile'];
                 $_SESSION['user_infor']['user_email'] = $user_social_account_info[0]['email'];
                 $_SESSION['toastr-code'] = "success";
-                $_SESSION['toastr-noti'] = "đăng nhập thành công";
-                header("Location: ".BASE_URL);
+                $_SESSION['toastr-noti'] = "Đăng nhập thành công";
+                header("Location: " . BASE_URL);
             }
-          }
+        }
     }
 
-    private function createClientGoogleObject() {
-        require_once dirname(dirname(__FILE__)).'/core/google/vendor/autoload.php';
+    private function createClientGoogleObject()
+    {
+        require_once dirname(dirname(__FILE__)) . '/core/google/vendor/autoload.php';
 
         $client = new Google_Client();
         $client->setClientId('370384614506-q53opk025rn27pqrqci8q1kajv691985.apps.googleusercontent.com');
@@ -77,17 +81,18 @@ class Auth extends Controller{
         return $client;
     }
 
-    public function verifyTokenGG () {
+    public function verifyTokenGG()
+    {
         $client = $this->createClientGoogleObject();
-        if(isset($_GET['code'])) {
+        if (isset($_GET['code'])) {
             $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
             $client->setAccessToken($token['access_token']);
 
-            try{
+            try {
                 $google_account_info = $client->verifyIdToken($token['id_token']);
-                var_dump($google_account_info);
-                
-                if( $this->User->findGoogleAccount($google_account_info['sub']) == 0 ){
+                //var_dump($google_account_info);
+
+                if ($this->User->findGoogleAccount($google_account_info['sub']) == 0) {
                     $this->User->createGoogleAccount($google_account_info);
                     $user_social_account_info = $this->User->getInforSocailAcccount($google_account_info['sub'], 'google');
                     $_SESSION['user_infor']['user_id'] = $user_social_account_info[0]['id'];
@@ -96,8 +101,8 @@ class Auth extends Controller{
                     $_SESSION['user_infor']['user_email'] = $user_social_account_info[0]['email'];
                     $_SESSION['toastr-code'] = "success";
                     $_SESSION['toastr-noti'] = "đăng nhập thành công";
-                    header("Location: ".BASE_URL);
-                }else{
+                    header("Location: " . BASE_URL);
+                } else {
                     $user_social_account_info = $this->User->getInforSocailAcccount($google_account_info['sub'], 'google');
                     $_SESSION['user_infor']['user_id'] = $user_social_account_info[0]['id'];
                     $_SESSION['user_infor']['user_name'] = $user_social_account_info[0]['fullname'];
@@ -105,20 +110,19 @@ class Auth extends Controller{
                     $_SESSION['user_infor']['user_email'] = $user_social_account_info[0]['email'];
                     $_SESSION['toastr-code'] = "success";
                     $_SESSION['toastr-noti'] = "đăng nhập thành công";
-                    header("Location: ".BASE_URL);
+                    header("Location: " . BASE_URL);
                 }
-
             } catch (Exception $e) {
-
                 echo $e->getMessage();
             }
         }
     }
-    public function loginGoogle () {
-        
+    public function loginGoogle()
+    {
     }
 
-    public function login(){
+    public function login()
+    {
         $google_client = $this->createClientGoogleObject();
         $google_login_url = $google_client->createAuthUrl();
         $data = [
@@ -128,52 +132,42 @@ class Auth extends Controller{
             "pass_error" => '',
             'google_login_url' => $google_login_url
         ];
-        
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // check user name
-            if($_POST['email'] != null) {
-                if($this->User->findUserByEmail($_POST['email']) == 0){
+            if ($_POST['email'] != null) {
+                if ($this->User->findUserByEmail($_POST['email']) == 0) {
                     $data['username_error'] = "Tài khoản không tồi tại";
 
-                    return $this->view('master2',['pages'=>'signin','data'=>$data]);
+                    return $this->view('master2', ['pages' => 'signin', 'data' => $data]);
                 }
-            }else{
-                $data['username_error'] = 'bạn phải nhập tên dăng nhập';
+            } else {
+                $data['username_error'] = 'Bạn phải nhập tên dăng nhập';
             }
 
             // check password
-            if($_POST['pass'] != null) {
+            if ($_POST['pass'] != null) {
                 $data['username'] = $_POST['email'];
                 $data['pass'] = $_POST['pass'];
                 $user = $this->User->findUserAccount($data);
-                
+
                 //user password_verify to verify password
-                if(password_verify($_POST['pass'],$user[0]['password']) == true){
+                if (password_verify($_POST['pass'], $user[0]['password']) == true) {
                     $user_infor = $this->User->getMemberInforById($user[0]['memberid']);
-                    
+
                     $_SESSION['user_infor']['user_id'] = $user_infor[0]['id'];
                     $_SESSION['user_infor']['user_name'] = $user_infor[0]['fullname'];
                     $_SESSION['user_infor']['user_phone'] = $user_infor[0]['mobile'];
                     $_SESSION['user_infor']['user_email'] = $user_infor[0]['email'];
-                    var_dump($_SESSION['user_infor']);
-                    header("Location: ".BASE_URL);
-                }else{
-                    $data['pass_error'] = "sai mật khẩu";
+                    header("Location: " . BASE_URL);
+                } else {
+                    $data['pass_error'] = "Sai mật khẩu";
                 }
-            }else{
-                $data['pass_error'] = 'bạn chưa nhập mật khẩu';
+            } else {
+                $data['pass_error'] = 'Bạn chưa nhập mật khẩu';
             }
         }
-        return $this->view('master2',['pages'=>'signin','data'=>$data]);
-<?php
-
-class Auth extends Controller
-{
-
-    public function login()
-    {
-
-        return $this->view('master2', ['pages' => 'signin']);
+        return $this->view('master2', ['pages' => 'signin', 'data' => $data]);
     }
 
     public function logout()
@@ -195,25 +189,16 @@ class Auth extends Controller
             'pass_error' => '',
             'repass_error' => ''
         ];
-        if($_SERVER['REQUEST_METHOD'] === 'POST' ){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $first_name = trim($_POST['firstname']);
             $last_name = trim($_POST['lastname']);
             $email = $_POST['email'];
             $pass = $_POST['pass'];
             $re_pass = $_POST['repass'];
-            
             $data['first_name'] = $first_name;
             $data['last_name'] = $last_name;
             $data['email'] = $email;
             $data['password'] = $pass;
-            if($first_name == ''){
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $first_name = $_POST['firstname'];
-            $last_name = $_POST['lastname'];
-            $email = $_POST['email'];
-            $pass = $_POST['pass'];
-            $re_pass = $_POST['repass'];
-
             if ($first_name == '') {
                 $data['first_name_error'] = "Bạn phải nhập đầy đủ họ";
             }
@@ -225,8 +210,8 @@ class Auth extends Controller
             } else {
                 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     $data['email_error'] = 'email sai định dạng';
-                }else{
-                    if($this->User->findUserByEmail($email) >= 1){
+                } else {
+                    if ($this->User->findUserByEmail($email) >= 1) {
                         $data['email_error'] = 'tên đăng nhập đã tồn tại';
                     }
                 }
@@ -247,11 +232,8 @@ class Auth extends Controller
             if (
                 empty($data['first_name_error']) && empty($data['last_name_error'])
                 && empty($data['email_error']) && empty($data['pass_error']) && empty($data['repass_error'])
-                ){
-                    $this->User->registerUserAccount($data);
-                }
-            
             ) {
+                $this->User->registerUserAccount($data);
             }
         }
 
@@ -261,23 +243,23 @@ class Auth extends Controller
         ]);
     }
 
-    public function forgetpass() {
+    public function forgetpass()
+    {
         $data = [
             'email_error' => '',
         ];
 
-        if($_SERVER['REQUEST_METHOD'] == "POST"){
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $email = $_POST['email'];
-            if($this->User->findUserByEmail($email) == 0){
+            if ($this->User->findUserByEmail($email) == 0) {
                 $data['email_error'] = 'tên đăng nhập không tồn tại';
-
             } else {
-                $new_pass = random_int(100000,999999);
+                $new_pass = random_int(100000, 999999);
                 $new_pass = base64_encode($new_pass);
                 //$this->User->updatePassword($email,$new_pass);
 
                 $mail = new PHPMailer(true);
-                try{
+                try {
                     //Server settings                      //Enable verbose debug output
                     $mail->isSMTP();                                            //Send using SMTP
                     $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
@@ -295,30 +277,29 @@ class Auth extends Controller
                     $mail->addCC('cc@example.com');
                     $mail->addBCC('bcc@example.com');
 
-                   
+
 
                     //Content
                     $mail->isHTML(true);                                  //Set email format to HTML
                     $mail->Subject = 'Hello here is your new password';
-                    $mail->Body    = 'đây là mật khẩu mới của bạn <b>'.$new_pass.'</b>';
+                    $mail->Body    = 'đây là mật khẩu mới của bạn <b>' . $new_pass . '</b>';
                     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
                     $mail->send();
                     $this->User->changePassword($email, $new_pass);
-
-
-                }catch(Exception $e){
+                } catch (Exception $e) {
                     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
                 }
             }
         }
         return $this->view('master2', [
-                        'pages' => 'forgetpass',
-                        'data' => $data
-            ]);
+            'pages' => 'forgetpass',
+            'data' => $data
+        ]);
     }
 
-    public function changePassword() {
+    public function changePassword()
+    {
         $data = [
             'username_error' => '',
             'pass_error' => '',
@@ -334,20 +315,19 @@ class Auth extends Controller
 
             $data['username'] = $email;
 
-            if(empty($email) || empty($pass) || empty($new_pass) || empty($confirm_new_pass)){
+            if (empty($email) || empty($pass) || empty($new_pass) || empty($confirm_new_pass)) {
                 $data['username_error'] = 'bạn phải nhập đầy đủ thông tin';
             } else {
-                if($this->User->findUserByEmail($data['username']) == 0){
+                if ($this->User->findUserByEmail($data['username']) == 0) {
                     $data['username_error'] = 'tên đăng nhập không tồn tại';
-    
                 } else {
                     // lấy thông tin mật khẩu cảu user
                     $user = $this->User->findUserAccount($data);
-                    if ( password_verify($pass, $user[0]['password']) == false){
+                    if (password_verify($pass, $user[0]['password']) == false) {
                         $data['pass_error'] = "mật khẩu không chính xác";
                     } else {
-                        if ($new_pass == $confirm_new_pass){
-                            $this->User->changePassword($email,$new_pass);
+                        if ($new_pass == $confirm_new_pass) {
+                            $this->User->changePassword($email, $new_pass);
                             $_SESSION['toastr-code'] = "success";
                             $_SESSION['toastr-noti'] = "Thêm thành công";
                         } else {
@@ -359,10 +339,8 @@ class Auth extends Controller
         }
 
         return $this->view('master2', [
-                        'pages' => 'changepass',
-                        'data' => $data
+            'pages' => 'changepass',
+            'data' => $data
         ]);
     }
-
-}
 }
