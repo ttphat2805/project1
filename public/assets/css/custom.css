@@ -131,3 +131,10 @@
     color: #fff;
     transition: .1s;
 }
+
+.main-nav>ul>li>.hello_account {
+    font-size: 14px;
+    margin-right: 5px;
+    font-weight: 400;
+    font-family: Roboto;
+}

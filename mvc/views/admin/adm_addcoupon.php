@@ -36,8 +36,8 @@
                     </div>
                     <div class="form-group value2" style="display:none;">
                         <label for="" class="label__css">Số tiền giảm</label>
-                        <input type="text" name="" id="discout" class="form-control" placeholder="Số tiền giảm" id="value2">
-                        <input hidden type="number" id="discout_new" name="discout_new">
+                        <input type="text" name="" id="discout" class="form-control" placeholder="Số tiền giảm" >
+                        <input hidden type="number" id="value2" name="" class="acp_value">
                     </div>
                     <div class="form-group">
                         <label for="" class="label__css">Số lượng</label>
@@ -45,17 +45,17 @@
                     </div>
                     <div class="form-group">
                         <label for="" class="label__css">Số tiền tối thiểu</label>
-                        <input type="text" id="min_order" name="min_order" class="form-control" id="value2">
-                        <input hidden type="number" id="min_order_new" name="min_order_new" class="form-control" id="value2">
+                        <input type="text" id="min_order" name="min_order" class="form-control" >
+                        <input hidden type="number" id="min_order_new" name="min_order_new" class="form-control">
 
                     </div>
                     <div class="form-group">
                         <label for="" class="label__css">Ngày tạo</label>
-                        <input type="date" name="date_created" min="<?= date('Y-m-d'); ?>" class="form-control" id="value2">
+                        <input type="date" name="date_created" min="<?= date('Y-m-d'); ?>" class="form-control" >
                     </div>
                     <div class="form-group">
                         <label for="" class="label__css">Ngày hết hạn</label>
-                        <input type="date" name="date_out" min="<?= date('Y-m-d'); ?>" class="form-control" id="value2">
+                        <input type="date" name="date_out" min="<?= date('Y-m-d'); ?>" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="" class="label__css">Trạng thái</label><br />
@@ -116,7 +116,7 @@
             var n = parseInt($(this).val().replace(/\D/g, ''), 10);
             if (n >= 0) {
                 $('#discout').val(n.toLocaleString("it-IT"));
-                $('#discout_new').val(n);
+                $('.acp_value').val(n);
             }
             if (isNaN(n)) {
                 $('#discout').val('');
