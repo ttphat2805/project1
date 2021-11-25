@@ -62,5 +62,7 @@ class productdetail extends Controller
         echo $hi;
     }
 
+    
+
 
 }

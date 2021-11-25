@@ -14,6 +14,8 @@
     <!-- CSS ============================================ -->
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/vendor/bootstrap.min.css">
     <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.15.3/css/all.css">
+
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/vendor/font.awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/vendor/ionicons.min.css">
@@ -147,7 +149,6 @@
                         }}
                         ]'>
                         <?php
-                   
                         foreach ($data['product_trends'] as $trend):
                         ?>
                         <div class="single-item">

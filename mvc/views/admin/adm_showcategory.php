@@ -45,26 +45,3 @@
 
 </div>
 
-<!-- AJAX
-<script>
-    // DEL CATEGORY
-    $(document).on('click', '.click_delete', function() {
-        var id = $(this).data('id_xoa');
-        $check = confirm("có chắc không ?");
-        if ($check) {
-            $.ajax({
-                url: "<?php echo BASE_URL ?>/admin/delcategory",
-                method: "POST",
-                data: {
-                    id: id
-                },
-                success: function(data) {
-                    alert('Xóa OK');
-                }
-            })
-        }else{
-            return;
-        }
-
-    })
-</script> -->

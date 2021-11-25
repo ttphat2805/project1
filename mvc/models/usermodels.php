@@ -79,7 +79,7 @@ class usermodels extends db {
         $this->insertMember($user_info->name,'');
         $sql = "INSERT INTO `facebook_account`(`memberid`, `facebook_id`) values (LAST_INSERT_ID(),:id)";
         $query = $this->conn->prepare($sql);
-        $query->bindValue(":id",$user_info->id, PDO::PARAM_INT);
+        $query->bindValue(":id",$user_info->id, PDO::PARAM_STR);
         try{
             $query->execute();
         } catch (Exception $e){
@@ -91,7 +91,7 @@ class usermodels extends db {
         $this->insertMember($user_info['name'],'');
         $sql = "INSERT INTO `google_account`(`memberid`, `google_id`) values (LAST_INSERT_ID(),:id)";
         $query = $this->conn->prepare($sql);
-        $query->bindValue(":id",$user_info['sub'], PDO::PARAM_INT);
+        $query->bindValue(":id",$user_info['sub'], PDO::PARAM_STR);
         try{
             $query->execute();
         } catch (Exception $e){
@@ -102,7 +102,7 @@ class usermodels extends db {
     public function findGoogleAccount($id) {
         $sql = "select * from `google_account` where `google_id` like :id";
         $query = $this->conn->prepare($sql);
-        $query->bindValue(":id",$id,PDO::PARAM_INT);
+        $query->bindValue(":id",$id,PDO::PARAM_STR);
         $query->execute();
 
         return $query->rowCount();

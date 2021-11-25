@@ -6,12 +6,16 @@ class Admin extends Controller
     public $member;
     public $cart;
     public $attribute;
+    public $coupon;
+
 
     function __construct()
     {
         $this->product = $this->model("productmodels");
         $this->category = $this->model("categorymodels");
         $this->attribute = $this->model("attributemodels");
+        $this->coupon = $this->model("couponmodels");
+
     }
     function show()
     {
@@ -45,7 +49,7 @@ class Admin extends Controller
                 $_SESSION['toastr-code'] = "warning";
                 $_SESSION['toastr-noti'] = "Đã tồn tại tên danh mục này";
             } else {
-                $this->category->addcategory($name,$name_slug, $status);
+                $this->category->addcategory($name, $name_slug, $status);
                 $_SESSION['toastr-code'] = "success";
                 $_SESSION['toastr-noti'] = "Thêm thành công";
                 header('Location:' . BASE_URL . '/admin/showcategory');
@@ -87,7 +91,7 @@ class Admin extends Controller
                 $_SESSION['toastr-code'] = "warning";
                 $_SESSION['toastr-noti'] = "Đã tồn tại danh mục này";
             } else {
-                $this->category->updatecategory($name, $name_slug, $status,$id);
+                $this->category->updatecategory($name, $name_slug, $status, $id);
                 $_SESSION['toastr-code'] = "success";
                 $_SESSION['toastr-noti'] = "Cập nhật thành công";
             }
@@ -154,8 +158,8 @@ class Admin extends Controller
                 if (in_array($ext, $extension)) {
                     $imageName = time() . '_' . $imageName;
                     move_uploaded_file($imageTemp, $store . $imageName);
-                    $this->product->insertproduct($categoryid, $name,$name_slug, $imageName, $description, $status);
-                }else{
+                    $this->product->insertproduct($categoryid, $name, $name_slug, $imageName, $description, $status);
+                } else {
                     $_SESSION['toastr-code'] = "warning";
                     $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
                     header('Location: ' . BASE_URL . '/admin/addproduct');
@@ -188,8 +192,12 @@ class Admin extends Controller
                             $newgalleryName = time() . '_' . $galleryName;
                             move_uploaded_file($galleryTemp, $store . $newgalleryName);
                             $final_image = $newgalleryName;
-
                             $this->product->insertlistimg($product_id, $final_image);
+                        } else {
+                            $_SESSION['toastr-code'] = "warning";
+                            $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
+                            header('Location: ' . BASE_URL . '/admin/addproduct');
+                            exit();
                         }
                     }
 
@@ -215,12 +223,11 @@ class Admin extends Controller
         $output = '<div class="list_gallery" onclick="getIdimg();">';
 
         $getgallery = $this->product->getgallery($id);
-
-        foreach($getgallery as $img){
-            $output .= '<input type="radio" name="closegallery" id="radio_'.$img['id'].'" value="'.$img['id'].'" class="radio-close">
-            <label for="radio_'.$img['id'].'" class="radio-close"><i class="fal fa-times"></i></label>
-            <img src="'.BASE_URL.'/public/assets/images/product/'.$img['gallery'].'" alt="Ảnh không tồn tại !" width="100px" height="100px">
-            <input type="hidden" name="gallery1" class="form-control" value="'.$img['gallery'].'">';
+        foreach ($getgallery as $img) {
+            $output .= '<input type="radio" name="closegallery" id="radio_' . $img['id'] . '" value="' . $img['id'] . '" class="radio-close">
+            <label for="radio_' . $img['id'] . '" class="radio-close"><i class="fal fa-times"></i></label>
+            <img src="' . BASE_URL . '/public/assets/images/product/' . $img['gallery'] . '" alt="Ảnh không tồn tại !" width="100px" height="100px">
+            <input type="hidden" name="gallery1" class="form-control" value="' . $img['gallery'] . '">';
         }
         $output .= '</div>';
         echo $output;
@@ -246,6 +253,7 @@ class Admin extends Controller
             ]
         );
     }
+
     function updateproduct()
     {
         if (isset($_POST['btn__submit'])) {
@@ -255,7 +263,7 @@ class Admin extends Controller
             $check = $this->category->checkexistname('products', $name, $id);
             if ($check != 0) {
                 $_SESSION['toastr-code'] = "warning";
-                $_SESSION['toastr-noti'] = "Đã tồn tại danh mục này";
+                $_SESSION['toastr-noti'] = "Đã tồn tại sản phẩm này";
                 header('Location: ' . BASE_URL . '/admin/infoproduct/' . $id);
             } else {
                 $categoryid = $_POST['categoryid'];
@@ -266,14 +274,14 @@ class Admin extends Controller
                 $store = "public/assets/images/product/";
                 $imageName = $_FILES['image']['name'];
                 $imageTemp = $_FILES['image']['tmp_name'];
-                $this->product->updateproduct($categoryid, $name,$name_slug, $description, $status, $id);
+                $this->product->updateproduct($categoryid, $name, $name_slug, $description, $status, $id);
                 if (!empty($imageName)) {
                     $ext = pathinfo($imageName, PATHINFO_EXTENSION);
                     if (in_array($ext, $extension)) {
                         $imageName = time() . '_' . $imageName;
                         move_uploaded_file($imageTemp, $store . $imageName);
                         $this->product->updateimg($imageName);
-                    }else{
+                    } else {
                         $_SESSION['toastr-code'] = "warning";
                         $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
                         header('Location: ' . BASE_URL . '/admin/infoproduct/' . $id);
@@ -322,10 +330,12 @@ class Admin extends Controller
     }
 
 
-    function deleteproduct($id){
-        $this->product->delete_product('prod_image','productid',$id);
-        $this->product->delete_product('product_type','product_id',$id);
-        $this->product->delete_product('products','id',$id);
+
+    function deleteproduct($id)
+    {
+        $this->product->delete_product('prod_image', 'productid', $id);
+        $this->product->delete_product('product_type', 'product_id', $id);
+        $this->product->delete_product('products', 'id', $id);
         $_SESSION['toastr-code'] = "success";
         $_SESSION['toastr-noti'] = "Xóa thành công";
         header('Location: ' . BASE_URL . '/admin/showproduct');
@@ -414,7 +424,64 @@ class Admin extends Controller
 
     // END - ATTRIBUTE
 
+    // START - COUPON
 
+    // --- show
+    function showcoupon()
+    {
+        $this->view(
+            "master3",
+            [
+                "pages" => "adm_showcoupon",
+                "coupon"=> $this->coupon->getcouponhome(),
+            ]
+        );
+    }
 
+    // --- add  
 
+    function addcoupon()
+    {
+        if(isset($_POST['btn__submit'])){
+            $name = $_POST['name'];
+            $code = $_POST['code'];
+            $type = $_POST['type'];
+            $discout = $_POST['coupon_value'];
+            $quantity = $_POST['quantity'];
+            $min_order = $_POST['min_order'];
+            $date_created = $_POST['date_created'];
+            $date_out = $_POST['date_out'];
+            $status = $_POST['status'];
+            if($name == '' || $code == '' || $type == '' || $discout == '' || $quantity == '' || $min_order == '' || $date_created == '' || $date_out == ''){
+                $_SESSION['toastr-code'] = "info";
+                $_SESSION['toastr-noti'] = "Vui lòng nhập đầy đủ thông tin";
+            }else{
+                $this->coupon->insertcoupon($name, $code, $discout, $type, $min_order, $quantity, $date_created, $date_out,$status);
+
+                $_SESSION['toastr-code'] = "success";
+                $_SESSION['toastr-noti'] = "Thêm thành công mã giảm giá";
+            }
+         
+        }
+
+        $this->view(
+            "master3",
+            [
+                "pages" => "adm_addcoupon",
+            ]
+        );
+    }
+
+    // --- get coupon
+    function getcoupon()
+    {
+        $chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $res = "G6";
+        for ($i = 0; $i < 5; $i++) {
+            $res .= $chars[mt_rand(0, strlen($chars) - 1)];
+        }
+        echo $res;
+    }
+
+    // END - COUPON
 }

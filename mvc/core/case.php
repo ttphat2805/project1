@@ -1,6 +1,6 @@
 <?php
     
-    define('BASE_URL','http://localhost/project1');
+    define('BASE_URL','https://nghi.test/project1');
 
     function change_slug($str) {
         $str = trim(mb_strtolower($str));
