@@ -5,42 +5,41 @@
                     <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-custom">
                         <div class="login-register-wrapper">
                             <div class="section-content text-center mb-5">
-                                <h2 class="title-4 mb-2">Create Account</h2>
-                                <p class="desc-content">Please Register using account detail bellow.</p>
+                                <h2 class="title-4 mb-2">Đăng ký</h2>
+                                <p class="desc-content"></p>
                             </div>
-                            <form action="<?php echo BASE_URL.'/auth/register' ?>" method="post">
+                            <form action="<?php echo BASE_URL . '/auth/register' ?>" method="post">
                                 <div class="single-input-item mb-3">
-                                    <input type="text" name="firstname" placeholder="First Name">
+                                    <input type="text" name="firstname" placeholder="Nhập họ...">
                                     <span class="text-danger error"><?php echo $data['data']['first_name_error'] ?></span>
                                 </div>
                                 <div class="single-input-item mb-3">
-                                    <input type="text" name="lastname" placeholder="Last Name">
+                                    <input type="text" name="lastname" placeholder="Nhập tên...">
                                     <span class="text-danger error"><?php echo $data['data']['last_name_error'] ?></span>
                                 </div>
                                 <div class="single-input-item mb-3">
-                                    <input type="email" name="email" placeholder="Email or Username">
+                                    <input type="email" name="email" placeholder="Nhập email...">
                                     <span class="text-danger error"><?php echo $data['data']['email_error'] ?></span>
                                 </div>
                                 <div class="single-input-item mb-3">
-                                    <input type="password" name="pass" placeholder="Enter your Password">
+                                    <input type="password" name="pass" placeholder="Nhập mật khẩu...">
                                     <span class="text-danger error"><?php echo $data['data']['pass_error'] ?></span>
                                 </div>
                                 <div class="single-input-item mb-3">
-                                    <input type="password" name="repass" placeholder="Confirm Password">
+                                    <input type="password" name="repass" placeholder="Xác nhận mật khẩu...">
                                     <span class="text-danger error"><?php echo $data['data']['repass_error'] ?></span>
                                 </div>
                                 <div class="single-input-item mb-3">
                                     <div class="login-reg-form-meta d-flex align-items-center justify-content-between">
                                         <div class="remember-meta mb-3">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="rememberMe">
-                                                <label class="custom-control-label" for="rememberMe">Subscribe Our Newsletter</label>
+                                            <div class="forget-password">
+                                                <span>Bạn đã có tài khoản?</span> <a href="<?php echo BASE_URL . '/auth/login' ?>" style="color:#E98C81" class="sign-up">Đăng nhập</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="single-input-item mb-3">
-                                    <button class="btn obrien-button-2 primary-color">Register</button>
+                                    <button class="btn obrien-button-2 primary-color">Đăng ký</button>
                                 </div>
                             </form>
                         </div>
@@ -48,4 +47,3 @@
                 </div>
             </div>
         </div>
-        <!-- Login Area End Here -->

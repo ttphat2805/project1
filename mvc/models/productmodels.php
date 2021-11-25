@@ -25,10 +25,15 @@ class productmodels extends db
 
     function insertproduct($categoryid, $name, $name_slug, $imageName, $description, $status)
     {
-        $query = "INSERT INTO products(categoryid,name,slug,image,description,status) 
-            values ('$categoryid',:name,'$name_slug','$imageName','$description','$status')";
+        $query = "INSERT INTO products(categoryid,name,image,description,status) 
+            values (:categoryid,:name,:imageName,:description,:status)";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindValue(":name", $name, PDO::PARAM_STR);
+        $stmt->bindValue(":categoryid",$categoryid,PDO::PARAM_INT);
+        $stmt->bindValue(":name",$name,PDO::PARAM_STR);
+        $stmt->bindValue(":imageName",$imageName,PDO::PARAM_STR);
+        $stmt->bindValue(":description",$description,PDO::PARAM_STR);
+        $stmt->bindValue(":status",$status,PDO::PARAM_INT);
+
         $stmt->execute();
         return $stmt;
     }
@@ -146,11 +151,11 @@ class productmodels extends db
         $stmt->execute([$categoryid, $name, $name_slug,  $description, $status, $id]);
     }
 
-    function updateimg($imgname)
+    function updateimg($imgname,$id)
     {
-        $query = "UPDATE products set image = ?";
+        $query = "UPDATE products set image = ? where id = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->execute([$imgname]);
+        $stmt->execute([$imgname,$id]);
     }
     function delete_product_type($id)
     {
