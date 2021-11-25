@@ -1,58 +1,86 @@
-.main-header-area .header-logo img {
-    width: 100px;
-}
-
-.product-area {
-    padding-top: 60px;
-}
-
-.latest-blog-area {
-    padding-bottom: 100px;
-}
-
-.product-size {
-    display: flex;
-}
-
-.product-size input[type="radio"] {
-    display: none;
-}
-
-.product-size>p {
-    margin-top: 7px;
-    margin-right: 7px;
-}
-
-.product-size input[type="radio"]:checked+.sd {
-    border: 1px solid #E98C81;
-    background: #E98C81;
-    color: #fff;
-}
-
-.product-size label.sd {
-    display: block;
-    margin-top: 5px;
-    margin-right: 2px;
-    background: #fff;
-    width: 35px;
-    height: 30px;
-    line-height: 30px;
-    position: relative;
-    border: 1px solid #e5e5e5;
-    font-size: 12px;
-    font-weight: 500;
-    text-align: center;
-    cursor: pointer;
-}
-
-/* css những dòng lỗi */
-.error{
-    font-style: italic;
-    display: block;
-    margin: 0 auto;
-.loader_pizza img {
-    position: absolute;
-    left: 50%;
-    top: 100%;
-    transform: translate(-50%, -50%);
-    z-index: 100;
+    .main-header-area .header-logo img {
+        width: 100px;
+    }
+    
+    .product-area {
+        padding-top: 60px;
+    }
+    
+    .latest-blog-area {
+        padding-bottom: 100px;
+    }
+    
+    .product-size {
+        display: flex;
+    }
+    
+    .product-size input[type="radio"] {
+        display: none;
+    }
+    
+    .product-size>p {
+        margin-top: 7px;
+        margin-right: 7px;
+    }
+    
+    .product-size input[type="radio"]:checked+.sd {
+        border: 1px solid #E98C81;
+        background: #E98C81;
+        color: #fff;
+    }
+    
+    .product-size label.sd {
+        display: block;
+        margin-top: 5px;
+        margin-right: 2px;
+        background: #fff;
+        width: 35px;
+        height: 30px;
+        line-height: 30px;
+        position: relative;
+        border: 1px solid #e5e5e5;
+        font-size: 12px;
+        font-weight: 500;
+        text-align: center;
+        cursor: pointer;
+    }
+    /* css những dòng lỗi */
+    
+    .error {
+        font-style: italic;
+        display: block;
+        margin: 0 auto;
+    }
+    
+    .loader_pizza img {
+        position: absolute;
+        left: 50%;
+        top: 100%;
+        transform: translate(-50%, -50%);
+        z-index: 100;
+    }
+    
+    .cart-item-wrapper {
+        background-color: lightblue;
+        height: 400px;
+        overflow-y: scroll;
+    }
+    
+    .obrien-button {
+        font-size: 16px;
+    }
+    
+     ::-webkit-scrollbar {
+        width: 10px;
+    }
+    /* Track */
+    
+     ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    /* Handle */
+    
+     ::-webkit-scrollbar-thumb {
+        background: #E98C81;
+        border-radius: 10px;
+    }

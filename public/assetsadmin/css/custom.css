@@ -156,3 +156,17 @@ input.form-control:focus {
     justify-content: space-between;
     align-items: center;
 }
+
+.list_gallery {
+    display: inline-block;
+    position: relative;
+}
+
+.list_gallery label>i {
+    background: red;
+    padding: 3px 4px;
+}
+
+.radio-close {
+    position: absolute;
+}

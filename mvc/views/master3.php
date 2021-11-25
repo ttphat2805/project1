@@ -6,7 +6,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Admin</title>
-    <!-- plugins:css -->
+        <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.15.3/css/all.css">
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo BASE_URL; ?>/public/assets/images/logoweb.png">
     <link rel="stylesheet" href=" <?php echo BASE_URL; ?>/public/assetsadmin/vendors/mdi/css/materialdesignicons.min.css">
     <!-- endinject -->
@@ -27,7 +28,7 @@
         <!-- partial:partials/_sidebar.html -->
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-                <a class="sidebar-brand brand-logo" href="index.html"><img src=" <?php echo BASE_URL; ?>/public/assetsadmin/image/logo-white.png" alt="logo" /></a>
+                <a class="sidebar-brand brand-logo" href="<?php echo BASE_URL; ?>/admin"><img src=" <?php echo BASE_URL; ?>/public/assetsadmin/image/logo-white.png" alt="logo" /></a>
                 <a class="sidebar-brand brand-logo-mini" href="index.html"><img src=" <?php echo BASE_URL; ?>/public/assetsadmin/image/logo-white.png" alt="logo" /></a>
             </div>
             <ul class="nav">

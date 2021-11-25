@@ -27,6 +27,10 @@
     <link rel="stylesheet" href=" <?php echo BASE_URL; ?>/public/assets/toastr/toastr.min.css"> 
     <script src="<?php echo BASE_URL; ?>/public/assets/toastr/toastr.min.js"></script>
     <script src="<?php echo BASE_URL; ?>/public/assets/js/custom.js"></script>
+    <script src="<?php echo BASE_URL; ?>/public/assets/js/product.js"></script>
+    <script src="<?php echo BASE_URL; ?>/public/assets/js/cart.js"></script>
+
+
 
 <footer class="footer-area">
     <div class="footer-widget-area">

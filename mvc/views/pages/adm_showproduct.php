@@ -88,7 +88,7 @@ $attr = new showproduct();
                                     <td><?= $item['status'] == 1 ? '<label class="badge badge-success">Còn hàng</label>' : '<label class="badge badge-danger">Hết hàng</label>' ?></td>
                                     <td>
                                         <a class="btn btn-primary" href="<?php echo BASE_URL ?>/admin/infoproduct/<?= $item['idproduct'] ?>">Sửa</a>
-                                        <a class="btn btn-danger click_delete" href="<?php echo BASE_URL ?>/admin/deleteproduct/<?= $item['idproduct'] ?>">Xóa</a>
+                                        <a class="btn btn-danger btn__delete" href="<?php echo BASE_URL ?>/admin/deleteproduct/<?= $item['idproduct'] ?>">Xóa</a>
                                     </td>
                                 </tr>
                             <?php

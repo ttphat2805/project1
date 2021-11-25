@@ -38,13 +38,14 @@ class Admin extends Controller
     {
         if (isset($_POST['btn__submit'])) {
             $name = $_POST['name'];
+            $name_slug = change_slug($name);
             $status = $_POST['status'];
             $check = $this->category->checkexistname('category', $name);
             if ($check == 1) {
                 $_SESSION['toastr-code'] = "warning";
                 $_SESSION['toastr-noti'] = "Đã tồn tại tên danh mục này";
             } else {
-                $this->category->addcategory($name, $status);
+                $this->category->addcategory($name,$name_slug, $status);
                 $_SESSION['toastr-code'] = "success";
                 $_SESSION['toastr-noti'] = "Thêm thành công";
                 header('Location:' . BASE_URL . '/admin/showcategory');
@@ -79,13 +80,14 @@ class Admin extends Controller
         if (isset($_POST['btn__submit'])) {
             $id = $_POST['id'];
             $name = $_POST['name'];
+            $name_slug = change_slug($name);
             $status = $_POST['status'];
             $check = $this->category->checkexistname('category', $name, $id);
             if ($check != 0) {
                 $_SESSION['toastr-code'] = "warning";
                 $_SESSION['toastr-noti'] = "Đã tồn tại danh mục này";
             } else {
-                $this->category->updatecategory($id, $name, $status);
+                $this->category->updatecategory($name, $name_slug, $status,$id);
                 $_SESSION['toastr-code'] = "success";
                 $_SESSION['toastr-noti'] = "Cập nhật thành công";
             }
@@ -135,6 +137,7 @@ class Admin extends Controller
                 $_SESSION['toastr-code'] = "warning";
                 $_SESSION['toastr-noti'] = "Đã tồn tại tên này";
             } else {
+                $name_slug = change_slug($name);
                 $categoryid = $_POST['categoryid'];
                 if (isset($_POST['price'])) {
                     $price = $_POST['price'];
@@ -151,7 +154,12 @@ class Admin extends Controller
                 if (in_array($ext, $extension)) {
                     $imageName = time() . '_' . $imageName;
                     move_uploaded_file($imageTemp, $store . $imageName);
-                    $this->product->insertproduct($categoryid, $name, $imageName, $description, $status);
+                    $this->product->insertproduct($categoryid, $name,$name_slug, $imageName, $description, $status);
+                }else{
+                    $_SESSION['toastr-code'] = "warning";
+                    $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
+                    header('Location: ' . BASE_URL . '/admin/addproduct');
+                    exit();
                 }
                 $product_id = $this->product->selectidproduct();
 
@@ -202,6 +210,26 @@ class Admin extends Controller
             ]
         );
     }
+    function load_gallery($id)
+    {
+        $output = '<div class="list_gallery" onclick="getIdimg();">';
+
+        $getgallery = $this->product->getgallery($id);
+
+        foreach($getgallery as $img){
+            $output .= '<input type="radio" name="closegallery" id="radio_'.$img['id'].'" value="'.$img['id'].'" class="radio-close">
+            <label for="radio_'.$img['id'].'" class="radio-close"><i class="fal fa-times"></i></label>
+            <img src="'.BASE_URL.'/public/assets/images/product/'.$img['gallery'].'" alt="Ảnh không tồn tại !" width="100px" height="100px">
+            <input type="hidden" name="gallery1" class="form-control" value="'.$img['gallery'].'">';
+        }
+        $output .= '</div>';
+        echo $output;
+    }
+    function delimg($idimg)
+    {
+        $this->product->delete_image($idimg);
+    }
+
 
     function infoproduct($id)
     {
@@ -223,35 +251,38 @@ class Admin extends Controller
         if (isset($_POST['btn__submit'])) {
             $id = $_POST['id'];
             $name = $_POST['name'];
+            $name_slug = change_slug($name);
             $check = $this->category->checkexistname('products', $name, $id);
             if ($check != 0) {
                 $_SESSION['toastr-code'] = "warning";
                 $_SESSION['toastr-noti'] = "Đã tồn tại danh mục này";
+                header('Location: ' . BASE_URL . '/admin/infoproduct/' . $id);
             } else {
-
                 $categoryid = $_POST['categoryid'];
                 $description = $_POST['description'];
                 $status = $_POST['status'];
-
                 //Xử lý phần ảnh!!!!
                 $extension = array('jpeg', 'jpg', 'png', 'gif', 'webp');
                 $store = "public/assets/images/product/";
                 $imageName = $_FILES['image']['name'];
                 $imageTemp = $_FILES['image']['tmp_name'];
-                if (empty($imageName)) {
-                    $imageName = $_POST['image1'];
+                $this->product->updateproduct($categoryid, $name,$name_slug, $description, $status, $id);
+                if (!empty($imageName)) {
+                    $ext = pathinfo($imageName, PATHINFO_EXTENSION);
+                    if (in_array($ext, $extension)) {
+                        $imageName = time() . '_' . $imageName;
+                        move_uploaded_file($imageTemp, $store . $imageName);
+                        $this->product->updateimg($imageName);
+                    }else{
+                        $_SESSION['toastr-code'] = "warning";
+                        $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
+                        header('Location: ' . BASE_URL . '/admin/infoproduct/' . $id);
+                    }
                 }
-                $ext = pathinfo($imageName, PATHINFO_EXTENSION);
-                if (in_array($ext, $extension)) {
-                    $imageName = time() . '_' . $imageName;
-                    move_uploaded_file($imageTemp, $store . $imageName);
-                    $this->product->updateproduct($categoryid, $name, $imageName, $description, $status, $id);
-                }
-                $product_id = $this->product->selectidproduct();
                 if ($categoryid !== 19) {
                     $this->product->delete_product_type($id);
                 }
-                if($categoryid == 19){
+                if ($categoryid == 19) {
                     $size_value = $_POST['size_value'];
                     $this->product->delete_product_type($id);
                     foreach ($size_value as $key => $value) {
@@ -265,107 +296,41 @@ class Admin extends Controller
                     $quantity = $_POST['quantity'];
                     $this->product->insertproduct_type($id, $price, $quantity);
                 }
-                // if (!isset($galleryName)) {
-                //     $this->product->delete_image($id);
-                //     foreach ($_FILES['gallery']['tmp_name'] as $key => $value) {
-                //         $galleryName = $_FILES['gallery']['name'][$key];
-                //         $galleryTemp = $_FILES['gallery']['tmp_name'][$key];
-                //         // if (empty($galleryName)) {
-                //         //     $galleryName = $_POST['gallery1'];
-                //         // }
-                //         // echo $_POST['gallery1'];
-                //         $ext = pathinfo($galleryName, PATHINFO_EXTENSION);
-                //         // echo $ext.'duoi file';
-                //         // print_r($galleryName);
-                //         $final_image = '';
 
-                //         if (in_array($ext, $extension)) {
-                //             $newgalleryName = time() . '_' . $galleryName;
-                //             // echo $newgalleryName;
-                //             move_uploaded_file($galleryTemp, $store . $newgalleryName);
-                //             $final_image = $newgalleryName;
-                //             $this->product->insertlistimg($id, $final_image);
-                //         }
-                //     }
-                // }
-            }
-        }
-    }
-
-    function updateproductt()
-    {
-        if (isset($_POST['btn__submit'])) {
-            $id = $_POST['id'];
-            $name = $_POST['name'];
-            $check = $this->category->checkexistname('products', $name, $id);
-            if ($check != 0) {
-                $_SESSION['toastr-code'] = "warning";
-                $_SESSION['toastr-noti'] = "Đã tồn tại danh mục này";
-            } else {
-
-                $categoryid = $_POST['categoryid'];
-                $description = $_POST['description'];
-                $status = $_POST['status'];
-
-                //Xử lý phần ảnh!!!!
-                $extension = array('jpeg', 'jpg', 'png', 'gif', 'webp');
-                $store = "public/assets/images/product/";
-                $imageName = $_FILES['image']['name'];
-                $imageTemp = $_FILES['image']['tmp_name'];
-                if (empty($imageName)) {
-                    $imageName = $_POST['image1'];
-                }
-                $ext = pathinfo($imageName, PATHINFO_EXTENSION);
-                if (in_array($ext, $extension)) {
-                    $imageName = time() . '_' . $imageName;
-                    move_uploaded_file($imageTemp, $store . $imageName);
-                    $this->product->updateproduct($categoryid, $name, $imageName, $description, $status, $id);
-                }
-                $product_id = $this->product->selectidproduct();
-                if ($categoryid !== 19) {
-                    $this->product->delete_product_type($id);
-                }
-                if($categoryid == 19){
-                    $size_value = $_POST['size_value'];
-                    $this->product->delete_product_type($id);
-                    foreach ($size_value as $key => $value) {
-                        $price_value = $_POST['price_attribute'][$key];
-                        $quantity_attr = $_POST['quantity_attribute'][$key];
-                        $this->product->insertproduct_type_attr($value, $id, $price_value, $quantity_attr);
+                // $this->product->delete_image($id);
+                if (!empty($_FILES['gallery'])) {
+                    foreach ($_FILES['gallery']['tmp_name'] as $key => $value) {
+                        $galleryName = $_FILES['gallery']['name'][$key];
+                        $galleryTemp = $_FILES['gallery']['tmp_name'][$key];
+                        $ext = pathinfo($galleryName, PATHINFO_EXTENSION);
+                        $final_image = '';
+                        if (in_array($ext, $extension)) {
+                            $newgalleryName = time() . '_' . $galleryName;
+                            // echo $newgalleryName;
+                            move_uploaded_file($galleryTemp, $store . $newgalleryName);
+                            $final_image = $newgalleryName;
+                            $this->product->insertlistimg($id, $final_image);
+                        }
                     }
                 }
-                if ($_POST['price'] != 0) {
-                    $price = $_POST['price'];
-                    $quantity = $_POST['quantity'];
-                    $this->product->insertproduct_type($id, $price, $quantity);
-                }
-                // if (!isset($galleryName)) {
-                //     $this->product->delete_image($id);
-                //     foreach ($_FILES['gallery']['tmp_name'] as $key => $value) {
-                //         $galleryName = $_FILES['gallery']['name'][$key];
-                //         $galleryTemp = $_FILES['gallery']['tmp_name'][$key];
-                //         // if (empty($galleryName)) {
-                //         //     $galleryName = $_POST['gallery1'];
-                //         // }
-                //         // echo $_POST['gallery1'];
-                //         $ext = pathinfo($galleryName, PATHINFO_EXTENSION);
-                //         // echo $ext.'duoi file';
-                //         // print_r($galleryName);
-                //         $final_image = '';
-
-                //         if (in_array($ext, $extension)) {
-                //             $newgalleryName = time() . '_' . $galleryName;
-                //             // echo $newgalleryName;
-                //             move_uploaded_file($galleryTemp, $store . $newgalleryName);
-                //             $final_image = $newgalleryName;
-                //             $this->product->insertlistimg($id, $final_image);
-                //         }
-                //     }
-                // }
+                $_SESSION['toastr-code'] = "success";
+                $_SESSION['toastr-noti'] = "Cập nhật thành công";
+                header('Location: ' . BASE_URL . '/admin/infoproduct/' . $id);
+                exit();
             }
         }
     }
 
+
+    function deleteproduct($id){
+        $this->product->delete_product('prod_image','productid',$id);
+        $this->product->delete_product('product_type','product_id',$id);
+        $this->product->delete_product('products','id',$id);
+        $_SESSION['toastr-code'] = "success";
+        $_SESSION['toastr-noti'] = "Xóa thành công";
+        header('Location: ' . BASE_URL . '/admin/showproduct');
+        exit();
+    }
     // END - PRODUCT
 
 
@@ -410,7 +375,7 @@ class Admin extends Controller
             [
                 "pages" => "adm_updateattr",
                 "attribute" => $this->attribute->infoattribute($id),
-
+                "category" => $this->category->getcategory(),
             ]
         );
     }
@@ -419,14 +384,32 @@ class Admin extends Controller
     {
         if (isset($_POST['btn__submit'])) {
             $id = $_POST['id'];
-            $name = $_POST['name'];
-            $value = $_POST['value'];
+            $name = $_POST['name_value'];
+            $value = $_POST['attr_value'];
             $this->attribute->updateattribute($name, $value, $id);
             $_SESSION['toastr-code'] = "success";
             $_SESSION['toastr-noti'] = "Cập nhật thành công";
             header('Location: ' . BASE_URL . '/admin/showattr');
             exit();
         }
+    }
+
+    function deleteattribute($id)
+    {
+        $attribute_id = $this->attribute->getproduct_type();
+        foreach ($attribute_id as $item) {
+            if ($item['attribute_id'] === $id) {
+                $_SESSION['toastr-code'] = "error";
+                $_SESSION['toastr-noti'] = "Không thể xóa, đã có sản phẩm chứa thuộc tính này";
+                header('Location: ' . BASE_URL . '/admin/showattr');
+                exit();
+            }
+        }
+        $this->attribute->deleteattribute($id);
+        $_SESSION['toastr-code'] = "success";
+        $_SESSION['toastr-noti'] = "Xóa thành công";
+        header('Location: ' . BASE_URL . '/admin/showattr');
+        exit();
     }
 
     // END - ATTRIBUTE

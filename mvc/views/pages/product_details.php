@@ -14,7 +14,7 @@
                         }'>
                                 <div class="single-image border">
                                     <a href="">
-                                        <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?php echo $data['productdetails']['image'] ?>" alt="Product">
+                                        <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?=$data['productdetails']['image'] ?>" alt="Product">
                                     </a>
                                 </div>
 
@@ -57,70 +57,76 @@
                         </div>
                     </div>
                     <div class="col-lg-7 col-custom">
-                        <div class="product-summery position-relative">
-                            <div class="product-head mb-3">
-                                <h2 class="product-title">
-                                    <?php echo $data['productdetails']['name'] ?>
-                                </h2>
-                            </div>
-                            <div class="price-box mb-2">
-                                <span class="regular-price"><span class="price-view"><?= number_format($data['productdetails']['price']) ?> </span> VNĐ</span>
-                                <span class="old-price"><del class="oldprice-view"><?= number_format($data['productdetails']['price'] + 12500) ?></del>VNĐ</span>
-                            </div>
-                            <div class="product-rating mb-3">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <div class="sku mb-3">
-                                <span>Lượt xem: <?php echo $data['productdetails']['views'] ?></span>
-                            </div>
-                            <p class="desc-content mb-5">
-                                <?php echo $data['productdetails']['description'] ?>
-                            </p>
-                            <div>Số lượng còn lại là: <span class="quantity_view"></span></div>
-                            <?php
-                            if ($data['product_type']['attribute_id'] !== NULL) {
-                            ?>
-                                <div class="product-meta">
-                                    <div class="product-size mb-4">
-                                        <p>Size :</p>
-                                        <?php
-                                        foreach ($data['productdetailattr'] as $size) :
-                                        ?>
-                                            <input id="prod-size-<?= $size['value'] ?>" type="radio" name="option1" value="<?= $size['value'] ?>">
-                                            <label for="prod-size-<?= $size['value'] ?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
-                                                <span><?= $size['value'] ?></span>
-                                            </label>
-                                        <?php
-                                        endforeach;
-                                        ?>
+                        <form action="<?= BASE_URL ?>/cart/addcart/<?= $data['productdetails']['idproduct'] ?>" method="post">
+                            <input type="hidden" value="<?= $data['productdetails']['idproduct'] ?>">
+                            <input type="hidden" value="<?= $data['productdetails']['name'] ?>">
+                            <div class="product-summery position-relative">
+                                <div class="product-head mb-3">
+                                    <h2 class="product-title">
+                                        <?php echo $data['productdetails']['name'] ?>
+                                    </h2>
+                                </div>
+                                <div class="price-box mb-2">
+                                    <span class="regular-price"><span class="price-view"><?= number_format($data['productdetails']['price']) ?> </span> VNĐ</span>
+                                    <span class="old-price"><del class="oldprice-view"><?= number_format($data['productdetails']['price'] + 12500) ?></del>VNĐ</span>
+                                </div>
+                                <div class="product-rating mb-3">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div>
+                                <div class="sku mb-3">
+                                    <span>Lượt xem: <?php echo $data['productdetails']['views'] ?></span>
+                                </div>
+                                <p class="desc-content mb-5">
+                                    <?php echo $data['productdetails']['description'] ?>
+                                </p>
+                                <div>Số lượng còn lại là: <span class="quantity_view">
+                                        <?php echo $data['productdetails']['quantity'] ?>
+                                    </span></div>
+                                <?php
+                                if ($data['product_type']['attribute_id'] !== NULL) {
+                                ?>
+                                    <div class="product-meta">
+                                        <div class="product-size mb-4">
+                                            <p>Size :</p>
+                                            <?php
+                                            foreach ($data['productdetailattr'] as $size) :
+                                            ?>
+                                                <input id="prod-size-<?= $size['value'] ?>" type="radio" name="option1" value="<?= $size['value'] ?>">
+                                                <label for="prod-size-<?= $size['value'] ?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
+                                                    <span><?= $size['value'] ?></span>
+                                                </label>
+                                            <?php
+                                            endforeach;
+                                            ?>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                                <div class="quantity-with_btn mb-4">
+                                    <div class="quantity">
+                                        <div class="cart-plus-minus">
+                                            <input class="cart-plus-minus-box" value="0" type="text">
+                                            <div class="dec qtybutton">-</div>
+                                            <div class="inc qtybutton">+</div>
+                                        </div>
                                     </div>
                                 </div>
-                            <?php } ?>
-                            <div class="quantity-with_btn mb-4">
-                                <div class="quantity">
-                                    <div class="cart-plus-minus">
-                                        <input class="cart-plus-minus-box" value="0" type="text">
-                                        <div class="dec qtybutton">-</div>
-                                        <div class="inc qtybutton">+</div>
-                                    </div>
+                                <div class="add-to_cart mb-4">
+                                    <input type="submit" value="Mua ngay" name="btn_submit" class="btn obrien-button primary-btn" href="">
+                                    <a class="btn obrien-button-2 treansparent-color pt-0 pb-0" href="wishlist.html">+ Yêu thích</a>
+                                </div>
+                                <div class="social-share mb-4">
+                                    <span>Share :</span>
+                                    <a href="#"><i class="fa fa-facebook-square facebook-color"></i></a>
+                                    <a href="#"><i class="fa fa-twitter-square twitter-color"></i></a>
+                                    <a href="#"><i class="fa fa-linkedin-square linkedin-color"></i></a>
+                                    <a href="#"><i class="fa fa-pinterest-square pinterest-color"></i></a>
                                 </div>
                             </div>
-                            <div class="add-to_cart mb-4">
-                                <a class="btn obrien-button primary-btn" href="cart.html">Mua ngay</a>
-                                <a class="btn obrien-button-2 treansparent-color pt-0 pb-0" href="wishlist.html">+ Yêu thích</a>
-                            </div>
-                            <div class="social-share mb-4">
-                                <span>Share :</span>
-                                <a href="#"><i class="fa fa-facebook-square facebook-color"></i></a>
-                                <a href="#"><i class="fa fa-twitter-square twitter-color"></i></a>
-                                <a href="#"><i class="fa fa-linkedin-square linkedin-color"></i></a>
-                                <a href="#"><i class="fa fa-pinterest-square pinterest-color"></i></a>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <div class="row mt-no-text">
@@ -527,7 +533,6 @@
             </div>
         </div>
         <!-- Product Area End Here -->
-
         <script>
             $(document).ready(function() {
                 $(".btn-value-size").click(function() {
@@ -544,10 +549,8 @@
                         }
                     });
                 })
-            })
 
 
-            $(document).ready(function() {
                 $(".btn-value-size").click(function() {
                     let size = $(this).attr('id');
                     $.ajax({
@@ -561,10 +564,8 @@
                         }
                     });
                 })
-            })
 
 
-            $(document).ready(function() {
                 $(".btn-value-size").click(function() {
                     let size = $(this).attr('id');
                     $.ajax({
