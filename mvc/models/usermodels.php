@@ -109,9 +109,10 @@ class usermodels extends db {
     }
 
     public function getInforSocailAcccount($id, $table) {
+
         $table_name = $table.'_account';
         $table_id = $table.'_id';
-        $sql = "select B.id, B.fullname, B.mobile, B.email from `$table_name` A inner join `member` B on A.memberid = B.id where A.$table_id = $id ";
+        $sql = "select B.id, B.fullname, B.mobile, B.email from `$table_name` A inner join `member` B on A.memberid = B.id where A.$table_id like $id ";
         $query = $this->conn->prepare($sql);
         $query->execute();
 
