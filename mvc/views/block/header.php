@@ -66,7 +66,7 @@
                                             <div class="login-register-wrapper dropdown-sidemenu dropdown-hover-2">
                                                 <ul class="">
                                                     <li> <a href="<?php echo BASE_URL . '/auth/login' ?>">Đăng nhập</a> </li>
-                                                    <li> <a href="">Đăng ký</a> </li>
+                                                    <li> <a href="<?php echo BASE_URL . '/auth/register' ?>">Đăng ký</a> </li>
                                                 </ul>
                                             </div>
                                     </li>
@@ -247,7 +247,8 @@
                                         <?php
                                         if (isset($_SESSION['user_infor']['user_name'])) {
                                         ?>
-                                            <a class="hello_account" href="<?=BASE_URL?>/myaccount"> Chào: <?=$_SESSION['user_infor']['user_name']?></a>
+                                            <a class="hello_account" href="<?=BASE_URL?>/myaccount"> Chào: <?=$_SESSION['user_infor']['user_name']?>
+                                        </a>
                                         <?php
                                         } ?>
                                         <a href="" class="login-register-btn">
@@ -259,7 +260,7 @@
                                             <div class="login-register-wrapper dropdown-sidemenu dropdown-hover-2">
                                                 <ul class="">
                                                     <li> <a href="<?php echo BASE_URL . '/auth/login' ?>">Đăng nhập</a> </li>
-                                                    <li> <a href="">Đăng ký</a> </li>
+                                                    <li> <a href="<?php echo BASE_URL . '/auth/register' ?>">Đăng ký</a> </li>
                                                 </ul>
                                             </div>
                                     </li>

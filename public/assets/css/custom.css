@@ -51,7 +51,6 @@
 .error {
     font-style: italic;
     display: block;
-    margin: 0 auto;
 }
 
 .loader_pizza img {
@@ -137,4 +136,30 @@
     margin-right: 5px;
     font-weight: 400;
     font-family: Roboto;
+}
+
+.background-zoom {
+    background-position: 50% 50%;
+    position: relative;
+    overflow: hidden;
+    cursor: zoom-in;
+    background-repeat: no-repeat;
+    background-color: hsla(0, 0%, 100%, 1);
+    /* background-blend-mode: overlay; */
+}
+
+.background-zoom:hover {
+    transition: background-color 1s;
+    background-color: hsla(0, 0%, 100%, 0);
+    /* background-blend-mode: overlay; */
+}
+
+.background-zoom img:hover {
+    opacity: 0;
+}
+
+.background-zoom img {
+    width: 100%;
+    transition: opacity 0.5s;
+    display: block;
 }

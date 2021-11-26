@@ -30,8 +30,6 @@
     <script src="<?php echo BASE_URL; ?>/public/assets/js/product.js"></script>
     <script src="<?php echo BASE_URL; ?>/public/assets/js/cart.js"></script>
 
-
-
 <footer class="footer-area">
     <div class="footer-widget-area">
         <div class="container container-default custom-area">
@@ -168,6 +166,9 @@
         }
     ?>
 
-<script>
+    <script>
+
 <?php echo "let SITE_URL = '" . BASE_URL . "';"; ?>
-</script>
+    
+    </script>
+

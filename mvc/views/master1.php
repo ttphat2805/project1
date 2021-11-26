@@ -5,8 +5,6 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>G6 - FOOD</title>
-    <meta name="robots" content="noindex, follow" />
-    <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo BASE_URL; ?>/public/assets/images/logoweb.png">
@@ -97,8 +95,10 @@
             </div>
         </div>
         <?php
-        Class homepage extends db{
-            function getproduct_detail_attr($id){
+        class homepage extends db
+        {
+            function getproduct_detail_attr($id)
+            {
                 $query = "SELECT a.*,b.id as 'idattr',b.value,b.name from attribute b inner join product_type a on b.id = a.attribute_id where a.product_id = $id";
                 $stmt = $this->conn->prepare($query);
                 $stmt->execute();
@@ -148,76 +148,76 @@
                         "slidesToShow": 1
                         }}
                         ]'>
-                        <?php
-                        foreach ($data['product_trends'] as $trend):
-                        ?>
-                        <div class="single-item">
-                                <div class="single-product position-relative">
-                                    <div class="product-image">
-                                        <a class="d-block" href="<?php echo BASE_URL ?>/productdetail/show/<?=$trend['slug']?>">
-                                            <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?=$trend['image']?>" alt="" class="product-image-1 w-100">
-                                        </a>
-                                    </div>
-                                    <div class="product-content">
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
+                            <?php
+                            foreach ($data['product_trends'] as $trend) :
+                            ?>
+                                <div class="single-item">
+                                    <div class="single-product position-relative">
+                                        <div class="product-image">
+                                            <a class="d-block" href="<?php echo BASE_URL ?>/productdetail/show/<?= $trend['slug'] ?>">
+                                                <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $trend['image'] ?>" alt="" class="product-image-1 w-100">
+                                            </a>
                                         </div>
-                                        <?php
-                                        $product_attr = $homepage->getproduct_detail_attr($trend['idproduct']);
-                                        $attr_id = $homepage->getproduct_type_id($trend['idproduct']);
-                                if ($attr_id['attribute_id'] !== NULL) {
-                                ?>
-                                    <div class="product-size mb-4">
-                                        <p>Size :</p>
-                                        <?php
-                                        foreach ($product_attr as $size) :
-                                        ?>
-                                            <input id="prod-size-<?= $size['value']?>-<?=$trend['idproduct']?>" type="radio" name="option1" value="<?= $size['value'] ?>">
-                                            <label for="prod-size-<?= $size['value']?>-<?=$trend['idproduct']?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
-                                                <span><?= $size['value'] ?></span>
-                                            </label>
-                                        <?php
-                                        endforeach;
-                                        ?>
-                                    </div>
-                                    <?php
-                                    
-                                    }?>
-                                        <div class="product-title">
-                                            <h4 class="title-2"> <a href="<?php echo BASE_URL ?>/productdetail/show/<?=$trend['slug']?>"><?=$trend['name']?></a></h4>
+                                        <div class="product-content">
+                                            <div class="product-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                            </div>
+                                            <?php
+                                            $product_attr = $homepage->getproduct_detail_attr($trend['idproduct']);
+                                            $attr_id = $homepage->getproduct_type_id($trend['idproduct']);
+                                            if ($attr_id['attribute_id'] !== NULL) {
+                                            ?>
+                                                <div class="product-size mb-4">
+                                                    <p>Size :</p>
+                                                    <?php
+                                                    foreach ($product_attr as $size) :
+                                                    ?>
+                                                        <input id="prod-size-<?= $size['value'] ?>-<?= $trend['idproduct'] ?>" type="radio" name="option1" value="<?= $size['value'] ?>">
+                                                        <label for="prod-size-<?= $size['value'] ?>-<?= $trend['idproduct'] ?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
+                                                            <span><?= $size['value'] ?></span>
+                                                        </label>
+                                                    <?php
+                                                    endforeach;
+                                                    ?>
+                                                </div>
+                                            <?php
+
+                                            } ?>
+                                            <div class="product-title">
+                                                <h4 class="title-2"> <a href="<?php echo BASE_URL ?>/productdetail/show/<?= $trend['slug'] ?>"><?= $trend['name'] ?></a></h4>
+                                            </div>
+                                            <div class="price-box">
+                                                <span class="regular-price "><?= number_format($trend['price']); ?></span>
+                                                <span class="old-price"><del><?= number_format($trend['price'] + 15000);
+                                                                                ?></del></span>
+                                            </div>
                                         </div>
-                                        <div class="price-box">
-                                        <span class="regular-price "><?=number_format($trend['price']);?></span>
-                                    <span class="old-price"><del><?=number_format($trend['price']+15000);
-                                    ?></del></span>
+                                        <div class="add-action d-flex position-absolute">
+                                            <a href="cart.html" title="Add To cart">
+                                                <i class="ion-bag"></i>
+                                            </a>
+                                            <a href="compare.html" title="Compare">
+                                                <i class="ion-ios-loop-strong"></i>
+                                            </a>
+                                            <a href="wishlist.html" title="Add To Wishlist">
+                                                <i class="ion-ios-heart-outline"></i>
+                                            </a>
+                                            <a href="#exampleModalCenter" data-toggle="modal" title="Quick View">
+                                                <i class="ion-eye"></i>
+                                            </a>
                                         </div>
-                                    </div>
-                                    <div class="add-action d-flex position-absolute">
-                                        <a href="cart.html" title="Add To cart">
-                                            <i class="ion-bag"></i>
-                                        </a>
-                                        <a href="compare.html" title="Compare">
-                                            <i class="ion-ios-loop-strong"></i>
-                                        </a>
-                                        <a href="wishlist.html" title="Add To Wishlist">
-                                            <i class="ion-ios-heart-outline"></i>
-                                        </a>
-                                        <a href="#exampleModalCenter" data-toggle="modal" title="Quick View">
-                                            <i class="ion-eye"></i>
-                                        </a>
                                     </div>
                                 </div>
-                            </div>
-                        
 
-                        <?php
-                        endforeach;
-                        ?>
-                        
+
+                            <?php
+                            endforeach;
+                            ?>
+
                         </div>
                     </div>
                 </div>
@@ -260,62 +260,63 @@
                 </div>
                 <div class="row shop_wrapper grid_4">
                     <?php
-                    foreach ($data['products'] as $item):
+                    foreach ($data['products'] as $item) :
                     ?>
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-custom product-area">
-                        <div class="single-product position-relative">
-                            <div class="product-image">
-                                <a class="d-block" href="<?php echo BASE_URL ?>/productdetail/show/<?=$item['slug']?>">
-                                    <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?=$item['image']?>" alt="" class="product-image-1 w-100">
-                                    <img src="" alt="" class="product-image-2 position-absolute w-100">
-                                </a>
-                            </div>
-                            <div class="product-content">
-                                <?php
-                            $product_attr = $homepage->getproduct_detail_attr($item['idproduct']);
-                            $attr_id = $homepage->getproduct_type_id($item['idproduct']);
-                                if ($attr_id['attribute_id'] !== NULL) {
-                                ?>
-                                    <div class="product-size mb-4">
-                                        <p>Size :</p>
-                                        <?php
-                                        foreach ($product_attr as $size) :
-                                        ?>
-                                            <input id="prod-size-<?= $size['value']?>-<?=$item['idproduct']?>" type="radio" name="option1" value="<?= $size['value'] ?>">
-                                            <label for="prod-size-<?= $size['value']?>-<?=$item['idproduct']?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
-                                                <span><?= $size['value'] ?></span>
-                                            </label>
-                                        <?php
-                                        endforeach;
-                                        ?>
-                                    </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-custom product-area">
+                            <div class="single-product position-relative">
+                                <input type="hidden" class="idproduct" value="<?= $item['idproduct'] ?>">
+                                <div class="product-image">
+                                    <a class="d-block" href="<?php echo BASE_URL ?>/productdetail/show/<?= $item['slug'] ?>">
+                                        <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $item['image'] ?>" alt="" class="product-image-1 w-100">
+                                        <img src="" alt="" class="product-image-2 position-absolute w-100">
+                                    </a>
+                                </div>
+                                <div class="product-content">
                                     <?php
-                                    
-                                    }?>
-                                <div class="product-title">
-                                    <h4 class="title-2"> <a href="<?php echo BASE_URL ?>/productdetail/show/<?=$item['slug']?>"><?=$item['name']?></a></h4>
+                                    $product_attr = $homepage->getproduct_detail_attr($item['idproduct']);
+                                    $attr_id = $homepage->getproduct_type_id($item['idproduct']);
+                                    if ($attr_id['attribute_id'] !== NULL) {
+                                    ?>
+                                        <div class="product-size mb-4">
+                                            <p>Size :</p>
+                                            <?php
+                                            foreach ($product_attr as $size) :
+                                            ?>
+                                                <input id="prod-size-<?= $size['value'] ?>-<?= $item['idproduct'] ?>" type="radio" name="option1" value="<?= $size['value'] ?>">
+                                                <label for="prod-size-<?= $size['value'] ?>-<?= $item['idproduct'] ?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
+                                                    <span><?= $size['value'] ?></span>
+                                                </label>
+                                            <?php
+                                            endforeach;
+                                            ?>
+                                        </div>
+                                    <?php
+
+                                    } ?>
+                                    <div class="product-title">
+                                        <h4 class="title-2"> <a href="<?php echo BASE_URL ?>/productdetail/show/<?= $item['slug'] ?>"><?= $item['name'] ?></a></h4>
+                                    </div>
+                                    <div class="price-box">
+                                        <span class="regular-price"><span class="price-view"><?= number_format($item['price']) ?> </span> VNĐ</span>
+                                        <span class="old-price"><del class="oldprice-view"><?= number_format($item['price'] + 12500) ?></del>VNĐ</span>
+                                    </div>
                                 </div>
-                                <div class="price-box">
-                                <span class="regular-price"><span class="price-view"><?= number_format($item['price']) ?> </span> VNĐ</span>
-                                    <span class="old-price"><del class="oldprice-view"><?= number_format($item['price'] + 12500) ?></del>VNĐ</span>
+                                <div class="add-action d-flex position-absolute">
+                                    <a href="cart.html" title="Add To cart">
+                                        <i class="ion-bag"></i>
+                                    </a>
+                                    <a href="compare.html" title="Compare">
+                                        <i class="ion-ios-loop-strong"></i>
+                                    </a>
+                                    <a class="addtowishlist" title="Add To Wishlist">
+                                        <i class="ion-ios-heart-outline"></i>
+                                    </a>
+                                    <a href="#exampleModalCenter" data-toggle="modal" title="Quick View">
+                                        <i class="ion-eye"></i>
+                                    </a>
                                 </div>
-                            </div>
-                            <div class="add-action d-flex position-absolute">
-                                <a href="cart.html" title="Add To cart">
-                                    <i class="ion-bag"></i>
-                                </a>
-                                <a href="compare.html" title="Compare">
-                                    <i class="ion-ios-loop-strong"></i>
-                                </a>
-                                <a href="wishlist.html" title="Add To Wishlist">
-                                    <i class="ion-ios-heart-outline"></i>
-                                </a>
-                                <a href="#exampleModalCenter" data-toggle="modal" title="Quick View">
-                                    <i class="ion-eye"></i>
-                                </a>
                             </div>
                         </div>
-                    </div>
                     <?php
                     endforeach;
                     ?>
@@ -515,17 +516,34 @@
             </div>
         </div>
     </div>
-    <!-- Modal Area End Here -->
-    <!-- HEADER: START -->
     <?php
     require_once './mvc/views/block/footer.php';
     ?>
-    <!-- HEADER: END -->
-    <!-- Scroll to Top Start -->
-    <a class="scroll-to-top" href="#">
-        <i class="ion-chevron-up"></i>
-    </a>
-    <!-- Scroll to Top End -->
+
+    <script>
+        $(document).ready(function() {
+            $('.addtowishlist').click(function() {
+                let parent = $(this).parents('.single-product');
+                let id_product = parent.find('.idproduct').val();
+                $.ajax({
+                    url: "<?= BASE_URL ?>/myaccount/insertwishlist",
+                    method: "POST",
+                    data: {
+                        'action': 'addWishList',
+                        'product_id': id_product
+                    },
+                    success: function(data) {
+                        if (data.length > 1000) {
+                            toastr['info']('Vui lòng đăng nhập');
+                        } else {
+                            let noti = JSON.parse(data);
+                            toastr[noti.code](noti.noti);
+                        }
+                    }
+                });
+            })
+        })
+    </script>
 </body>
 
 </html>
