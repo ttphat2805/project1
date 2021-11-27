@@ -58,7 +58,7 @@
 
                     <div class="col-lg-7 col-custom">
                         <form action="<?= BASE_URL ?>/cart/addcart/<?= $data['productdetails']['idproduct'] ?>" method="post">
-                            <input type="hidden" value="<?= $data['productdetails']['idproduct'] ?>">
+                            <input type="hidden" class="valueid" value="<?= $data['productdetails']['idproduct'] ?>">
                             <input type="hidden" value="<?= $data['productdetails']['name'] ?>">
                             <div class="product-summery position-relative">
                                 <div class="product-head mb-3">
@@ -100,7 +100,7 @@
                                                     <span><?= $size['value'] ?></span>
                                                 </label>
                                                 <!-- Button trigger modal -->
-                                                
+
                                             <?php
                                             endforeach;
                                             ?>
@@ -108,7 +108,7 @@
                                         <!-- <button type="button" class="btn mb-2" data-toggle="modal" data-target="#exampleModal">
                                                     Xem tham khảo size
                                         </button> -->
-                                        
+
                                     </div>
                                 <?php } ?>
                                 <div class="quantity-with_btn mb-4">
@@ -122,7 +122,7 @@
                                 </div>
                                 <div class="add-to_cart mb-4">
                                     <input type="submit" value="Mua ngay" name="btn_submit" class="btn obrien-button primary-btn" href="">
-                                    <a class="btn obrien-button-2 treansparent-color pt-0 pb-0" href="wishlist.html">+ Yêu thích</a>
+                                    <a class="btn obrien-button-2 treansparent-color pt-0 pb-0 addwishlistdetail">+ Yêu thích</a>
                                 </div>
                                 <div class="social-share mb-4">
                                     <span>Share :</span>
@@ -525,6 +525,27 @@
                         },
                         success: function(data) {
                             $('.quantity_view').html(data);
+                        }
+                    });
+                })
+                // WISHLIST DETAIL
+
+                $('.addwishlistdetail').click(function() {
+                    let id_product = $('.valueid').val();
+                    $.ajax({
+                        url: "<?= BASE_URL ?>/myaccount/insertwishlist",
+                        method: "POST",
+                        data: {
+                            'action': 'addWishList',
+                            'product_id': id_product
+                        },
+                        success: function(data) {
+                            if (data.length > 1000) {
+                                toastr['info']('Vui lòng đăng nhập');
+                            } else {
+                                let noti = JSON.parse(data);
+                                toastr[noti.code](noti.noti);
+                            }
                         }
                     });
                 })
