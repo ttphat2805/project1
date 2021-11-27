@@ -119,8 +119,13 @@ class usermodels extends db {
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // comment
     function showComment(){
-        $query = "SELECT a.id,a.fullname,b.memberid,b.id,b.content,b.date,b.status from member a INNER JOIN comments b on a.id = b.memberid where a.id > 0";
+        $query = "SELECT a.id,a.fullname,b.member_id,b.id as 'idcmt',b.content,b.date,b.status 
+                from member a 
+                INNER JOIN comments b 
+                on a.id = b.member_id 
+                where a.id = 1";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
