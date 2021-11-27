@@ -14,7 +14,7 @@ class productdetail extends Controller
             exit();
         }
 
-        // if(strstr($_GET['url'], '')){
+        // if(strstr($_GET['url'], 'show')){
         //     if (!isset($url[2])) {
         //         header("Location:".BASE_URL."pagenotfound");
         //         exit();
