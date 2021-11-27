@@ -30,25 +30,19 @@ class productdetail extends Controller
     {
         $_SESSION['namesite'] = 'Chi tiết món ăn';
         // print_r($this->product->getproduct_type_id($id));
-
-        {
-            $id = $this->product->getProductId($slug);
-
-
-
-            $this->view(
-                "master2",
-                [
-                    "pages" => "product_details",
-                    "detailviews" => $this->product->updateviews($id),
-                    "productdetails" => $this->product->getproductdetails($id),
-                    "productdetailall" => $this->product->getproductdetailall($id),
-                    "gallery" => $this->product->get_gallery_image($id),
-                    "productdetailattr" => $this->attribute->getproduct_detail_attr($id),
-                    "product_type" => $this->product->getproduct_type_id($id),
-                ]
-            );
-        }
+        $id = $this->product->getProductId($slug);
+        $this->view(
+            "master2",
+            [
+                "pages" => "product_details",
+                "detailviews" => $this->product->updateviews($id),
+                "productdetails" => $this->product->getproductdetails($id),
+                "productdetailall" => $this->product->getproductdetailall($id),
+                "gallery" => $this->product->get_gallery_image($id),
+                "productdetailattr" => $this->attribute->getproduct_detail_attr($id),
+                "product_type" => $this->product->getproduct_type_id($id),
+            ]
+        );
     }
     function showcmt($id)
     {

@@ -2,6 +2,7 @@
         <div class="single-product-main-area">
             <div class="container container-default custom-area">
                 <div class="row">
+
                     <div class="col-lg-5 col-custom">
                         <div class="product-details-img horizontal-tab">
                             <div class="product-slider popup-gallery product-details_slider" data-slick-options='{
@@ -13,21 +14,20 @@
                         "asNavFor": ".pd-slider-nav"
                         }'>
                                 <div class="single-image border background-zoom" onmousemove="zoom(event)" style="background-image: url('<?php echo BASE_URL ?>/public/assets/images/product/<?= $data['productdetails']['image'] ?>')">
-                                    <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $data['productdetails']['image'] ?>" alt="Product">
                                     <div class="single-image border">
                                         <a href="">
                                             <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $data['productdetails']['image'] ?>" alt="Product">
                                         </a>
                                     </div>
+                                </div>
 
-                                    <?php
-                                    foreach ($data['gallery'] as $img) :
-                                    ?>
-                                        <div class="single-image border background-zoom" onmousemove="zoom(event)" style="background-image: url('<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery'] ?>')">
-                                            <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery'] ?>" alt="Product">
-                                        </div>
-                                    <?php endforeach; ?>
-
+                                <?php
+                                foreach ($data['gallery'] as $img) :
+                                ?>
+                                    <div class="single-image border background-zoom" onmousemove="zoom(event)" style="background-image: url('<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery'] ?>')">
+                                        <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery'] ?>" alt="Product">
+                                    </div>
+                                <?php endforeach; ?>
                             </div>
                             <div class="pd-slider-nav product-slider" data-slick-options='{
                         "slidesToShow": 3,
@@ -56,8 +56,6 @@
                             </div>
                         </div>
                     </div>
-
-
 
                     <div class="col-lg-7 col-custom">
                         <form action="<?= BASE_URL ?>/cart/addcart/<?= $data['productdetails']['idproduct'] ?>" method="post">
@@ -431,7 +429,7 @@
         </div>
 
         </div>
-            
+
         <!-- Product Area End Here -->
         <script>
             $(document).ready(function() {
