@@ -1,7 +1,7 @@
 <?php 
 class categorymodels extends db{
     function getcategory(){
-        $query = "SELECT * FROM category";
+        $query = "SELECT * FROM category where status = 1";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();

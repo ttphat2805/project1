@@ -12,19 +12,15 @@
                         "swipe": false,
                         "asNavFor": ".pd-slider-nav"
                         }'>
-                                <div class="single-image border">
-                                    <a href="">
-                                        <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?=$data['productdetails']['image'] ?>" alt="Product">
-                                    </a>
+                                <div class="single-image border background-zoom" onmousemove="zoom(event)" style="background-image: url('<?php echo BASE_URL ?>/public/assets/images/product/<?= $data['productdetails']['image'] ?>')">
+                                    <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $data['productdetails']['image'] ?>" alt="Product">
                                 </div>
 
                                 <?php
                                 foreach ($data['gallery'] as $img) :
                                 ?>
-                                    <div class="single-image border">
-                                        <a href="">
-                                            <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery'] ?>" alt="Product">
-                                        </a>
+                                    <div class="single-image border background-zoom" onmousemove="zoom(event)" style="background-image: url('<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery'] ?>')">
+                                        <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery'] ?>" alt="Product">
                                     </div>
                                 <?php endforeach; ?>
 
@@ -42,6 +38,7 @@
                             {"breakpoint":992, "settings": {"slidesToShow": 4}},
                             {"breakpoint":575, "settings": {"slidesToShow": 3}}
                         ]'>
+
                                 <div class="single-thumb border">
                                     <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?php echo $data['productdetails']['image'] ?>" alt="Product thumnail">
                                 </div>
@@ -56,9 +53,12 @@
                             </div>
                         </div>
                     </div>
+
+
+
                     <div class="col-lg-7 col-custom">
                         <form action="<?= BASE_URL ?>/cart/addcart/<?= $data['productdetails']['idproduct'] ?>" method="post">
-                            <input type="hidden" value="<?= $data['productdetails']['idproduct'] ?>">
+                            <input type="hidden" class="valueid" value="<?= $data['productdetails']['idproduct'] ?>">
                             <input type="hidden" value="<?= $data['productdetails']['name'] ?>">
                             <div class="product-summery position-relative">
                                 <div class="product-head mb-3">
@@ -99,10 +99,16 @@
                                                 <label for="prod-size-<?= $size['value'] ?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
                                                     <span><?= $size['value'] ?></span>
                                                 </label>
+                                                <!-- Button trigger modal -->
+
                                             <?php
                                             endforeach;
                                             ?>
                                         </div>
+                                        <!-- <button type="button" class="btn mb-2" data-toggle="modal" data-target="#exampleModal">
+                                                    Xem tham khảo size
+                                        </button> -->
+
                                     </div>
                                 <?php } ?>
                                 <div class="quantity-with_btn mb-4">
@@ -116,7 +122,7 @@
                                 </div>
                                 <div class="add-to_cart mb-4">
                                     <input type="submit" value="Mua ngay" name="btn_submit" class="btn obrien-button primary-btn" href="">
-                                    <a class="btn obrien-button-2 treansparent-color pt-0 pb-0" href="wishlist.html">+ Yêu thích</a>
+                                    <a class="btn obrien-button-2 treansparent-color pt-0 pb-0 addwishlistdetail">+ Yêu thích</a>
                                 </div>
                                 <div class="social-share mb-4">
                                     <span>Share :</span>
@@ -433,9 +439,31 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Product Area End Here -->
         <script>
             $(document).ready(function() {
+
                 $(".btn-value-size").click(function() {
                     let size = $(this).attr('id');
                     $.ajax({
@@ -480,5 +508,35 @@
                         }
                     });
                 })
+                // WISHLIST DETAIL
+
+                $('.addwishlistdetail').click(function() {
+                    let id_product = $('.valueid').val();
+                    $.ajax({
+                        url: "<?= BASE_URL ?>/myaccount/insertwishlist",
+                        method: "POST",
+                        data: {
+                            'action': 'addWishList',
+                            'product_id': id_product
+                        },
+                        success: function(data) {
+                            if (data.length > 1000) {
+                                toastr['info']('Vui lòng đăng nhập');
+                            } else {
+                                let noti = JSON.parse(data);
+                                toastr[noti.code](noti.noti);
+                            }
+                        }
+                    });
+                })
             })
+
+            function zoom(e) {
+                var zoom = e.currentTarget;
+                e.offsetX ? offsetX = e.offsetX : offsetX = e.touches[0].pageX
+                e.offsetY ? offsetY = e.offsetY : offsetX = e.touches[0].pageX
+                x = (offsetX / zoom.offsetWidth) * 100
+                y = (offsetY / zoom.offsetHeight) * 100
+                zoom.style.backgroundPosition = x + "% " + y + "%";
+            }
         </script>

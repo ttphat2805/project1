@@ -29,8 +29,12 @@
                                     <td><?= $item['name'] ?></td>
                                     <td><?= $item['value'] ?></td>
                                     <td>
-                                        <a class="btn btn-primary" href="<?php echo BASE_URL ?>/admin/infoattribute/<?= $item['id'] ?>">Sửa</a>
-                                        <a class="btn btn-danger btn__delete" href="<?php echo BASE_URL ?>/admin/deleteattribute/<?= $item['id'] ?>">Xóa</a>
+                                        <a class="btn btn-primary" href="<?php echo BASE_URL ?>/admin/infoattribute/<?= $item['id'] ?>">
+                                        <i class="fal fa-money-check-edit"></i>
+                                        </a>
+                                        <a class="btn btn-danger btn__delete" href="<?php echo BASE_URL ?>/admin/deleteattribute/<?= $item['id'] ?>">
+                                        <i class="fal fa-trash-alt"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             <?php

@@ -12,7 +12,7 @@
                                 <a href="https://www.facebook.com/v12.0/dialog/oauth?client_id=4520117901402470&redirect_uri=<?php echo BASE_URL; ?>/auth/facebooklogin&scope=public_profile" class="social1"><i class="fab fa-facebook-f"></i></a>
                                 <a href="<?php echo $data['data']['google_login_url'] ?>" class="social2"><i class="fab fa-google-plus-g"></i></a>
                             </div>
-                            <form action="#" method="post">
+                            <form action="" method="post">
                                 <div class="single-input-item mb-3">
                                     <input type="email" name="email" placeholder="Nhập email...">
                                     <span class="text-danger error"><?php echo $data['data']['username_error'] ?></span>
