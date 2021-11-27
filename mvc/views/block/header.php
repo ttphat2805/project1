@@ -9,7 +9,7 @@
                         <div class="col-lg-2 col-xl-2 col-sm-6 col-6 col-custom">
                             <div class="header-logo d-flex align-items-center">
                                 <a href="<?php echo BASE_URL; ?>">
-                                    <img class="img-full" src="<?php echo BASE_URL; ?>/public/assets/images/logo/logo.png" alt="Header Logo" height="100px">
+                                    <img class="img-full" src="<?php echo BASE_URL; ?>/public/assets/images/logo/logo.png" alt="Logo" height="100px">
                                 </a>
                             </div>
                         </div>
@@ -50,14 +50,14 @@
                         <div class="col-lg-2 col-xl-3 col-sm-6 col-6 col-custom">
                             <div class="header-right-area main-nav">
                                 <ul class="nav">
-                                    <li class="login-register-wrap d-none d-xl-flex">
+                                    <li class="login-register-wrap d-xl-flex">
                                         <?php
                                         if (isset($_SESSION['user_infor']['user_name'])) {
                                         ?>
                                            <a class="hello_account" href="<?=BASE_URL?>/myaccount"> Chào: <?=$_SESSION['user_infor']['user_name']?></a>
                                         <?php
                                         } ?>
-                                        <a href="" class="login-register-btn">
+                                        <a href="<?=BASE_URL?>/myaccount" class="login-register-btn">
                                             <i class="ion-person"></i>
                                         </a>
                                         <?php
@@ -201,8 +201,8 @@
                     <div class="row align-items-center">
                         <div class="col-lg-2 col-xl-2 col-sm-6 col-6 col-custom">
                             <div class="header-logo">
-                                <a href="index.html">
-                                    <img class="img-full" src="<?php echo BASE_URL; ?>/public/assets/images/logo/logo.png" alt="Header Logo">
+                                <a href="<?=BASE_URL?>">
+                                <img class="img-full" src="<?php echo BASE_URL; ?>/public/assets/images/logo/logo.png" alt="Logo" height="100px">
                                 </a>
                             </div>
                         </div>
@@ -243,7 +243,7 @@
                         <div class="col-lg-2 col-xl-3 col-sm-6 col-6 col-custom">
                             <div class="header-right-area main-nav">
                                 <ul class="nav">
-                                <li class="login-register-wrap d-none d-xl-flex">
+                                <li class="login-register-wrap d-xl-flex">
                                         <?php
                                         if (isset($_SESSION['user_infor']['user_name'])) {
                                         ?>
@@ -251,7 +251,7 @@
                                         </a>
                                         <?php
                                         } ?>
-                                        <a href="" class="login-register-btn">
+                                        <a href="<?=BASE_URL?>/myaccount" class="login-register-btn">
                                             <i class="ion-person"></i>
                                         </a>
                                         <?php
@@ -400,11 +400,21 @@
                     <!-- mobile menu navigation start -->
                     <nav>
                         <ul class="mobile-menu">
-                            <li class="menu-item-has-children"><a href="#">Tài khoản</a>
-                                <ul class="dropdown">
-                                    <li><a href="login.html">Đăng nhập</a></li>
-                                    <li><a href="Register.html">Đăng ký</a></li>
+                        <?php if(isset($_SESSION['user_infor']['user_name'])):?>
+                                    <a href="<?=BASE_URL?>/myaccount">
+                                    
+                                    <img src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Clipart.png" alt="" width="30px" height="25px" style="margin-right:5px">
+                                    Chào: <?=$_SESSION['user_infor']['user_name']?>
+                                    </a>
+                                    <?php else:?>
+
+                            <li class="menu-item-has-children"><a href="#">Tài khoản</a><br>
+                                   
+                                    <ul class="dropdown">
+                                    <li><a href="<?php echo BASE_URL . '/auth/login' ?>">Đăng nhập</a></li>
+                                    <li><a href="<?php echo BASE_URL . '/auth/login' ?>">Đăng ký</a></li>
                                 </ul>
+                                <?php endif;?>
                             </li>
 
                         </ul>

@@ -123,6 +123,7 @@ class Auth extends Controller
 
     public function login()
     {
+        $_SESSION['namesite'] = "Đăng nhập";
         // $google_client = $this->createClientGoogleObject();
         // $google_login_url = $google_client->createAuthUrl();
         $data = [
@@ -188,6 +189,8 @@ class Auth extends Controller
 
     public function register()
     {
+        $_SESSION['namesite'] = "Đăng ký";
+
         $data = [
             'first_name' => '',
             'last_name' => '',
@@ -211,29 +214,29 @@ class Auth extends Controller
             $data['email'] = $email;
             $data['password'] = $pass;
             if ($first_name == '') {
-                $data['first_name_error'] = "Bạn phải nhập đầy đủ họ";
+                $data['first_name_error'] = "Vui lòng nhập họ..";
             }
             if ($last_name == '') {
-                $data['last_name_error'] = "bạn phải nhập tên";
+                $data['last_name_error'] = "Vui lòng nhập tên..";
             }
             if (empty($email)) {
-                $data['email_error'] = "Bạn phải nhập email";
+                $data['email_error'] = "Email không được bỏ trống";
             } else {
                 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                    $data['email_error'] = 'email sai định dạng';
+                    $data['email_error'] = 'Email không đúng định dạng';
                 } else {
                     if ($this->User->findUserByEmail($email) >= 1) {
-                        $data['email_error'] = 'tên đăng nhập đã tồn tại';
+                        $data['email_error'] = 'Tên đăng nhập đã tồn tại';
                     }
                 }
             }
 
             if (empty($pass)) {
-                $data['pass_error'] = "Bạn phải nhập mật khẩu";
+                $data['pass_error'] = "Vui lòng nhập mật khẩu";
             } else {
                 if (strlen($pass) >= 6) {
                     if ($pass != $re_pass) {
-                        $data['repass_error'] = "Mật khẩu không trùng khớp";
+                        $data['repass_error'] = "Mật khẩu xác nhận không đúng";
                     }
                 } else {
                     $data['pass_error'] = "Mật khẩu phải lớn hơn 6 chữ số";

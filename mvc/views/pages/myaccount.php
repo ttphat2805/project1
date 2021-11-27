@@ -13,7 +13,7 @@
                                 <a href="#orders" data-toggle="tab"><i class="fa fa-cart-arrow-down"></i>
                                     Orders</a>
                                 <a href="#wishlist" data-toggle="tab"><i class="fa fa-cloud-download"></i>
-                                    Sản phẩm yêu thích</a>
+                                    Món ăn yêu thích</a>
                                 <a href="#payment-method" data-toggle="tab"><i class="fa fa-credit-card"></i>
                                     Payment
                                     Method</a>
@@ -89,7 +89,7 @@
                                 <!-- Single Tab Content Start -->
                                 <div class="tab-pane fade" id="wishlist" role="tabpanel">
                                     <div class="myaccount-content">
-                                        <h3>Sản phẩm yêu thích</h3>
+                                        <h3>Món ăn yêu thích</h3>
                                         <div class="myaccount-table table-responsive text-center" id="js_wishlist_get">
                                         </div>
                                     </div>

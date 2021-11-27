@@ -75,7 +75,7 @@ class myaccount extends Controller
                             <img src="' . $url . '/public/assets/images/product/' . $item['image'] . '" alt="">
                         </td>
                         <td width="50%">' . $item['name'] . '</td>
-                        <td width="20%">' . $item['price'] . '</td>
+                        <td width="20%">' . number_format($item['price']) . ' VNĐ </td>
                         <td class="pro-remove"><a class="btn_del_wishlist" id="' . $item['prodidwl'] . '">
                         <i class="ion-trash-b"></i>
                         </a></td>
@@ -84,7 +84,7 @@ class myaccount extends Controller
             </table>';
             }
         } else {
-            $output .= 'Chưa có món ăn nào được yêu thích';
+            $output .= '<p class="noti-wishlist">Chưa có món ăn nào được yêu thích <i class="fal fa-star-shooting"></i></p>';
         }
         echo $output;
     }

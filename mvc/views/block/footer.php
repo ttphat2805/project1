@@ -2,6 +2,7 @@
  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <!-- jQuery JS -->
+
     <script src="<?php echo BASE_URL; ?>/public/assets/js/vendor/jquery-3.5.1.min.js"></script>
     <!-- jQuery Migrate JS -->
     <script src="<?php echo BASE_URL; ?>/public/assets/js/vendor/jQuery-migrate-3.3.0.min.js"></script>
@@ -41,7 +42,7 @@
                                 <img src="<?php echo BASE_URL; ?>/public/assets/images/logo/footer.png" widget="150px" height="130px"  alt="Logo Image">
                             </a>
                         </div>
-                        <p class="desc-content">Obrien is the best parts shop of your daily nutritions. What kind of nutrition do you need you can get here soluta nobis</p>
+                        <p class="desc-content">G6' Food là cửa hàng bán các sản phẩm dinh dưỡng hàng ngày tốt nhất của bạn. Bạn cần loại dinh dưỡng nào, bạn có thể lấy ở đây</p>
                         <div class="social-links">
                             <ul class="d-flex">
                                 <li>
