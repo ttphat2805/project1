@@ -12,14 +12,12 @@
                         "swipe": false,
                         "asNavFor": ".pd-slider-nav"
                         }'>
-                                <<<<<<< HEAD <div class="single-image border background-zoom" onmousemove="zoom(event)" style="background-image: url('<?php echo BASE_URL ?>/public/assets/images/product/<?= $data['productdetails']['image'] ?>')">
+                                <div class="single-image border background-zoom" onmousemove="zoom(event)" style="background-image: url('<?php echo BASE_URL ?>/public/assets/images/product/<?= $data['productdetails']['image'] ?>')">
                                     <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $data['productdetails']['image'] ?>" alt="Product">
-                                    =======
                                     <div class="single-image border">
                                         <a href="">
                                             <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $data['productdetails']['image'] ?>" alt="Product">
                                         </a>
-                                        >>>>>>> toan
                                     </div>
 
                                     <?php
@@ -55,7 +53,6 @@
                                         <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery'] ?>" alt="Product thumnail">
                                     </div>
                                 <?php endforeach; ?>
-
                             </div>
                         </div>
                     </div>
@@ -63,12 +60,10 @@
 
 
                     <div class="col-lg-7 col-custom">
-                        <<<<<<< HEAD <form action="<?= BASE_URL ?>/cart/addcart/<?= $data['productdetails']['idproduct'] ?>" method="post">
+                        <form action="<?= BASE_URL ?>/cart/addcart/<?= $data['productdetails']['idproduct'] ?>" method="post">
                             <input type="hidden" class="valueid" value="<?= $data['productdetails']['idproduct'] ?>">
-                            =======
                             <form action="<?= BASE_URL ?>/cart/addcart/<?= $data['productdetails']['idproduct'] ?>" method="post" class="parent_productid">
                                 <input type="hidden" id="value_idproduct" value="<?= $data['productdetails']['idproduct'] ?>">
-                                >>>>>>> toan
                                 <input type="hidden" value="<?= $data['productdetails']['name'] ?>">
                                 <div class="product-summery position-relative">
                                     <div class="product-head mb-3">
@@ -435,26 +430,8 @@
             </div>
         </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        ...
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
         </div>
+            
         <!-- Product Area End Here -->
         <script>
             $(document).ready(function() {
