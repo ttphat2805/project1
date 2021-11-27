@@ -30,40 +30,28 @@ class productdetail extends Controller
 
     function show($slug)
     {
-        // print_r($this->product->getproduct_type_id($id));
-<<<<<<< HEAD
-        $_SESSION['nameSite'] = "Chi tiết";
-
+        $id = $this->product->getProductId($slug);
         if(isset($_POST['btn__submit'])){
             $content = $_POST['content'];
-            if(isset($_SESSION['member'])):
-            $username = $_SESSION['member'];
-            $productid = $id;
-            // print_r($this->user->getComment($id));
-            // exit();
-            $memberid = $this->user->idComment($username)['id'];
-            $this->user->insertComment($memberid,$productid,$content);
-            ?>
-            <script>
-                history.back();
-            </script><?php
-            else:
+            if(isset($_SESSION['user_infor'])){
+                $fullname = $_SESSION['user_infor']['user_name'];
                 $productid = $id;
-                $_SESSION['content'] = $content;
-                $_SESSION['idcomment'] = $id;
-                $_SESSION['notification'] = "Đăng nhập để bình luận !";
-                $_SESSION['notification-code'] = "warning";
-                header('Location: '.BASE_URL.'/Login/Show/3');
-                exit();
-            endif;
-
+                $memberid = $this->user->idComment($fullname)['id'];
+                $this->user->insertComment($memberid,$productid,$content);
+                $_SESSION['toastr-code'] = "success";
+                $_SESSION['toastr-noti'] = "bình luận thành công";
+            }else{
+                $productid = $id;
+                $_SESSION['toastr-code'] = "warning";
+                $_SESSION['toastr-noti'] = "Bạn phải đăng nhập để bình luận";
+                // if(isset())
+                $_SESSION['check_CMT']= $_GET['url'];
+                echo $_SESSION['check_CMT'];
+                header('Location: '.BASE_URL.'/auth/login/');
+            }
         }
-        $brandid = $this->product->infoproduct($id)['brandid'];
-        $price = $this->product->infoproduct($id)['price'];
-    
-=======
-        $id = $this->product->getProductId($slug);
->>>>>>> main
+
+        
         $this->view(
             "master2",
             [
@@ -74,6 +62,8 @@ class productdetail extends Controller
                 "gallery" => $this->product->get_gallery_image($id),
                 "productdetailattr" =>$this->attribute->getproduct_detail_attr($id),
                 "product_type" => $this->product->getproduct_type_id($id),
+                "getSLComment"=>$this->user->getSLcomment($id),
+                "getComment"=>$this->user->getComment($id),
             ]
         );
     }
@@ -100,3 +90,4 @@ class productdetail extends Controller
 
 
 }
+?>
