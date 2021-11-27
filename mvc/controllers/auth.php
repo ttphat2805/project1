@@ -160,6 +160,7 @@ class Auth extends Controller
                     $_SESSION['user_infor']['user_phone'] = $user_infor[0]['mobile'];
                     $_SESSION['user_infor']['user_email'] = $user_infor[0]['email'];
                     header("Location: " . BASE_URL);
+                    
                 } else {
                     $data['pass_error'] = "Sai mật khẩu";
                 }

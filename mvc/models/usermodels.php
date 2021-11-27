@@ -119,17 +119,11 @@ class usermodels extends db {
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function showComment(){
-        $query = "SELECT a.id,a.fullname,b.memberid,b.id,b.content,b.date,b.status from member a INNER JOIN comments b on a.id = b.memberid where a.id > 0";
+    function showComment($id){
+        $query = "SELECT a.id as 'idmember',a.fullname,b.id as 'idcmt',b.product_id,b.member_id,b.content,b.date,b.status from member a INNER JOIN comments b on a.id = b.member_id where b.status = 1 and b.product_id = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt->fetchAll();
-    }
-    function idComment($fullname){
-        $query = "SELECT * FROM member where fullname = ?";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute([$fullname]);
-        return $stmt->fetch();
+        $stmt->execute([$id]);
+        return $stmt;
     }
 
     function insertComment($memberid,$productid,$content){
@@ -139,42 +133,22 @@ class usermodels extends db {
         $stmt->execute();
     }
 
-    function getSLcomment($id){
-        $query = "SELECT * from member a 
-                join comments b on a.id=b.member_id
-                join products c on b.product_id=c.id 
-                where b.product_id= $id";
+
+    function userdeletecmt($memberid,$id){
+        $query = "DELETE FROM comments WHERE member_id = ? and id = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt->rowCount();
+        $stmt->execute([$memberid,$id]);
     }
 
-    function getComment($id){
-        $query = "SELECT * from member a 
-                join comments b on a.id=b.member_id
-                join products c on b.product_id=c.id 
-                where b.product_id= $id and b.status = 1 
-                order by b.id desc LIMIT 4";
+    function userupdatecmt($memberid,$id,$content){
+        $query = "UPDATE comments set content = ? where member_id = ? and id = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt->fetchAll();
+        $stmt->execute([$content,$memberid,$id]);
     }
-
-    function getCommentSL($id){
-        $query = "SELECT * from comments a 
-                join member b on b.id=a.member_id
-                join products c on a.product_id=c.id 
-                where a.product_id= $id and a.status = 1 
-                order by a.id desc LIMIT 4";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt->fetchAll();
-    }
-
     function deleteComment($id){
         $query = "DELETE FROM comments WHERE id=$id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
-
     }
+
 }
