@@ -142,6 +142,7 @@
     font-family: Roboto;
 }
 
+<<<<<<< HEAD
 .background-zoom {
     background-position: 50% 50%;
     position: relative;
@@ -240,4 +241,9 @@
     .hello_account {
         display: none !important;
     }
+=======
+.noti-cmt {
+    font-size: 20px;
+    margin: 20px;
+>>>>>>> toan
 }
