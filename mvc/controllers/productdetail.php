@@ -14,12 +14,12 @@ class productdetail extends Controller
             exit();
         }
 
-        if(strstr($_GET['url'], 'show')){
-            if (!isset($url[2])) {
-                header("Location:".BASE_URL."pagenotfound");
-                exit();
-            }
-        }
+        // if(strstr($_GET['url'], '')){
+        //     if (!isset($url[2])) {
+        //         header("Location:".BASE_URL."pagenotfound");
+        //         exit();
+        //     }
+        // }
         $this->product = $this->model("productmodels");
         $this->attribute = $this->model("attributemodels");
         $this->user = $this->model("usermodels");
@@ -31,25 +31,7 @@ class productdetail extends Controller
     function show($slug)
     {
         $id = $this->product->getProductId($slug);
-        if(isset($_POST['btn__submit'])){
-            $content = $_POST['content'];
-            if(isset($_SESSION['user_infor'])){
-                $fullname = $_SESSION['user_infor']['user_name'];
-                $productid = $id;
-                $memberid = $this->user->idComment($fullname)['id'];
-                $this->user->insertComment($memberid,$productid,$content);
-                $_SESSION['toastr-code'] = "success";
-                $_SESSION['toastr-noti'] = "bình luận thành công";
-            }else{
-                $productid = $id;
-                $_SESSION['toastr-code'] = "warning";
-                $_SESSION['toastr-noti'] = "Bạn phải đăng nhập để bình luận";
-                // if(isset())
-                $_SESSION['check_CMT']= $_GET['url'];
-                echo $_SESSION['check_CMT'];
-                header('Location: '.BASE_URL.'/auth/login/');
-            }
-        }
+
 
         
         $this->view(
@@ -62,10 +44,81 @@ class productdetail extends Controller
                 "gallery" => $this->product->get_gallery_image($id),
                 "productdetailattr" =>$this->attribute->getproduct_detail_attr($id),
                 "product_type" => $this->product->getproduct_type_id($id),
-                "getSLComment"=>$this->user->getSLcomment($id),
-                "getComment"=>$this->user->getComment($id),
             ]
         );
+    }
+
+    function showcmt($id){
+        $check = $this->user->showComment($id);
+        $output = ''; 
+        if($check->rowCount() > 0){
+            $comments = $check->fetchAll();
+            foreach($comments as $cmt){
+                $output.= '<div class="pro_review mb-5">
+                <div class="review_thumb">
+                    <input type="hidden" class="getidcmt" value="'.$cmt['idcmt'].'">
+                    <img alt="review images" src="/public/assets/images/logo/user.png">
+                </div>
+                <div class="review_details">
+                    <div class="review_info mb-2">
+                        <h5>'.$cmt['fullname'].' - <span>'.$cmt['date'].'</span></h5>
+                    </div>
+                    <p class="content">'.$cmt['content'].'</p>
+                    <a class="user_deletecmt"> Xoas</a>
+                    <a class="user_updatecmt"> sửa</a><br/>
+                </div>
+                
+            </div>
+            <input type="text" class="updatecmt" style="display:none;"> <span class="spanupdatecmt" style="display:none;">Cập nhật</span>
+            ';
+            }
+        }else{
+            $output .= " <p class='noti-cmt'>Sản phẩm này chưa có bình luận nào...</p>";
+        }
+        echo $output;
+    }
+
+    function insertcmt(){
+        if(isset($_POST['action'])){
+            if(isset($_SESSION['user_infor'])){
+                $memberid = $_SESSION['user_infor']['user_id'];
+                $idproduct = $_POST['idproduct'];
+                $content = $_POST['content'];
+                $this->user->insertComment($memberid,$idproduct,$content);
+                echo 'ok';
+            }else{
+                $_SESSION['toastr-code'] = "warning";
+                $_SESSION['toastr-noti'] = "Bạn phải đăng nhập để bình luận";
+                echo 'sai';
+
+            }
+        }
+    }
+
+    function userdeletecmt(){
+        if(isset($_POST['action'])){
+            if(isset($_SESSION['user_infor'])){
+                $id = $_POST['id_cmt'];
+                $memberid = $_SESSION['user_infor']['user_id'];
+                echo 'id: '.$id.'memberid'.$memberid;
+                $this->user->userdeletecmt($memberid,$id);
+            }else{
+                echo 'Vui lòng đăng nhập';
+            }
+        }
+    }
+
+    function userupdatecmt(){
+        if(isset($_POST['action'])){
+            if(isset($_SESSION['user_infor'])){
+                $id = $_POST['id_cmt'];
+                $content = $_POST['content'];
+                $memberid = $_SESSION['user_infor']['user_id'];
+                $this->user->userupdatecmt($memberid,$id,$content);
+            }else{
+                echo 'Vui lòng đăng nhập';
+            }
+        }
     }
 
     function change_price($size){
@@ -90,4 +143,3 @@ class productdetail extends Controller
 
 
 }
-?>

@@ -14,7 +14,7 @@
                         }'>
                                 <div class="single-image border">
                                     <a href="">
-                                        <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?=$data['productdetails']['image'] ?>" alt="Product">
+                                        <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $data['productdetails']['image'] ?>" alt="Product">
                                     </a>
                                 </div>
 
@@ -57,8 +57,8 @@
                         </div>
                     </div>
                     <div class="col-lg-7 col-custom">
-                        <form action="<?= BASE_URL ?>/cart/addcart/<?= $data['productdetails']['idproduct'] ?>" method="post">
-                            <input type="hidden" value="<?= $data['productdetails']['idproduct'] ?>">
+                        <form action="<?= BASE_URL ?>/cart/addcart/<?= $data['productdetails']['idproduct'] ?>" method="post" class="parent_productid">
+                            <input type="hidden" id="value_idproduct" value="<?= $data['productdetails']['idproduct'] ?>">
                             <input type="hidden" value="<?= $data['productdetails']['name'] ?>">
                             <div class="product-summery position-relative">
                                 <div class="product-head mb-3">
@@ -148,25 +148,10 @@
                             </div>
                             <div class="tab-pane fade" id="connect-2" role="tabpanel" aria-labelledby="profile-tab">
                                 <!-- Start Single Content -->
-                                <?php foreach($data['getComment'] as $cmt) :?>
-                                <div class="product_tab_content  border p-3">
-                                    <div class="review_address_inner">
-                                        <!-- Start Single Review -->
-                                        <div class="pro_review mb-5">
-                                            <div class="review_thumb">
-                                                <img alt="review images" src="<?php echo BASE_URL?>/public/assets/images/logo/user.png">
-                                            </div>
-                                            <div class="review_details">
-                                                <div class="review_info mb-2">
-                                                    <h5><?=$cmt['fullname']?> - <span> <?=$cmt['date']?></span></h5>
-                                                </div>
-                                                <p><?=$cmt['content']?></p>
-                                            </div>
-                                        </div>
-                                        <!-- End Single Review -->
+                                <div class="product_tab_content  border p-3 ">
+                                    <div class="review_address_inner comment_show_ajax">
                                     </div>
-                                <?php endforeach ?>
-                                    <!-- End RAting Area -->
+                                    <!-- End CMT-->
                                     <div class="comments-area comments-reply-area">
                                         <div class="row">
                                             <div class="col-lg-12 col-custom">
@@ -175,10 +160,10 @@
                                                     </div>
                                                     <div class="comment-form-comment mb-3">
                                                         <label>Comment</label>
-                                                        <textarea class="comment-notes" name="content" required="required"></textarea>
+                                                        <textarea class="comment-notes get_comment" name="content" required="required"></textarea>
                                                     </div>
                                                     <div class="comment-form-submit">
-                                                        <input type="submit" value="Submit" name="btn__submit" class="comment-submit btn obrien-button primary-btn">
+                                                        <div class="comment-submit btn obrien-button primary-btn">OK</div>
                                                     </div>
                                                 </form>
                                             </div>
@@ -445,7 +430,6 @@
                             'size': size,
                         },
                         success: function(data) {
-                            console.log(data);
                             $('.price-view').html(data);
                         }
                     });
@@ -479,6 +463,87 @@
                             $('.quantity_view').html(data);
                         }
                     });
+                })
+
+
+                function fetchcmt() {
+                    // alert('hi');
+
+                    let id = $('#value_idproduct').val();
+                    $.ajax({
+                        url: `<?= BASE_URL ?>/productdetail/showcmt/${id}`,
+                        method: "POST",
+                        success: function(data) {
+                            $('.comment_show_ajax').html(data);
+                        },
+                    });
+                }
+                fetchcmt();
+
+                $(".comment-submit").click(function() {
+                    let idproduct = $('#value_idproduct').val();
+                    let content = $('.get_comment').val();
+                    $.ajax({
+                        url: `<?= BASE_URL ?>/productdetail/insertcmt/`,
+                        method: "POST",
+                        data: {
+                            'action': 'addcmt',
+                            'idproduct': idproduct,
+                            'content': content
+                        },
+                        success: function(data) {
+                            fetchcmt();
+                        }
+                    });
+                })
+
+                $(document).on('click', '.user_deletecmt', function() {
+                    var parent = $(this).parents('.pro_review');
+                    var id_cmt = parent.find('.getidcmt').val();
+                    $.ajax({
+                        url: `<?= BASE_URL ?>/productdetail/userdeletecmt/`,
+                        method: "POST",
+                        data: {
+                            'action': 'userdeletecmt',
+                            'id_cmt': id_cmt,
+                        },
+                        success: function(data) {
+                            if (data == 'ok') {} else {
+                                fetchcmt();
+                            }
+                        }
+                    });
+                })
+
+                $(document).on('click', '.user_updatecmt', function() {
+                    var parent = $(this).parents('.pro_review');
+                    var id_cmt = parent.find('.getidcmt').val();
+                    var content_cmt = parent.find('.content').html();
+                    var textcmt = $('.updatecmt');
+                    var spanupdate = $('.spanupdatecmt');
+                    textcmt.show();
+                    spanupdate.show();
+                    textcmt.val(content_cmt);
+                    spanupdate.on('click', function() {
+                        let content = textcmt.val();
+                        $.ajax({
+                            url: `<?= BASE_URL ?>/productdetail/userupdatecmt/`,
+                            method: "POST",
+                            data: {
+                                'action': 'userupdatecmt',
+                                'id_cmt': id_cmt,
+                                'content': content,
+                            },
+                            success: function(data) {
+                                if (data == 'ok') {
+                                } else {
+                                    textcmt.hide();
+                                    spanupdate.hide();
+                                    fetchcmt();
+                                }
+                            }
+                        });
+                    })
                 })
             })
         </script>
