@@ -23,6 +23,8 @@
                                     Đổi mật khẩu
                                 </a>
                                 <a href="<?= BASE_URL ?>/auth/logout"><i class="fa fa-sign-out"></i> Đăng xuất</a>
+                                <a href="#account-info" data-toggle="tab"><i class="fa fa-user"></i> Account
+                                    Details</a>
                             </div>
                         </div>
                         <!-- My Account Tab Menu End -->
