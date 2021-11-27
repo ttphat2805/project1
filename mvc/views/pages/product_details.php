@@ -148,57 +148,37 @@
                             </div>
                             <div class="tab-pane fade" id="connect-2" role="tabpanel" aria-labelledby="profile-tab">
                                 <!-- Start Single Content -->
+                                <?php foreach($data['getComment'] as $cmt) :?>
                                 <div class="product_tab_content  border p-3">
                                     <div class="review_address_inner">
                                         <!-- Start Single Review -->
                                         <div class="pro_review mb-5">
                                             <div class="review_thumb">
-                                                <img alt="review images" src="assets/images/review/1.jpg">
+                                                <img alt="review images" src="<?php echo BASE_URL?>/public/assets/images/logo/user.png">
                                             </div>
                                             <div class="review_details">
                                                 <div class="review_info mb-2">
-                                                    <div class="product-rating mb-2">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                    </div>
-                                                    <h5>Admin - <span> December 19, 2020</span></h5>
+                                                    <h5><?=$cmt['fullname']?> - <span> <?=$cmt['date']?></span></h5>
                                                 </div>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin in viverra ex, vitae vestibulum arcu. Duis sollicitudin metus sed lorem commodo, eu dapibus libero interdum. Morbi convallis viverra erat, et aliquet orci congue vel. Integer in odio enim. Pellentesque in dignissim leo. Vivamus varius ex sit amet quam tincidunt iaculis.</p>
+                                                <p><?=$cmt['content']?></p>
                                             </div>
                                         </div>
                                         <!-- End Single Review -->
                                     </div>
-                                    <!-- Start RAting Area -->
-                                    <div class="rating_wrap">
-                                        <h6 class="rating-title-2 mb-2">Your Rating</h6>
-                                        <div class="rating_list mb-4">
-                                            <div class="review_info">
-                                                <div class="product-rating mb-3">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <?php endforeach ?>
                                     <!-- End RAting Area -->
                                     <div class="comments-area comments-reply-area">
                                         <div class="row">
                                             <div class="col-lg-12 col-custom">
-                                                <form action="#" class="comment-form-area">
+                                                <form method="post" class="comment-form-area">
                                                     <div class="row comment-input">
                                                     </div>
                                                     <div class="comment-form-comment mb-3">
                                                         <label>Comment</label>
-                                                        <textarea class="comment-notes" required="required"></textarea>
+                                                        <textarea class="comment-notes" name="content" required="required"></textarea>
                                                     </div>
                                                     <div class="comment-form-submit">
-                                                        <input type="submit" value="Submit" class="comment-submit btn obrien-button primary-btn">
+                                                        <input type="submit" value="Submit" name="btn__submit" class="comment-submit btn obrien-button primary-btn">
                                                     </div>
                                                 </form>
                                             </div>

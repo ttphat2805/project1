@@ -1,3 +1,4 @@
+
 <?php 
 
 class usermodels extends db {
@@ -116,5 +117,64 @@ class usermodels extends db {
         $query->execute();
 
         return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function showComment(){
+        $query = "SELECT a.id,a.fullname,b.memberid,b.id,b.content,b.date,b.status from member a INNER JOIN comments b on a.id = b.memberid where a.id > 0";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+    function idComment($fullname){
+        $query = "SELECT * FROM member where fullname = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$fullname]);
+        return $stmt->fetch();
+    }
+
+    function insertComment($memberid,$productid,$content){
+        $query = "INSERT comments(member_id,product_id,content)
+                values ('$memberid','$productid','$content');";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+    }
+
+    function getSLcomment($id){
+        $query = "SELECT * from member a 
+                join comments b on a.id=b.member_id
+                join products c on b.product_id=c.id 
+                where b.product_id= $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
+
+    function getComment($id){
+        $query = "SELECT * from member a 
+                join comments b on a.id=b.member_id
+                join products c on b.product_id=c.id 
+                where b.product_id= $id and b.status = 1 
+                order by b.id desc LIMIT 4";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    function getCommentSL($id){
+        $query = "SELECT * from comments a 
+                join member b on b.id=a.member_id
+                join products c on a.product_id=c.id 
+                where a.product_id= $id and a.status = 1 
+                order by a.id desc LIMIT 4";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    function deleteComment($id){
+        $query = "DELETE FROM comments WHERE id=$id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+
     }
 }

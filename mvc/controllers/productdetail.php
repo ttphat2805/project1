@@ -3,6 +3,7 @@ class productdetail extends Controller
 {
     public $product;
     public $attribute;
+    public $user;
 
     function __construct()
     {
@@ -21,6 +22,7 @@ class productdetail extends Controller
         }
         $this->product = $this->model("productmodels");
         $this->attribute = $this->model("attributemodels");
+        $this->user = $this->model("usermodels");
 
 
     }
@@ -28,8 +30,28 @@ class productdetail extends Controller
 
     function show($slug)
     {
-        // print_r($this->product->getproduct_type_id($id));
         $id = $this->product->getProductId($slug);
+        if(isset($_POST['btn__submit'])){
+            $content = $_POST['content'];
+            if(isset($_SESSION['user_infor'])){
+                $fullname = $_SESSION['user_infor']['user_name'];
+                $productid = $id;
+                $memberid = $this->user->idComment($fullname)['id'];
+                $this->user->insertComment($memberid,$productid,$content);
+                $_SESSION['toastr-code'] = "success";
+                $_SESSION['toastr-noti'] = "bình luận thành công";
+            }else{
+                $productid = $id;
+                $_SESSION['toastr-code'] = "warning";
+                $_SESSION['toastr-noti'] = "Bạn phải đăng nhập để bình luận";
+                // if(isset())
+                $_SESSION['check_CMT']= $_GET['url'];
+                echo $_SESSION['check_CMT'];
+                header('Location: '.BASE_URL.'/auth/login/');
+            }
+        }
+
+        
         $this->view(
             "master2",
             [
@@ -40,6 +62,8 @@ class productdetail extends Controller
                 "gallery" => $this->product->get_gallery_image($id),
                 "productdetailattr" =>$this->attribute->getproduct_detail_attr($id),
                 "product_type" => $this->product->getproduct_type_id($id),
+                "getSLComment"=>$this->user->getSLcomment($id),
+                "getComment"=>$this->user->getComment($id),
             ]
         );
     }
@@ -66,3 +90,4 @@ class productdetail extends Controller
 
 
 }
+?>

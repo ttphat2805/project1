@@ -172,7 +172,11 @@ class Auth extends Controller
 
     public function logout()
     {
-        echo "a";
+        unset($_SESSION['user_infor']);
+        $_SESSION['toastr-code'] = "success";
+        $_SESSION['toastr-noti'] = "Đã đăng xuất";
+        header('Location: ' . BASE_URL);
+        exit();
     }
 
     public function register()
