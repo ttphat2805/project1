@@ -41,7 +41,7 @@
                         $query = "SELECT * FROM product_type where product_id = $id";
                         $stmt = $this->conn->prepare($query);
                         $stmt->execute();
-                        return $stmt->fetch();
+                        return $stmt->fetchAll();
                     }
                 }
                 $homepage = new homepage();
@@ -65,17 +65,18 @@
                                         <h4 class="title-2"> <a href="<?php echo BASE_URL ?>/productdetail/show/<?= $item['slug'] ?>"><?= $item['name'] ?></a>
                                     
                                     </h4>
-                                    <?php
+                                    <?php 
                                     $product_attr = $homepage->getproduct_detail_attr($item['idproduct']);
                                     $attr_id = $homepage->getproduct_type_id($item['idproduct']);
-                                    if ($attr_id['attribute_id'] !== NULL) {
+                                    print_r($attr_id);   
+                                    if ($attr_id[0]['attribute_id'] != '') {
                                     ?>
                                         <div class="product-size">
                                             <p>Size :</p>
                                             <?php
                                             foreach ($product_attr as $size) :
                                             ?>
-                                                <input id="prod-size-<?= $size['value'] ?>-<?= $item['idproduct'] ?>" type="radio" name="option1" value="<?= $size['value'] ?>">
+                                                <input id="prod-size-<?= $size['value'] ?>-<?= $item['idproduct'] ?>" type="radio" checked name="option1" data-prod="<?= $size['id'] ?>" value="<?= $size['attribute_id'] ?> ">
                                                 <label for="prod-size-<?= $size['value'] ?>-<?= $item['idproduct'] ?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
                                                     <span><?= $size['value'] ?></span>
                                                 </label>
@@ -84,6 +85,8 @@
                                             ?>
                                         </div>
                                     <?php
+                                    } else {
+                                        echo "<div class='non-size' data-prod='".$attr_id[0]['id']."'></div>";
                                     } ?>
                                     </div>
                                     <div class="price-box">
@@ -93,7 +96,7 @@
                                 </div>
 
                                 <div class="add-action d-flex position-absolute">
-                                    <a href="cart.html" title="Add To cart">
+                                    <a title="Add To cart" class="add_to_cart">
                                         <i class="ion-bag"></i>
                                     </a>
                                     <a href="compare.html" title="Compare">

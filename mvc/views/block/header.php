@@ -76,7 +76,7 @@
                                 <li class="minicart-wrap">
                                     <a href="#" class="minicart-btn toolbar-btn">
                                         <i class="ion-bag"></i>
-                                        <span class="cart-item_count">3</span>
+                                        <span class="cart-item_count"><?php echo $_SESSION['cart_number'] ??'0' ?></span>
                                     </a>
                                     <div class="cart-item-wrapper dropdown-sidemenu dropdown-hover-2">
                                         <div class="single-cart-item">
@@ -269,7 +269,7 @@
                                     <li class="minicart-wrap">
                                         <a href="#" class="minicart-btn toolbar-btn">
                                             <i class="ion-bag"></i>
-                                            <span class="cart-item_count">3</span>
+                                            <span class="cart-item_count"><?php echo $_SESSION['cart_number'] ?? 0 ?></span>
                                         </a>
                                         <div class="cart-item-wrapper dropdown-sidemenu dropdown-hover-2">
                                             <div class="single-cart-item">
