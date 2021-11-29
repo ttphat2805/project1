@@ -8,15 +8,14 @@
                 <h4 class="card-title">
                     Thêm mã giảm giá
                 </h4>
-                <!-- <p class="card-description"> Basic form layout </p> -->
                 <form class="forms-sample" method="POST">
                     <div class="form-group">
                         <label for="" class="label__css">Tên mã giảm giá</label>
-                        <input type="text" name="namecoupon" placeholder="Tên mã giảm giá" class="form-control">
+                        <input type="text" name="name" placeholder="Tên mã giảm giá" class="form-control">
                     </div>
                     <label for="" class="label__css">Mã giảm giá</label>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="coupon" name="codecoupon" placeholder="Mã giảm giá">
+                        <input type="text" class="form-control" id="coupon" name="code" placeholder="Mã giảm giá">
                         <div class="input-group-append">
                             <button class="btn btn-secondary" id="apply_coupon" type="button">
                                 Random
@@ -37,8 +36,8 @@
                     </div>
                     <div class="form-group value2" style="display:none;">
                         <label for="" class="label__css">Số tiền giảm</label>
-                        <input type="text" name="" id="price" class="form-control" placeholder="Số tiền giảm" id="value2">
-                        <input hidden type="number" id="price_new" name="price_new">
+                        <input type="text" name="" id="discout" class="form-control" placeholder="Số tiền giảm" >
+                        <input hidden type="number" id="value2" name="" class="acp_value">
                     </div>
                     <div class="form-group">
                         <label for="" class="label__css">Số lượng</label>
@@ -46,11 +45,17 @@
                     </div>
                     <div class="form-group">
                         <label for="" class="label__css">Số tiền tối thiểu</label>
-                        <input type="text" name="price_coupon" class="form-control" id="value2">
+                        <input type="text" id="min_order" name="min_order" class="form-control" >
+                        <input hidden type="number" id="min_order_new" name="min_order_new" class="form-control">
+
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="label__css">Ngày tạo</label>
+                        <input type="date" name="date_created" min="<?= date('Y-m-d'); ?>" class="form-control" >
                     </div>
                     <div class="form-group">
                         <label for="" class="label__css">Ngày hết hạn</label>
-                        <input type="date" name="date_out" min="<?= date('Y-m-d'); ?>" class="form-control" id="value2">
+                        <input type="date" name="date_out" min="<?= date('Y-m-d'); ?>" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="" class="label__css">Trạng thái</label><br />
@@ -68,7 +73,7 @@
                         </div><br>
                     </div>
                     <input type="submit" value="Thêm" name="btn__submit" class="btn btn-primary">
-                    <a href="<?php echo BASE_URL ?>/admin/showcategory" class="btn btn-dark">Trở về</a>
+                    <a href="<?php echo BASE_URL ?>/admin/showcoupon" class="btn btn-dark">Trở về</a>
                 </form>
             </div>
         </div>
@@ -107,14 +112,26 @@
             }
         })
 
-        $("#price").on('keyup', function(){
-            var n = parseInt($(this).val().replace(/\D/g,''),10);
-            if(n>=0){
-                $('#price').val(n.toLocaleString("de-DE"));
-                $('#price_new').val(n);
+        $("#discout").on('keyup', function() {
+            var n = parseInt($(this).val().replace(/\D/g, ''), 10);
+            if (n >= 0) {
+                $('#discout').val(n.toLocaleString("it-IT"));
+                $('.acp_value').val(n);
             }
-            if(isNaN(n)){
-                $('#price').val('');
+            if (isNaN(n)) {
+                $('#discout').val('');
+            }
+        });
+
+
+        $("#min_order").on('keyup', function() {
+            var n = parseInt($(this).val().replace(/\D/g, ''), 10);
+            if (n >= 0) {
+                $('#min_order').val(n.toLocaleString("it-IT"));
+                $('#min_order_new').val(n);
+            }
+            if (isNaN(n)) {
+                $('#min_order').val('');
             }
         });
     });

@@ -9,6 +9,7 @@ class Home extends Controller
     }
     function Show()
     {
+        
         $this->view(
             "master1",
             [

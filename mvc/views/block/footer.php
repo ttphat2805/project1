@@ -2,6 +2,7 @@
  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <!-- jQuery JS -->
+
     <script src="<?php echo BASE_URL; ?>/public/assets/js/vendor/jquery-3.5.1.min.js"></script>
     <!-- jQuery Migrate JS -->
     <script src="<?php echo BASE_URL; ?>/public/assets/js/vendor/jQuery-migrate-3.3.0.min.js"></script>
@@ -30,8 +31,6 @@
     <script src="<?php echo BASE_URL; ?>/public/assets/js/product.js"></script>
     <script src="<?php echo BASE_URL; ?>/public/assets/js/cart.js"></script>
 
-
-
 <footer class="footer-area">
     <div class="footer-widget-area">
         <div class="container container-default custom-area">
@@ -43,7 +42,7 @@
                                 <img src="<?php echo BASE_URL; ?>/public/assets/images/logo/footer.png" widget="150px" height="130px"  alt="Logo Image">
                             </a>
                         </div>
-                        <p class="desc-content">Obrien is the best parts shop of your daily nutritions. What kind of nutrition do you need you can get here soluta nobis</p>
+                        <p class="desc-content">G6' Food là cửa hàng bán các sản phẩm dinh dưỡng hàng ngày tốt nhất của bạn. Bạn cần loại dinh dưỡng nào, bạn có thể lấy ở đây</p>
                         <div class="social-links">
                             <ul class="d-flex">
                                 <li>
@@ -77,43 +76,40 @@
                 </div>
                 <div class="col-12 col-sm-6 col-md-6 col-lg-2 col-custom">
                     <div class="single-footer-widget">
-                        <h2 class="widget-title">Information</h2>
+                        <h2 class="widget-title">Thông tin</h2>
                         <ul class="widget-list">
-                            <li><a href="about-us.html">Our Company</a></li>
-                            <li><a href="contact-us.html">Contact Us</a></li>
-                            <li><a href="about-us.html">Our Services</a></li>
-                            <li><a href="about-us.html">Why We?</a></li>
-                            <li><a href="about-us.html">Careers</a></li>
+                            <li><a href="#">Về công ty</a></li>
+                            <li><a href="#">Liên hệ</a></li>
+                            <li><a href="#">Dịch vụ</a></li>
+                            <li><a href="#">Tận tình</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-12 col-sm-6 col-md-6 col-lg-2 col-custom">
                     <div class="single-footer-widget">
-                        <h2 class="widget-title">Quicklink</h2>
+                        <h2 class="widget-title">Liên kết</h2>
                         <ul class="widget-list">
-                            <li><a href="about-us.html">About</a></li>
-                            <li><a href="blog.html">Blog</a></li>
-                            <li><a href="shop.html">Shop</a></li>
-                            <li><a href="cart.html">Cart</a></li>
-                            <li><a href="contact-us.html">Contact</a></li>
+                            <li><a href="about-us.html">Trang chủ</a></li>
+                            <li><a href="blog.html">Cửa hàng</a></li>
+                            <li><a href="shop.html">Tin tức</a></li>
+                            <li><a href="cart.html">Liên hệ</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-12 col-sm-6 col-md-6 col-lg-2 col-custom">
                     <div class="single-footer-widget">
-                        <h2 class="widget-title">Support</h2>
+                        <h2 class="widget-title">Hỗ trợ</h2>
                         <ul class="widget-list">
-                            <li><a href="contact-us.html">Online Support</a></li>
-                            <li><a href="contact-us.html">Shipping Policy</a></li>
-                            <li><a href="contact-us.html">Return Policy</a></li>
-                            <li><a href="contact-us.html">Privacy Policy</a></li>
-                            <li><a href="contact-us.html">Terms of Service</a></li>
+                            <li><a href="contact-us.html">Hỗ trợ online</a></li>
+                            <li><a href="contact-us.html">Giao hàng tận nơi</a></li>
+                            <li><a href="contact-us.html">Đổi trả nhanh</a></li>
+                            <li><a href="contact-us.html">Đặt hàng</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-custom">
                     <div class="single-footer-widget">
-                        <h2 class="widget-title">See Information</h2>
+                        <h2 class="widget-title">Liên hệ</h2>
                         <div class="widget-body">
                             <address>FPT Polytechnic<br>Phone:+84364303994<br>Email: G6Food@gmail.com</address>
                         </div>
@@ -167,3 +163,10 @@
             unset($_SESSION['toastr-noti']);
         }
     ?>
+
+    <script>
+
+<?php echo "let SITE_URL = '" . BASE_URL . "';"; ?>
+    
+    </script>
+

@@ -41,19 +41,20 @@
                         $query = "SELECT * FROM product_type where product_id = $id";
                         $stmt = $this->conn->prepare($query);
                         $stmt->execute();
-                        return $stmt->fetch();
+                        return $stmt->fetchAll();
                     }
                 }
                 $homepage = new homepage();
 
                 ?>
                 <div class="row shop_wrapper grid_3">
-                    <?php
-                    foreach ($data['products'] as $item) :
+                    <!-- <?php
+                            foreach ($data['products'] as $item) :
 
-                    ?>
+                            ?>
                         <div class="col-md-6 col-sm-6 col-lg-4 col-custom product-area">
                             <div class="single-product position-relative">
+                                <input type="hidden" class="idproduct" value="<?= $item['idproduct'] ?>">
                                 <div class="product-image">
                                     <a class="d-block" href="<?php echo BASE_URL ?>/productdetail/show/<?= $item['slug'] ?>">
                                         <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $item['image'] ?>" alt="" class="product-image-1 w-100">
@@ -63,19 +64,21 @@
 
                                     <div class="product-title" style="padding-top:10px">
                                         <h4 class="title-2"> <a href="<?php echo BASE_URL ?>/productdetail/show/<?= $item['slug'] ?>"><?= $item['name'] ?></a>
+<<<<<<< HEAD
                                     
                                     </h4>
-                                    <?php
+                                    <?php 
                                     $product_attr = $homepage->getproduct_detail_attr($item['idproduct']);
                                     $attr_id = $homepage->getproduct_type_id($item['idproduct']);
-                                    if ($attr_id['attribute_id'] !== NULL) {
+                                    print_r($attr_id);   
+                                    if ($attr_id[0]['attribute_id'] != '') {
                                     ?>
                                         <div class="product-size">
                                             <p>Size :</p>
                                             <?php
                                             foreach ($product_attr as $size) :
                                             ?>
-                                                <input id="prod-size-<?= $size['value'] ?>-<?= $item['idproduct'] ?>" type="radio" name="option1" value="<?= $size['value'] ?>">
+                                                <input id="prod-size-<?= $size['value'] ?>-<?= $item['idproduct'] ?>" type="radio" checked name="option1" data-prod="<?= $size['id'] ?>" value="<?= $size['attribute_id'] ?> ">
                                                 <label for="prod-size-<?= $size['value'] ?>-<?= $item['idproduct'] ?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
                                                     <span><?= $size['value'] ?></span>
                                                 </label>
@@ -84,7 +87,33 @@
                                             ?>
                                         </div>
                                     <?php
+                                    } else {
+                                        echo "<div class='non-size' data-prod='".$attr_id[0]['id']."'></div>";
                                     } ?>
+=======
+
+                                        </h4>
+                                        <?php
+                                        $product_attr = $homepage->getproduct_detail_attr($item['idproduct']);
+                                        $attr_id = $homepage->getproduct_type_id($item['idproduct']);
+                                        if ($attr_id['attribute_id'] !== NULL) {
+                                        ?>
+                                            <div class="product-size">
+                                                <p>Size :</p>
+                                                <?php
+                                                foreach ($product_attr as $size) :
+                                                ?>
+                                                    <input id="prod-size-<?= $size['value'] ?>-<?= $item['idproduct'] ?>" type="radio" name="option1" value="<?= $size['value'] ?>">
+                                                    <label for="prod-size-<?= $size['value'] ?>-<?= $item['idproduct'] ?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
+                                                        <span><?= $size['value'] ?></span>
+                                                    </label>
+                                                <?php
+                                                endforeach;
+                                                ?>
+                                            </div>
+                                        <?php
+                                        } ?>
+>>>>>>> main
                                     </div>
                                     <div class="price-box">
                                         <span class="regular-price"><span class="price-view"><?= number_format($item['price']) ?> </span> VNĐ</span>
@@ -93,17 +122,15 @@
                                 </div>
 
                                 <div class="add-action d-flex position-absolute">
-                                    <a href="cart.html" title="Add To cart">
+<<<<<<< HEAD
+                                    <a title="Add To cart" class="add_to_cart">
+=======
+                                    <a href="" title="Add To cart">
+>>>>>>> main
                                         <i class="ion-bag"></i>
                                     </a>
-                                    <a href="compare.html" title="Compare">
-                                        <i class="ion-ios-loop-strong"></i>
-                                    </a>
-                                    <a href="wishlist.html" title="Add To Wishlist">
+                                    <a class="addtowishlist" title="Add To Wishlist">
                                         <i class="ion-ios-heart-outline"></i>
-                                    </a>
-                                    <a href="#exampleModalCenter" data-toggle="modal" title="Quick View">
-                                        <i class="ion-eye"></i>
                                     </a>
                                 </div>
                                 <div class="product-content-listview">
@@ -111,20 +138,20 @@
                                     <div class="product-title">
                                         <h4 class="title-2"> <a href="<?php echo BASE_URL ?>/productdetail/show/<?= $item['slug'] ?>"><?= $item['name'] ?></a></h4>
                                     </div>
-                                   
+
                                     <div class="price-box">
                                         <span class="regular-price"><span class="price-view"><?= number_format($item['price']) ?> </span> VNĐ</span>
                                         <span class="old-price"><del class="oldprice-view"><?= number_format($item['price'] + 12500) ?></del>VNĐ</span>
                                     </div>
                                     <p class="desc-content">
-                                    <?= $item['description'] ?>
-                                        </p>
+                                        <?= $item['description'] ?>
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     <?php
-                    endforeach;
-                    ?>
+                            endforeach;
+                    ?> -->
                 </div>
                 <!-- Shop Wrapper End -->
                 <!-- Bottom Toolbar Start -->
@@ -159,7 +186,7 @@
                             <h3 class="widget-title">Tìm kiếm</h3>
                             <div class="search-box">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search Our Store" aria-label="Search Our Store">
+                                    <input type="text" id="clearvalue" class="form-control search-products" placeholder="Tìm món ăn của bạn...">
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-secondary" type="button">
                                             <i class="fa fa-search"></i>
@@ -173,8 +200,12 @@
                             <!-- Widget Menu Start -->
                             <nav>
                                 <ul class="mobile-menu p-0 m-0">
-                                    <li class="menu-item-has-children"><a href="#">Breads</a>
-                                    </li>
+                                    <?php
+                                    foreach ($data['category'] as $category) {
+                                    ?>
+                                        <li class="menu-item-has-children"><a href="#"><?= $category['name'] ?></a>
+                                        </li>
+                                    <?php } ?>
                                 </ul>
                             </nav>
                             <!-- Widget Menu End -->
@@ -255,3 +286,66 @@
     </div>
 </div>
 <!-- Shop Main Area End Here -->
+<<<<<<< HEAD
+=======
+<script>
+    $(document).ready(function() {
+        // FETCH PRODUCTS
+        function fetchproducts() {
+            $.ajax({
+                url: "<?= BASE_URL ?>/products/fetchproducts",
+                method: "POST",
+                success: function(data) {
+                    $(".row.shop_wrapper").html(data);
+                },
+            });
+        }
+
+        fetchproducts();
+
+        // SEARCH PRODUCTS
+        $('.search-products').keyup(function() {
+            var value_input = $('.search-products').val();
+            $.ajax({
+                url: "<?= BASE_URL ?>/products/searchproducts",
+                method: "POST",
+                data: {
+                    'action': 'search',
+                    'value_input': value_input
+                },
+                success: function(data) {
+                    $(".row.shop_wrapper").html(data);
+                },
+            });
+        })
+
+
+        // WISHLIST
+        $(document).on('click', '.addtowishlist', function() {
+            let parent = $(this).parents('.single-product');
+            let id_product = parent.find('.idproduct').val();
+            // alert(parent);
+            $.ajax({
+                url: "<?= BASE_URL ?>/myaccount/insertwishlist",
+                method: "POST",
+                data: {
+                    'action': 'addWishList',
+                    'product_id': id_product
+                },
+                success: function(data) {
+                    if (data.length > 1000) {
+                        toastr['info']('Vui lòng đăng nhập');
+                    } else {
+                        let noti = JSON.parse(data);
+                        toastr[noti.code](noti.noti);
+                    }
+                }
+            });
+        })
+
+        $(document).on('click', '.btn-search-value', function() {
+            var clearvalue = $('#clearvalue').val();
+        })
+    })
+</script>
+>>>>>>> main

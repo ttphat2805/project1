@@ -6,6 +6,8 @@ class contact extends Controller
     }
     function Show()
     {
+        $_SESSION['namesite'] = "Liên hệ";
+
         $this->view(
             "master2",
             [

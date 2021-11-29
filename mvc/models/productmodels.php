@@ -28,11 +28,11 @@ class productmodels extends db
         $query = "INSERT INTO products(categoryid,name,image,description,status) 
             values (:categoryid,:name,:imageName,:description,:status)";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindValue(":categoryid",$categoryid,PDO::PARAM_INT);
-        $stmt->bindValue(":name",$name,PDO::PARAM_STR);
-        $stmt->bindValue(":imageName",$imageName,PDO::PARAM_STR);
-        $stmt->bindValue(":description",$description,PDO::PARAM_STR);
-        $stmt->bindValue(":status",$status,PDO::PARAM_INT);
+        $stmt->bindValue(":categoryid", $categoryid, PDO::PARAM_INT);
+        $stmt->bindValue(":name", $name, PDO::PARAM_STR);
+        $stmt->bindValue(":imageName", $imageName, PDO::PARAM_STR);
+        $stmt->bindValue(":description", $description, PDO::PARAM_STR);
+        $stmt->bindValue(":status", $status, PDO::PARAM_INT);
 
         $stmt->execute();
         return $stmt;
@@ -130,7 +130,8 @@ class productmodels extends db
         $stmt->execute();
         return $stmt->fetchAll();
     }
-    function getProductId($slug) {
+    function getProductId($slug)
+    {
         $query = "SELECT id FROM `products` WHERE slug = '$slug' and status = 1";
         $result = $this->conn->prepare($query);
         $result->execute();
@@ -151,11 +152,11 @@ class productmodels extends db
         $stmt->execute([$categoryid, $name, $name_slug,  $description, $status, $id]);
     }
 
-    function updateimg($imgname,$id)
+    function updateimg($imgname, $id)
     {
         $query = "UPDATE products set image = ? where id = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->execute([$imgname,$id]);
+        $stmt->execute([$imgname, $id]);
     }
     function delete_product_type($id)
     {
@@ -178,11 +179,32 @@ class productmodels extends db
         $stmt->execute([$id]);
     }
 
+
     function delete_product($table, $where, $id){
         $query = "DELETE FROM $table WHERE $where = $id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
     }
+    function getproducts_detail_attr($id)
+    {
+        $query = "SELECT a.*,b.id as 'idattr',b.value,b.name from attribute b inner join product_type a on b.id = a.attribute_id where a.product_id = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+    function getproducts_type_id($id)
+    {
+        $query = "SELECT * FROM product_type where product_id = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
 
+    function searchproducts($value)
+    {
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.name like '%$value%' and a.status = 1 group by a.id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
 }
-

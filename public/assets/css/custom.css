@@ -1,90 +1,243 @@
-    .main-header-area .header-logo img {
-        width: 100px;
+.main-header-area .header-logo img {
+    width: 100px;
+}
+
+.app {
+    overflow: hidden;
+}
+
+.product-area {
+    padding-top: 60px;
+}
+
+.latest-blog-area {
+    padding-bottom: 100px;
+}
+
+.product-size {
+    display: flex;
+}
+
+.product-size input[type="radio"] {
+    display: none;
+}
+
+.product-size>p {
+    margin-top: 7px;
+    margin-right: 7px;
+}
+
+.product-size input[type="radio"]:checked+.sd {
+    border: 1px solid #E98C81;
+    background: #E98C81;
+    color: #fff;
+}
+
+.product-size label.sd {
+    display: block;
+    margin-top: 5px;
+    margin-right: 2px;
+    background: #fff;
+    width: 35px;
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+    border: 1px solid #e5e5e5;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+}
+
+
+/* css những dòng lỗi */
+
+.error {
+    font-style: italic;
+    display: block;
+}
+
+.loader_pizza img {
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+}
+
+.cart-item-wrapper {
+    background-color: lightblue;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+.obrien-button {
+    font-size: 16px;
+}
+
+ ::-webkit-scrollbar {
+    width: 10px;
+}
+
+
+/* Track */
+
+ ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+
+/* Handle */
+
+ ::-webkit-scrollbar-thumb {
+    background: #E98C81;
+    border-radius: 10px;
+}
+
+.contact-us-area {
+    overflow: hidden;
+}
+
+.social-container {
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.social-container a {
+    color: var(--text-color);
+    border: 1px solid #DDDDDD;
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+    height: 40px;
+    width: 40px;
+}
+
+.social-container .social1:hover {
+    background: #3b5998;
+    color: #fff;
+    transition: .1s;
+}
+
+.social-container .social2:hover {
+    background: #FF3e30;
+    color: #fff;
+    transition: .1s;
+}
+
+.social-container .social3:hover {
+    background: #DD2a7b;
+    color: #fff;
+    transition: .1s;
+}
+
+.main-nav>ul>li>.hello_account {
+    font-size: 14px;
+    margin-right: 5px;
+    font-weight: 400;
+    font-family: Roboto;
+}
+
+.background-zoom {
+    background-position: 50% 50%;
+    position: relative;
+    overflow: hidden;
+    cursor: zoom-in;
+    background-repeat: no-repeat;
+    background-color: hsla(0, 0%, 100%, 1);
+    /* background-blend-mode: overlay; */
+}
+
+.background-zoom:hover {
+    transition: background-color 1s;
+    background-color: hsla(0, 0%, 100%, 0);
+    /* background-blend-mode: overlay; */
+}
+
+.background-zoom img:hover {
+    opacity: 0;
+}
+
+.background-zoom img {
+    width: 100%;
+    transition: opacity 0.5s;
+    display: block;
+}
+
+.noti-wishlist {
+    font-size: 16px;
+}
+
+.product-content {
+    height: 120px;
+    position: relative;
+}
+
+.product-size {
+    position: absolute;
+    right: -50px;
+    top: 65px;
+    opacity: 0;
+}
+
+.product-size.list {
+    position: absolute;
+    right: 300px;
+    top: 70px;
+    opacity: 0;
+}
+
+.single-product:hover .product-size {
+    opacity: 1;
+    right: 20px;
+    transition: right .2s;
+}
+
+.single-product:hover .product-size.list {
+    opacity: 1;
+    right: 400px;
+    transition: right .2s;
+}
+
+.ht_un {
+    float: left;
+    width: 45%;
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.product-action a {
+    font-size: 16px;
+    font-weight: bold;
+    font-size: 22px;
+    margin-right: 15px;
+}
+
+.product-title {
+    padding-top: 10px;
+}
+
+.noti-search {
+    font-size: 20px;
+    text-align: center;
+    margin: 40px 0;
+}
+
+@media (max-width: 990px) {
+    .login-register-wrap {
+        display: none !important;
     }
-    
-    .product-area {
-        padding-top: 60px;
+    .product-content {
+        height: 120px !important;
     }
-    
-    .latest-blog-area {
-        padding-bottom: 100px;
+}
+
+@media (max-width: 1200px) {
+    .hello_account {
+        display: none !important;
     }
-    
-    .product-size {
-        display: flex;
-    }
-    
-    .product-size input[type="radio"] {
-        display: none;
-    }
-    
-    .product-size>p {
-        margin-top: 7px;
-        margin-right: 7px;
-    }
-    
-    .product-size input[type="radio"]:checked+.sd {
-        border: 1px solid #E98C81;
-        background: #E98C81;
-        color: #fff;
-    }
-    
-    .product-size label.sd {
-        display: block;
-        margin-top: 5px;
-        margin-right: 2px;
-        background: #fff;
-        width: 35px;
-        height: 30px;
-        line-height: 30px;
-        position: relative;
-        border: 1px solid #e5e5e5;
-        font-size: 12px;
-        font-weight: 500;
-        text-align: center;
-        cursor: pointer;
-    }
-    /* css những dòng lỗi */
-    
-    .error {
-        font-style: italic;
-        display: block;
-        margin: 0 auto;
-    }
-    
-    .loader_pizza img {
-        position: absolute;
-        left: 50%;
-        top: 100%;
-        transform: translate(-50%, -50%);
-        z-index: 100;
-    }
-    
-    .cart-item-wrapper {
-        background-color: lightblue;
-        height: 400px;
-        overflow-y: scroll;
-    }
-    
-    .obrien-button {
-        font-size: 16px;
-    }
-    
-     ::-webkit-scrollbar {
-        width: 10px;
-    }
-    /* Track */
-    
-     ::-webkit-scrollbar-track {
-        background: #f1f1f1;
-    }
-    /* Handle */
-    
-     ::-webkit-scrollbar-thumb {
-        background: #E98C81;
-        border-radius: 10px;
-    }
-    
-    .contact-us-area {
-        overflow: hidden;
-    }
+}
