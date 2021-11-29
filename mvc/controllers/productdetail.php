@@ -53,22 +53,28 @@ class productdetail extends Controller
             foreach ($comments as $cmt) {
                 $output .= '<div class="pro_review mb-5">
                 <div class="review_thumb">
+                    <input type="hidden" class="getidmembercmt" value="' . $cmt['idmember'] . '">
                     <input type="hidden" class="getidcmt" value="' . $cmt['idcmt'] . '">
-                    <img alt="review images" src="/public/assets/images/logo/user.png">
+                    <img alt="review images" src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Clipart.png" width="80px" height="75px">
                 </div>
                 <div class="review_details">
                     <div class="review_info mb-2">
                         <h5>' . $cmt['fullname'] . ' - <span>' . $cmt['date'] . '</span></h5>
                     </div>
-                    <p class="content">' . $cmt['content'] . '</p>
-                    <a class="user_deletecmt"> Xoas</a>
-                    <a class="user_updatecmt"> sửa</a><br/>
+                    <p class="content">' . $cmt['content'] . '</p>';
+                if(isset($_SESSION['user_infor']['user_id'])){
+                    $output.= '    <input type="hidden" class="sessionidmember" value="' .$_SESSION['user_infor']['user_id'] . '">';
+                if($cmt['idmember'] ==  $_SESSION['user_infor']['user_id']){
+                $output.= '
+                    <a class="user_deletecmt edit-user-comment"><i class="fal fa-trash-alt"></i> xóa</a>
+                    <a class="user_updatecmt edit-user-comment"> <i class="far fa-pen"></i> sửa</a><br/>
                 </div>
-                
+                ';}}
+            $output.= '</div>
+            <textarea type="text" class="updatecmt update_comment_style" style="display:none;"> </textarea><span class="spanupdatecmt comment-submit btn obrien-button primary-btn" style="display:none;">Cập nhật</span>
+            
             </div>
-            <input type="text" class="updatecmt" style="display:none;"> <span class="spanupdatecmt" style="display:none;">Cập nhật</span>
-            ';
-            }
+            ';}
         } else {
             $output .= " <p class='noti-cmt'>Sản phẩm này chưa có bình luận nào...</p>";
         }

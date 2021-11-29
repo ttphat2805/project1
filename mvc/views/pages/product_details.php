@@ -156,30 +156,37 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="connect-2" role="tabpanel" aria-labelledby="profile-tab">
-                                <!-- Start Single Content -->
                                 <div class="product_tab_content  border p-3 ">
+                                    <!-- START CMT -->
                                     <div class="review_address_inner comment_show_ajax">
                                     </div>
-                                    <!-- End CMT-->
                                     <div class="comments-area comments-reply-area">
                                         <div class="row">
+                                            <?php if(isset($_SESSION['user_infor'])):?>
                                             <div class="col-lg-12 col-custom">
                                                 <form method="post" class="comment-form-area">
                                                     <div class="row comment-input">
                                                     </div>
                                                     <div class="comment-form-comment mb-3">
-                                                        <label>Comment</label>
+                                                        <label>Đánh giá (<i class="fal fa-star"></i>)</label>
                                                         <textarea class="comment-notes get_comment" name="content" required="required"></textarea>
                                                     </div>
                                                     <div class="comment-form-submit">
-                                                        <div class="comment-submit btn obrien-button primary-btn">OK</div>
+                                                        <div class="comment-submit btn obrien-button primary-btn">Gửi ngay</div>
+                                                    </div>
+                                                    <div class="comment-form-submit">
+                                                        <div class="comment-update btn obrien-button primary-btn" style="display: none">Cập nhật</div>
                                                     </div>
                                                 </form>
                                             </div>
+                                            <?php else:?>
+                                                <div class="comment-constraint mt-4">
+                                                <p class="">Chỉ những khách hàng đã đăng nhập mới có thể đưa ra đánh giá (*)</p>
+                                            </div>
+                                            <?php endif;?>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- End Single Content -->
                             </div>
                         </div>
                     </div>
@@ -498,7 +505,7 @@
                         }
                     });
                 })
-
+                // FETCH COMMENT
                 function fetchcmt() {
                     // alert('hi');
 
@@ -513,6 +520,8 @@
                 }
                 fetchcmt();
 
+
+                // INSERT COMMENT
                 $(".comment-submit").click(function() {
                     let idproduct = $('#value_idproduct').val();
                     let content = $('.get_comment').val();
@@ -526,10 +535,11 @@
                         },
                         success: function(data) {
                             fetchcmt();
+                            $('.get_comment').val('');
                         }
                     });
                 })
-
+                // USER - DELETE COMMENT
                 $(document).on('click', '.user_deletecmt', function() {
                     var parent = $(this).parents('.pro_review');
                     var id_cmt = parent.find('.getidcmt').val();
@@ -541,44 +551,50 @@
                             'id_cmt': id_cmt,
                         },
                         success: function(data) {
-                            if (data == 'ok') {} else {
+                            if (data == 'ok') {
+
+                            } else {
                                 fetchcmt();
                             }
                         }
                     });
                 })
+                // USER - UPDATE COMMENT
 
                 $(document).on('click', '.user_updatecmt', function() {
+                    let content = $('.get_comment');
                     var parent = $(this).parents('.pro_review');
                     var id_cmt = parent.find('.getidcmt').val();
                     var content_cmt = parent.find('.content').html();
-                    var textcmt = $('.updatecmt');
-                    var spanupdate = $('.spanupdatecmt');
-                    textcmt.show();
-                    spanupdate.show();
-                    textcmt.val(content_cmt);
-                    spanupdate.on('click', function() {
-                        let content = textcmt.val();
+                    var comment_update = $('.comment-update');
+                    comment_update.show();
+                    $('.comment-submit').hide()
+                        content.val(content_cmt);
+                        comment_update.on('click', function() {
+                        let contentupdatecmt = content.val();
                         $.ajax({
-                            url: `<?= BASE_URL ?>/productdetail/userupdatecmt/`,
+                            url: `<?= BASE_URL ?>/productdetail/userupdatecmt`,
                             method: "POST",
                             data: {
                                 'action': 'userupdatecmt',
                                 'id_cmt': id_cmt,
-                                'content': content,
+                                'content': contentupdatecmt,
                             },
                             success: function(data) {
-                                if (data == 'ok') {} else {
-                                    textcmt.hide();
-                                    spanupdate.hide();
+                                if (data == 'ok') {
+
+                                } else {
                                     fetchcmt();
+                                    $('.comment-submit').show()
+                                    comment_update.hide();
+                                    content.val('');
                                 }
                             }
                         });
                     })
                 })
             })
-
+            // ZOOM IMAGE
             function zoom(e) {
                 var zoom = e.currentTarget;
                 e.offsetX ? offsetX = e.offsetX : offsetX = e.touches[0].pageX

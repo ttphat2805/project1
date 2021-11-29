@@ -170,3 +170,13 @@ input.form-control:focus {
 .radio-close {
     position: absolute;
 }
+
+.custom-form-label {
+    font-size: 16px;
+    color: rgb(175, 175, 175);
+    font-weight: bold;
+}
+
+.italic {
+    font-style: italic;
+}

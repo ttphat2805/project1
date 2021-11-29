@@ -95,7 +95,7 @@
                 </li>
 
                 <li class="nav-item menu-items">
-                    <a class="nav-link" href="<?php echo BASE_URL; ?>/admin/">
+                    <a class="nav-link" href="<?php echo BASE_URL; ?>/admin/member">
                         <span class="menu-icon">
                             <i class="mdi mdi-account-multiple-outline"></i>
                         </span>
@@ -152,7 +152,7 @@
                     </div>
                 </li>
                 <li class="nav-item menu-items">
-                    <a class="nav-link" href="<?php echo BASE_URL; ?>/Admin/showComment">
+                    <a class="nav-link" href="<?php echo BASE_URL; ?>/Admin/showcomment">
                         <span class="menu-icon">
                             <i class="mdi mdi-comment-check-outline"></i>
                         </span>

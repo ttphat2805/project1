@@ -184,7 +184,7 @@
                                                 </div>
                                                 <div class="product-price">
                                                     <span class="regular-price "><?= number_format($trend['price']); ?> VNĐ</span>
-                                                    <span class="old-price"><del><?= number_format($trend['price'] + 15000);
+                                                    <span class="old-price"><del><?= number_format($trend['price'] + 12500);
                                                                                     ?> VNĐ</del></span>
                                                 </div>
                                                 <div class="product-action d-flex">

@@ -141,14 +141,60 @@ class usermodels extends db {
     }
 
     function userupdatecmt($memberid,$id,$content){
-        $query = "UPDATE comments set content = ? where member_id = ? and id = ?";
+        $query = "UPDATE comments set content = ? where id = ? and member_id = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->execute([$content,$memberid,$id]);
+        $stmt->execute([$content,$id,$memberid]);
     }
     function deleteComment($id){
         $query = "DELETE FROM comments WHERE id=$id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
     }
+    // CMT ADMIN 
+    function showcommentadmin(){
+        $query = "SELECT a.id as 'idmember',a.fullname,b.id as 'idcmt',b.product_id,b.member_id,b.content,b.date,b.status,c.name from member a INNER JOIN comments b on a.id = b.member_id inner join products c on b.product_id = c.id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 
+    function infocomment($id){
+        $query = "SELECT a.id as 'idmember',a.fullname,a.email,b.id as 'idcmt',b.product_id,b.member_id,b.content,b.date,b.status,c.name,c.image from member a INNER JOIN comments b on a.id = b.member_id inner join products c on b.product_id = c.id where b.id = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
+    function updatecomment($status, $id){
+        $query = "UPDATE comments set status = ? where id = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$status]);
+    }
+    function getmember(){
+        $query = "SELECT * FROM member";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    function getmemberid($id){
+        $query = "SELECT * FROM member where id = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
+    function checkroleadmin($id){
+        $query = "SELECT fullname FROM member where role = 1 and id = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetch()['fullname'];
+    }
+
+
+    function updatemember($fullname,$mobile,$email,$address,$role,$status,$id){
+        $query = "UPDATE member SET fullname = ?, mobile = ?, email = ?, address = ?, role = ?, status = ? where id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$fullname,$mobile,$email,$address,$role,$status,$id]);
+    }
 }
