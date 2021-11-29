@@ -2,6 +2,7 @@
         <div class="single-product-main-area">
             <div class="container container-default custom-area">
                 <div class="row">
+
                     <div class="col-lg-5 col-custom">
                         <div class="product-details-img horizontal-tab">
                             <div class="product-slider popup-gallery product-details_slider" data-slick-options='{
@@ -12,22 +13,21 @@
                         "swipe": false,
                         "asNavFor": ".pd-slider-nav"
                         }'>
-                                <div class="single-image border">
-                                    <a href="">
-                                        <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?=$data['productdetails']['image'] ?>" alt="Product">
-                                    </a>
+                                <div class="single-image border background-zoom" onmousemove="zoom(event)" style="background-image: url('<?php echo BASE_URL ?>/public/assets/images/product/<?= $data['productdetails']['image'] ?>')">
+                                    <div class="single-image border">
+                                        <a href="">
+                                            <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $data['productdetails']['image'] ?>" alt="Product">
+                                        </a>
+                                    </div>
                                 </div>
 
                                 <?php
                                 foreach ($data['gallery'] as $img) :
                                 ?>
-                                    <div class="single-image border">
-                                        <a href="">
-                                            <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery'] ?>" alt="Product">
-                                        </a>
+                                    <div class="single-image border background-zoom" onmousemove="zoom(event)" style="background-image: url('<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery'] ?>')">
+                                        <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery'] ?>" alt="Product">
                                     </div>
                                 <?php endforeach; ?>
-
                             </div>
                             <div class="pd-slider-nav product-slider" data-slick-options='{
                         "slidesToShow": 3,
@@ -42,6 +42,7 @@
                             {"breakpoint":992, "settings": {"slidesToShow": 4}},
                             {"breakpoint":575, "settings": {"slidesToShow": 3}}
                         ]'>
+
                                 <div class="single-thumb border">
                                     <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?php echo $data['productdetails']['image'] ?>" alt="Product thumnail">
                                 </div>
@@ -52,81 +53,89 @@
                                         <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery'] ?>" alt="Product thumnail">
                                     </div>
                                 <?php endforeach; ?>
-
                             </div>
                         </div>
                     </div>
+
                     <div class="col-lg-7 col-custom">
                         <form action="<?= BASE_URL ?>/cart/addcart/<?= $data['productdetails']['idproduct'] ?>" method="post">
-                            <input type="hidden" value="<?= $data['productdetails']['idproduct'] ?>">
-                            <input type="hidden" value="<?= $data['productdetails']['name'] ?>">
-                            <div class="product-summery position-relative">
-                                <div class="product-head mb-3">
-                                    <h2 class="product-title">
-                                        <?php echo $data['productdetails']['name'] ?>
-                                    </h2>
-                                </div>
-                                <div class="price-box mb-2">
-                                    <span class="regular-price"><span class="price-view"><?= number_format($data['productdetails']['price']) ?> </span> VNĐ</span>
-                                    <span class="old-price"><del class="oldprice-view"><?= number_format($data['productdetails']['price'] + 12500) ?></del>VNĐ</span>
-                                </div>
-                                <div class="product-rating mb-3">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </div>
-                                <div class="sku mb-3">
-                                    <span>Lượt xem: <?php echo $data['productdetails']['views'] ?></span>
-                                </div>
-                                <p class="desc-content mb-5">
-                                    <?php echo $data['productdetails']['description'] ?>
-                                </p>
-                                <div>Số lượng còn lại là: <span class="quantity_view">
-                                        <?php echo $data['productdetails']['quantity'] ?>
-                                    </span></div>
-                                <?php
-                                if ($data['product_type']['attribute_id'] !== NULL) {
-                                ?>
-                                    <div class="product-meta">
-                                        <div class="product-size mb-4">
-                                            <p>Size :</p>
-                                            <?php
-                                            foreach ($data['productdetailattr'] as $size) :
-                                            ?>
-                                                <input id="prod-size-<?= $size['value'] ?>" type="radio" name="option1" value="<?= $size['value'] ?>">
-                                                <label for="prod-size-<?= $size['value'] ?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
-                                                    <span><?= $size['value'] ?></span>
-                                                </label>
-                                            <?php
-                                            endforeach;
-                                            ?>
+                            <input type="hidden" class="valueid" value="<?= $data['productdetails']['idproduct'] ?>">
+                            <form action="<?= BASE_URL ?>/cart/addcart/<?= $data['productdetails']['idproduct'] ?>" method="post" class="parent_productid">
+                                <input type="hidden" id="value_idproduct" value="<?= $data['productdetails']['idproduct'] ?>">
+                                <input type="hidden" value="<?= $data['productdetails']['name'] ?>">
+                                <div class="product-summery position-relative">
+                                    <div class="product-head mb-3">
+                                        <h2 class="product-title">
+                                            <?php echo $data['productdetails']['name'] ?>
+                                        </h2>
+                                    </div>
+                                    <div class="price-box mb-2">
+                                        <span class="regular-price"><span class="price-view"><?= number_format($data['productdetails']['price']) ?> </span> VNĐ</span>
+                                        <span class="old-price"><del class="oldprice-view"><?= number_format($data['productdetails']['price'] + 12500) ?></del>VNĐ</span>
+                                    </div>
+                                    <div class="product-rating mb-3">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                    </div>
+                                    <div class="sku mb-3">
+                                        <span>Lượt xem: <?php echo $data['productdetails']['views'] ?></span>
+                                    </div>
+                                    <p class="desc-content mb-5">
+                                        <?php echo $data['productdetails']['description'] ?>
+                                    </p>
+                                    <div>Số lượng còn lại là: <span class="quantity_view">
+                                            <?php echo $data['productdetails']['quantity'] ?>
+                                        </span></div>
+                                    <?php
+                                    if ($data['product_type']['attribute_id'] !== NULL) {
+                                    ?>
+                                        <div class="product-meta">
+                                            <div class="product-size mb-4">
+                                                <p>Size :</p>
+                                                <?php
+                                                foreach ($data['productdetailattr'] as $size) :
+                                                ?>
+                                                    <input id="prod-size-<?= $size['value'] ?>" type="radio" name="option1" value="<?= $size['value'] ?>">
+                                                    <label for="prod-size-<?= $size['value'] ?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
+                                                        <span><?= $size['value'] ?></span>
+                                                    </label>
+                                                    <!-- Button trigger modal -->
+
+                                                <?php
+                                                endforeach;
+                                                ?>
+                                            </div>
+                                            <!-- <button type="button" class="btn mb-2" data-toggle="modal" data-target="#exampleModal">
+                                                    Xem tham khảo size
+                                        </button> -->
+
+                                        </div>
+                                    <?php } ?>
+                                    <div class="quantity-with_btn mb-4">
+                                        <div class="quantity">
+                                            <div class="cart-plus-minus">
+                                                <input class="cart-plus-minus-box" value="0" type="text">
+                                                <div class="dec qtybutton">-</div>
+                                                <div class="inc qtybutton">+</div>
+                                            </div>
                                         </div>
                                     </div>
-                                <?php } ?>
-                                <div class="quantity-with_btn mb-4">
-                                    <div class="quantity">
-                                        <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" value="0" type="text">
-                                            <div class="dec qtybutton">-</div>
-                                            <div class="inc qtybutton">+</div>
-                                        </div>
+                                    <div class="add-to_cart mb-4">
+                                        <input type="submit" value="Mua ngay" name="btn_submit" class="btn obrien-button primary-btn" href="">
+                                        <a class="btn obrien-button-2 treansparent-color pt-0 pb-0 addwishlistdetail">+ Yêu thích</a>
+                                    </div>
+                                    <div class="social-share mb-4">
+                                        <span>Share :</span>
+                                        <a href="#"><i class="fa fa-facebook-square facebook-color"></i></a>
+                                        <a href="#"><i class="fa fa-twitter-square twitter-color"></i></a>
+                                        <a href="#"><i class="fa fa-linkedin-square linkedin-color"></i></a>
+                                        <a href="#"><i class="fa fa-pinterest-square pinterest-color"></i></a>
                                     </div>
                                 </div>
-                                <div class="add-to_cart mb-4">
-                                    <input type="submit" value="Mua ngay" name="btn_submit" class="btn obrien-button primary-btn" href="">
-                                    <a class="btn obrien-button-2 treansparent-color pt-0 pb-0" href="wishlist.html">+ Yêu thích</a>
-                                </div>
-                                <div class="social-share mb-4">
-                                    <span>Share :</span>
-                                    <a href="#"><i class="fa fa-facebook-square facebook-color"></i></a>
-                                    <a href="#"><i class="fa fa-twitter-square twitter-color"></i></a>
-                                    <a href="#"><i class="fa fa-linkedin-square linkedin-color"></i></a>
-                                    <a href="#"><i class="fa fa-pinterest-square pinterest-color"></i></a>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
                     </div>
                 </div>
                 <div class="row mt-no-text">
@@ -148,57 +157,22 @@
                             </div>
                             <div class="tab-pane fade" id="connect-2" role="tabpanel" aria-labelledby="profile-tab">
                                 <!-- Start Single Content -->
-                                <div class="product_tab_content  border p-3">
-                                    <div class="review_address_inner">
-                                        <!-- Start Single Review -->
-                                        <div class="pro_review mb-5">
-                                            <div class="review_thumb">
-                                                <img alt="review images" src="assets/images/review/1.jpg">
-                                            </div>
-                                            <div class="review_details">
-                                                <div class="review_info mb-2">
-                                                    <div class="product-rating mb-2">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                    </div>
-                                                    <h5>Admin - <span> December 19, 2020</span></h5>
-                                                </div>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin in viverra ex, vitae vestibulum arcu. Duis sollicitudin metus sed lorem commodo, eu dapibus libero interdum. Morbi convallis viverra erat, et aliquet orci congue vel. Integer in odio enim. Pellentesque in dignissim leo. Vivamus varius ex sit amet quam tincidunt iaculis.</p>
-                                            </div>
-                                        </div>
-                                        <!-- End Single Review -->
+                                <div class="product_tab_content  border p-3 ">
+                                    <div class="review_address_inner comment_show_ajax">
                                     </div>
-                                    <!-- Start RAting Area -->
-                                    <div class="rating_wrap">
-                                        <h6 class="rating-title-2 mb-2">Your Rating</h6>
-                                        <div class="rating_list mb-4">
-                                            <div class="review_info">
-                                                <div class="product-rating mb-3">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End RAting Area -->
+                                    <!-- End CMT-->
                                     <div class="comments-area comments-reply-area">
                                         <div class="row">
                                             <div class="col-lg-12 col-custom">
-                                                <form action="#" class="comment-form-area">
+                                                <form method="post" class="comment-form-area">
                                                     <div class="row comment-input">
                                                     </div>
                                                     <div class="comment-form-comment mb-3">
                                                         <label>Comment</label>
-                                                        <textarea class="comment-notes" required="required"></textarea>
+                                                        <textarea class="comment-notes get_comment" name="content" required="required"></textarea>
                                                     </div>
                                                     <div class="comment-form-submit">
-                                                        <input type="submit" value="Submit" class="comment-submit btn obrien-button primary-btn">
+                                                        <div class="comment-submit btn obrien-button primary-btn">OK</div>
                                                     </div>
                                                 </form>
                                             </div>
@@ -453,9 +427,13 @@
                 </div>
             </div>
         </div>
+
+        </div>
+
         <!-- Product Area End Here -->
         <script>
             $(document).ready(function() {
+
                 $(".btn-value-size").click(function() {
                     let size = $(this).attr('id');
                     $.ajax({
@@ -465,7 +443,6 @@
                             'size': size,
                         },
                         success: function(data) {
-                            console.log(data);
                             $('.price-view').html(data);
                         }
                     });
@@ -500,5 +477,114 @@
                         }
                     });
                 })
+                // WISHLIST DETAIL
+
+                $('.addwishlistdetail').click(function() {
+                    let id_product = $('.valueid').val();
+                    $.ajax({
+                        url: "<?= BASE_URL ?>/myaccount/insertwishlist",
+                        method: "POST",
+                        data: {
+                            'action': 'addWishList',
+                            'product_id': id_product
+                        },
+                        success: function(data) {
+                            if (data.length > 1000) {
+                                toastr['info']('Vui lòng đăng nhập');
+                            } else {
+                                let noti = JSON.parse(data);
+                                toastr[noti.code](noti.noti);
+                            }
+                        }
+                    });
+                })
+
+                function fetchcmt() {
+                    // alert('hi');
+
+                    let id = $('#value_idproduct').val();
+                    $.ajax({
+                        url: `<?= BASE_URL ?>/productdetail/showcmt/${id}`,
+                        method: "POST",
+                        success: function(data) {
+                            $('.comment_show_ajax').html(data);
+                        },
+                    });
+                }
+                fetchcmt();
+
+                $(".comment-submit").click(function() {
+                    let idproduct = $('#value_idproduct').val();
+                    let content = $('.get_comment').val();
+                    $.ajax({
+                        url: `<?= BASE_URL ?>/productdetail/insertcmt/`,
+                        method: "POST",
+                        data: {
+                            'action': 'addcmt',
+                            'idproduct': idproduct,
+                            'content': content
+                        },
+                        success: function(data) {
+                            fetchcmt();
+                        }
+                    });
+                })
+
+                $(document).on('click', '.user_deletecmt', function() {
+                    var parent = $(this).parents('.pro_review');
+                    var id_cmt = parent.find('.getidcmt').val();
+                    $.ajax({
+                        url: `<?= BASE_URL ?>/productdetail/userdeletecmt/`,
+                        method: "POST",
+                        data: {
+                            'action': 'userdeletecmt',
+                            'id_cmt': id_cmt,
+                        },
+                        success: function(data) {
+                            if (data == 'ok') {} else {
+                                fetchcmt();
+                            }
+                        }
+                    });
+                })
+
+                $(document).on('click', '.user_updatecmt', function() {
+                    var parent = $(this).parents('.pro_review');
+                    var id_cmt = parent.find('.getidcmt').val();
+                    var content_cmt = parent.find('.content').html();
+                    var textcmt = $('.updatecmt');
+                    var spanupdate = $('.spanupdatecmt');
+                    textcmt.show();
+                    spanupdate.show();
+                    textcmt.val(content_cmt);
+                    spanupdate.on('click', function() {
+                        let content = textcmt.val();
+                        $.ajax({
+                            url: `<?= BASE_URL ?>/productdetail/userupdatecmt/`,
+                            method: "POST",
+                            data: {
+                                'action': 'userupdatecmt',
+                                'id_cmt': id_cmt,
+                                'content': content,
+                            },
+                            success: function(data) {
+                                if (data == 'ok') {} else {
+                                    textcmt.hide();
+                                    spanupdate.hide();
+                                    fetchcmt();
+                                }
+                            }
+                        });
+                    })
+                })
             })
+
+            function zoom(e) {
+                var zoom = e.currentTarget;
+                e.offsetX ? offsetX = e.offsetX : offsetX = e.touches[0].pageX
+                e.offsetY ? offsetY = e.offsetY : offsetX = e.touches[0].pageX
+                x = (offsetX / zoom.offsetWidth) * 100
+                y = (offsetY / zoom.offsetHeight) * 100
+                zoom.style.backgroundPosition = x + "% " + y + "%";
+            }
         </script>
