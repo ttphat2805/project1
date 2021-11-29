@@ -29,8 +29,12 @@
                                     <td><?= $item['name'] ?></td>
                                     <td><?= $item['status'] == 1 ? '<label class="badge badge-success">Kích hoạt</label>' : '<label class="badge badge-danger">Chưa kích hoạt</label>' ?></td>
                                     <td>
-                                        <a class="btn btn-primary" href="<?php echo BASE_URL ?>/admin/infocategory/<?= $item['id'] ?>">Sửa</a>
-                                        <a class="btn btn-danger btn__delete" href="<?php echo BASE_URL ?>/admin/delcategory/<?= $item['id'] ?>">Xóa</a>
+                                        <a class="btn btn-primary" href="<?php echo BASE_URL ?>/admin/infocategory/<?= $item['id'] ?>">
+                                        <i class="fal fa-money-check-edit"></i>
+                                        </a>
+                                        <a class="btn btn-danger btn__delete" href="<?php echo BASE_URL ?>/admin/delcategory/<?= $item['id'] ?>">
+                                        <i class="fal fa-trash-alt"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             <?php

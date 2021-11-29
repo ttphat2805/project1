@@ -1,3 +1,4 @@
+
 <?php 
 
 class usermodels extends db {
@@ -118,4 +119,37 @@ class usermodels extends db {
 
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    function showComment($id){
+        $query = "SELECT a.id as 'idmember',a.fullname,b.id as 'idcmt',b.product_id,b.member_id,b.content,b.date,b.status from member a INNER JOIN comments b on a.id = b.member_id where b.status = 1 and b.product_id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$id]);
+        return $stmt;
+    }
+
+    function insertComment($memberid,$productid,$content){
+        $query = "INSERT comments(member_id,product_id,content)
+                values ('$memberid','$productid','$content');";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+    }
+
+
+    function userdeletecmt($memberid,$id){
+        $query = "DELETE FROM comments WHERE member_id = ? and id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$memberid,$id]);
+    }
+
+    function userupdatecmt($memberid,$id,$content){
+        $query = "UPDATE comments set content = ? where member_id = ? and id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$content,$memberid,$id]);
+    }
+    function deleteComment($id){
+        $query = "DELETE FROM comments WHERE id=$id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+    }
+
 }

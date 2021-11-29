@@ -9,14 +9,15 @@
                                 <p class="desc-content"></p>
                             </div>
                             <form action="<?php echo BASE_URL . '/auth/register' ?>" method="post">
-                                <div class="single-input-item mb-3">
-                                    <input type="text" name="firstname" placeholder="Nhập họ...">
-                                    <span class="text-danger error"><?php echo $data['data']['first_name_error'] ?></span>
-                                </div>
-                                <div class="single-input-item mb-3">
+                                <div class="single-input-item mb-3 ht_un">
                                     <input type="text" name="lastname" placeholder="Nhập tên...">
                                     <span class="text-danger error"><?php echo $data['data']['last_name_error'] ?></span>
                                 </div>
+                                <div class="single-input-item mb-3 ml-3" style="width:50%;display:inline-block">
+                                    <input type="text" name="firstname" placeholder="Nhập họ...">
+                                    <span class="text-danger error"><?php echo $data['data']['first_name_error'] ?></span>
+                                </div>
+
                                 <div class="single-input-item mb-3">
                                     <input type="email" name="email" placeholder="Nhập email...">
                                     <span class="text-danger error"><?php echo $data['data']['email_error'] ?></span>
