@@ -90,10 +90,6 @@ class Auth extends Controller
 
             try {
                 $google_account_info = $client->verifyIdToken($token['id_token']);
-<<<<<<< HEAD
-                //var_dump($google_account_info);
-=======
->>>>>>> d00f7874d3788fdb4a9510e9d431d3aeff39376f
 
                 if ($this->User->findGoogleAccount($google_account_info['sub']) == 0) {
                     $this->User->createGoogleAccount($google_account_info);
@@ -127,14 +123,8 @@ class Auth extends Controller
 
     public function login()
     {
-<<<<<<< HEAD
         $google_client = $this->createClientGoogleObject();
         $google_login_url = $google_client->createAuthUrl();
-=======
-        $_SESSION['namesite'] = "Đăng nhập";
-        // $google_client = $this->createClientGoogleObject();
-        // $google_login_url = $google_client->createAuthUrl();
->>>>>>> d00f7874d3788fdb4a9510e9d431d3aeff39376f
         $data = [
             "username" => '',
             "pass" => '',

@@ -140,12 +140,4 @@ class productdetail extends Controller
         $hi = $this->attribute->getsizedetail('quantity', $size);
         echo $hi;
     }
-<<<<<<< HEAD
-
-    
-
-
 }
-=======
-}
->>>>>>> d00f7874d3788fdb4a9510e9d431d3aeff39376f
