@@ -50,6 +50,8 @@ class Auth extends Controller
                 $_SESSION['user_infor']['user_name'] = $user_social_account_info[0]['fullname'];
                 $_SESSION['user_infor']['user_phone'] = $user_social_account_info[0]['mobile'];
                 $_SESSION['user_infor']['user_email'] = $user_social_account_info[0]['email'];
+                $_SESSION['user_infor']['user_role'] = $user_social_account_info[0]['role'];
+
                 $_SESSION['toastr-code'] = "success";
                 $_SESSION['toastr-noti'] = "đăng nhập thành công";
                 header("Location: " . BASE_URL);
@@ -59,6 +61,8 @@ class Auth extends Controller
                 $_SESSION['user_infor']['user_name'] = $user_social_account_info[0]['fullname'];
                 $_SESSION['user_infor']['user_phone'] = $user_social_account_info[0]['mobile'];
                 $_SESSION['user_infor']['user_email'] = $user_social_account_info[0]['email'];
+                $_SESSION['user_infor']['user_role'] = $user_social_account_info[0]['role'];
+
                 $_SESSION['toastr-code'] = "success";
                 $_SESSION['toastr-noti'] = "Đăng nhập thành công";
                 header("Location: " . BASE_URL);
@@ -98,6 +102,8 @@ class Auth extends Controller
                     $_SESSION['user_infor']['user_name'] = $user_social_account_info[0]['fullname'];
                     $_SESSION['user_infor']['user_phone'] = $user_social_account_info[0]['mobile'];
                     $_SESSION['user_infor']['user_email'] = $user_social_account_info[0]['email'];
+                    $_SESSION['user_infor']['user_role'] = $user_social_account_info[0]['role'];
+
                     $_SESSION['toastr-code'] = "success";
                     $_SESSION['toastr-noti'] = "đăng nhập thành công";
                     header("Location: " . BASE_URL);
@@ -108,6 +114,8 @@ class Auth extends Controller
                     $_SESSION['user_infor']['user_name'] = $user_social_account_info[0]['fullname'];
                     $_SESSION['user_infor']['user_phone'] = $user_social_account_info[0]['mobile'];
                     $_SESSION['user_infor']['user_email'] = $user_social_account_info[0]['email'];
+                    $_SESSION['user_infor']['user_role'] = $user_social_account_info[0]['role'];
+
                     $_SESSION['toastr-code'] = "success";
                     $_SESSION['toastr-noti'] = "Đăng nhập thành công";
                     header("Location: " . BASE_URL);
@@ -160,6 +168,8 @@ class Auth extends Controller
                     $_SESSION['user_infor']['user_name'] = $user_infor[0]['fullname'];
                     $_SESSION['user_infor']['user_phone'] = $user_infor[0]['mobile'];
                     $_SESSION['user_infor']['user_email'] = $user_infor[0]['email'];
+                    $_SESSION['user_infor']['user_role'] = $user_infor[0]['role'];
+
                     header("Location: " . BASE_URL);
                     
                 } else {

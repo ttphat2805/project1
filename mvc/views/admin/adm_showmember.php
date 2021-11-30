@@ -29,7 +29,18 @@
                                     <td><?= $item['id'] ?></td>
                                     <td><?= $item['fullname'] ?></td>
                                     <td><?= $item['email'] ?></td>
-                                    <td><?= $item['role'] == 1 ? '<label class="btn btn-primary btn-fw">Admin</label>' : '<label class="btn btn-secondary btn-fw">Khách hàng</label>' ?></td>
+                                    <td>
+                                    <?php
+                                    if($item['role'] == 1){
+                                        echo '<label class="btn btn-primary btn-fw">Admin</label>';
+                                    }else if($item['role'] == 2){
+                                        echo '<label class="btn btn-info btn-fw">SuperAdmin</label>';
+                                    }else{
+                                        echo '<label class="btn btn-secondary btn-fw">Khách hàng</label>';
+                                    }
+                                    ?>
+
+                                    </td>
                                     <td><?= $item['status'] == 1 ? '<label class="badge badge-success">Kích hoạt</label>' : '<label class="badge badge-danger">Ẩn</label>' ?></td>
                                     <td>
                                         <a class="btn btn-primary" href="<?php echo BASE_URL ?>/admin/infomember/<?= $item['id'] ?>">

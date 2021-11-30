@@ -265,6 +265,40 @@
     margin-top: 70px;
 }
 
+.input-hidden {
+    position: absolute;
+    left: -9999px;
+}
+
+.flex-panigation {
+    display: flex;
+}
+
+.panigation {
+    flex: 1;
+    cursor: pointer;
+    margin: 40px 5px;
+    background: #ffffff;
+    box-shadow: -3px -3px 7px #ffffff73, 3px 3px 5px rgba(94, 104, 121, 0.288);
+    text-align: center;
+    border-radius: 3px;
+    font-size: 16px;
+    color: #4d3252;
+    height: 45px;
+    width: 40px;
+    display: block;
+    line-height: 45px;
+}
+
+.panigation.active {
+    color: #E98C81;
+}
+
+.arrow-css {
+    font-size: 18px;
+    font-weight: bold;
+}
+
 @media (max-width: 990px) {
     .login-register-wrap {
         display: none !important;

@@ -43,8 +43,20 @@ class Admin extends Controller
 
     function infomember($id)
     {
-        $check = $this->user->checkroleadmin($_SESSION['user_infor']['user_id']);
-        $_SESSION['checkroleadmin'] = $check;
+        if(isset($_SESSON['user_infor'])){
+            $role = $this->user->checkrole($_SESSION['user_infor']['user_id']);
+            $_SESSION['role'] = $role;
+            $checkroleadmin = $this->user->checkroleadmin($_SESSION['user_infor']['user_id']);
+            $checkrolesuperadmin = $this->user->checkrolesuperadmin($_SESSION['user_infor']['user_id']);
+            if (!empty($checkrolesuperadmin)) {
+                $_SESSION['checkrolesuperadmin'] = $checkrolesuperadmin;
+            }
+            if (!empty($checkroleadmin)) {
+                $_SESSION['checkroleadmin'] = $checkroleadmin;
+            }
+        }
+        
+
         $this->view(
             "master3",
             [
@@ -59,22 +71,23 @@ class Admin extends Controller
     {
         if (isset($_POST['btn__submit'])) {
             $id = $_POST['id'];
-            $fullname = $_POST['fullname'];
-            if (isset($_POST['address'])) {
-                $address = $_POST['address'];
-            }
-            if (isset($_POST['mobile'])) {
-                $mobile = $_POST['mobile'];
-            }
-            $email = $_POST['email'];
-            $role = $_POST['role'];
             $status = $_POST['status'];
-            $this->user->updatemember($fullname,$mobile,$email,$address,$role,$status,$id);
+
+            if (!isset($_POST['fullname']) || !isset($_POST['address']) || !isset($_POST['mobile']) || !isset($_POST['email'])) {
+                $this->user->updatestatus($status, $id);
+            } else {
+                $role = $_POST['role'];
+
+                $fullname = $_POST['fullname'];
+                $email = $_POST['email'];
+                $address = $_POST['address'];
+                $mobile = $_POST['mobile'];
+                $this->user->updatemember($fullname, $mobile, $email, $address, $role, $status, $id);
+            }
             $_SESSION['toastr-code'] = "success";
             $_SESSION['toastr-noti'] = "Cập nhật thành công";
-            header('Location:' . BASE_URL . '/admin/infomember/'.$id);
+            header('Location:' . BASE_URL . '/admin/member');
             exit();
-
         }
     }
 

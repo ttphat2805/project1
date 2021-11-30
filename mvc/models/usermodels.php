@@ -185,16 +185,34 @@ class usermodels extends db {
     }
 
     function checkroleadmin($id){
-        $query = "SELECT fullname FROM member where role = 1 and id = $id";
+        $query = "SELECT id FROM member where role = 1 and id = $id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
-        return $stmt->fetch()['fullname'];
+        return $stmt->fetch()['id'];
+    }
+    
+    function checkrolesuperadmin($id){
+        $query = "SELECT id FROM member where role = 2 and id = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetch()['id'];
     }
 
+    function checkrole($id){
+        $query = "SELECT role FROM member where id = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetch()['role'];
+    }
 
     function updatemember($fullname,$mobile,$email,$address,$role,$status,$id){
         $query = "UPDATE member SET fullname = ?, mobile = ?, email = ?, address = ?, role = ?, status = ? where id = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->execute([$fullname,$mobile,$email,$address,$role,$status,$id]);
+    }
+    function updatestatus($status,$id){
+        $query = "UPDATE member SET status = ? where id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$status,$id]);
     }
 }

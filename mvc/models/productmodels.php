@@ -92,14 +92,20 @@ class productmodels extends db
         return $stmt->fetch();
     }
 
-    function getproduct_home()
+    function getproduct_home($search)
+    {
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.name like '%$search%' and a.status = 1 group by a.id ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+    function getproductsite()
     {
         $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.status = 1 group by a.id ";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
     }
-
     function getproduct_trend()
     {
         $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.status = 1 group by a.id order by views desc limit 10";
@@ -208,4 +214,43 @@ class productmodels extends db
         $stmt->execute();
         return $stmt;
     }
+
+    function filltercategory($id)
+    {
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.categoryid,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.categoryid = $id and a.status = 1 group by a.id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    function productspage($from,$productsperpage,$search)
+    {
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.name like '%$search%' and a.status = 1 group by a.id
+        LIMIT $productsperpage OFFSET $from";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+    function productcatsearch($from,$productsperpage,$search,$id_category)
+    {
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.categoryid,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.categoryid = $id_category and a.name like '%$search%' and a.status = 1 group by a.id
+        LIMIT $productsperpage OFFSET $from";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    function getsearchname($search){
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.name like '%$search%' and a.status = 1 group by a.id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+    function getsearchcategory($search,$id_category){
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.categoryid,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.categoryid = $id_category and a.name like '%$search%' and a.status = 1 group by a.id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
 }

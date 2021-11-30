@@ -8,23 +8,25 @@
                     <div class="row">
                         <div class="col-lg-3 col-md-4 col-custom">
                             <div class="myaccount-tab-menu nav" role="tablist">
-                                <a href="#dashboad" class="active" data-toggle="tab"><i class="fa fa-dashboard"></i>
-                                    Dashboard</a>
-                                <a href="#orders" data-toggle="tab"><i class="fa fa-cart-arrow-down"></i>
-                                    Orders</a>
+                                <a href="#cartdetail" class="active" data-toggle="tab"><i class="fa fa-dashboard"></i>
+                                   Đơn hàng</a>
                                 <a href="#wishlist" data-toggle="tab"><i class="fa fa-cloud-download"></i>
                                     Món ăn yêu thích</a>
-                                <a href="#payment-method" data-toggle="tab"><i class="fa fa-credit-card"></i>
-                                    Payment
-                                    Method</a>
-                                <a href="#address-edit" data-toggle="tab"><i class="fa fa-map-marker"></i>
-                                    address</a>
+                                <a href="#detailaccout" data-toggle="tab"><i class="fas fa-user-plus"></i>
+                                    Tài khoản chi tiết</a>
+                                    <?php
+                                if(isset($_SESSION['user_infor']['user_role']) && $_SESSION['user_infor']['user_role'] >=1){
+                                ?>
+                                <a href="<?=BASE_URL?>/admin"><i class="fas fa-users-cog"></i>
+                                
+                                Vào trang admin
+                                </a>
+                                <?php }?>
+
                                 <a href="#account-info" data-toggle="tab"><i class="fa fa-user"></i>
                                     Đổi mật khẩu
                                 </a>
                                 <a href="<?= BASE_URL ?>/auth/logout"><i class="fa fa-sign-out"></i> Đăng xuất</a>
-                                <a href="#account-info" data-toggle="tab"><i class="fa fa-user"></i> Account
-                                    Details</a>
                             </div>
                         </div>
                         <!-- My Account Tab Menu End -->
@@ -33,21 +35,9 @@
                         <div class="col-lg-9 col-md-8 col-custom">
                             <div class="tab-content" id="myaccountContent">
                                 <!-- Single Tab Content Start -->
-                                <div class="tab-pane fade show active" id="dashboad" role="tabpanel">
+                                <div class="tab-pane fade show active" id="cartdetail" role="tabpanel">
                                     <div class="myaccount-content">
-                                        <h3>Dashboard</h3>
-                                        <div class="welcome">
-                                            <p>Hello, <strong>Alex Aya</strong> (If Not <strong>Aya !</strong><a href="login-register.html" class="logout"> Logout</a>)</p>
-                                        </div>
-                                        <p class="mb-0">From your account dashboard. you can easily check & view your recent orders, manage your shipping and billing addresses and edit your password and account details.</p>
-                                    </div>
-                                </div>
-                                <!-- Single Tab Content End -->
-
-                                <!-- Single Tab Content Start -->
-                                <div class="tab-pane fade" id="orders" role="tabpanel">
-                                    <div class="myaccount-content">
-                                        <h3>Orders</h3>
+                                    <h3>Đơn hàng</h3>
                                         <div class="myaccount-table table-responsive text-center">
                                             <table class="table table-bordered">
                                                 <thead class="thead-light">
@@ -86,9 +76,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Single Tab Content End -->
-
-                                <!-- Single Tab Content Start -->
+                       
                                 <div class="tab-pane fade" id="wishlist" role="tabpanel">
                                     <div class="myaccount-content">
                                         <h3>Món ăn yêu thích</h3>
@@ -96,18 +84,24 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Single Tab Content End -->
+                     
 
-                                <!-- Single Tab Content Start -->
+                                <div class="tab-pane fade" id="detailaccout" role="tabpanel">
+                                    <div class="myaccount-content">
+                                        <h3>Thông tin tài khoản</h3>
+                                        <div class="myaccount-table table-responsive text-center" id="js_wishlist_get">
+                                        </div>
+                                    </div>
+                                </div>
+
+
                                 <div class="tab-pane fade" id="payment-method" role="tabpanel">
                                     <div class="myaccount-content">
                                         <h3>Payment Method</h3>
                                         <p class="saved-message">You Can't Saved Your Payment Method yet.</p>
                                     </div>
                                 </div>
-                                <!-- Single Tab Content End -->
 
-                                <!-- Single Tab Content Start -->
                                 <div class="tab-pane fade" id="address-edit" role="tabpanel">
                                     <div class="myaccount-content">
                                         <h3>Billing Address</h3>
