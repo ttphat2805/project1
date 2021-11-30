@@ -47,7 +47,7 @@ class products extends Controller
         }
         
         $totalproduct = count($products);
-        $productsperpage = 2;
+        $productsperpage = 3;
         $prev = ($page - 1);
         $next = ($page + 1);
         $from = ($page - 1) * $productsperpage;
@@ -135,23 +135,18 @@ class products extends Controller
                 </div>
             </div>';
             }
-            $output .= '
+            if($totalproduct > $productsperpage){
+                $output .= '
                 <div style="display: flex; justify-content:center; ">
                 <div class="pd_page flex-panigation">';
-                    // if($prev != 0){
+                    if($prev != 0){
                         $output .= '
-                            <input type="radio" name="page" ';
-                            if($prev == 0){
-                                $output .= 'disabled ';
-                            }else{
-                                $output .= '';
-                            }
-                        $output.= 'class="input-hidden" id="'.$prev.'" value="'.$prev.'"> </input>
+                            <input type="radio" name="page"class="input-hidden" id="'.$prev.'" value="'.$prev.'"> </input>
                             
                             <label class="panigation" for="'.$prev.'">
                         <i class="ion-ios-arrow-thin-left arrow-css"></i>
                         </label>';
-                    // }
+                    }
                     for($i=1 ; $i<=$totalPage ;$i++ ) {
                             $output .= '<input type="radio" name="page" class="input-hidden" id="'.$i.'" value ="'.$i. '"> </input>
                                     <label class="panigation';
@@ -168,6 +163,8 @@ class products extends Controller
                     $output .= '
                 </div></div>
             ';
+            }
+            
         }else{
             echo '<p class="noti-search">Không tìm thấy sản phẩm nào <i class="fad fa-times-octagon btn-search-value"></i></p>';
         }
