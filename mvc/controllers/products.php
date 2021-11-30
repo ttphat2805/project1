@@ -135,6 +135,7 @@ class products extends Controller
                 </div>
             </div>';
             }
+            // END FOREACH
             if($totalproduct > $productsperpage){
                 $output .= '
                 <div style="display: flex; justify-content:center; ">
