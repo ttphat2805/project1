@@ -86,7 +86,7 @@ class products extends Controller
                 endif;
                 $output .= '<div class="product-price">
                             <span class="regular-price ">' . number_format($item['price']) . ' VNĐ</span>
-                            <span class="old-price"><del>' . number_format($item['price']) . ' VNĐ</del></span>
+                            <span class="old-price"><del>' . number_format($item['price']+12500) . ' VNĐ</del></span>
                         </div>
                         
                         <div class="product-action d-flex position-absolute">
