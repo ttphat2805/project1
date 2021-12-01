@@ -75,8 +75,8 @@
                                         }
                                 ?>
                                 <li class="minicart-wrap">
-                                    <a href="#" class="minicart-btn toolbar-btn">
-                                        <i class="ion-bag"></i>
+                                    <a href="" class="minicart-btn toolbar-btn">
+                                    <i class="far fa-shopping-cart"></i>
                                         <span class="cart-item_count">3</span>
                                     </a>
                                     <div class="cart-item-wrapper dropdown-sidemenu dropdown-hover-2">
@@ -271,7 +271,7 @@
                                 ?>
                                 <li class="minicart-wrap">
                                     <a href="#" class="minicart-btn toolbar-btn">
-                                        <i class="ion-bag"></i>
+                                    <i class="far fa-shopping-cart"></i>
                                         <span class="cart-item_count">3</span>
                                     </a>
                                     <div class="cart-item-wrapper dropdown-sidemenu dropdown-hover-2">
