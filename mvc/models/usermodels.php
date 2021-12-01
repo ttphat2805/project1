@@ -231,4 +231,33 @@ class usermodels extends db {
         $stmt->execute([$email]);
         return $stmt;
     }
+
+    // chat models
+    function view($in_id,$out_id){
+        $query = "SELECT * FROM `chat`
+                WHERE (in_msg_id = '$in_id' AND out_msg_id = '$out_id') 
+                OR (in_msg_id = '$out_id' AND out_msg_id = '$in_id')
+                ORDER BY date";
+        $result = $this->conn->prepare($query);
+        $result->execute([$out_id,$in_id]);
+        return $result->fetchAll();
+    }
+
+    function addChat($in_id,$out_id,$content){
+        $query = "INSERT INTO `chat`(`in_msg_id`, `out_msg_id`, `content`) 
+                    VALUES (?,?,?)";
+        $result = $this->conn->prepare($query);
+        if ($result->execute([$in_id,$out_id,$content])) {
+            return $kq = true;
+        } else {
+            return $kq = false;
+        }
+    }
+
+    function showChatForAdmin(){
+        $query = "SELECT * FROM chat GROUP BY in_msg_id ORDER BY date ASC ";
+        $result = $this->conn->prepare($query);
+        $result->execute();
+        return $result->fetchAll();
+    }
 }
