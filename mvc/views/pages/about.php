@@ -5,13 +5,9 @@
             <div class="col-xl-6 col-lg-5 col-md-12 col-custom">
                 <div class="feature-content-wrapper">
                     <h2 class="title">Quan trọng của G6'Food</h2>
-                    <p class="desc-content">G6' Food là chuỗi nhà hàng pizza được yêu thích và lớn nhất thế giới, trực thuộc tập đoàn G6!. G6' Food tự hào hiện diện tại 100 quốc gia trên khắp thế giới từ tháng 4 năm 2016.
+                    <p class="desc-content">G6' Food là chuỗi nhà hàng pizza được yêu thích. G6' Food tự hào hiện diện tại 100 quốc gia trên khắp thế giới từ tháng 4 năm 2016.
 
-
-                        Sự kiện này đánh dấu một cột mốc ý nghĩa để minh chứng cho sự cam kết của nhãn hàng về chất lượng pizza hảo hạng và phong cách phục vụ chuyên nghiệp.
-
-
-                        G6' Food có mặt tại Việt Nam từ năm 2006 với 100% vốn nước ngoài; và hiện đã phát triển hơn 50 nhà hàng với trên 3.000 nhân viên.
+                    G6' Food có mặt tại Việt Nam từ năm 2006 với 100% vốn nước ngoài; và hiện đã phát triển hơn 50 nhà hàng với trên 3.000 nhân viên.
 
 
                     </p>
@@ -73,25 +69,25 @@
         <div class="row">
             <div class="col-lg-12 col-custom">
                 <div class="obrien-slider" data-slick-options='{
-                        "slidesToShow": 5,
-                        "slidesToScroll": 1,
-                        "infinite": true,
-                        "arrows": false,
-                        "dots": false
-                        }' data-slick-responsive='[
-                        {"breakpoint": 1200, "settings": {
-                        "slidesToShow": 4
-                        }},
-                        {"breakpoint": 992, "settings": {
-                        "slidesToShow": 3
-                        }},
-                        {"breakpoint": 576, "settings": {
-                        "slidesToShow": 3
-                        }},
-                        {"breakpoint": 481, "settings": {
-                        "slidesToShow": 2
-                        }}
-                        ]'>
+                    "slidesToShow": 5,
+                    "slidesToScroll": 1,
+                    "infinite": true,
+                    "arrows": false,
+                    "dots": false
+                    }' data-slick-responsive='[
+                    {"breakpoint": 1200, "settings": {
+                    "slidesToShow": 4
+                    }},
+                    {"breakpoint": 992, "settings": {
+                    "slidesToShow": 3
+                    }},
+                    {"breakpoint": 576, "settings": {
+                    "slidesToShow": 3
+                    }},
+                    {"breakpoint": 481, "settings": {
+                    "slidesToShow": 2
+                    }}
+                    ]'>
                     <div class="brand-logo-item">
                         <a href="">
                             <img src="https://pizza-restaurant.cmsmasters.net/wp-content/uploads/2016/09/pizza-logo-footer.png" alt="Brand Logo">

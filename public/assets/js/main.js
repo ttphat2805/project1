@@ -467,3 +467,27 @@
     };
 
 })(jQuery);
+
+window.addEventListener("scroll", function() {
+    const btnScroll = document.querySelector(".btnScrollTop");
+    if (window.pageYOffset > 100) {
+        btnScroll.classList.add("active");
+    } else {
+        btnScroll.classList.remove("active");
+    }
+});
+
+function autoTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    })
+}
+
+const aItem = document.querySelectorAll('.ahrefactive');
+const currentLocation = location.href;
+for (let i = 0; i < aItem.length; i++) {
+    if (aItem[i].href === currentLocation) {
+        aItem[i].classList.add("active");
+    }
+}

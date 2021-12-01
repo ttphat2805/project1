@@ -17,7 +17,10 @@ class Admin extends Controller
         $this->category = $this->model("categorymodels");
         $this->attribute = $this->model("attributemodels");
         $this->coupon = $this->model("couponmodels");
+        $this->cart = $this->model("cartmodels");
         $this->user = $this->model("usermodels");
+        $this->account = $this->model("accountmodels");
+
     }
     function show()
     {
@@ -25,6 +28,27 @@ class Admin extends Controller
             header('Location:' . BASE_URL . '/auth/login');
             exit();
         }
+
+        $this->view(
+            "master3",
+            [
+                "pages" => "adm_homepage",
+                "countproduct"=>$this->product->countproduct(),
+                "countcomments"=>$this->user->countcomment(),
+                "countmember"=>$this->account->countmember(),
+                "countcart"=>$this->cart->countcart(),
+
+
+            ]
+        );
+    }
+    function homepage()
+    {
+        if (!isset($_SESSION['user_infor'])) {
+            header('Location:' . BASE_URL . '/auth/login');
+            exit();
+        }
+
         $this->view(
             "master3",
             [

@@ -5,14 +5,18 @@ class usermodels extends db {
 
     public function findUserByEmail($email) {
         $sql = "SELECT * FROM `user_account` WHERE username like :email";
-
         $query = $this->conn->prepare($sql);
         $query->bindValue(":email", $email, PDO::PARAM_STR);
         $query->execute();
-        $query->fetchAll(PDO::FETCH_ASSOC);
-        return $query->rowCount();
+        // $query->fetchAll(PDO::FETCH_ASSOC);
+        return $query;;
     }
-
+    public function blockaccount($id) {
+        $query = "SELECT * from user_account inner join member on user_account.memberid = member.id where member.id = $id and member.status = 0";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
     public function insertMember($name, $email){
         $sql = "insert into `member` (`fullname`,`email`) values (:name, :email)";
         $query = $this->conn->prepare($sql);
@@ -149,6 +153,13 @@ class usermodels extends db {
         $stmt->execute([$memberid,$id]);
     }
 
+    function countcomment(){
+        $query = "SELECT * FROM comments";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->rowCount();
+
+    }
     function userupdatecmt($memberid,$id,$content){
         $query = "UPDATE comments set content = ? where id = ? and member_id = ?";
         $stmt = $this->conn->prepare($query);

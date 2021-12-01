@@ -18,7 +18,12 @@ class accountmodels extends db
         return $stmt->fetch();
     }
 
-          
+    function countmember(){
+        $query = "SELECT * FROM member";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
     function insertwishlist($id_member,$id_product){
         $query = "INSERT INTO product_wishlist(`member_id`, `product_id`) VALUES ('$id_member','$id_product')";
         $stmt = $this->conn->prepare($query);

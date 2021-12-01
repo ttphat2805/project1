@@ -35,11 +35,14 @@
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/style.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/custom.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-</script>
+    </script>
     <!-- <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/style.min.css"> -->
 </head>
 
 <body>
+    <button onclick="autoTop();" class="btnScrollTop">
+        <i class="far fa-arrow-up"></i>
+    </button>
 
     <div class="shop-wrapper">
         <!-- HEADER: START -->
@@ -53,12 +56,12 @@
                 <div class="row">
                     <div class="col-12 text-center">
                         <div class="breadcrumb-content position-relative section-content">
-                            <h3 class="title-3"><?=$_SESSION['namesite']?></h3>
+                            <h3 class="title-3"><?= $_SESSION['namesite'] ?></h3>
                             <ul>
-                                <li><a href="<?=BASE_URL?>">Trang chủ</a>
-                                
-                            </li>
-                                <li><?=$_SESSION['namesite']?></li>
+                                <li><a href="<?= BASE_URL ?>">Trang chủ</a>
+
+                                </li>
+                                <li><?= $_SESSION['namesite'] ?></li>
                             </ul>
                         </div>
                     </div>
