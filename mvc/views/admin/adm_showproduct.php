@@ -32,7 +32,7 @@ $attr = new showproduct();
                 </h4>
                 </p>
                 <div class="table-responsive">
-                    <table class="table">
+                    <!-- <table class="table">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -47,51 +47,51 @@ $attr = new showproduct();
                         </thead>
                         <tbody>
                             <?php $count = 1; ?>
-                            <?php 
-                            
+                            <?php
+
                             foreach ($data['product'] as $item) :
 
-                            $attr_prod = $attr->attribute_product($item['idproduct']);
-                            $attr_single = $attr->attribute_single($item['idproduct']);
-                          
+                                $attr_prod = $attr->attribute_product($item['idproduct']);
+                                $attr_single = $attr->attribute_single($item['idproduct']);
+
                             ?>
                                 <tr>
                                     <td><?= $count++ ?></td>
                                     <td><?= $item['idproduct'] ?></td>
                                     <td><?= $item['nameproduct'] ?></td>
                                     <td><?php
-                                    foreach ($attr_single as $size_single):
-                                        if($size_single['attribute_id'] === NULL){
-                                            echo  number_format( $size_single['price']).' VNĐ';
-                                        }
-                                    endforeach;
-                                    foreach ($attr_prod as $price):
-                                        echo $price['value'].': '.$price['price'].' VNĐ <br/>';
-                                    endforeach;
-                                    ?>
+                                        foreach ($attr_single as $size_single) :
+                                            if ($size_single['attribute_id'] === NULL) {
+                                                echo  number_format($size_single['price']) . ' VNĐ';
+                                            }
+                                        endforeach;
+                                        foreach ($attr_prod as $price) :
+                                            echo $price['value'] . ': ' . $price['price'] . ' VNĐ <br/>';
+                                        endforeach;
+                                        ?>
                                     </td>
 
                                     <td><img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $item['image'] ?>" alt=""> </td>
-                           
+
                                     <td><?php
-                                    foreach ($attr_single as $size_single):
-                                        if($size_single['attribute_id'] === NULL){
-                                            echo $size_single['quantity'] .' cái';
-                                        }
-                                    endforeach;
-                                    foreach ($attr_prod as $price):
-                                        echo $price['value'].': '.$price['quantity'].' cái <br/>';
-                                    endforeach;
-                                    ?>
+                                        foreach ($attr_single as $size_single) :
+                                            if ($size_single['attribute_id'] === NULL) {
+                                                echo $size_single['quantity'] . ' cái';
+                                            }
+                                        endforeach;
+                                        foreach ($attr_prod as $price) :
+                                            echo $price['value'] . ': ' . $price['quantity'] . ' cái <br/>';
+                                        endforeach;
+                                        ?>
                                     </td>
 
                                     <td><?= $item['status'] == 1 ? '<label class="badge badge-success">Còn hàng</label>' : '<label class="badge badge-danger">Hết hàng</label>' ?></td>
                                     <td>
                                         <a class="btn btn-primary" href="<?php echo BASE_URL ?>/admin/infoproduct/<?= $item['idproduct'] ?>">
-                                        <i class="fal fa-money-check-edit"></i>
+                                            <i class="fal fa-money-check-edit"></i>
                                         </a>
                                         <a class="btn btn-danger btn__delete" href="<?php echo BASE_URL ?>/admin/deleteproduct/<?= $item['idproduct'] ?>">
-                                        <i class="fal fa-trash-alt"></i>
+                                            <i class="fal fa-trash-alt"></i>
                                         </a>
                                     </td>
                                 </tr>
@@ -99,9 +99,34 @@ $attr = new showproduct();
                             endforeach;
                             ?>
                         </tbody>
-                    </table>
+                    </table> -->
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function fetchproducts() {
+        let page = $('input[name="page"]:checked').val();
+
+        $.ajax({
+            url: "<?= BASE_URL ?>/admin/fetchproduct",
+            method: "POST",
+            data: {
+                'action': 'adm_fetchproduct',
+                'page': page,
+
+            },
+            success: function(data) {
+                $(".table-responsive").html(data);
+            },
+        });
+    }
+
+    fetchproducts();
+
+    $(document).on('click', '.pd_page', function() {
+        fetchproducts();
+    })
+</script>
