@@ -491,3 +491,17 @@ for (let i = 0; i < aItem.length; i++) {
         aItem[i].classList.add("active");
     }
 }
+
+// SHOW SMS
+var checkhideshowsms;
+$('.box-sms').click(function() {
+    if (checkhideshowsms == 1) {
+        $('.avenue-messenger').addClass('active');
+        return checkhideshowsms = 0;
+    } else {
+        $('.avenue-messenger').removeClass('active');
+        return checkhideshowsms = 1;
+
+    }
+
+})

@@ -725,4 +725,140 @@ class Admin extends Controller
         if ($check == true) {
         }
     }
+
+    // Blog Start
+    function showblog(){
+        $this->view(
+            "master3",
+            [
+                "pages" => "adm_showblog",
+                "blog" => $this->blog->getBlog(),
+            ]
+        );
+    }
+
+    function addblog(){
+        if(isset($_POST['btn__submit'])){
+            $title = $_POST['title'];
+            $title_slug = change_slug($title);
+            $description = $_POST['description'];
+            $content = $_POST['content'];
+            $status = $_POST['status'];
+            // exit();
+        //     //Xử lý phần ảnh!!!!
+            $extension = array('jpeg', 'jpg', 'png', 'gif', 'webp');
+            $store = "public/assets/images/blog/";
+            $imageName = $_FILES['image']['name'];
+            $imageTemp = $_FILES['image']['tmp_name'];
+            $ext = pathinfo($imageName, PATHINFO_EXTENSION);
+            if (in_array($ext, $extension)) {
+                $imageName = time() . '_' . $imageName;
+                move_uploaded_file($imageTemp, $store . $imageName);
+                $this->blog->insertblog($title,$title_slug,$description,$content,$imageName,$status);
+            } else {
+                $_SESSION['toastr-code'] = "warning";
+                $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
+                header('Location: ' . BASE_URL . '/admin/addblog');
+                exit();
+            }
+            $_SESSION['toastr-code'] = "success";
+            $_SESSION['toastr-noti'] = "Thêm thành công";
+            header('Location: ' . BASE_URL . '/admin/showblog');
+            exit();
+        }
+
+        $this->view(
+            "master3",
+            [
+                "pages" => "adm_addblog",
+            ]
+        );
+    }
+
+    function infoblog($id){
+        $this->view(
+            "master3",
+            [
+                "pages" => "adm_updateblog",
+                "blog" =>$this->blog->getblogid($id),
+            ]
+        );
+    }
+
+    function updateblog(){
+        if(isset($_POST['btn__submit'])){
+            $id = $_POST['id'];
+            $title = $_POST['title'];
+            $title_slug = change_slug($title);
+            $description = $_POST['description'];
+            $content = $_POST['content'];
+            $status = $_POST['status'];
+        //     //Xử lý phần ảnh!!!!
+            $extension = array('jpeg', 'jpg', 'png', 'gif', 'webp');
+            $store = "public/assets/images/blog/";
+            $imageName = $_FILES['image']['name'];
+            $imageTemp = $_FILES['image']['tmp_name'];
+            $ext = pathinfo($imageName, PATHINFO_EXTENSION);
+            $this->blog->updateblog($title,$title_slug,$description, $content, $status,$id);
+            if(!empty($imageName)){
+                if (in_array($ext, $extension)) {
+                    $imageName = time() . '_' . $imageName;
+                    move_uploaded_file($imageTemp, $store . $imageName);
+                    $this->blog->updateimageblog($imageName,$id);
+                } else {
+                    $_SESSION['toastr-code'] = "warning";
+                    $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
+                    header('Location: ' . BASE_URL . '/admin/updateblog');
+                    exit();
+                }
+            }
+            $_SESSION['toastr-code'] = "success";
+            $_SESSION['toastr-noti'] = "Sửa thành công";
+            header('Location: ' . BASE_URL . '/admin/showblog');
+            exit();
+        }
+
+
+
+        
+    }
+
+    function deleteblog($id){
+
+        $this->blog->deleteblog($id);
+        $_SESSION['toastr-code'] = "success";
+        $_SESSION['toastr-noti'] = "Xóa thành công";
+        header('Location:' . BASE_URL . '/admin/showblog');
+        exit();
+    }
+    // END BLOG
+
+    // show chat
+    function showchat(){
+        $this->view(
+            "master3",
+            [
+                "pages" => "adm_showchat",
+                "chat" => $this->user->showChatForAdmin(),
+            ]
+        );
+    }
+
+    function addChat($id){
+        $in_id = 3;
+        if(isset($_POST['send'])){
+            $content = $_POST['content'];
+            $this->user->addChat($in_id,$id,$content);
+        }
+        
+        $this->view(
+            "master3",
+            [
+                "pages" => "adm_addchat",
+                "view" => $this->user->view($in_id,$id),
+            ]
+        );
+    }
+
+    // END chat
 }
