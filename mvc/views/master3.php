@@ -39,9 +39,20 @@
                                 <span class="count bg-success"></span>
                             </div>
                             <div class="profile-name">
-                                <h5 class="mb-0 font-weight-normal">Hi ADMIN
+                                <h5 class="mb-0 font-weight-normal">Hi <b><?=$_SESSION['user_infor']['user_name']
+                                ?></b>
                                 </h5>
-                                <span>Gold Member</span>
+                                <span>
+                                <?php
+                                if($_SESSION['user_infor']['user_role'] == 1){
+                                    echo 'Admin';
+                                }else{
+                                    echo 'Superadmin';
+                                }
+                                
+                                ?>
+
+                                </span>
                             </div>
                         </div>
 

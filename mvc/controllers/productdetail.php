@@ -31,6 +31,8 @@ class productdetail extends Controller
         $_SESSION['namesite'] = 'Chi tiết món ăn';
         // print_r($this->product->getproduct_type_id($id));
         $id = $this->product->getProductId($slug);
+        $price = $this->product->getproductdetails($id);
+        $price = $price['price'];
         $this->view(
             "master2",
             [
@@ -41,6 +43,8 @@ class productdetail extends Controller
                 "gallery" => $this->product->get_gallery_image($id),
                 "productdetailattr" => $this->attribute->getproduct_detail_attr($id),
                 "product_type" => $this->product->getproduct_type_id($id),
+                "product_related" => $this->product->productrelated($price,$id),
+
             ]
         );
     }
@@ -126,24 +130,30 @@ class productdetail extends Controller
         }
     }
 
-    function change_price($size)
-    {
-        $size = $this->attribute->getsizedetail('price', $size);
-        $output = number_format($size);
+    function change_price()
+    {   
+        $size = $_POST['size'];
+        $id = $_POST['id'];
+        $price = $this->attribute->getsizedetail('price', $size,$id);
+        $output = number_format($price);
         echo $output;
     }
 
-    function change_oldprice($size)
+    function change_oldprice()
     {
-        $hi = $this->attribute->getsizedetail('price', $size);
-        $hi += 12500;
-        $output = number_format($hi);
+        $size = $_POST['size'];
+        $id = $_POST['id'];
+        $old_price = $this->attribute->getsizedetail('price', $size,$id);
+        $old_price += 12500;
+        $output = number_format($old_price);
         echo $output;
     }
 
-    function change_quantitysize($size)
+    function change_quantitysize()
     {
-        $hi = $this->attribute->getsizedetail('quantity', $size);
+        $id = $_POST['id'];
+        $size = $_POST['size'];
+        $hi = $this->attribute->getsizedetail('quantity', $size,$id);
         echo $hi;
     }
 }

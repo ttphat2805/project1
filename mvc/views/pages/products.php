@@ -11,14 +11,9 @@
                     <div class="shop-select">
                         <form class="d-flex flex-column w-100" action="#">
                             <div class="form-group">
-                                <select class="form-control nice-select w-100">
-                                    <option selected value="1">Alphabetically, A-Z</option>
-                                    <option value="2">Sort by popularity</option>
-                                    <option value="3">Sort by newness</option>
-                                    <option value="4">Sort by price: low to high</option>
-                                    <option value="5">Sort by price: high to low</option>
-                                    <option value="6">Product Name: Z</option>
-                                </select>
+                                <!-- <select class="form-control nice-select w-100">
+                                  
+                                </select> -->
                             </div>
                         </form>
                     </div>

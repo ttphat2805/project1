@@ -1,35 +1,34 @@
-
- <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <!-- jQuery JS -->
+<!-- jQuery JS -->
 
-    <script src="<?php echo BASE_URL; ?>/public/assets/js/vendor/jquery-3.5.1.min.js"></script>
-    <!-- jQuery Migrate JS -->
-    <script src="<?php echo BASE_URL; ?>/public/assets/js/vendor/jQuery-migrate-3.3.0.min.js"></script>
-    <!-- Modernizer JS -->
-    <script src="<?php echo BASE_URL; ?>/public/assets/js/vendor/modernizr-2.8.3.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="<?php echo BASE_URL; ?>/public/assets/js/vendor/bootstrap.bundle.min.js"></script>
-    <!-- Slick Slider JS -->
-    <script src="<?php echo BASE_URL; ?>/public/assets/js/plugins/slick.min.js"></script>
-    <!-- Countdown JS -->
-    <script src="<?php echo BASE_URL; ?>/public/assets/js/plugins/jquery.countdown.min.js"></script>
-    <!-- Ajax JS -->
-    <script src="<?php echo BASE_URL; ?>/public/assets/js/plugins/jquery.ajaxchimp.min.js"></script>
-    <!-- Jquery Nice Select JS -->
-    <script src="<?php echo BASE_URL; ?>/public/assets/js/plugins/jquery.nice-select.min.js"></script>
-    <!-- Jquery Ui JS -->
-    <script src="<?php echo BASE_URL; ?>/public/assets/js/plugins/jquery-ui.min.js"></script>
-    <!-- jquery magnific popup js -->
-    <script src="<?php echo BASE_URL; ?>/public/assets/js/plugins/jquery.magnific-popup.min.js"></script>
+<script src="<?php echo BASE_URL; ?>/public/assets/js/vendor/jquery-3.5.1.min.js"></script>
+<!-- jQuery Migrate JS -->
+<script src="<?php echo BASE_URL; ?>/public/assets/js/vendor/jQuery-migrate-3.3.0.min.js"></script>
+<!-- Modernizer JS -->
+<script src="<?php echo BASE_URL; ?>/public/assets/js/vendor/modernizr-2.8.3.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="<?php echo BASE_URL; ?>/public/assets/js/vendor/bootstrap.bundle.min.js"></script>
+<!-- Slick Slider JS -->
+<script src="<?php echo BASE_URL; ?>/public/assets/js/plugins/slick.min.js"></script>
+<!-- Countdown JS -->
+<script src="<?php echo BASE_URL; ?>/public/assets/js/plugins/jquery.countdown.min.js"></script>
+<!-- Ajax JS -->
+<script src="<?php echo BASE_URL; ?>/public/assets/js/plugins/jquery.ajaxchimp.min.js"></script>
+<!-- Jquery Nice Select JS -->
+<script src="<?php echo BASE_URL; ?>/public/assets/js/plugins/jquery.nice-select.min.js"></script>
+<!-- Jquery Ui JS -->
+<script src="<?php echo BASE_URL; ?>/public/assets/js/plugins/jquery-ui.min.js"></script>
+<!-- jquery magnific popup js -->
+<script src="<?php echo BASE_URL; ?>/public/assets/js/plugins/jquery.magnific-popup.min.js"></script>
 
-    <!-- Main JS -->
-    <script src="<?php echo BASE_URL; ?>/public/assets/js/main.js"></script>
-    <link rel="stylesheet" href=" <?php echo BASE_URL; ?>/public/assets/toastr/toastr.min.css"> 
-    <script src="<?php echo BASE_URL; ?>/public/assets/toastr/toastr.min.js"></script>
-    <script src="<?php echo BASE_URL; ?>/public/assets/js/custom.js"></script>
-    <script src="<?php echo BASE_URL; ?>/public/assets/js/product.js"></script>
-    <script src="<?php echo BASE_URL; ?>/public/assets/js/cart.js"></script>
+<!-- Main JS -->
+<script src="<?php echo BASE_URL; ?>/public/assets/js/main.js"></script>
+<link rel="stylesheet" href=" <?php echo BASE_URL; ?>/public/assets/toastr/toastr.min.css">
+<script src="<?php echo BASE_URL; ?>/public/assets/toastr/toastr.min.js"></script>
+<script src="<?php echo BASE_URL; ?>/public/assets/js/custom.js"></script>
+<script src="<?php echo BASE_URL; ?>/public/assets/js/product.js"></script>
+<script src="<?php echo BASE_URL; ?>/public/assets/js/cart.js"></script>
 
 <footer class="footer-area">
     <div class="footer-widget-area">
@@ -39,7 +38,7 @@
                     <div class="single-footer-widget m-0">
                         <div class="footer-logo">
                             <a href="index.html">
-                                <img src="<?php echo BASE_URL; ?>/public/assets/images/logo/footer.png" widget="150px" height="130px"  alt="Logo Image">
+                                <img src="<?php echo BASE_URL; ?>/public/assets/images/logo/footer.png" widget="150px" height="130px" alt="Logo Image">
                             </a>
                         </div>
                         <p class="desc-content">G6' Food là cửa hàng bán các sản phẩm dinh dưỡng hàng ngày tốt nhất của bạn. Bạn cần loại dinh dưỡng nào, bạn có thể lấy ở đây</p>
@@ -131,42 +130,35 @@
     </div>
 </footer>
 <script>
-     // TOASTR
-     <?php
-        if (isset($_SESSION['toastr-code']) && $_SESSION['toastr-noti'] != '') {
-        ?>
-         window.addEventListener('load', function() {
-             $(document).ready(function() {
-                 toastr.options = {
-                     "closeButton": true,
-                     "debug": false,
-                     "newestOnTop": false,
-                     "progressBar": true,
-                     "positionClass": "toast-top-right",
-                     "preventDuplicates": false,
-                     "onclick": null,
-                     "showDuration": "300",
-                     "hideDuration": "1000",
-                     "timeOut": "5000",
-                     "extendedTimeOut": "1000",
-                     "showEasing": "swing",
-                     "hideEasing": "linear",
-                     "showMethod": "fadeIn",
-                     "hideMethod": "fadeOut"
-                 }
-                 toastr["<?php echo $_SESSION['toastr-code'] ?>"]("<?php echo $_SESSION['toastr-noti'] ?>")
-             })
-         })
- </script>
- <?php
-            unset($_SESSION['toastr-code']);
-            unset($_SESSION['toastr-noti']);
-        }
+    <?php
+    if (isset($_SESSION['toastr-code']) && $_SESSION['toastr-noti'] != '') {
     ?>
-
-    <script>
-
-<?php echo "let SITE_URL = '" . BASE_URL . "';"; ?>
-    
-    </script>
-
+        window.addEventListener('load', function() {
+            $(document).ready(function() {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                toastr["<?php echo $_SESSION['toastr-code'] ?>"]("<?php echo $_SESSION['toastr-noti'] ?>")
+            })
+        })
+    <?php
+        unset($_SESSION['toastr-code']);
+        unset($_SESSION['toastr-noti']);
+    }
+    ?>
+    <?php echo "let SITE_URL = '" . BASE_URL . "';"; ?>
+</script>

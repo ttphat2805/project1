@@ -14,10 +14,10 @@
                         <label for="" class="label__css">Họ tên:</label>
                         <input type="text" id="" name="fullname" class="form-control" value="<?php echo $data['memberid']['fullname'] ?>"
                         <?php
-                        if(isset($_SESSION['checkroleadmin']) && $_SESSION['checkroleadmin'] == $data['memberid']['id'] ){
+                        if(isset($_SESSION['role']) && $_SESSION['role'] == 2 && $_SESSION['checkrolesuperadmin'] == $data['memberid']['id']){
                             echo '';
-                        }else if($_SESSION['role'] == 2){
-                            echo '';
+                        }else if(isset($_SESSION['role']) && $_SESSION['role'] == 1){
+                            echo 'disabled';
                         }else{
                             echo 'disabled';
                         }
@@ -29,10 +29,10 @@
                         <label for="" class="label__css">Số điện thoại:</label>
                         <input type="text" id="" name="mobile" class="form-control" value="<?php echo $data['memberid']['mobile'] ?>"
                         <?php
-                        if(isset($_SESSION['checkroleadmin']) && $_SESSION['checkroleadmin'] == $data['memberid']['id'] ){
+                        if(isset($_SESSION['role']) && $_SESSION['role'] == 2 && $_SESSION['checkrolesuperadmin'] == $data['memberid']['id']){
                             echo '';
-                        }else if($_SESSION['role'] == 2){
-                            echo '';
+                        }else if(isset($_SESSION['role']) && $_SESSION['role'] == 1){
+                            echo 'disabled';
                         }else{
                             echo 'disabled';
                         }
@@ -44,10 +44,10 @@
                         <label for="" class="label__css">Email:</label>
                         <input type="text" id="" name="email" class="form-control" value="<?php echo $data['memberid']['email'] ?>"
                         <?php
-                        if(isset($_SESSION['checkroleadmin']) && $_SESSION['checkroleadmin'] == $data['memberid']['id'] ){
+                        if(isset($_SESSION['role']) && $_SESSION['role'] == 2 && $_SESSION['checkrolesuperadmin'] == $data['memberid']['id']){
                             echo '';
-                        }else if($_SESSION['role'] == 2){
-                            echo '';
+                        }else if(isset($_SESSION['role']) && $_SESSION['role'] == 1){
+                            echo 'disabled';
                         }else{
                             echo 'disabled';
                         }
@@ -58,10 +58,10 @@
                         <label for="" class="label__css">Địa chỉ:</label>
                         <textarea class="form-control" rows="4" name="address" value=""
                         <?php
-                        if(isset($_SESSION['checkroleadmin']) && $_SESSION['checkroleadmin'] == $data['memberid']['id'] ){
+                        if(isset($_SESSION['role']) && $_SESSION['role'] == 2 && $_SESSION['checkrolesuperadmin'] == $data['memberid']['id']){
                             echo '';
-                        }else if($_SESSION['role'] == 2){
-                            echo '';
+                        }else if(isset($_SESSION['role']) && $_SESSION['role'] == 1){
+                            echo 'disabled';
                         }else{
                             echo 'disabled';
                         }
@@ -80,20 +80,22 @@
                             <?php }?>
                           
                             <input type="radio" name="role" id="option-3" value="1" <?= $data['memberid']['role'] == 1 ? 'checked' : '' ?>
-                            <?php   
-                            if($_SESSION['role'] == 1){
-                                echo 'disabled';
-                            }else if($_SESSION['role'] == 2){
+                            <?php  
+                            if(isset($_SESSION['role']) && $_SESSION['role'] == 2){
                                 echo '';
+                            }else
+                            if(isset($_SESSION['role']) && $_SESSION['role'] == 1){
+                                echo 'disabled';
                             }
                         ?>
                             >
                             <input type="radio" name="role" id="option-4" value="0" <?= $data['memberid']['role'] == 0 ? 'checked' : '' ?>
                             <?php   
-                            if($_SESSION['role'] == 1){
-                                echo 'disabled';
-                            }else if($_SESSION['role'] == 2){
+                             if(isset($_SESSION['role']) && $_SESSION['role'] == 2){
                                 echo '';
+                            }else
+                            if(isset($_SESSION['role']) && $_SESSION['role'] == 1){
+                                echo 'disabled';
                             }
                         ?>
                             >
@@ -125,9 +127,9 @@
                             <?php   
                              if($data['memberid']['role'] == 0){
                                 echo '';
-                            }else if($_SESSION['role'] == 1){
+                            }else if(isset($_SESSION['role']) && $_SESSION['role'] == 1){
                                 echo 'disabled';
-                            }else if($_SESSION['role'] == 2){
+                            }else if(isset($_SESSION['role']) && $_SESSION['role'] == 2){
                                 echo '';
                             }
                         ?>
@@ -142,7 +144,15 @@
                             </label>
                         </div><br>
                     </div>
-                    <input type="submit" value="Cập nhật" name="btn__submit" class="btn btn-primary">
+                    <input type="submit" value="Cập nhật" name="btn__submit" class="btn btn-primary"
+                    <?php
+                    if(isset($_SESSION['role']) && $_SESSION['role'] == 1 && $_SESSION['role'] == $data['memberid']['role']){
+                        echo 'disabled';
+                    }else{
+                        echo '';
+                    }
+                    ?>
+                    >
                     <a href="<?php echo BASE_URL ?>/admin/member" class="btn btn-dark">Trở về</a>
 
                 </form>
