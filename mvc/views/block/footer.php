@@ -43,12 +43,12 @@
         </div>
         <div class="agent-face">
             <div class="half">
-                <img class="agent circle" src="http://askavenue.com/img/17.jpg" alt="Jesse Tino"></div>
+                <img class="agent circle" src="<?=BASE_URL?>/public/assets/images/logo/logo.png" alt="Jesse Tino"></div>
             </div>
             <div class="chat">
                 <div class="chat-title">
-                    <h1>Admin</h1>
-                    <h2>RE/MAX</h2>
+                   <b><h1>Admin</h1></b> 
+                 <b><h2>G6'Food</h2></b>   
                 </div>
                 <div class="messages">
                     <!-- data here -->
