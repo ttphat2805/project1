@@ -18,4 +18,13 @@ class blog extends Controller
         );
     }
 
+    function blogdetail($id){
+        $this->view(
+            "master2",
+            [
+                "pages" => "blogdetail",
+                "blog"=>$this->blog->getblogid($id),
+            ]
+        );
+    }
 }
