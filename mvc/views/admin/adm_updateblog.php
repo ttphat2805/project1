@@ -3,7 +3,7 @@
 
 
 <div class="page-header ">
-    <h3 class="page-title center_page-header"> Blog </h3>
+    <h3 class="page-title center_page-header"> Bài viết </h3>
 </div>
 <div class="row center_modal">
     <div class="col-md-6 grid-margin stretch-card">
@@ -38,7 +38,7 @@
                         <label for="" class="label__css">Trạng thái</label><br />
                         <div class="wrapper">
                             <input type="radio" name="status" id="option-1" value="1" <?= $data['blog']['status'] == 1 ? 'checked' : '' ?>>
-                            <input type="radio" name="status" id="option-2" value="2" <?= $data['blog']['status'] == 0 ? 'checked' : '' ?>>
+                            <input type="radio" name="status" id="option-2" value="0" <?= $data['blog']['status'] == 0 ? 'checked' : '' ?>>
                             <label for="option-1" class="option option-1">
                                 <div class="dot"></div>
                                 <span>Active</span>
@@ -49,7 +49,7 @@
                             </label>
                         </div><br>
                     </div>
-                    <input type="submit" value="Sửa" name="btn__submit" class="btn btn-primary">
+                    <input type="submit" value="Cập nhật" name="btn__submit" class="btn btn-primary">
                     <a href="<?php echo BASE_URL ?>/admin/showblog" class="btn btn-dark">Trở về</a>
                 </form>
             </div>

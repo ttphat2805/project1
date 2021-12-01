@@ -8,6 +8,7 @@ class Admin extends Controller
     public $attribute;
     public $coupon;
     public $user;
+    public $blog;
 
 
 
@@ -20,6 +21,7 @@ class Admin extends Controller
         $this->cart = $this->model("cartmodels");
         $this->user = $this->model("usermodels");
         $this->account = $this->model("accountmodels");
+        $this->blog = $this->model("blogmodels");
     }
     function show()
     {
@@ -358,16 +360,16 @@ class Admin extends Controller
             $product = $this->product->getproductadmin();
             $url = BASE_URL;
 
-            if(!isset($_POST['page'])){
+            if (!isset($_POST['page'])) {
                 $page = 1;
-            }else{
+            } else {
                 $page = $_POST['page'];
             }
             $totalproduct = count($product);
             $productsperpage = 4;
             $from = ($page - 1) * $productsperpage;
             $totalPage = ceil($totalproduct / $productsperpage);
-            $result = $this->product->productadminpage($productsperpage,$from);
+            $result = $this->product->productadminpage($productsperpage, $from);
             $count = 1;
             $output .= '<table class="table">
             <thead>
@@ -437,23 +439,24 @@ class Admin extends Controller
             $output .= '
             </tbody>
             </table>';
-                        // END FOREACH
-                        if($totalproduct > $productsperpage){
-                            $output .= '
+            // END FOREACH
+            if ($totalproduct > $productsperpage) {
+                $output .= '
                             <div style="display: flex; justify-content:center; ">
                             <div class="pd_page flex-panigation">';
-                                for($i=1 ; $i<=$totalPage ;$i++ ) {
-                                        $output .= '<input type="radio" name="page" class="input-hidden" id="'.$i.'" value ="'.$i. '"> </input>
+                for ($i = 1; $i <= $totalPage; $i++) {
+                    $output .= '<input type="radio" name="page" class="input-hidden" id="' . $i . '" value ="' . $i . '"> </input>
                                                 <label class="panigation';
-                                                if($i == $page) $output .= ' active';else{
-                                                    $output .= '';
-                                                }
-                                        $output.= '"for="' .$i.'">'.$i.'</label>';
-                                }
-                                $output .= '
+                    if ($i == $page) $output .= ' active';
+                    else {
+                        $output .= '';
+                    }
+                    $output .= '"for="' . $i . '">' . $i . '</label>';
+                }
+                $output .= '
                             </div></div>
                         ';
-                        }
+            }
             echo $output;
         }
     }
@@ -675,6 +678,55 @@ class Admin extends Controller
         );
     }
 
+
+    function infocoupon($id)
+    {
+
+
+        $this->view(
+            "master3",
+            [
+                "pages" => "adm_updatecoupon",
+                "infocoupon" => $this->coupon->infocoupon($id),
+
+            ]
+        );
+    }
+
+    function updatecoupon()
+    {
+        if (isset($_POST['btn__submit'])) {
+            $id = $_POST['id'];
+            $name = $_POST['name'];
+            $code = $_POST['code'];
+            $type = $_POST['type'];
+            $discout = $_POST['coupon_value'];
+            $quantity = $_POST['quantity'];
+            $min_order = $_POST['min_order'];
+            $date_created = $_POST['date_created'];
+            $date_out = $_POST['date_out'];
+            $status = $_POST['status'];
+            if ($name == '' || $code == '' || $type == '' || $discout == '' || $quantity == '' || $min_order == '' || $date_created == '' || $date_out == '') {
+                $_SESSION['toastr-code'] = "info";
+                $_SESSION['toastr-noti'] = "Vui lòng nhập đầy đủ thông tin";
+            } else {
+                $this->coupon->updatecoupon($name, $code, $type, $discout, $min_order, $quantity, $date_created, $date_out, $status, $id);
+
+                $_SESSION['toastr-code'] = "success";
+                $_SESSION['toastr-noti'] = "Cập nhật thành công";
+                header('Location: ' . BASE_URL . '/admin/showcoupon');
+            }
+        }
+    }
+
+    function deletecoupon($id)
+    {
+        $this->coupon->delcoupon($id);
+        $_SESSION['toastr-code'] = "success";
+        $_SESSION['toastr-noti'] = "Xóa thành công";
+        header('Location:' . BASE_URL . '/admin/showcoupon');
+        exit();
+    }
     // --- get coupon
     function getcoupon()
     {
@@ -685,6 +737,7 @@ class Admin extends Controller
         }
         echo $res;
     }
+
 
     // END - COUPON
 
@@ -727,7 +780,8 @@ class Admin extends Controller
     }
 
     // Blog Start
-    function showblog(){
+    function showblog()
+    {
         $this->view(
             "master3",
             [
@@ -737,15 +791,16 @@ class Admin extends Controller
         );
     }
 
-    function addblog(){
-        if(isset($_POST['btn__submit'])){
+    function addblog()
+    {
+        if (isset($_POST['btn__submit'])) {
             $title = $_POST['title'];
             $title_slug = change_slug($title);
             $description = $_POST['description'];
             $content = $_POST['content'];
             $status = $_POST['status'];
             // exit();
-        //     //Xử lý phần ảnh!!!!
+            //     //Xử lý phần ảnh!!!!
             $extension = array('jpeg', 'jpg', 'png', 'gif', 'webp');
             $store = "public/assets/images/blog/";
             $imageName = $_FILES['image']['name'];
@@ -754,7 +809,7 @@ class Admin extends Controller
             if (in_array($ext, $extension)) {
                 $imageName = time() . '_' . $imageName;
                 move_uploaded_file($imageTemp, $store . $imageName);
-                $this->blog->insertblog($title,$title_slug,$description,$content,$imageName,$status);
+                $this->blog->insertblog($title, $title_slug, $description, $content, $imageName, $status);
             } else {
                 $_SESSION['toastr-code'] = "warning";
                 $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
@@ -775,36 +830,38 @@ class Admin extends Controller
         );
     }
 
-    function infoblog($id){
+    function infoblog($id)
+    {
         $this->view(
             "master3",
             [
                 "pages" => "adm_updateblog",
-                "blog" =>$this->blog->getblogid($id),
+                "blog" => $this->blog->getblogidadmin($id),
             ]
         );
     }
 
-    function updateblog(){
-        if(isset($_POST['btn__submit'])){
+    function updateblog()
+    {
+        if (isset($_POST['btn__submit'])) {
             $id = $_POST['id'];
             $title = $_POST['title'];
             $title_slug = change_slug($title);
             $description = $_POST['description'];
             $content = $_POST['content'];
             $status = $_POST['status'];
-        //     //Xử lý phần ảnh!!!!
+            //     //Xử lý phần ảnh!!!!
             $extension = array('jpeg', 'jpg', 'png', 'gif', 'webp');
             $store = "public/assets/images/blog/";
             $imageName = $_FILES['image']['name'];
             $imageTemp = $_FILES['image']['tmp_name'];
             $ext = pathinfo($imageName, PATHINFO_EXTENSION);
-            $this->blog->updateblog($title,$title_slug,$description, $content, $status,$id);
-            if(!empty($imageName)){
+            $this->blog->updateblog($title, $title_slug, $description, $content, $status, $id);
+            if (!empty($imageName)) {
                 if (in_array($ext, $extension)) {
                     $imageName = time() . '_' . $imageName;
                     move_uploaded_file($imageTemp, $store . $imageName);
-                    $this->blog->updateimageblog($imageName,$id);
+                    $this->blog->updateimageblog($imageName, $id);
                 } else {
                     $_SESSION['toastr-code'] = "warning";
                     $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
@@ -817,13 +874,10 @@ class Admin extends Controller
             header('Location: ' . BASE_URL . '/admin/showblog');
             exit();
         }
-
-
-
-        
     }
 
-    function deleteblog($id){
+    function deleteblog($id)
+    {
 
         $this->blog->deleteblog($id);
         $_SESSION['toastr-code'] = "success";
@@ -834,7 +888,8 @@ class Admin extends Controller
     // END BLOG
 
     // show chat
-    function showchat(){
+    function showchat()
+    {
         $this->view(
             "master3",
             [
@@ -844,18 +899,19 @@ class Admin extends Controller
         );
     }
 
-    function addChat($id){
+    function addChat($id)
+    {
         $in_id = 3;
-        if(isset($_POST['send'])){
+        if (isset($_POST['send'])) {
             $content = $_POST['content'];
-            $this->user->addChat($in_id,$id,$content);
+            $this->user->addChat($in_id, $id, $content);
         }
-        
+
         $this->view(
             "master3",
             [
                 "pages" => "adm_addchat",
-                "view" => $this->user->view($in_id,$id),
+                "view" => $this->user->view($in_id, $id),
             ]
         );
     }

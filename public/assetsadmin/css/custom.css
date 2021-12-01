@@ -170,15 +170,18 @@ input.form-control:focus {
 .radio-close {
     position: absolute;
 }
-textarea#editor{
+
+textarea#editor {
     height: 500px;
 }
 
-td#hide{
-    white-space: nowrap; 
-  width: 50px; 
-  overflow: hidden;
-  text-overflow: ellipsis;
+td#hide {
+    white-space: wrap;
+    width: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .italic {
     font-style: italic;
 }

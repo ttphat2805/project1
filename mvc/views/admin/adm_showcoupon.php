@@ -42,10 +42,10 @@
                                     <td><?= $item['created_at'] ?></td>
                                     <td><?= $item['date_out'] ?></td>
                                     <td>
-                                        <a class="btn btn-primary" href="<?php echo BASE_URL ?>/admin/infocategory/<?= $item['id'] ?>">
+                                        <a class="btn btn-primary" href="<?php echo BASE_URL ?>/admin/infocoupon/<?= $item['id'] ?>">
                                         <i class="fal fa-money-check-edit"></i>
                                         </a>
-                                        <a class="btn btn-danger btn__delete" href="<?php echo BASE_URL ?>/admin/delcategory/<?= $item['id'] ?>">
+                                        <a class="btn btn-danger btn__delete" href="<?php echo BASE_URL ?>/admin/deletecoupon/<?= $item['id'] ?>">
                                         <i class="fal fa-trash-alt"></i>
                                         </a>
                                     </td>

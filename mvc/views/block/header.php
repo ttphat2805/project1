@@ -33,7 +33,7 @@
 
                                     </li>
                                     <li>
-                                        <a  class="ahrefactive" href="blog-details-fullwidth.html">
+                                        <a  class="ahrefactive" href="<?=BASE_URL?>/blog">
                                             <span class="menu-text"> Tin tức</span>
                                         </a>
 
@@ -227,7 +227,7 @@
 
                                     </li>
                                     <li>
-                                        <a class="ahrefactive" href="blog-details-fullwidth.html">
+                                        <a class="ahrefactive" href="<?=BASE_URL?>/blog">
                                             <span class="menu-text"> Tin tức</span>
                                         </a>
 
@@ -407,7 +407,7 @@
 
                             </li>
                             <li>
-                                <a class="ahrefactive" href="blog-details-fullwidth.html">
+                                <a class="ahrefactive" href="<?=BASE_URL?>/blog">
                                     <span class="menu-text"> Tin tức</span>
                                 </a>
 

@@ -53,25 +53,25 @@
 
 <script>
     $(document).ready(function() {
-        $('#email').keyup(function(){
+        $('#email').keyup(function() {
             let email = $('#email').val();
             var pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-            var text =  $('.error-register-email');
-            if(email.match(pattern)){
-                $('#email').css('border','1px solid #28a745');
-            }else{
-                $('#email').css('border','1px solid red');
+            var text = $('.error-register-email');
+            if (email.match(pattern)) {
+                $('#email').css('border', '1px solid #28a745');
+            } else {
+                $('#email').css('border', '1px solid red');
             }
             $.ajax({
                 url: "<?= BASE_URL ?>/auth/checkexistemail",
                 method: "POST",
                 data: {
                     'action': 'checkexist',
-                    'email':email,
+                    'email': email,
                 },
                 success: function(data) {
                     text.html(data);
-                    text.css('color','red');
+                    text.css('color', 'red');
                 },
             });
         })

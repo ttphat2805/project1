@@ -264,7 +264,12 @@ class usermodels extends db {
             return $kq = false;
         }
     }
-
+    function idComment($fullname){
+        $query = "SELECT * FROM member where fullname = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$fullname]);
+        return $stmt->fetch();
+    }
     function showChatForAdmin(){
         $query = "SELECT * FROM chat GROUP BY in_msg_id ORDER BY date ASC ";
         $result = $this->conn->prepare($query);
