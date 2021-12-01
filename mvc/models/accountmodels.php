@@ -11,7 +11,19 @@ class accountmodels extends db
         return $stmt->fetch()['id'];
     }
 
-          
+    function getmember($id){
+        $query = "SELECT * FROM member WHERE id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$id]);
+        return $stmt->fetch();
+    }
+
+    function countmember(){
+        $query = "SELECT * FROM member";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
     function insertwishlist($id_member,$id_product){
         $query = "INSERT INTO product_wishlist(`member_id`, `product_id`) VALUES ('$id_member','$id_product')";
         $stmt = $this->conn->prepare($query);
@@ -43,6 +55,16 @@ class accountmodels extends db
         $stmt->execute();
     }
 
+    function checkexistemailaccount($email, $id){
+        $query = "SELECT email FROM member where email = ? and id != ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$email,$id]);
+        return $stmt;
+    }
 
-
+    function updatemyaccount($fullname,$mobile,$address,$email,$id){
+        $query = "UPDATE member SET fullname = ?,mobile = ?,address = ?,email = ? where id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$fullname,$mobile,$address,$email,$id]);
+    }
 }

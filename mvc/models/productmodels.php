@@ -8,6 +8,13 @@ class productmodels extends db
         $stmt->execute();
         return $stmt->fetchAll();
     }
+
+    function countproduct(){
+        $query = "SELECT * FROM products";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
     function getattradmin()
     {
         $query = "SELECT a.id as 'idproduct',a.name as 'nameproduct',a.image,a.description,a.status,b.id as 'idproduct_type',b.price,b.quantity,c.name as 'nameattr',c.value FROM products a inner join product_type b on b.product_id = a.id inner join attribute c on b.attribute_id = c.id where b.product_id = a.id";
@@ -252,5 +259,12 @@ class productmodels extends db
         $stmt->execute();
         return $stmt->fetchAll();
     }
-
+    
+    function productrelated($price,$id){
+        $query = "SELECT a.quantity,b.id as 'idproduct',b.name,b.slug,b.image,b.description,b.views,a.*,c.* FROM product_type a inner join products b on a.product_id = b.id inner join prod_image c on c.productid = b.id where a.price between $price - ($price*20/100) and $price + ($price*20/100)  and a.product_id != $id group by a.product_id limit 5";
+        $pd = $this->conn->prepare($query);
+        $pd->execute();
+        return $pd->fetchAll();
+    }
 }
+

@@ -74,7 +74,7 @@ class products extends Controller
                             <h4 class="title-2"> <a href="' . $url . '/productdetail/show/' . $item['slug'] . '">' . $item['name'] . '</a></h4>
                         </div>';
                 if ($attr_id['attribute_id'] !== NULL) :
-                    $output .= '<div class="product-size mb-2">
+                    $output .= '<div class="product-size animate-size mb-2">
                             <p>Size :</p>';
                     foreach ($product_attr as $size) :
                         $output .= '   <input id="prod-size-' . $size['value'] . '-' . $item['idproduct'] . '" type="radio" name="option1" value="' . $size['value'] . '">
@@ -108,7 +108,7 @@ class products extends Controller
                             <span class="old-price"><del>' . number_format($item['price']) . ' VNĐ</del></span>
                         </div>';
                 if ($attr_id['attribute_id'] !== NULL) :
-                    $output .= '<div class="product-size list mb-2">
+                    $output .= '<div class="product-size animate-size list mb-2">
                             <p>Size :</p>';
                     foreach ($product_attr as $size) :
                         $output .= '   <input id="prod-size-' . $size['value'] . '-' . $item['idproduct'] . '" type="radio" name="option1" value="' . $size['value'] . '">
@@ -135,6 +135,7 @@ class products extends Controller
                 </div>
             </div>';
             }
+            // END FOREACH
             if($totalproduct > $productsperpage){
                 $output .= '
                 <div style="display: flex; justify-content:center; ">

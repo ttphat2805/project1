@@ -2,6 +2,34 @@
     width: 100px;
 }
 
+.btnScrollTop {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    background-color: #E98C81;
+    color: #fff;
+    font-size: 16px;
+    z-index: 10000;
+    opacity: 0;
+    outline: none;
+    transition: all 0.5s;
+    visibility: hidden;
+}
+
+.btnScrollTop.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+a.ahrefactive.active {
+    color: #DB6574;
+}
+
 .app {
     overflow: hidden;
 }
@@ -181,27 +209,27 @@
     position: relative;
 }
 
-.product-size {
+.animate-size {
     position: absolute;
     right: -50px;
     top: 65px;
     opacity: 0;
 }
 
-.product-size.list {
+.animate-size.list {
     position: absolute;
     right: 300px;
     top: 70px;
     opacity: 0;
 }
 
-.single-product:hover .product-size {
+.single-product:hover .animate-size {
     opacity: 1;
     right: 20px;
     transition: right .2s;
 }
 
-.single-product:hover .product-size.list {
+.single-product:hover .animate-size.list {
     opacity: 1;
     right: 400px;
     transition: right .2s;
@@ -297,6 +325,28 @@
 .arrow-css {
     font-size: 18px;
     font-weight: bold;
+}
+
+.about-text {
+    color: white;
+}
+
+.about-text.fz-16px {
+    font-size: 16px;
+}
+
+.custom-textarea {
+    outline: none;
+    padding: 10px;
+    border: 1px solid #e1e1e1;
+}
+
+.custom-textarea:focus {
+    border: #E98C81 1px solid;
+}
+
+.mobiel-menu li {
+    margin-top: 20px;
 }
 
 @media (max-width: 990px) {

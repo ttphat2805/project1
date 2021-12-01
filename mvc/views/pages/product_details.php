@@ -90,6 +90,7 @@
                                             <?php echo $data['productdetails']['quantity'] ?>
                                         </span></div>
                                     <?php
+                                    // print_r($data['productdetailattr']);
                                     if ($data['product_type']['attribute_id'] !== NULL) {
                                     ?>
                                         <div class="product-meta">
@@ -102,15 +103,10 @@
                                                     <label for="prod-size-<?= $size['value'] ?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
                                                         <span><?= $size['value'] ?></span>
                                                     </label>
-                                                    <!-- Button trigger modal -->
-
                                                 <?php
                                                 endforeach;
                                                 ?>
                                             </div>
-                                            <!-- <button type="button" class="btn mb-2" data-toggle="modal" data-target="#exampleModal">
-                                                    Xem tham khảo size
-                                        </button> -->
 
                                         </div>
                                     <?php } ?>
@@ -162,28 +158,28 @@
                                     </div>
                                     <div class="comments-area comments-reply-area">
                                         <div class="row">
-                                            <?php if(isset($_SESSION['user_infor'])):?>
-                                            <div class="col-lg-12 col-custom">
-                                                <form method="post" class="comment-form-area">
-                                                    <div class="row comment-input">
-                                                    </div>
-                                                    <div class="comment-form-comment mb-3">
-                                                        <label>Đánh giá (<i class="fal fa-star"></i>)</label>
-                                                        <textarea class="comment-notes get_comment" name="content" required="required"></textarea>
-                                                    </div>
-                                                    <div class="comment-form-submit">
-                                                        <div class="comment-submit btn obrien-button primary-btn">Gửi ngay</div>
-                                                    </div>
-                                                    <div class="comment-form-submit">
-                                                        <div class="comment-update btn obrien-button primary-btn" style="display: none">Cập nhật</div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <?php else:?>
+                                            <?php if (isset($_SESSION['user_infor'])) : ?>
+                                                <div class="col-lg-12 col-custom">
+                                                    <form method="post" class="comment-form-area">
+                                                        <div class="row comment-input">
+                                                        </div>
+                                                        <div class="comment-form-comment mb-3">
+                                                            <label>Đánh giá (<i class="fal fa-star"></i>)</label>
+                                                            <textarea class="comment-notes get_comment" name="content" required="required"></textarea>
+                                                        </div>
+                                                        <div class="comment-form-submit">
+                                                            <div class="comment-submit btn obrien-button primary-btn">Gửi ngay</div>
+                                                        </div>
+                                                        <div class="comment-form-submit">
+                                                            <div class="comment-update btn obrien-button primary-btn" style="display: none">Cập nhật</div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            <?php else : ?>
                                                 <div class="comment-constraint mt-4">
-                                                <p class="">Chỉ những khách hàng đã đăng nhập mới có thể đưa ra đánh giá (*)</p>
-                                            </div>
-                                            <?php endif;?>
+                                                    <p class="">Chỉ những khách hàng đã đăng nhập mới có thể đưa ra đánh giá (*)</p>
+                                                </div>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>
@@ -194,6 +190,27 @@
             </div>
         </div>
         <!-- Single Product Main Area End -->
+        <?php
+        class homepage extends db
+        {
+            function getproduct_detail_attr($id)
+            {
+                $query = "SELECT a.*,b.id as 'idattr',b.value,b.name from attribute b inner join product_type a on b.id = a.attribute_id where a.product_id = $id";
+                $stmt = $this->conn->prepare($query);
+                $stmt->execute();
+                return $stmt->fetchAll();
+            }
+            function getproduct_type_id($id)
+            {
+                $query = "SELECT * FROM product_type where product_id = $id";
+                $stmt = $this->conn->prepare($query);
+                $stmt->execute();
+                return $stmt->fetch();
+            }
+        }
+        $homepage = new homepage();
+
+        ?>
         <!-- Product Area Start Here -->
         <div class="product-area mb-text">
             <div class="container container-default custom-area">
@@ -202,7 +219,8 @@
                         <div class="section-content">
                             <h2 class="title-1 text-uppercase">Sản phẩm liên quan</h2>
                             <div class="desc-content">
-                                <p>You can check the related product for your shopping collection.</p>
+                                <p>
+                                    Bạn có thể kiểm tra sản phẩm liên quan cho bộ sưu tập mua sắm của bạn.</p>
                             </div>
                         </div>
                     </div>
@@ -226,209 +244,65 @@
                         "slidesToShow": 1
                         }}
                         ]'>
-                            <div class="single-item">
-                                <div class="single-product position-relative">
-                                    <div class="product-image">
-                                        <a class="d-block" href="product-details.html">
-                                            <img src="https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/08/3-1.png" alt="" class="product-image-1 w-100">
-                                            <img src="assets/images/product/2.jpg" alt="" class="product-image-2 position-absolute w-100">
-                                        </a>
-                                    </div>
-                                    <div class="product-content">
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
+                            <?php
+                            foreach ($data['product_related'] as $trend) :
+                            ?>
+                                <div class="single-item">
+                                    <div class="single-product position-relative">
+                                        <input type="hidden" class="idproduct" value="<?= $trend['idproduct'] ?>">
+                                        <div class="product-image">
+                                            <a class="d-block" href="<?php echo BASE_URL ?>/productdetail/show/<?= $trend['slug'] ?>">
+                                                <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $trend['image'] ?>" alt="" class="product-image-1 w-100">
+                                            </a>
                                         </div>
-                                        <div class="product-title">
-                                            <h4 class="title-2"> <a href="product-details.html">Product dummy name</a></h4>
+                                        <div class="product-content">
+                                            <?php
+                                            $product_attr = $homepage->getproduct_detail_attr($trend['idproduct']);
+                                            $attr_id = $homepage->getproduct_type_id($trend['idproduct']);
+                                            if ($attr_id['attribute_id'] !== NULL) {
+                                            ?>
+                                                <div class="product-size animate-size mb-2">
+                                                    <p>Size :</p>
+                                                    <?php
+                                                    foreach ($product_attr as $size) :
+                                                    ?>
+                                                        <input id="prod-size-<?= $size['value'] ?>-<?= $trend['idproduct'] ?>" type="radio" name="option1" value="<?= $size['value'] ?>">
+                                                        <label for="prod-size-<?= $size['value'] ?>-<?= $trend['idproduct'] ?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
+                                                            <span><?= $size['value'] ?></span>
+                                                        </label>
+                                                    <?php
+                                                    endforeach;
+                                                    ?>
+                                                </div>
+                                            <?php
+
+                                            } ?>
+                                            <div class="product-title">
+                                                <h4 class="title-2"> <a href="<?php echo BASE_URL ?>/productdetail/show/<?= $trend['slug'] ?>"><?= $trend['name'] ?></a></h4>
+                                            </div>
+                                            <div class="product-price">
+                                                <span class="regular-price "><?= number_format($trend['price']); ?> VNĐ</span>
+                                                <span class="old-price"><del><?= number_format($trend['price'] + 12500);
+                                                                                ?> VNĐ</del></span>
+                                            </div>
+                                            <div class="product-action d-flex">
+                                                <a href="" title="+ Giỏ hàng">
+                                                    <i class="ion-bag"></i>
+                                                </a>
+                                                <a class="addtowishlist" title="+ Yêu thích">
+                                                    <i class="fal fa-heart"></i>
+                                                </a>
+                                            </div>
                                         </div>
-                                        <div class="price-box">
-                                            <span class="regular-price ">$80.00</span>
-                                            <span class="old-price"><del>$90.00</del></span>
-                                        </div>
-                                    </div>
-                                    <div class="add-action d-flex position-absolute">
-                                        <a href="cart.html" title="Add To cart">
-                                            <i class="ion-bag"></i>
-                                        </a>
-                                        <a href="compare.html" title="Compare">
-                                            <i class="ion-ios-loop-strong"></i>
-                                        </a>
-                                        <a href="wishlist.html" title="Add To Wishlist">
-                                            <i class="ion-ios-heart-outline"></i>
-                                        </a>
-                                        <a href="#exampleModalCenter" data-toggle="modal" title="Quick View">
-                                            <i class="ion-eye"></i>
-                                        </a>
+
                                     </div>
                                 </div>
-                            </div>
-                            <div class="single-item">
-                                <div class="single-product position-relative">
-                                    <div class="product-image">
-                                        <a class="d-block" href="product-details.html">
-                                            <img src="https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/08/3-1.png" alt="" class="product-image-1 w-100">
-                                            <img src="assets/images/product/4.jpg" alt="" class="product-image-2 position-absolute w-100">
-                                        </a>
-                                    </div>
-                                    <div class="product-content">
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <div class="product-title">
-                                            <h4 class="title-2"> <a href="product-details.html">Product dummy title</a></h4>
-                                        </div>
-                                        <div class="price-box">
-                                            <span class="regular-price ">$80.00</span>
-                                            <span class="old-price"><del>$90.00</del></span>
-                                        </div>
-                                    </div>
-                                    <div class="add-action d-flex position-absolute">
-                                        <a href="cart.html" title="Add To cart">
-                                            <i class="ion-bag"></i>
-                                        </a>
-                                        <a href="compare.html" title="Compare">
-                                            <i class="ion-ios-loop-strong"></i>
-                                        </a>
-                                        <a href="wishlist.html" title="Add To Wishlist">
-                                            <i class="ion-ios-heart-outline"></i>
-                                        </a>
-                                        <a href="#exampleModalCenter" data-toggle="modal" title="Quick View">
-                                            <i class="ion-eye"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="single-item">
-                                <div class="single-product position-relative">
-                                    <div class="product-image">
-                                        <a class="d-block" href="product-details.html">
-                                            <img src="https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/08/3-1.png" alt="" class="product-image-1 w-100">
-                                            <img src="assets/images/product/6.jpg" alt="" class="product-image-2 position-absolute w-100">
-                                        </a>
-                                    </div>
-                                    <div class="label-product">
-                                        <span class="label-sale position-absolute text-uppercase text-white text-center d-block">Soldout</span>
-                                    </div>
-                                    <div class="product-content">
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <div class="product-title">
-                                            <h4 class="title-2"> <a href="product-details.html">Product dummy title</a></h4>
-                                        </div>
-                                        <div class="price-box">
-                                            <span class="regular-price ">$80.00</span>
-                                            <span class="old-price"><del>$90.00</del></span>
-                                        </div>
-                                    </div>
-                                    <div class="add-action d-flex position-absolute">
-                                        <a href="cart.html" title="Add To cart">
-                                            <i class="ion-bag"></i>
-                                        </a>
-                                        <a href="compare.html" title="Compare">
-                                            <i class="ion-ios-loop-strong"></i>
-                                        </a>
-                                        <a href="wishlist.html" title="Add To Wishlist">
-                                            <i class="ion-ios-heart-outline"></i>
-                                        </a>
-                                        <a href="#exampleModalCenter" data-toggle="modal" title="Quick View">
-                                            <i class="ion-eye"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="single-item">
-                                <div class="single-product position-relative">
-                                    <div class="product-image">
-                                        <a class="d-block" href="product-details.html">
-                                            <img src="https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/08/3-1.png" alt="" class="product-image-1 w-100">
-                                            <img src="assets/images/product/8.jpg" alt="" class="product-image-2 position-absolute w-100">
-                                        </a>
-                                    </div>
-                                    <div class="product-content">
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <div class="product-title">
-                                            <h4 class="title-2"> <a href="product-details.html">Product dummy name</a></h4>
-                                        </div>
-                                        <div class="price-box">
-                                            <span class="regular-price ">$80.00</span>
-                                            <span class="old-price"><del>$90.00</del></span>
-                                        </div>
-                                    </div>
-                                    <div class="add-action d-flex position-absolute">
-                                        <a href="cart.html" title="Add To cart">
-                                            <i class="ion-bag"></i>
-                                        </a>
-                                        <a href="compare.html" title="Compare">
-                                            <i class="ion-ios-loop-strong"></i>
-                                        </a>
-                                        <a href="wishlist.html" title="Add To Wishlist">
-                                            <i class="ion-ios-heart-outline"></i>
-                                        </a>
-                                        <a href="#exampleModalCenter" data-toggle="modal" title="Quick View">
-                                            <i class="ion-eye"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="single-item">
-                                <div class="single-product position-relative">
-                                    <div class="product-image">
-                                        <a class="d-block" href="product-details.html">
-                                            <img src="https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/08/3-1.png" alt="" class="product-image-1 w-100">
-                                            <img src="assets/images/product/10.jpg" alt="" class="product-image-2 position-absolute top-0 left-0">
-                                        </a>
-                                    </div>
-                                    <div class="product-content">
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <div class="product-title">
-                                            <h4 class="title-2"> <a href="product-details.html">Product dummy title</a></h4>
-                                        </div>
-                                        <div class="price-box">
-                                            <span class="regular-price ">$80.00</span>
-                                            <span class="old-price"><del>$90.00</del></span>
-                                        </div>
-                                    </div>
-                                    <div class="add-action d-flex position-absolute">
-                                        <a href="cart.html" title="Add To cart">
-                                            <i class="ion-bag"></i>
-                                        </a>
-                                        <a href="compare.html" title="Compare">
-                                            <i class="ion-ios-loop-strong"></i>
-                                        </a>
-                                        <a href="wishlist.html" title="Add To Wishlist">
-                                            <i class="ion-ios-heart-outline"></i>
-                                        </a>
-                                        <a href="#exampleModalCenter" data-toggle="modal" title="Quick View">
-                                            <i class="ion-eye"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+
+
+                            <?php
+                            endforeach;
+                            ?>
+
                         </div>
                     </div>
                 </div>
@@ -443,11 +317,14 @@
 
                 $(".btn-value-size").click(function() {
                     let size = $(this).attr('id');
+                    let id = $('.valueid').val();
+
                     $.ajax({
-                        url: `<?= BASE_URL ?>/productdetail/change_price/${size}`,
+                        url: `<?= BASE_URL ?>/productdetail/change_price/`,
                         method: "POST",
                         data: {
                             'size': size,
+                            'id': id,
                         },
                         success: function(data) {
                             $('.price-view').html(data);
@@ -458,11 +335,14 @@
 
                 $(".btn-value-size").click(function() {
                     let size = $(this).attr('id');
+                    let id = $('.valueid').val();
                     $.ajax({
-                        url: `<?= BASE_URL ?>/productdetail/change_oldprice/${size}`,
+                        url: `<?= BASE_URL ?>/productdetail/change_oldprice/`,
                         method: "POST",
                         data: {
                             'size': size,
+                            'id': id,
+
                         },
                         success: function(data) {
                             $('.oldprice-view').html(data);
@@ -473,11 +353,14 @@
 
                 $(".btn-value-size").click(function() {
                     let size = $(this).attr('id');
+                    let id = $('.valueid').val();
+
                     $.ajax({
-                        url: `<?= BASE_URL ?>/productdetail/change_quantitysize/${size}`,
+                        url: `<?= BASE_URL ?>/productdetail/change_quantitysize/`,
                         method: "POST",
                         data: {
                             'size': size,
+                            'id': id,
                         },
                         success: function(data) {
                             $('.quantity_view').html(data);
@@ -569,8 +452,8 @@
                     var comment_update = $('.comment-update');
                     comment_update.show();
                     $('.comment-submit').hide()
-                        content.val(content_cmt);
-                        comment_update.on('click', function() {
+                    content.val(content_cmt);
+                    comment_update.on('click', function() {
                         let contentupdatecmt = content.val();
                         $.ajax({
                             url: `<?= BASE_URL ?>/productdetail/userupdatecmt`,

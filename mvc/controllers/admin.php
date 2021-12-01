@@ -17,10 +17,38 @@ class Admin extends Controller
         $this->category = $this->model("categorymodels");
         $this->attribute = $this->model("attributemodels");
         $this->coupon = $this->model("couponmodels");
+        $this->cart = $this->model("cartmodels");
         $this->user = $this->model("usermodels");
+        $this->account = $this->model("accountmodels");
+
     }
     function show()
     {
+        if (!isset($_SESSION['user_infor'])) {
+            header('Location:' . BASE_URL . '/auth/login');
+            exit();
+        }
+
+        $this->view(
+            "master3",
+            [
+                "pages" => "adm_homepage",
+                "countproduct"=>$this->product->countproduct(),
+                "countcomments"=>$this->user->countcomment(),
+                "countmember"=>$this->account->countmember(),
+                "countcart"=>$this->cart->countcart(),
+
+
+            ]
+        );
+    }
+    function homepage()
+    {
+        if (!isset($_SESSION['user_infor'])) {
+            header('Location:' . BASE_URL . '/auth/login');
+            exit();
+        }
+
         $this->view(
             "master3",
             [
@@ -43,19 +71,17 @@ class Admin extends Controller
 
     function infomember($id)
     {
-        if(isset($_SESSON['user_infor'])){
-            $role = $this->user->checkrole($_SESSION['user_infor']['user_id']);
-            $_SESSION['role'] = $role;
-            $checkroleadmin = $this->user->checkroleadmin($_SESSION['user_infor']['user_id']);
-            $checkrolesuperadmin = $this->user->checkrolesuperadmin($_SESSION['user_infor']['user_id']);
-            if (!empty($checkrolesuperadmin)) {
-                $_SESSION['checkrolesuperadmin'] = $checkrolesuperadmin;
-            }
-            if (!empty($checkroleadmin)) {
-                $_SESSION['checkroleadmin'] = $checkroleadmin;
-            }
+        $role = $this->user->checkrole($_SESSION['user_infor']['user_id']);
+        $_SESSION['role'] = $role;
+        $checkroleadmin = $this->user->checkroleadmin($_SESSION['user_infor']['user_id']);
+        $checkrolesuperadmin = $this->user->checkrolesuperadmin($_SESSION['user_infor']['user_id']);
+        if (!empty($checkrolesuperadmin)) {
+            $_SESSION['checkrolesuperadmin'] = $checkrolesuperadmin;
         }
-        
+        if (!empty($checkroleadmin)) {
+            $_SESSION['checkroleadmin'] = $checkroleadmin;
+        }
+
 
         $this->view(
             "master3",
@@ -74,10 +100,10 @@ class Admin extends Controller
             $status = $_POST['status'];
 
             if (!isset($_POST['fullname']) || !isset($_POST['address']) || !isset($_POST['mobile']) || !isset($_POST['email'])) {
-                $this->user->updatestatus($status, $id);
+                $role = $_POST['role'];
+                $this->user->updatestatus($status, $role,$id);
             } else {
                 $role = $_POST['role'];
-
                 $fullname = $_POST['fullname'];
                 $email = $_POST['email'];
                 $address = $_POST['address'];
@@ -295,9 +321,9 @@ class Admin extends Controller
         $getgallery = $this->product->getgallery($id);
         foreach ($getgallery as $img) {
             $output .= '<input type="radio" name="closegallery" id="radio_' . $img['id'] . '" value="' . $img['id'] . '" class="radio-close">
-            <label for="radio_' . $img['id'] . '" class="radio-close"><i class="fal fa-times"></i></label>
-            <img src="' . BASE_URL . '/public/assets/images/product/' . $img['gallery'] . '" alt="Ảnh không tồn tại !" width="100px" height="100px">
-            <input type="hidden" name="gallery1" class="form-control" value="' . $img['gallery'] . '">';
+        <label for="radio_' . $img['id'] . '" class="radio-close"><i class="fal fa-times"></i></label>
+        <img src="' . BASE_URL . '/public/assets/images/product/' . $img['gallery'] . '" alt="Ảnh không tồn tại !" width="100px" height="100px">
+        <input type="hidden" name="gallery1" class="form-control" value="' . $img['gallery'] . '">';
         }
         $output .= '</div>';
         echo $output;

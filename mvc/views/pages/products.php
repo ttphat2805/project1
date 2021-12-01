@@ -7,19 +7,13 @@
                 <div class="shop_toolbar_wrapper">
                     <div class="shop_toolbar_btn">
                         <button data-role="grid_3" type="button" class="active btn-grid-3" data-toggle="tooltip" title="3"><i class="fa fa-th"></i></button>
-                        <button data-role="grid_list" type="button" class="btn-list" data-toggle="tooltip" title="List"><i class="fa fa-th-list"></i></button>
                     </div>
                     <div class="shop-select">
                         <form class="d-flex flex-column w-100" action="#">
                             <div class="form-group">
-                                <select class="form-control nice-select w-100">
-                                    <option selected value="1">Alphabetically, A-Z</option>
-                                    <option value="2">Sort by popularity</option>
-                                    <option value="3">Sort by newness</option>
-                                    <option value="4">Sort by price: low to high</option>
-                                    <option value="5">Sort by price: high to low</option>
-                                    <option value="6">Product Name: Z</option>
-                                </select>
+                                <!-- <select class="form-control nice-select w-100">
+                                  
+                                </select> -->
                             </div>
                         </form>
                     </div>
