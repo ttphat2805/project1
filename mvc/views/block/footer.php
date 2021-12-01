@@ -88,10 +88,12 @@
                     <div class="single-footer-widget">
                         <h2 class="widget-title">Liên kết</h2>
                         <ul class="widget-list">
-                            <li><a href="about-us.html">Trang chủ</a></li>
-                            <li><a href="blog.html">Cửa hàng</a></li>
+                            <li><a href="<?=BASE_URL?>">Trang chủ</a></li>
+                            <li><a href="<?=BASE_URL?>/about">Giới thiệu</a></li>
+
+                            <li><a href="<?=BASE_URL?>/products">Cửa hàng</a></li>
                             <li><a href="shop.html">Tin tức</a></li>
-                            <li><a href="cart.html">Liên hệ</a></li>
+                            <li><a href="<?=BASE_URL?>/contact">Liên hệ</a></li>
                         </ul>
                     </div>
                 </div>

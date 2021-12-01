@@ -36,6 +36,9 @@
 </head>
 
 <body>
+    <button onclick="autoTop();" class="btnScrollTop">
+        <i class="far fa-arrow-up"></i>
+    </button>
     <div class="app">
         <div class="home-wrapper home-1">
             <!-- HEADER: START -->

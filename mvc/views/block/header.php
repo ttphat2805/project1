@@ -16,24 +16,24 @@
                         <div class="col-lg-8 col-xl-7 position-static d-none d-lg-block col-custom">
                             <nav class="main-nav d-flex justify-content-center">
                                 <ul class="nav">
-                                    <li>
-                                        <a class="active" href="<?php echo BASE_URL; ?>">
-                                            <span class="menu-text"> Trang chủ</span>
+                                <li>
+                                        <a class="ahrefactive" href="<?= BASE_URL ?>/">
+                                            <span class="menu-text">Trang chủ</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="<?= BASE_URL ?>/about">
+                                        <a class="ahrefactive" href="<?= BASE_URL ?>/about">
                                             <span class="menu-text"> Giới thiệu</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="<?php echo BASE_URL; ?>/products">
+                                        <a class="ahrefactive" href="<?php echo BASE_URL; ?>/products">
                                             <span class="menu-text">Cửa hàng</span>
                                         </a>
 
                                     </li>
                                     <li>
-                                        <a href="blog-details-fullwidth.html">
+                                        <a  class="ahrefactive" href="blog-details-fullwidth.html">
                                             <span class="menu-text"> Tin tức</span>
                                         </a>
 
@@ -41,7 +41,7 @@
 
 
                                     <li>
-                                        <a href="<?php echo BASE_URL; ?>/contact">
+                                        <a class="ahrefactive" href="<?php echo BASE_URL; ?>/contact">
                                             <span class="menu-text">Liên hệ</span>
                                         </a>
                                     </li>
@@ -65,7 +65,7 @@
                                         if (!isset($_SESSION['user_infor']['user_name'])) {
                                         ?>
                                             <div class="login-register-wrapper dropdown-sidemenu dropdown-hover-2">
-                                                <ul class="">
+                                                <ul class="ahrefactive">
                                                     <li> <a href="<?php echo BASE_URL . '/auth/login' ?>">Đăng nhập</a> </li>
                                                     <li> <a href="<?php echo BASE_URL . '/auth/register' ?>">Đăng ký</a> </li>
                                                 </ul>
@@ -211,23 +211,23 @@
                             <nav class="main-nav d-flex justify-content-center">
                                 <ul class="nav">
                                     <li>
-                                        <a class="active" href="<?php echo BASE_URL; ?>">
+                                        <a class="ahrefactive" href="<?php echo BASE_URL; ?>/">
                                             <span class="menu-text"> Trang chủ</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="<?= BASE_URL ?>/about">
+                                        <a class="ahrefactive" href="<?= BASE_URL ?>/about">
                                             <span class="menu-text"> Giới thiệu</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="<?php echo BASE_URL; ?>/products">
+                                        <a class="ahrefactive" href="<?php echo BASE_URL; ?>/products">
                                             <span class="menu-text">Cửa hàng</span>
                                         </a>
 
                                     </li>
                                     <li>
-                                        <a href="blog-details-fullwidth.html">
+                                        <a class="ahrefactive" href="blog-details-fullwidth.html">
                                             <span class="menu-text"> Tin tức</span>
                                         </a>
 
@@ -235,7 +235,7 @@
 
 
                                     <li>
-                                        <a href="<?php echo BASE_URL; ?>/contact">
+                                        <a class="ahrefactive" href="<?php echo BASE_URL; ?>/contact">
                                             <span class="menu-text">Liên hệ</span>
                                         </a>
                                     </li>
@@ -391,23 +391,23 @@
                     <nav>
                         <ul class="mobiel-menu">
                             <li>
-                                <a class="active" href="<?php echo BASE_URL; ?>">
+                                <a class="ahrefactive" href="<?php echo BASE_URL; ?>/">
                                     <span class="menu-text"> Trang chủ</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="<?= BASE_URL ?>/about">
+                                <a class="ahrefactive" href="<?= BASE_URL ?>/about">
                                     <span class="menu-text"> Giới thiệu</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="<?php echo BASE_URL; ?>/products">
+                                <a class="ahrefactive" href="<?php echo BASE_URL; ?>/products">
                                     <span class="menu-text">Cửa hàng</span>
                                 </a>
 
                             </li>
                             <li>
-                                <a href="blog-details-fullwidth.html">
+                                <a class="ahrefactive" href="blog-details-fullwidth.html">
                                     <span class="menu-text"> Tin tức</span>
                                 </a>
 
@@ -415,7 +415,7 @@
 
 
                             <li>
-                                <a href="<?php echo BASE_URL; ?>/contact">
+                                <a class="ahrefactive" href="<?php echo BASE_URL; ?>/contact">
                                     <span class="menu-text">Liên hệ</span>
                                 </a>
                             </li>

@@ -146,12 +146,22 @@ class Auth extends Controller
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // check user name
+            $username = $_POST['email'];
+            $check = $this->User->findUserByEmail($username);
             if ($_POST['email'] != null) {
-                if ($this->User->findUserByEmail($_POST['email']) == 0) {
-                    $data['username_error'] = "Tài khoản không tồi tại";
-
+                if ($check->rowCount() == 0) {
+                    $data['username_error'] = "Tài khoản không tồn tại";
                     return $this->view('master2', ['pages' => 'signin', 'data' => $data]);
+                }else{
+                    $id = $check->fetch();
+                    $blockaccount = $this->User->blockaccount($id['memberid']);
+                    if($blockaccount > 0){
+                        $data['username_error'] = "Tài khoản này đã bị khóa";
+                    return $this->view('master2', ['pages' => 'signin', 'data' => $data]);
+
+                    }
                 }
+                
             } else {
                 $data['username_error'] = 'Bạn phải nhập tên đăng nhập';
             }
