@@ -127,8 +127,13 @@ class usermodels extends db {
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // comment
     function showComment($id){
-        $query = "SELECT a.id as 'idmember',a.fullname,b.id as 'idcmt',b.product_id,b.member_id,b.content,b.date,b.status from member a INNER JOIN comments b on a.id = b.member_id where b.status = 1 and b.product_id = ?";
+        $query = "SELECT a.id as 'idmember',a.fullname,b.id as 'idcmt',b.product_id,b.member_id,b.content,b.date,b.status 
+                from member a 
+                INNER JOIN comments b 
+                on a.id = b.member_id 
+                where b.status = 1 and b.product_id = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->execute([$id]);
         return $stmt;
@@ -236,5 +241,39 @@ class usermodels extends db {
         $stmt = $this->conn->prepare($query);
         $stmt->execute([$email]);
         return $stmt;
+    }
+
+    // chat models
+    function view($in_id,$out_id){
+        $query = "SELECT * FROM `chat`
+                WHERE (in_msg_id = '$in_id' AND out_msg_id = '$out_id') 
+                OR (in_msg_id = '$out_id' AND out_msg_id = '$in_id')
+                ORDER BY date";
+        $result = $this->conn->prepare($query);
+        $result->execute([$out_id,$in_id]);
+        return $result->fetchAll();
+    }
+
+    function addChat($in_id,$out_id,$content){
+        $query = "INSERT INTO `chat`(`in_msg_id`, `out_msg_id`, `content`) 
+                    VALUES (?,?,?)";
+        $result = $this->conn->prepare($query);
+        if ($result->execute([$in_id,$out_id,$content])) {
+            return $kq = true;
+        } else {
+            return $kq = false;
+        }
+    }
+    function idComment($fullname){
+        $query = "SELECT * FROM member where fullname = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$fullname]);
+        return $stmt->fetch();
+    }
+    function showChatForAdmin(){
+        $query = "SELECT * FROM chat GROUP BY in_msg_id ORDER BY date ASC ";
+        $result = $this->conn->prepare($query);
+        $result->execute();
+        return $result->fetchAll();
     }
 }

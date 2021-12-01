@@ -105,8 +105,7 @@
                                                 </div>
                                                 <div class="single-input-item mb-3">
                                                     <label for="email" class="required mb-1">Địa chỉ Email</label>
-                                                    <input type="email" id="email" value="<?= $data['getmember']['email'] ?>"
-                                                    />
+                                                    <input type="email" id="email" value="<?= $data['getmember']['email'] ?>" />
                                                     <span class="error-update-email"></span>
                                                 </div>
                                                 <div class="single-input-item mb-3">
@@ -179,30 +178,28 @@
 </div>
 
 <script>
-    
- 
     $(document).ready(function() {
         // VALIDATE EXIST EMAIL
 
-        $('#email').keyup(function(){
+        $('#email').keyup(function() {
             let email = $('#email').val();
             var pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-            var text =  $('.error-update-email');
-            if(email.match(pattern)){
-                $('#email').css('border','1px solid #28a745');
-            }else{
-                $('#email').css('border','1px solid red');
+            var text = $('.error-update-email');
+            if (email.match(pattern)) {
+                $('#email').css('border', '1px solid #28a745');
+            } else {
+                $('#email').css('border', '1px solid red');
             }
             $.ajax({
                 url: "<?= BASE_URL ?>/myaccount/checkexistemail",
                 method: "POST",
                 data: {
                     'action': 'checkexist',
-                    'email':email,
+                    'email': email,
                 },
                 success: function(data) {
                     text.html(data);
-                    text.css('color','red');
+                    text.css('color', 'red');
                 },
             });
         })
@@ -219,27 +216,27 @@
 
             if (email.match(pattern)) {
                 email = email;
-            }else{
+            } else {
                 $('.error-update-email').html('Email không đúng định dạng');
-                $('.error-update-email').css('color','red');
+                $('.error-update-email').css('color', 'red');
                 return;
             }
             if (full_name == "" || mobile == "" || email == "" || address == "") {
                 $('.error-update-all').html('Bạn cần nhập đầy đủ thông tin');
-                $('.error-update-all').css('color','red');
+                $('.error-update-all').css('color', 'red');
                 return;
-            }else{
+            } else {
                 $('.error-update-all').html('');
             }
             if (mobile.length <= 9 || mobile.length > 11) {
                 $('.error-update-mobile').html('Số điện thoại không đúng');
-                $('.error-update-mobile').css('color','red');
-            }else{
+                $('.error-update-mobile').css('color', 'red');
+            } else {
                 $('.error-update-mobile').html('');
             }
 
             $.ajax({
-                url: "<?=BASE_URL?>/myaccount/updateaccount",
+                url: "<?= BASE_URL ?>/myaccount/updateaccount",
                 type: "POST",
                 data: {
                     action: 'update',
@@ -249,11 +246,11 @@
                     full_name: full_name
                 },
                 success: function(data) {
-                    if(data == 'ok'){
+                    if (data == 'ok') {
                         alert('ok');
-                    }else{
+                    } else {
                         $('.error-update-all').html('Cập nhật thành công');
-                        $('.error-update-all').css('color','#28a745');
+                        $('.error-update-all').css('color', '#28a745');
 
                     }
                 }
@@ -278,8 +275,8 @@
                 },
                 success: function(data) {
                     $('.noti-change-password').html(data);
-                    $('.noti-change-password').css('color','red');
-                 
+                    $('.noti-change-password').css('color', 'red');
+
                 },
             });
         })

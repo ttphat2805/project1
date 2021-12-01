@@ -8,6 +8,7 @@ class Admin extends Controller
     public $attribute;
     public $coupon;
     public $user;
+    public $blog;
 
 
 
@@ -20,7 +21,7 @@ class Admin extends Controller
         $this->cart = $this->model("cartmodels");
         $this->user = $this->model("usermodels");
         $this->account = $this->model("accountmodels");
-
+        $this->blog = $this->model("blogmodels");
     }
     function show()
     {
@@ -33,10 +34,10 @@ class Admin extends Controller
             "master3",
             [
                 "pages" => "adm_homepage",
-                "countproduct"=>$this->product->countproduct(),
-                "countcomments"=>$this->user->countcomment(),
-                "countmember"=>$this->account->countmember(),
-                "countcart"=>$this->cart->countcart(),
+                "countproduct" => $this->product->countproduct(),
+                "countcomments" => $this->user->countcomment(),
+                "countmember" => $this->account->countmember(),
+                "countcart" => $this->cart->countcart(),
 
 
             ]
@@ -101,7 +102,7 @@ class Admin extends Controller
 
             if (!isset($_POST['fullname']) || !isset($_POST['address']) || !isset($_POST['mobile']) || !isset($_POST['email'])) {
                 $role = $_POST['role'];
-                $this->user->updatestatus($status, $role,$id);
+                $this->user->updatestatus($status, $role, $id);
             } else {
                 $role = $_POST['role'];
                 $fullname = $_POST['fullname'];
@@ -350,6 +351,115 @@ class Admin extends Controller
         );
     }
 
+
+    function fetchproduct()
+    {
+        if (isset($_POST['action'])) {
+
+            $output = "";
+            $product = $this->product->getproductadmin();
+            $url = BASE_URL;
+
+            if (!isset($_POST['page'])) {
+                $page = 1;
+            } else {
+                $page = $_POST['page'];
+            }
+            $totalproduct = count($product);
+            $productsperpage = 4;
+            $from = ($page - 1) * $productsperpage;
+            $totalPage = ceil($totalproduct / $productsperpage);
+            $result = $this->product->productadminpage($productsperpage, $from);
+            $count = 1;
+            $output .= '<table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>ID</th>
+                    <th>Tên</th>
+                    <th>Giá</th>
+                    <th>Ảnh</th>
+                    <th>Số lượng</th>
+                    <th>Trạng thái</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>';
+            foreach ($result as $item) {
+                $attr_prod = $this->product->attribute_product($item['idproduct']);
+                $attr_single = $this->product->attribute_single($item['idproduct']);
+                $output .= '
+                <tr>
+                <td>' . $count++ . '</td>
+                <td>' . $item['idproduct'] . '</td>
+                <td>' . $item['nameproduct'] . '</td>
+                <td>
+                ';
+                foreach ($attr_single as $size_single) :
+                    if ($size_single['attribute_id'] === NULL) {
+                        $output .= '' . number_format($size_single['price']) . ' VNĐ';
+                    }
+                endforeach;
+                foreach ($attr_prod as $price) :
+                    $output .= '' . $price['value'] . ': ' . $price['price'] . ' VNĐ <br/>';
+                endforeach;
+
+                $output .=  '</td>
+                <td><img src="' . $url . '/public/assets/images/product/' . $item['image'] . '" alt=""> </td>
+                <td>';
+                foreach ($attr_single as $size_single) :
+                    if ($size_single['attribute_id'] === NULL) {
+                        $output .= '' . $size_single['quantity'] . ' cái';
+                    }
+                endforeach;
+                foreach ($attr_prod as $price) :
+                    $output .= '' . $price['value'] . ': ' . $price['quantity'] . ' cái <br/>';
+                endforeach;
+
+                $output .= '</td>
+                
+                <td>';
+                if ($item['status'] == 1) {
+                    $output .= '<label class="badge badge-success">Còn hàng</label>';
+                } else {
+                    $output .= '<label class="badge badge-danger">Hết hàng</label>';
+                }
+                $output .= '</td>
+                <td>
+                <a class="btn btn-primary" href="' . $url . '/admin/infoproduct/' . $item['idproduct'] . '">
+                    <i class="fal fa-money-check-edit"></i>
+                </a>
+                <a class="btn btn-danger btn__delete" href="' . $url . '/admin/deleteproduct/' . $item['idproduct'] . '">
+                    <i class="fal fa-trash-alt"></i>
+                </a>
+            </td>
+                </tr>
+                ';
+            }
+            $output .= '
+            </tbody>
+            </table>';
+            // END FOREACH
+            if ($totalproduct > $productsperpage) {
+                $output .= '
+                            <div style="display: flex; justify-content:center; ">
+                            <div class="pd_page flex-panigation">';
+                for ($i = 1; $i <= $totalPage; $i++) {
+                    $output .= '<input type="radio" name="page" class="input-hidden" id="' . $i . '" value ="' . $i . '"> </input>
+                                                <label class="panigation';
+                    if ($i == $page) $output .= ' active';
+                    else {
+                        $output .= '';
+                    }
+                    $output .= '"for="' . $i . '">' . $i . '</label>';
+                }
+                $output .= '
+                            </div></div>
+                        ';
+            }
+            echo $output;
+        }
+    }
     function updateproduct()
     {
         if (isset($_POST['btn__submit'])) {
@@ -568,6 +678,55 @@ class Admin extends Controller
         );
     }
 
+
+    function infocoupon($id)
+    {
+
+
+        $this->view(
+            "master3",
+            [
+                "pages" => "adm_updatecoupon",
+                "infocoupon" => $this->coupon->infocoupon($id),
+
+            ]
+        );
+    }
+
+    function updatecoupon()
+    {
+        if (isset($_POST['btn__submit'])) {
+            $id = $_POST['id'];
+            $name = $_POST['name'];
+            $code = $_POST['code'];
+            $type = $_POST['type'];
+            $discout = $_POST['coupon_value'];
+            $quantity = $_POST['quantity'];
+            $min_order = $_POST['min_order'];
+            $date_created = $_POST['date_created'];
+            $date_out = $_POST['date_out'];
+            $status = $_POST['status'];
+            if ($name == '' || $code == '' || $type == '' || $discout == '' || $quantity == '' || $min_order == '' || $date_created == '' || $date_out == '') {
+                $_SESSION['toastr-code'] = "info";
+                $_SESSION['toastr-noti'] = "Vui lòng nhập đầy đủ thông tin";
+            } else {
+                $this->coupon->updatecoupon($name, $code, $type, $discout, $min_order, $quantity, $date_created, $date_out, $status, $id);
+
+                $_SESSION['toastr-code'] = "success";
+                $_SESSION['toastr-noti'] = "Cập nhật thành công";
+                header('Location: ' . BASE_URL . '/admin/showcoupon');
+            }
+        }
+    }
+
+    function deletecoupon($id)
+    {
+        $this->coupon->delcoupon($id);
+        $_SESSION['toastr-code'] = "success";
+        $_SESSION['toastr-noti'] = "Xóa thành công";
+        header('Location:' . BASE_URL . '/admin/showcoupon');
+        exit();
+    }
     // --- get coupon
     function getcoupon()
     {
@@ -578,6 +737,7 @@ class Admin extends Controller
         }
         echo $res;
     }
+
 
     // END - COUPON
 
@@ -618,4 +778,143 @@ class Admin extends Controller
         if ($check == true) {
         }
     }
+
+    // Blog Start
+    function showblog()
+    {
+        $this->view(
+            "master3",
+            [
+                "pages" => "adm_showblog",
+                "blog" => $this->blog->getBlog(),
+            ]
+        );
+    }
+
+    function addblog()
+    {
+        if (isset($_POST['btn__submit'])) {
+            $title = $_POST['title'];
+            $title_slug = change_slug($title);
+            $description = $_POST['description'];
+            $content = $_POST['content'];
+            $status = $_POST['status'];
+            // exit();
+            //     //Xử lý phần ảnh!!!!
+            $extension = array('jpeg', 'jpg', 'png', 'gif', 'webp');
+            $store = "public/assets/images/blog/";
+            $imageName = $_FILES['image']['name'];
+            $imageTemp = $_FILES['image']['tmp_name'];
+            $ext = pathinfo($imageName, PATHINFO_EXTENSION);
+            if (in_array($ext, $extension)) {
+                $imageName = time() . '_' . $imageName;
+                move_uploaded_file($imageTemp, $store . $imageName);
+                $this->blog->insertblog($title, $title_slug, $description, $content, $imageName, $status);
+            } else {
+                $_SESSION['toastr-code'] = "warning";
+                $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
+                header('Location: ' . BASE_URL . '/admin/addblog');
+                exit();
+            }
+            $_SESSION['toastr-code'] = "success";
+            $_SESSION['toastr-noti'] = "Thêm thành công";
+            header('Location: ' . BASE_URL . '/admin/showblog');
+            exit();
+        }
+
+        $this->view(
+            "master3",
+            [
+                "pages" => "adm_addblog",
+            ]
+        );
+    }
+
+    function infoblog($id)
+    {
+        $this->view(
+            "master3",
+            [
+                "pages" => "adm_updateblog",
+                "blog" => $this->blog->getblogidadmin($id),
+            ]
+        );
+    }
+
+    function updateblog()
+    {
+        if (isset($_POST['btn__submit'])) {
+            $id = $_POST['id'];
+            $title = $_POST['title'];
+            $title_slug = change_slug($title);
+            $description = $_POST['description'];
+            $content = $_POST['content'];
+            $status = $_POST['status'];
+            //     //Xử lý phần ảnh!!!!
+            $extension = array('jpeg', 'jpg', 'png', 'gif', 'webp');
+            $store = "public/assets/images/blog/";
+            $imageName = $_FILES['image']['name'];
+            $imageTemp = $_FILES['image']['tmp_name'];
+            $ext = pathinfo($imageName, PATHINFO_EXTENSION);
+            $this->blog->updateblog($title, $title_slug, $description, $content, $status, $id);
+            if (!empty($imageName)) {
+                if (in_array($ext, $extension)) {
+                    $imageName = time() . '_' . $imageName;
+                    move_uploaded_file($imageTemp, $store . $imageName);
+                    $this->blog->updateimageblog($imageName, $id);
+                } else {
+                    $_SESSION['toastr-code'] = "warning";
+                    $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
+                    header('Location: ' . BASE_URL . '/admin/updateblog');
+                    exit();
+                }
+            }
+            $_SESSION['toastr-code'] = "success";
+            $_SESSION['toastr-noti'] = "Sửa thành công";
+            header('Location: ' . BASE_URL . '/admin/showblog');
+            exit();
+        }
+    }
+
+    function deleteblog($id)
+    {
+
+        $this->blog->deleteblog($id);
+        $_SESSION['toastr-code'] = "success";
+        $_SESSION['toastr-noti'] = "Xóa thành công";
+        header('Location:' . BASE_URL . '/admin/showblog');
+        exit();
+    }
+    // END BLOG
+
+    // show chat
+    function showchat()
+    {
+        $this->view(
+            "master3",
+            [
+                "pages" => "adm_showchat",
+                "chat" => $this->user->showChatForAdmin(),
+            ]
+        );
+    }
+
+    function addChat($id)
+    {
+        $in_id = 3;
+        if (isset($_POST['send'])) {
+            $content = $_POST['content'];
+            $this->user->addChat($in_id, $id, $content);
+        }
+
+        $this->view(
+            "master3",
+            [
+                "pages" => "adm_addchat",
+                "view" => $this->user->view($in_id, $id),
+            ]
+        );
+    }
+
+    // END chat
 }

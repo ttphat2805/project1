@@ -165,8 +165,8 @@
                                     foreach ($data['category'] as $category) {
                                     ?>
                                         <li class="menu-item-has-children single-category"><a href="" class="btn-category"><?= $category['name'] ?>
-                                        </a>
-                                        <input type="hidden" class="get-id-category" value="<?=$category['id']?>">
+                                            </a>
+                                            <input type="hidden" class="get-id-category" value="<?= $category['id'] ?>">
                                         </li>
                                     <?php } ?>
                                 </ul>
@@ -262,8 +262,8 @@
                 data: {
                     'action': 'load_product',
                     'page': page,
-                    'search':search,
-                    'id_category':id_category,
+                    'search': search,
+                    'id_category': id_category,
                 },
                 success: function(data) {
                     $(".row.shop_wrapper").html(data);
@@ -290,7 +290,7 @@
                 data: {
                     'action': 'search',
                     'search': search,
-                    'id_category':id_category,
+                    'id_category': id_category,
                 },
                 success: function(data) {
                     $(".row.shop_wrapper").html(data);
@@ -300,7 +300,7 @@
 
         // FILLTER CATEGORY
 
-        $('.btn-category').click(function(e){
+        $('.btn-category').click(function(e) {
             e.preventDefault();
             var search = $('.search-products').val();
 
@@ -312,7 +312,7 @@
                 data: {
                     'action': 'filletcategory',
                     'id_category': id_category,
-                    'search':search,
+                    'search': search,
 
                 },
                 success: function(data) {

@@ -30,6 +30,37 @@
 <script src="<?php echo BASE_URL; ?>/public/assets/js/product.js"></script>
 <script src="<?php echo BASE_URL; ?>/public/assets/js/cart.js"></script>
 
+<!-- Chat -->
+<section class="avenue-messenger">
+        <div class="menu">
+            <div class="items">
+                <span>
+                    <a href="#" title="Minimize">&mdash;</a><br>
+                    <a href="#" title="End Chat">&#10005;</a>
+                </span>
+            </div>
+            <div class="button">...</div>
+        </div>
+        <div class="agent-face">
+            <div class="half">
+                <img class="agent circle" src="<?=BASE_URL?>/public/assets/images/logo/logo.png" alt="Jesse Tino"></div>
+            </div>
+            <div class="chat">
+                <div class="chat-title">
+                   <b><h1>Admin</h1></b> 
+                 <b><h2>G6'Food</h2></b>   
+                </div>
+                <div class="messages">
+                    <!-- data here -->
+                </div>
+                <div class="message-box">
+                    <textarea type="text" id="content" class="message-input" placeholder="Type message..."></textarea>
+                    <button type="submit" id="insert_chat" class="message-submit">Send</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
 <footer class="footer-area">
     <div class="footer-widget-area">
         <div class="container container-default custom-area">
@@ -163,4 +194,44 @@
     }
     ?>
     <?php echo "let SITE_URL = '" . BASE_URL . "';"; ?>
+</script>
+
+<script>
+    $(document).ready(function() {
+    function sendMsg(msg){
+        $.ajax({
+            url: `<?= BASE_URL ?>/chat/sendMsg/`,
+            type: 'POST',
+            data: {
+                'content': msg,
+                'send': 'abc'
+            },
+            success:function(data){
+                console.log(data);
+                selectMsg();
+                $('#content').val('');
+            }
+        });
+    }
+    function selectMsg(){
+        $.ajax({
+            url: `<?= BASE_URL ?>/chat/SelectMsg/`,
+            type: 'POST',
+            success:function(data){
+                $('.messages').html(data);
+            }
+        })
+    }
+    $('#insert_chat').click(function(e){
+        e.preventDefault();
+        msg = $('#content').val();
+        if (msg == "") {
+            alert('chưa nhập tin nhắn');
+            return;
+        } else {
+            sendMsg(msg);
+        }
+    });
+    selectMsg();
+});
 </script>

@@ -29,6 +29,14 @@ class productmodels extends db
         $stmt->execute();
         return $stmt->fetchAll();
     }
+    function productadminpage($productsperpage,$from)
+    {
+        $query = "SELECT a.id as 'idproduct',a.name as 'nameproduct',a.categoryid as 'category_id',a.image,a.description,a.status,b.id as 'idproduct_type',b.price,b.quantity FROM products a inner join product_type b on b.product_id = a.id group by a.id LIMIT $productsperpage OFFSET $from";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
 
     function insertproduct($categoryid, $name, $name_slug, $imageName, $description, $status)
     {
@@ -265,6 +273,22 @@ class productmodels extends db
         $pd = $this->conn->prepare($query);
         $pd->execute();
         return $pd->fetchAll();
+    }
+
+    // FETPRODUCT - admin 
+    function attribute_product($id)
+    {
+        $query = "SELECT DISTINCT a.id as 'idproduct',b.id as 'idproduct_type',b.price,b.attribute_id, b.quantity,c.name as 'nameattr',c.value FROM products a inner join product_type b on b.product_id = a.id inner join attribute c on b.attribute_id = c.id where b.product_id = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+    function attribute_single($id)
+    {
+        $query = "SELECT DISTINCT a.id as 'idproduct',b.id as 'idproduct_type',b.sold, b.price,b.attribute_id, b.quantity FROM products a inner join product_type b on b.product_id = a.id where b.product_id = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 }
 

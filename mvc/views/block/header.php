@@ -33,7 +33,7 @@
 
                                     </li>
                                     <li>
-                                        <a  class="ahrefactive" href="blog-details-fullwidth.html">
+                                        <a  class="ahrefactive" href="<?=BASE_URL?>/blog">
                                             <span class="menu-text"> Tin tức</span>
                                         </a>
 
@@ -227,7 +227,7 @@
 
                                     </li>
                                     <li>
-                                        <a class="ahrefactive" href="blog-details-fullwidth.html">
+                                        <a class="ahrefactive" href="<?=BASE_URL?>/blog">
                                             <span class="menu-text"> Tin tức</span>
                                         </a>
 
@@ -352,7 +352,7 @@
                 <i class="fa fa-times"></i>
             </div>
             <div class="off-canvas-inner">
-<!-- 
+                <!-- 
                 <div class="search-box-offcanvas">
                     <form>
                         <input type="text" placeholder="Search product...">
@@ -407,7 +407,7 @@
 
                             </li>
                             <li>
-                                <a class="ahrefactive" href="blog-details-fullwidth.html">
+                                <a class="ahrefactive" href="<?=BASE_URL?>/blog">
                                     <span class="menu-text"> Tin tức</span>
                                 </a>
 
@@ -424,7 +424,7 @@
                     <!-- mobile menu navigation end -->
                 </div>
                 <!-- mobile menu end -->
-            
+
                 <!-- offcanvas widget area start -->
                 <div class="offcanvas-widget-area">
                     <div class="top-info-wrap text-left text-black">
@@ -446,3 +446,9 @@
     </aside>
     <!-- off-canvas menu end -->
 </header>
+
+<!-- SMS BOX -->
+
+<button class="box-sms">
+    <i class="fal fa-comment-dots"></i>
+</button>

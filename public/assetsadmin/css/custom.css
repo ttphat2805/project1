@@ -171,12 +171,50 @@ input.form-control:focus {
     position: absolute;
 }
 
-.custom-form-label {
-    font-size: 16px;
-    color: rgb(175, 175, 175);
-    font-weight: bold;
+textarea#editor {
+    height: 500px;
+}
+
+td#hide {
+    white-space: wrap;
+    width: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .italic {
     font-style: italic;
+}
+
+
+/* PANIGTION */
+
+.input-hidden {
+    position: absolute;
+    left: -9999px;
+}
+
+.flex-panigation {
+    display: flex;
+}
+
+.panigation {
+    flex: 1;
+    cursor: pointer;
+    margin: 40px 5px;
+    background: #191c24;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 16px;
+    color: #fff;
+    height: 35px;
+    width: 40px;
+    display: block;
+    line-height: 35px;
+}
+
+.panigation.active {
+    color: #fff;
+    background: rgba(190, 190, 190, 0.534);
 }
