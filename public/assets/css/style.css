@@ -1620,8 +1620,8 @@ button,
     height: 20px;
     width: 20px;
     position: absolute;
-    left: -10px;
-    top: 0;
+    left: -12px;
+    top: -2px;
 }
 
 .header-right-area.main-nav>ul>li.mobile-menu-btn a i {

@@ -20,7 +20,6 @@ class Admin extends Controller
         $this->cart = $this->model("cartmodels");
         $this->user = $this->model("usermodels");
         $this->account = $this->model("accountmodels");
-
     }
     function show()
     {
@@ -33,10 +32,10 @@ class Admin extends Controller
             "master3",
             [
                 "pages" => "adm_homepage",
-                "countproduct"=>$this->product->countproduct(),
-                "countcomments"=>$this->user->countcomment(),
-                "countmember"=>$this->account->countmember(),
-                "countcart"=>$this->cart->countcart(),
+                "countproduct" => $this->product->countproduct(),
+                "countcomments" => $this->user->countcomment(),
+                "countmember" => $this->account->countmember(),
+                "countcart" => $this->cart->countcart(),
 
 
             ]
@@ -101,7 +100,7 @@ class Admin extends Controller
 
             if (!isset($_POST['fullname']) || !isset($_POST['address']) || !isset($_POST['mobile']) || !isset($_POST['email'])) {
                 $role = $_POST['role'];
-                $this->user->updatestatus($status, $role,$id);
+                $this->user->updatestatus($status, $role, $id);
             } else {
                 $role = $_POST['role'];
                 $fullname = $_POST['fullname'];
@@ -350,6 +349,114 @@ class Admin extends Controller
         );
     }
 
+
+    function fetchproduct()
+    {
+        if (isset($_POST['action'])) {
+
+            $output = "";
+            $product = $this->product->getproductadmin();
+            $url = BASE_URL;
+
+            if(!isset($_POST['page'])){
+                $page = 1;
+            }else{
+                $page = $_POST['page'];
+            }
+            $totalproduct = count($product);
+            $productsperpage = 4;
+            $from = ($page - 1) * $productsperpage;
+            $totalPage = ceil($totalproduct / $productsperpage);
+            $result = $this->product->productadminpage($productsperpage,$from);
+            $count = 1;
+            $output .= '<table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>ID</th>
+                    <th>Tên</th>
+                    <th>Giá</th>
+                    <th>Ảnh</th>
+                    <th>Số lượng</th>
+                    <th>Trạng thái</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>';
+            foreach ($result as $item) {
+                $attr_prod = $this->product->attribute_product($item['idproduct']);
+                $attr_single = $this->product->attribute_single($item['idproduct']);
+                $output .= '
+                <tr>
+                <td>' . $count++ . '</td>
+                <td>' . $item['idproduct'] . '</td>
+                <td>' . $item['nameproduct'] . '</td>
+                <td>
+                ';
+                foreach ($attr_single as $size_single) :
+                    if ($size_single['attribute_id'] === NULL) {
+                        $output .= '' . number_format($size_single['price']) . ' VNĐ';
+                    }
+                endforeach;
+                foreach ($attr_prod as $price) :
+                    $output .= '' . $price['value'] . ': ' . $price['price'] . ' VNĐ <br/>';
+                endforeach;
+
+                $output .=  '</td>
+                <td><img src="' . $url . '/public/assets/images/product/' . $item['image'] . '" alt=""> </td>
+                <td>';
+                foreach ($attr_single as $size_single) :
+                    if ($size_single['attribute_id'] === NULL) {
+                        $output .= '' . $size_single['quantity'] . ' cái';
+                    }
+                endforeach;
+                foreach ($attr_prod as $price) :
+                    $output .= '' . $price['value'] . ': ' . $price['quantity'] . ' cái <br/>';
+                endforeach;
+
+                $output .= '</td>
+                
+                <td>';
+                if ($item['status'] == 1) {
+                    $output .= '<label class="badge badge-success">Còn hàng</label>';
+                } else {
+                    $output .= '<label class="badge badge-danger">Hết hàng</label>';
+                }
+                $output .= '</td>
+                <td>
+                <a class="btn btn-primary" href="' . $url . '/admin/infoproduct/' . $item['idproduct'] . '">
+                    <i class="fal fa-money-check-edit"></i>
+                </a>
+                <a class="btn btn-danger btn__delete" href="' . $url . '/admin/deleteproduct/' . $item['idproduct'] . '">
+                    <i class="fal fa-trash-alt"></i>
+                </a>
+            </td>
+                </tr>
+                ';
+            }
+            $output .= '
+            </tbody>
+            </table>';
+                        // END FOREACH
+                        if($totalproduct > $productsperpage){
+                            $output .= '
+                            <div style="display: flex; justify-content:center; ">
+                            <div class="pd_page flex-panigation">';
+                                for($i=1 ; $i<=$totalPage ;$i++ ) {
+                                        $output .= '<input type="radio" name="page" class="input-hidden" id="'.$i.'" value ="'.$i. '"> </input>
+                                                <label class="panigation';
+                                                if($i == $page) $output .= ' active';else{
+                                                    $output .= '';
+                                                }
+                                        $output.= '"for="' .$i.'">'.$i.'</label>';
+                                }
+                                $output .= '
+                            </div></div>
+                        ';
+                        }
+            echo $output;
+        }
+    }
     function updateproduct()
     {
         if (isset($_POST['btn__submit'])) {
