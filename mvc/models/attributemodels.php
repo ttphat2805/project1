@@ -61,10 +61,10 @@ Class attributemodels extends db{
         return $stmt->fetchAll();
     }
 
-    function getsizedetail($table,$size){
-        $query = "SELECT $table FROM product_type a inner join attribute b on a.attribute_id = b.id where b.value = ?";
+    function getsizedetail($table,$size,$id){
+        $query = "SELECT $table FROM product_type a inner join attribute b on a.attribute_id = b.id where b.value = ? and a.product_id = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->execute([$size]);
+        $stmt->execute([$size,$id]);
         return $stmt->fetch()[$table];
     }
 

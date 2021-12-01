@@ -46,14 +46,18 @@ class usermodels extends db {
 
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
-
-    public function changePassword($email, $newpass) {
-        $newpass = password_hash($newpass, PASSWORD_DEFAULT);
-        $sql = "UPDATE `user_account` SET `password` = :newpass WHERE `username` like :username";
+    public function checkpassworduser($id){
+        $sql = "select * from `user_account` where `memberid` = $id";
+        $query = $this->conn->prepare($sql);
+        $query->execute();
+        return $query->fetch();
+    }
+    public function changePassword($id,$newpassword) {
+        $newpass = password_hash($newpassword, PASSWORD_DEFAULT);
+        $sql = "UPDATE `user_account` SET `password` = :newpass WHERE `memberid` like $id";
 
         $query = $this->conn->prepare($sql);
         $query->bindValue(":newpass", $newpass, PDO::PARAM_STR);
-        $query->bindValue(":username", $email, PDO::PARAM_STR);
 
         return $query->execute();
     }
@@ -210,9 +214,16 @@ class usermodels extends db {
         $stmt = $this->conn->prepare($query);
         $stmt->execute([$fullname,$mobile,$email,$address,$role,$status,$id]);
     }
-    function updatestatus($status,$id){
-        $query = "UPDATE member SET status = ? where id = ?";
+    function updatestatus($status,$role,$id){
+        $query = "UPDATE member SET status = ?,role = ? where id = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->execute([$status,$id]);
+        $stmt->execute([$status,$role,$id]);
+    }
+
+    function checkexistemailaccount($email){
+        $query = "SELECT username FROM user_account where username = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$email]);
+        return $stmt;
     }
 }

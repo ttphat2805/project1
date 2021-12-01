@@ -12,6 +12,8 @@ class Auth extends Controller
     {
         $this->mail = new PHPMailer(true);
         $this->User = $this->model('usermodels');
+        $this->account = $this->model('accountmodels');
+
     }
 
     public function facebooklogin()
@@ -222,6 +224,7 @@ class Auth extends Controller
             $data['last_name'] = $last_name;
             $data['email'] = $email;
             $data['password'] = $pass;
+
             if ($first_name == '') {
                 $data['first_name_error'] = "Vui lòng nhập họ..";
             }
@@ -266,6 +269,17 @@ class Auth extends Controller
             'pages' => 'signup',
             'data' => $data
         ]);
+    }
+
+    public function checkexistemail(){
+        if(isset($_POST['action'])){
+            $email = filter_var($_POST['email']);
+            $check = $this->User->checkexistemailaccount($email);
+            if($check->rowCount() > 0){
+                echo 'Tên đăng nhập đã tồn tại';
+            }
+        }
+
     }
 
     public function forgetpass()
@@ -343,7 +357,6 @@ class Auth extends Controller
             $confirm_new_pass = $_POST['confirm_pass'];
 
             $data['username'] = $email;
-
             if (empty($email) || empty($pass) || empty($new_pass) || empty($confirm_new_pass)) {
                 $data['username_error'] = 'bạn phải nhập đầy đủ thông tin';
             } else {

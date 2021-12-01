@@ -163,7 +163,7 @@
                                                 $attr_id = $homepage->getproduct_type_id($trend['idproduct']);
                                                 if ($attr_id['attribute_id'] !== NULL) {
                                                 ?>
-                                                    <div class="product-size mb-2">
+                                                    <div class="product-size animate-size mb-2">
                                                         <p>Size :</p>
                                                         <?php
                                                         foreach ($product_attr as $size) :
@@ -271,7 +271,7 @@
                                         $attr_id = $homepage->getproduct_type_id($item['idproduct']);
                                         if ($attr_id['attribute_id'] !== NULL) {
                                         ?>
-                                            <div class="product-size mb-2">
+                                            <div class="product-size animate-size mb-2">
                                                 <p>Size :</p>
                                                 <?php
                                                 foreach ($product_attr as $size) :
@@ -312,9 +312,9 @@
                     <div class="row">
                         <div class="col-lg-5 m-auto text-center col-custom">
                             <div class="section-content">
-                                <h2 class="title-1 text-uppercase">Latest Blog</h2>
+                                <h2 class="title-1 text-uppercase">Tin tức</h2>
                                 <div class="desc-content">
-                                    <p>If you want to know about the organic product then keep an eye on our blog.</p>
+                                    <p>Nếu bạn muốn biết về sản phẩm thì hãy theo dõi blog của chúng tôi..</p>
                                 </div>
                             </div>
                         </div>

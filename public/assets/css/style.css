@@ -1749,6 +1749,7 @@ button,
     overflow: hidden;
     max-height: 290px;
     padding: 30px;
+    padding-top: 10px;
 }
 
 .mobile-navigation nav {
@@ -5528,7 +5529,7 @@ button,
 }
 
 .newsletter-area {
-    background: #f2f2f2 url(../images/bg/1-1.jpg) no-repeat scroll center center/cover;
+    background: #f2f2f2 url(../images/banner/home-slider-2.jpg) no-repeat scroll center center/cover;
     height: 430px;
 }
 
@@ -5553,8 +5554,6 @@ button,
     height: 45px;
     line-height: 45px;
     padding-right: 155px;
-    border-color: #1B1B1C !important;
-    background-color: transparent;
 }
 
 @media (max-width: 575px) {
