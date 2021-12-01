@@ -50,6 +50,8 @@ class Auth extends Controller
                 $_SESSION['user_infor']['user_name'] = $user_social_account_info[0]['fullname'];
                 $_SESSION['user_infor']['user_phone'] = $user_social_account_info[0]['mobile'];
                 $_SESSION['user_infor']['user_email'] = $user_social_account_info[0]['email'];
+                $_SESSION['user_infor']['user_role'] = $user_social_account_info[0]['role'];
+
                 $_SESSION['toastr-code'] = "success";
                 $_SESSION['toastr-noti'] = "đăng nhập thành công";
                 header("Location: " . BASE_URL);
@@ -59,6 +61,8 @@ class Auth extends Controller
                 $_SESSION['user_infor']['user_name'] = $user_social_account_info[0]['fullname'];
                 $_SESSION['user_infor']['user_phone'] = $user_social_account_info[0]['mobile'];
                 $_SESSION['user_infor']['user_email'] = $user_social_account_info[0]['email'];
+                $_SESSION['user_infor']['user_role'] = $user_social_account_info[0]['role'];
+
                 $_SESSION['toastr-code'] = "success";
                 $_SESSION['toastr-noti'] = "Đăng nhập thành công";
                 header("Location: " . BASE_URL);
@@ -90,7 +94,6 @@ class Auth extends Controller
 
             try {
                 $google_account_info = $client->verifyIdToken($token['id_token']);
-                var_dump($google_account_info);
 
                 if ($this->User->findGoogleAccount($google_account_info['sub']) == 0) {
                     $this->User->createGoogleAccount($google_account_info);
@@ -99,17 +102,22 @@ class Auth extends Controller
                     $_SESSION['user_infor']['user_name'] = $user_social_account_info[0]['fullname'];
                     $_SESSION['user_infor']['user_phone'] = $user_social_account_info[0]['mobile'];
                     $_SESSION['user_infor']['user_email'] = $user_social_account_info[0]['email'];
+                    $_SESSION['user_infor']['user_role'] = $user_social_account_info[0]['role'];
+
                     $_SESSION['toastr-code'] = "success";
                     $_SESSION['toastr-noti'] = "đăng nhập thành công";
                     header("Location: " . BASE_URL);
+                    exit();
                 } else {
                     $user_social_account_info = $this->User->getInforSocailAcccount($google_account_info['sub'], 'google');
                     $_SESSION['user_infor']['user_id'] = $user_social_account_info[0]['id'];
                     $_SESSION['user_infor']['user_name'] = $user_social_account_info[0]['fullname'];
                     $_SESSION['user_infor']['user_phone'] = $user_social_account_info[0]['mobile'];
                     $_SESSION['user_infor']['user_email'] = $user_social_account_info[0]['email'];
+                    $_SESSION['user_infor']['user_role'] = $user_social_account_info[0]['role'];
+
                     $_SESSION['toastr-code'] = "success";
-                    $_SESSION['toastr-noti'] = "đăng nhập thành công";
+                    $_SESSION['toastr-noti'] = "Đăng nhập thành công";
                     header("Location: " . BASE_URL);
                 }
             } catch (Exception $e) {
@@ -123,6 +131,7 @@ class Auth extends Controller
 
     public function login()
     {
+        $_SESSION['namesite'] = "Đăng nhập";
         // $google_client = $this->createClientGoogleObject();
         // $google_login_url = $google_client->createAuthUrl();
         $data = [
@@ -142,7 +151,7 @@ class Auth extends Controller
                     return $this->view('master2', ['pages' => 'signin', 'data' => $data]);
                 }
             } else {
-                $data['username_error'] = 'Bạn phải nhập tên dăng nhập';
+                $data['username_error'] = 'Bạn phải nhập tên đăng nhập';
             }
 
             // check password
@@ -159,6 +168,8 @@ class Auth extends Controller
                     $_SESSION['user_infor']['user_name'] = $user_infor[0]['fullname'];
                     $_SESSION['user_infor']['user_phone'] = $user_infor[0]['mobile'];
                     $_SESSION['user_infor']['user_email'] = $user_infor[0]['email'];
+                    $_SESSION['user_infor']['user_role'] = $user_infor[0]['role'];
+
                     header("Location: " . BASE_URL);
                     
                 } else {
@@ -167,21 +178,28 @@ class Auth extends Controller
             } else {
                 $data['pass_error'] = 'Bạn chưa nhập mật khẩu';
             }
+            if($data['pass_error'] == '' && $data['username_error'] == ''){
+                header('Location: ' . BASE_URL);
+                exit();
+            }
+    
         }
         return $this->view('master2', ['pages' => 'signin', 'data' => $data]);
     }
 
     public function logout()
     {
-        unset($_SESSION['user_infor']);
-        $_SESSION['toastr-code'] = "success";
-        $_SESSION['toastr-noti'] = "Đã đăng xuất";
-        header('Location: ' . BASE_URL);
+       unset($_SESSION['user_infor']);
+       $_SESSION['toastr-code'] = "success";
+       $_SESSION['toastr-noti'] = "Đã đăng xuất";
+       header('Location: ' . BASE_URL);
         exit();
     }
 
     public function register()
     {
+        $_SESSION['namesite'] = "Đăng ký";
+
         $data = [
             'first_name' => '',
             'last_name' => '',
@@ -205,29 +223,29 @@ class Auth extends Controller
             $data['email'] = $email;
             $data['password'] = $pass;
             if ($first_name == '') {
-                $data['first_name_error'] = "Bạn phải nhập đầy đủ họ";
+                $data['first_name_error'] = "Vui lòng nhập họ..";
             }
             if ($last_name == '') {
-                $data['last_name_error'] = "bạn phải nhập tên";
+                $data['last_name_error'] = "Vui lòng nhập tên..";
             }
             if (empty($email)) {
-                $data['email_error'] = "Bạn phải nhập email";
+                $data['email_error'] = "Email không được bỏ trống";
             } else {
                 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                    $data['email_error'] = 'email sai định dạng';
+                    $data['email_error'] = 'Email không đúng định dạng';
                 } else {
                     if ($this->User->findUserByEmail($email) >= 1) {
-                        $data['email_error'] = 'tên đăng nhập đã tồn tại';
+                        $data['email_error'] = 'Tên đăng nhập đã tồn tại';
                     }
                 }
             }
 
             if (empty($pass)) {
-                $data['pass_error'] = "Bạn phải nhập mật khẩu";
+                $data['pass_error'] = "Vui lòng nhập mật khẩu";
             } else {
                 if (strlen($pass) >= 6) {
                     if ($pass != $re_pass) {
-                        $data['repass_error'] = "Mật khẩu không trùng khớp";
+                        $data['repass_error'] = "Mật khẩu xác nhận không đúng";
                     }
                 } else {
                     $data['pass_error'] = "Mật khẩu phải lớn hơn 6 chữ số";
@@ -239,6 +257,8 @@ class Auth extends Controller
                 && empty($data['email_error']) && empty($data['pass_error']) && empty($data['repass_error'])
             ) {
                 $this->User->registerUserAccount($data);
+                header("Location: " . BASE_URL."/auth/login");
+
             }
         }
 
@@ -257,10 +277,11 @@ class Auth extends Controller
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $email = $_POST['email'];
             if ($this->User->findUserByEmail($email) == 0) {
-                $data['email_error'] = 'tên đăng nhập không tồn tại';
+                $data['email_error'] = 'Tên đăng nhập không tồn tại';
             } else {
                 $new_pass = random_int(100000, 999999);
                 $new_pass = base64_encode($new_pass);
+                $new_pass = strtolower($new_pass);
                 //$this->User->updatePassword($email,$new_pass);
 
                 $mail = new PHPMailer(true);
@@ -283,11 +304,14 @@ class Auth extends Controller
                     $mail->addBCC('bcc@example.com');
 
 
-
+                    
                     //Content
                     $mail->isHTML(true);                                  //Set email format to HTML
-                    $mail->Subject = 'Hello here is your new password';
-                    $mail->Body    = 'đây là mật khẩu mới của bạn <b>' . $new_pass . '</b>';
+                    $mail->Subject = 'New password form G6\'Food';
+                    $mail->Body    = 'Đây là mật khẩu mới của bạn <b>' . $new_pass . '</b><br/>
+                    Vui lòng không cung cấp mật khẩu này cho bất kì ai !<br/>
+                    <img src="https://lh3.googleusercontent.com/lXkCcoveZoYp1gShpok9dvkzUiZDprUcr8tfJtMg9kySiwEZj22M2SYy4ap_FV5hXqC8vzMtn7uxX2eZ5F9HUN9AbL-u5zfPGsHvdFrAZJcLQabJ64o-Rum8mKqP_8JTUl-6pkz3chUvN37C_8f3bZLK6WtY1rGpOv1XhHkzVfApt7Tgc-0nvfUz8aCirX9XYOgOigWQ4F7z9U1MIeiqaDk2i-g0HEoy0nIJH192qoVJemCjJRgfC2qehIoVCmSSguMMKoMg0agS4DYHqekebBKgnEgP2SISH58ats3qqbJmoWumCFbjvPooDS9qVH1eyJcVMbNgx4VE7jTsQI08pd73xn7p2Qi-KROvSFp-KaKQSR9dQqJxyE6V6WqwufGd6C4TkNYdozuI7u1zgAYssC1fDXXmFBKvRaEhdBTzvAPCv_b3A7SjakFlIX3vnpFIcMuiNYPAtSCE82sWAT-Inf1F9padI_nnU1F8CPADvGtBzGBdtfpGFf6oQGrCvW1sUlTJ-A4WJ2zSnQDfT8Jd1hW8-l5KgqYqTKLlPBPB2fYMlh-H_soq6Z8bR6ucxm5y56oZGYb09KUsVTCxxhz202FraOlhqQTa_aXY8ulPNWo5u7Q2LBXjtH3Q7xBQxHZL2Dl_mmrj8vy3n-3iYOnhYlOFNDOMdmLXTUMkWz59ptH9vqRWd18KQch6e-1Ib92Iy-0tHlkESrGoNVF5YmoFDXo=s500-no?authuser=0" width="300px" height="300px">
+                    ';
                     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
                     $mail->send();
@@ -342,10 +366,11 @@ class Auth extends Controller
                 }
             }
         }
-
-        return $this->view('master2', [
-            'pages' => 'changepass',
-            'data' => $data
-        ]);
+        // return $this->view('master2', [
+        //     'pages' => 'myaccount',
+        //     'data' => $data
+        // ]);
     }
+
+
 }

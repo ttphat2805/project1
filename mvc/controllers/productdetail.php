@@ -10,11 +10,11 @@ class productdetail extends Controller
 
         $url = explode("/", filter_var(trim($_GET["url"], "/")));
         if (count($url) > 3) {
-            header("location:".BASE_URL."/error404");
+            header("location:" . BASE_URL . "/error404");
             exit();
         }
 
-        // if(strstr($_GET['url'], '')){
+        // if(strstr($_GET['url'], 'show')){
         //     if (!isset($url[2])) {
         //         header("Location:".BASE_URL."pagenotfound");
         //         exit();
@@ -23,123 +23,127 @@ class productdetail extends Controller
         $this->product = $this->model("productmodels");
         $this->attribute = $this->model("attributemodels");
         $this->user = $this->model("usermodels");
-
-
     }
 
 
     function show($slug)
     {
+        $_SESSION['namesite'] = 'Chi tiết món ăn';
+        // print_r($this->product->getproduct_type_id($id));
         $id = $this->product->getProductId($slug);
-
-
-        
         $this->view(
             "master2",
             [
                 "pages" => "product_details",
-                "detailviews"=>$this->product->updateviews($id),                
+                "detailviews" => $this->product->updateviews($id),
                 "productdetails" => $this->product->getproductdetails($id),
                 "productdetailall" => $this->product->getproductdetailall($id),
                 "gallery" => $this->product->get_gallery_image($id),
-                "productdetailattr" =>$this->attribute->getproduct_detail_attr($id),
+                "productdetailattr" => $this->attribute->getproduct_detail_attr($id),
                 "product_type" => $this->product->getproduct_type_id($id),
             ]
         );
     }
-
-    function showcmt($id){
+    function showcmt($id)
+    {
         $check = $this->user->showComment($id);
-        $output = ''; 
-        if($check->rowCount() > 0){
+        $output = '';
+        if ($check->rowCount() > 0) {
             $comments = $check->fetchAll();
-            foreach($comments as $cmt){
-                $output.= '<div class="pro_review mb-5">
+            foreach ($comments as $cmt) {
+                $output .= '<div class="pro_review mb-5">
                 <div class="review_thumb">
-                    <input type="hidden" class="getidcmt" value="'.$cmt['idcmt'].'">
-                    <img alt="review images" src="/public/assets/images/logo/user.png">
+                    <input type="hidden" class="getidmembercmt" value="' . $cmt['idmember'] . '">
+                    <input type="hidden" class="getidcmt" value="' . $cmt['idcmt'] . '">
+                    <img alt="review images" src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Clipart.png" width="80px" height="75px">
                 </div>
                 <div class="review_details">
                     <div class="review_info mb-2">
-                        <h5>'.$cmt['fullname'].' - <span>'.$cmt['date'].'</span></h5>
+                        <h5>' . $cmt['fullname'] . ' - <span>' . $cmt['date'] . '</span></h5>
                     </div>
-                    <p class="content">'.$cmt['content'].'</p>
-                    <a class="user_deletecmt"> Xoas</a>
-                    <a class="user_updatecmt"> sửa</a><br/>
+                    <p class="content">' . $cmt['content'] . '</p>';
+                if(isset($_SESSION['user_infor']['user_id'])){
+                    $output.= '    <input type="hidden" class="sessionidmember" value="' .$_SESSION['user_infor']['user_id'] . '">';
+                if($cmt['idmember'] ==  $_SESSION['user_infor']['user_id']){
+                $output.= '
+                    <a class="user_deletecmt edit-user-comment"><i class="fal fa-trash-alt"></i> xóa</a>
+                    <a class="user_updatecmt edit-user-comment"> <i class="far fa-pen"></i> sửa</a><br/>
                 </div>
-                
+                ';}}
+            $output.= '</div>
+            <textarea type="text" class="updatecmt update_comment_style" style="display:none;"> </textarea><span class="spanupdatecmt comment-submit btn obrien-button primary-btn" style="display:none;">Cập nhật</span>
+            
             </div>
-            <input type="text" class="updatecmt" style="display:none;"> <span class="spanupdatecmt" style="display:none;">Cập nhật</span>
-            ';
-            }
-        }else{
+            ';}
+        } else {
             $output .= " <p class='noti-cmt'>Sản phẩm này chưa có bình luận nào...</p>";
         }
         echo $output;
     }
 
-    function insertcmt(){
-        if(isset($_POST['action'])){
-            if(isset($_SESSION['user_infor'])){
+    function insertcmt()
+    {
+        if (isset($_POST['action'])) {
+            if (isset($_SESSION['user_infor'])) {
                 $memberid = $_SESSION['user_infor']['user_id'];
                 $idproduct = $_POST['idproduct'];
                 $content = $_POST['content'];
-                $this->user->insertComment($memberid,$idproduct,$content);
+                $this->user->insertComment($memberid, $idproduct, $content);
                 echo 'ok';
-            }else{
+            } else {
                 $_SESSION['toastr-code'] = "warning";
                 $_SESSION['toastr-noti'] = "Bạn phải đăng nhập để bình luận";
                 echo 'sai';
-
             }
         }
     }
 
-    function userdeletecmt(){
-        if(isset($_POST['action'])){
-            if(isset($_SESSION['user_infor'])){
+    function userdeletecmt()
+    {
+        if (isset($_POST['action'])) {
+            if (isset($_SESSION['user_infor'])) {
                 $id = $_POST['id_cmt'];
                 $memberid = $_SESSION['user_infor']['user_id'];
-                echo 'id: '.$id.'memberid'.$memberid;
-                $this->user->userdeletecmt($memberid,$id);
-            }else{
+                echo 'id: ' . $id . 'memberid' . $memberid;
+                $this->user->userdeletecmt($memberid, $id);
+            } else {
                 echo 'Vui lòng đăng nhập';
             }
         }
     }
 
-    function userupdatecmt(){
-        if(isset($_POST['action'])){
-            if(isset($_SESSION['user_infor'])){
+    function userupdatecmt()
+    {
+        if (isset($_POST['action'])) {
+            if (isset($_SESSION['user_infor'])) {
                 $id = $_POST['id_cmt'];
                 $content = $_POST['content'];
                 $memberid = $_SESSION['user_infor']['user_id'];
-                $this->user->userupdatecmt($memberid,$id,$content);
-            }else{
+                $this->user->userupdatecmt($memberid, $id, $content);
+            } else {
                 echo 'Vui lòng đăng nhập';
             }
         }
     }
 
-    function change_price($size){
-        $size = $this->attribute->getsizedetail('price',$size);
+    function change_price($size)
+    {
+        $size = $this->attribute->getsizedetail('price', $size);
         $output = number_format($size);
         echo $output;
     }
 
-    function change_oldprice($size){
-        $hi = $this->attribute->getsizedetail('price',$size);
+    function change_oldprice($size)
+    {
+        $hi = $this->attribute->getsizedetail('price', $size);
         $hi += 12500;
         $output = number_format($hi);
         echo $output;
     }
 
-    function change_quantitysize($size){
-        $hi = $this->attribute->getsizedetail('quantity',$size);
+    function change_quantitysize($size)
+    {
+        $hi = $this->attribute->getsizedetail('quantity', $size);
         echo $hi;
     }
-
-    
-
-
 }

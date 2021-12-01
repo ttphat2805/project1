@@ -156,7 +156,6 @@
         <?php 
         echo "let sizes = '" . json_encode($data['size']) . "';";
         ?>
-
         sizes = JSON.parse(sizes);
 
         var Size = '';

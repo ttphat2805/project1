@@ -1,19 +1,18 @@
 <?php
-class contact extends Controller
+class about extends Controller
 {
     function __construct()
     {
     }
     function Show()
     {
-        $_SESSION['namesite'] = "Liên hệ";
+    $_SESSION['namesite'] = 'Giới thiệu';
 
         $this->view(
             "master2",
             [
-                "pages" => "contact-us",
+                "pages" => "about",
             ]
         );
     }
-
 }

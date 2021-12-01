@@ -7,6 +7,8 @@ class Admin extends Controller
     public $cart;
     public $attribute;
     public $coupon;
+    public $user;
+
 
 
     function __construct()
@@ -15,7 +17,7 @@ class Admin extends Controller
         $this->category = $this->model("categorymodels");
         $this->attribute = $this->model("attributemodels");
         $this->coupon = $this->model("couponmodels");
-
+        $this->user = $this->model("usermodels");
     }
     function show()
     {
@@ -26,6 +28,73 @@ class Admin extends Controller
             ]
         );
     }
+    // START - MEMBER
+    function member()
+    {
+        $this->view(
+            "master3",
+            [
+                "pages" => "adm_showmember",
+                "member" => $this->user->getmember(),
+
+            ]
+        );
+    }
+
+    function infomember($id)
+    {
+        if(isset($_SESSON['user_infor'])){
+            $role = $this->user->checkrole($_SESSION['user_infor']['user_id']);
+            $_SESSION['role'] = $role;
+            $checkroleadmin = $this->user->checkroleadmin($_SESSION['user_infor']['user_id']);
+            $checkrolesuperadmin = $this->user->checkrolesuperadmin($_SESSION['user_infor']['user_id']);
+            if (!empty($checkrolesuperadmin)) {
+                $_SESSION['checkrolesuperadmin'] = $checkrolesuperadmin;
+            }
+            if (!empty($checkroleadmin)) {
+                $_SESSION['checkroleadmin'] = $checkroleadmin;
+            }
+        }
+        
+
+        $this->view(
+            "master3",
+            [
+                "pages" => "adm_updatemember",
+                "memberid" => $this->user->getmemberid($id),
+
+            ]
+        );
+    }
+
+    function updatemember()
+    {
+        if (isset($_POST['btn__submit'])) {
+            $id = $_POST['id'];
+            $status = $_POST['status'];
+
+            if (!isset($_POST['fullname']) || !isset($_POST['address']) || !isset($_POST['mobile']) || !isset($_POST['email'])) {
+                $this->user->updatestatus($status, $id);
+            } else {
+                $role = $_POST['role'];
+
+                $fullname = $_POST['fullname'];
+                $email = $_POST['email'];
+                $address = $_POST['address'];
+                $mobile = $_POST['mobile'];
+                $this->user->updatemember($fullname, $mobile, $email, $address, $role, $status, $id);
+            }
+            $_SESSION['toastr-code'] = "success";
+            $_SESSION['toastr-noti'] = "Cập nhật thành công";
+            header('Location:' . BASE_URL . '/admin/member');
+            exit();
+        }
+    }
+
+
+    // END - MEMBER
+
+
     // START - CATEGORY
     function showcategory()
     {
@@ -142,6 +211,7 @@ class Admin extends Controller
                 $_SESSION['toastr-noti'] = "Đã tồn tại tên này";
             } else {
                 $name_slug = change_slug($name);
+                echo $name_slug;
                 $categoryid = $_POST['categoryid'];
                 if (isset($_POST['price'])) {
                     $price = $_POST['price'];
@@ -280,7 +350,7 @@ class Admin extends Controller
                     if (in_array($ext, $extension)) {
                         $imageName = time() . '_' . $imageName;
                         move_uploaded_file($imageTemp, $store . $imageName);
-                        $this->product->updateimg($imageName);
+                        $this->product->updateimg($imageName, $id);
                     } else {
                         $_SESSION['toastr-code'] = "warning";
                         $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
@@ -433,7 +503,7 @@ class Admin extends Controller
             "master3",
             [
                 "pages" => "adm_showcoupon",
-                "coupon"=> $this->coupon->getcouponhome(),
+                "coupon" => $this->coupon->getcouponhome(),
             ]
         );
     }
@@ -442,7 +512,7 @@ class Admin extends Controller
 
     function addcoupon()
     {
-        if(isset($_POST['btn__submit'])){
+        if (isset($_POST['btn__submit'])) {
             $name = $_POST['name'];
             $code = $_POST['code'];
             $type = $_POST['type'];
@@ -452,16 +522,16 @@ class Admin extends Controller
             $date_created = $_POST['date_created'];
             $date_out = $_POST['date_out'];
             $status = $_POST['status'];
-            if($name == '' || $code == '' || $type == '' || $discout == '' || $quantity == '' || $min_order == '' || $date_created == '' || $date_out == ''){
+            if ($name == '' || $code == '' || $type == '' || $discout == '' || $quantity == '' || $min_order == '' || $date_created == '' || $date_out == '') {
                 $_SESSION['toastr-code'] = "info";
                 $_SESSION['toastr-noti'] = "Vui lòng nhập đầy đủ thông tin";
-            }else{
-                $this->coupon->insertcoupon($name, $code, $discout, $type, $min_order, $quantity, $date_created, $date_out,$status);
+            } else {
+                $this->coupon->insertcoupon($name, $code, $discout, $type, $min_order, $quantity, $date_created, $date_out, $status);
 
                 $_SESSION['toastr-code'] = "success";
                 $_SESSION['toastr-noti'] = "Thêm thành công mã giảm giá";
+                header('Location: ' . BASE_URL . '/admin/showcoupon');
             }
-         
         }
 
         $this->view(
@@ -484,4 +554,42 @@ class Admin extends Controller
     }
 
     // END - COUPON
+
+    // COMMENT
+
+    function showcomment()
+    {
+        $this->view(
+            "master3",
+            [
+                "pages" => "adm_showcomment",
+                "showcomment" => $this->user->showcommentadmin(),
+            ]
+        );
+    }
+
+    function infocomment($id)
+    {
+
+        $this->view(
+            "master3",
+            [
+                "pages" => "adm_updatecomment",
+                "infocomment" => $this->user->infocomment($id),
+
+            ]
+        );
+    }
+
+    function updatecomment()
+    {
+        $id = $_POST['id'];
+        $status = $_POST['status'];
+        $check = $this->user->updatecomment($status, $id);
+        $_SESSION['toastr-code'] = "success";
+        $_SESSION['toastr-noti'] = "Cập nhật thành công";
+        header('Location: ' . BASE_URL . '/admin/showcomment');
+        if ($check == true) {
+        }
+    }
 }
