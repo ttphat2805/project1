@@ -19,8 +19,8 @@
                         </thead>
                         <tbody>
                            
-                            <?= var_dump($data['list']) ?>
-                            <?php if(isset($data['list'])){
+                            <?php //var_dump($data['list']) ?>
+                            <?php if($data['list']){
                                     
                                     $cart_total = 0;?>
                             <?php for($i=0; $i< count($data['list']); $i++){ ?>
@@ -73,7 +73,7 @@
                                 </tr>
                                 <tr class="total">
                                     <td>Total</td>
-                                    <td class="total-amount"><?= $cart_total ?></td>
+                                    <td class="total-amount"><?= $cart_total??0 ?></td>
                                 </tr>
                             </table>
                         </div>

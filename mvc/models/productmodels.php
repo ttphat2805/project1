@@ -88,7 +88,7 @@ class productmodels extends db
         $query = "SELECT * FROM product_type where product_id = $id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
-        return $stmt->fetch();
+        return $stmt->fetchAll();
     }
 
     function getproduct_home()

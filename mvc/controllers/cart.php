@@ -30,6 +30,9 @@ class cart extends Controller
         );
     }
 
+    public function addcart($id) {
+        echo $id;
+    }
 
     public function addToCart() {
 

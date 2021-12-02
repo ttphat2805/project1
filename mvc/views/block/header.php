@@ -174,7 +174,7 @@
                                             <h5>$166.00</h5>
                                         </div>
                                         <div class="cart-links d-flex justify-content-center">
-                                            <a class="obrien-button white-btn" href="cart.html">giỏ hàng</a>
+                                            <a class="obrien-button white-btn" href="<?= BASE_URL ?>/cart">giỏ hàng</a>
                                             <a class="obrien-button white-btn" href="checkout.html">Thanh toán</a>
                                         </div>
                                     </div>
@@ -323,7 +323,7 @@
                                                 <h5>$166.00</h5>
                                             </div>
                                             <div class="cart-links d-flex justify-content-center">
-                                                <a class="obrien-button white-btn" href="cart.html">View cart</a>
+                                                <a class="obrien-button white-btn" href="<?= BASE_URL ?>/cart">View cart</a>
                                                 <a class="obrien-button white-btn" href="checkout.html">Checkout</a>
                                             </div>
                                         </div>

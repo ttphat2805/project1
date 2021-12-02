@@ -31,7 +31,7 @@ class products extends Controller
         foreach ($products as $item) {
             $product_attr = $this->product->getproducts_detail_attr($item['idproduct']);
             $attr_id = $this->product->getproducts_type_id($item['idproduct']);
-            print_r($attr_id);
+            //print_r($attr_id);
             $output .= '<div class="col-custom product-area col-lg-4 col-md-6 col-sm-6">
             <div class="single-product position-relative">
             <input type="hidden" class="idproduct" value="' . $item['idproduct'] . '">

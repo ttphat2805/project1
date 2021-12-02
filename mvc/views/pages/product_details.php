@@ -58,9 +58,10 @@
                     </div>
 
                     <div class="col-lg-7 col-custom">
+                        <?php var_dump($data['productdetailattr'][0]); ?>
                         <form action="<?= BASE_URL ?>/cart/addcart/<?= $data['productdetails']['idproduct'] ?>" method="post">
-                            <input type="hidden" class="valueid" value="<?= $data['productdetails']['idproduct'] ?>">
-                            <form action="<?= BASE_URL ?>/cart/addcart/<?= $data['productdetails']['idproduct'] ?>" method="post" class="parent_productid">
+                            <input type="hidden" class="valueid" name="" value="<?= $data['productdetails']['idproduct'] ?>">
+                            
                                 <input type="hidden" id="value_idproduct" value="<?= $data['productdetails']['idproduct'] ?>">
                                 <input type="hidden" value="<?= $data['productdetails']['name'] ?>">
                                 <div class="product-summery position-relative">
@@ -90,13 +91,16 @@
                                             <?php echo $data['productdetails']['quantity'] ?>
                                         </span></div>
                                     <?php
-                                    if ($data['product_type']['attribute_id'] !== NULL) {
+                                     if ($data['product_type'][0]['attribute_id']) :
+
                                     ?>
                                         <div class="product-meta">
                                             <div class="product-size mb-4">
+                                                
                                                 <p>Size :</p>
                                                 <?php
                                                 foreach ($data['productdetailattr'] as $size) :
+                                                    echo 'a';
                                                 ?>
                                                     <input id="prod-size-<?= $size['value'] ?>" type="radio" name="option1" value="<?= $size['value'] ?>">
                                                     <label for="prod-size-<?= $size['value'] ?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
@@ -113,7 +117,7 @@
                                         </button> -->
 
                                         </div>
-                                    <?php } ?>
+                                    <?php echo 'a'; endif; ?>
                                     <div class="quantity-with_btn mb-4">
                                         <div class="quantity">
                                             <div class="cart-plus-minus">
