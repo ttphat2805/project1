@@ -6,6 +6,8 @@ class Home extends Controller
     function __construct()
     {
         $this->product = $this->model("productmodels");
+        $this->blog = $this->model("blogmodels");
+
     }
     function Show()
     {
@@ -13,8 +15,9 @@ class Home extends Controller
         $this->view(
             "master1",
             [
-                "products" => $this->product->getproduct_home(),
+                "products" => $this->product->getproductsite(),
                 "product_trends"=>$this->product->getproduct_trend(),
+                "blog"=>$this->blog->getBlogpage(),
             ]
         );
     }

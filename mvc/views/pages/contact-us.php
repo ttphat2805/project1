@@ -72,7 +72,7 @@
         <!-- Google Maps -->
         <div class="google-map-area">
             <div id="contacts" class="map-area">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.444519015143!2d106.62615085048262!3d10.853755692231148!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752bee0b0ef9e5%3A0x5b4da59e47aa97a8!2zQ8O0bmcgVmnDqm4gUGjhuqduIE3hu4FtIFF1YW5nIFRydW5n!5e0!3m2!1svi!2s!4v1637680266529!5m2!1svi!2s" width="100%" height="450px"  loading="lazy"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.444519015143!2d106.62615085048262!3d10.853755692231148!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752bee0b0ef9e5%3A0x5b4da59e47aa97a8!2zQ8O0bmcgVmnDqm4gUGjhuqduIE3hu4FtIFF1YW5nIFRydW5n!5e0!3m2!1svi!2s!4v1637680266529!5m2!1svi!2s" width="100%" height="450px" loading="lazy"></iframe>
             </div>
         </div>
         <!-- Google Maps End -->

@@ -7,19 +7,13 @@
                 <div class="shop_toolbar_wrapper">
                     <div class="shop_toolbar_btn">
                         <button data-role="grid_3" type="button" class="active btn-grid-3" data-toggle="tooltip" title="3"><i class="fa fa-th"></i></button>
-                        <button data-role="grid_list" type="button" class="btn-list" data-toggle="tooltip" title="List"><i class="fa fa-th-list"></i></button>
                     </div>
                     <div class="shop-select">
                         <form class="d-flex flex-column w-100" action="#">
                             <div class="form-group">
-                                <select class="form-control nice-select w-100">
-                                    <option selected value="1">Alphabetically, A-Z</option>
-                                    <option value="2">Sort by popularity</option>
-                                    <option value="3">Sort by newness</option>
-                                    <option value="4">Sort by price: low to high</option>
-                                    <option value="5">Sort by price: high to low</option>
-                                    <option value="6">Product Name: Z</option>
-                                </select>
+                                <!-- <select class="form-control nice-select w-100">
+                                  
+                                </select> -->
                             </div>
                         </form>
                     </div>
@@ -50,7 +44,6 @@
                 <div class="row shop_wrapper grid_3">
                     <!-- <?php
                             foreach ($data['products'] as $item) :
-
                             ?>
                         <div class="col-md-6 col-sm-6 col-lg-4 col-custom product-area">
                             <div class="single-product position-relative">
@@ -125,7 +118,7 @@
                 </div>
                 <!-- Shop Wrapper End -->
                 <!-- Bottom Toolbar Start -->
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-sm-12 col-custom">
                         <div class="toolbar-bottom mt-30">
                             <nav class="pagination pagination-wrap mb-10 mb-sm-0">
@@ -145,7 +138,7 @@
                             <p class="desc-content text-center text-sm-right">Showing 1 - 12 of 34 result</p>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- Bottom Toolbar End -->
             </div>
             <div class="col-lg-3 col-12 col-custom">
@@ -169,11 +162,13 @@
                             <h3 class="widget-title">Danh mục</h3>
                             <!-- Widget Menu Start -->
                             <nav>
-                                <ul class="mobile-menu p-0 m-0">
+                                <ul class="mobile-menu p-0 m-0 parent-category">
                                     <?php
                                     foreach ($data['category'] as $category) {
                                     ?>
-                                        <li class="menu-item-has-children"><a href="#"><?= $category['name'] ?></a>
+                                        <li class="menu-item-has-children single-category"><a href="" class="btn-category"><?= $category['name'] ?>
+                                            </a>
+                                            <input type="hidden" class="get-id-category" value="<?= $category['id'] ?>">
                                         </li>
                                     <?php } ?>
                                 </ul>
@@ -258,11 +253,20 @@
 <!-- Shop Main Area End Here -->
 <script>
     $(document).ready(function() {
-        // FETCH PRODUCTS
         function fetchproducts() {
+            let page = $('input[name="page"]:checked').val();
+            var search = $('.search-products').val();
+            let parent = $(this).parents('.single-category');
+            let id_category = parent.find('.get-id-category').val();
             $.ajax({
                 url: "<?= BASE_URL ?>/products/fetchproducts",
                 method: "POST",
+                data: {
+                    'action': 'load_product',
+                    'page': page,
+                    'search': search,
+                    'id_category': id_category,
+                },
                 success: function(data) {
                     $(".row.shop_wrapper").html(data);
                 },
@@ -271,15 +275,24 @@
 
         fetchproducts();
 
+        // PANIGATION
+
+        $(document).on('click', '.pd_page', function() {
+            fetchproducts();
+        })
+
         // SEARCH PRODUCTS
         $('.search-products').keyup(function() {
-            var value_input = $('.search-products').val();
+            var search = $('.search-products').val();
+            let parent = $(this).parents('.single-category');
+            let id_category = parent.find('.get-id-category').val();
             $.ajax({
-                url: "<?= BASE_URL ?>/products/searchproducts",
+                url: "<?= BASE_URL ?>/products/fetchproducts",
                 method: "POST",
                 data: {
                     'action': 'search',
-                    'value_input': value_input
+                    'search': search,
+                    'id_category': id_category,
                 },
                 success: function(data) {
                     $(".row.shop_wrapper").html(data);
@@ -287,6 +300,28 @@
             });
         })
 
+        // FILLTER CATEGORY
+
+        $('.btn-category').click(function(e) {
+            e.preventDefault();
+            var search = $('.search-products').val();
+
+            let parent = $(this).parents('.single-category');
+            let id_category = parent.find('.get-id-category').val();
+            $.ajax({
+                url: "<?= BASE_URL ?>/products/fetchproducts",
+                method: "POST",
+                data: {
+                    'action': 'filletcategory',
+                    'id_category': id_category,
+                    'search': search,
+
+                },
+                success: function(data) {
+                    $(".row.shop_wrapper").html(data);
+                },
+            });
+        })
 
         // WISHLIST
         $(document).on('click', '.addtowishlist', function() {

@@ -36,6 +36,9 @@
 </head>
 
 <body>
+    <button onclick="autoTop();" class="btnScrollTop">
+        <i class="far fa-arrow-up"></i>
+    </button>
     <div class="app">
         <div class="home-wrapper home-1">
             <!-- HEADER: START -->
@@ -163,7 +166,7 @@
                                                 $attr_id = $homepage->getproduct_type_id($trend['idproduct']);
                                                 if ($attr_id['attribute_id'] !== NULL) {
                                                 ?>
-                                                    <div class="product-size mb-2">
+                                                    <div class="product-size animate-size mb-2">
                                                         <p>Size :</p>
                                                         <?php
                                                         foreach ($product_attr as $size) :
@@ -184,7 +187,7 @@
                                                 </div>
                                                 <div class="product-price">
                                                     <span class="regular-price "><?= number_format($trend['price']); ?> VNĐ</span>
-                                                    <span class="old-price"><del><?= number_format($trend['price'] + 15000);
+                                                    <span class="old-price"><del><?= number_format($trend['price'] + 12500);
                                                                                     ?> VNĐ</del></span>
                                                 </div>
                                                 <div class="product-action d-flex">
@@ -271,7 +274,7 @@
                                         $attr_id = $homepage->getproduct_type_id($item['idproduct']);
                                         if ($attr_id['attribute_id'] !== NULL) {
                                         ?>
-                                            <div class="product-size mb-2">
+                                            <div class="product-size animate-size mb-2">
                                                 <p>Size :</p>
                                                 <?php
                                                 foreach ($product_attr as $size) :
@@ -312,9 +315,9 @@
                     <div class="row">
                         <div class="col-lg-5 m-auto text-center col-custom">
                             <div class="section-content">
-                                <h2 class="title-1 text-uppercase">Latest Blog</h2>
+                                <h2 class="title-1 text-uppercase">Tin tức</h2>
                                 <div class="desc-content">
-                                    <p>If you want to know about the organic product then keep an eye on our blog.</p>
+                                    <p>Nếu bạn muốn biết về sản phẩm thì hãy theo dõi blog của chúng tôi..</p>
                                 </div>
                             </div>
                         </div>
@@ -339,86 +342,33 @@
                         "slidesToShow": 1
                         }}
                         ]'>
-                                <div class="single-blog">
-                                    <div class="single-blog-thumb">
-                                        <a href="blog.html">
-                                            <img src="https://xpressrow.com/html/frudbaz/assets/img/blog/blog_01.jpg" alt="Blog Image">
-                                        </a>
-                                    </div>
-                                    <div class="single-blog-content position-relative">
-                                        <div class="post-date text-center border rounded d-flex flex-column position-absolute">
-                                            <span>14</span>
-                                            <span>01</span>
+                                <?php foreach ($data['blog'] as $blog) :
+                                    $date = new DateTime($blog['date']);
+                                    $month = $date->format('m');
+                                    $day = $date->format('d');
+                                ?>
+
+                                    <div class="single-blog">
+                                        <div class="single-blog-thumb">
+                                            <a href="<?= BASE_URL ?>/blogdetail/show/<?= $blog['slug'] ?>">
+                                                <img src="<?= BASE_URL ?>/public/assets/images/blog/<?= $blog['image'] ?>" alt="Blog Image">
+                                            </a>
                                         </div>
-                                        <div class="post-meta">
-                                            <span class="author">Nhóm 6 dự án 1</span>
+                                        <div class="single-blog-content position-relative">
+                                            <div class="post-date text-center border rounded d-flex flex-column position-absolute">
+                                                <span><?= $day ?></span>
+                                                <span><?= $month ?></span>
+                                            </div>
+                                            <div class="post-meta">
+                                                <span class="author">Tác giả: G6'Food</span>
+                                            </div>
+                                            <h2 class="post-title ">
+                                                <a href="<?= BASE_URL ?>/blogdetail/show/<?= $blog['slug'] ?>"><?= $blog['title'] ?></a>
+                                            </h2>
+                                            <p class="desc-content hidden-text"><?= $blog['description'] ?></p>
                                         </div>
-                                        <h2 class="post-title">
-                                            <a href="blog.html">Tiêu đề</a>
-                                        </h2>
-                                        <p class="desc-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making...</p>
                                     </div>
-                                </div>
-                                <div class="single-blog">
-                                    <div class="single-blog-thumb">
-                                        <a href="blog.html">
-                                            <img src="https://xpressrow.com/html/frudbaz/assets/img/blog/blog_01.jpg" alt="Blog Image">
-                                        </a>
-                                    </div>
-                                    <div class="single-blog-content position-relative">
-                                        <div class="post-date text-center border rounded d-flex flex-column position-absolute">
-                                            <span>14</span>
-                                            <span>01</span>
-                                        </div>
-                                        <div class="post-meta">
-                                            <span class="author">Nhóm 6 dự án 1</span>
-                                        </div>
-                                        <h2 class="post-title">
-                                            <a href="blog.html">Tiêu đề</a>
-                                        </h2>
-                                        <p class="desc-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making...</p>
-                                    </div>
-                                </div>
-                                <div class="single-blog">
-                                    <div class="single-blog-thumb">
-                                        <a href="blog.html">
-                                            <img src="https://xpressrow.com/html/frudbaz/assets/img/blog/blog_01.jpg" alt="Blog Image">
-                                        </a>
-                                    </div>
-                                    <div class="single-blog-content position-relative">
-                                        <div class="post-date text-center border rounded d-flex flex-column position-absolute">
-                                            <span>14</span>
-                                            <span>01</span>
-                                        </div>
-                                        <div class="post-meta">
-                                            <span class="author">Nhóm 6 dự án 1</span>
-                                        </div>
-                                        <h2 class="post-title">
-                                            <a href="blog.html">Tiêu đề</a>
-                                        </h2>
-                                        <p class="desc-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making...</p>
-                                    </div>
-                                </div>
-                                <div class="single-blog">
-                                    <div class="single-blog-thumb">
-                                        <a href="blog.html">
-                                            <img src="<?php echo BASE_URL; ?>/public/assets/images/blog/medium-size/4.jpg" alt="Blog Image">
-                                        </a>
-                                    </div>
-                                    <div class="single-blog-content position-relative">
-                                        <div class="post-date text-center border rounded d-flex flex-column position-absolute">
-                                            <span>14</span>
-                                            <span>01</span>
-                                        </div>
-                                        <div class="post-meta">
-                                            <span class="author">Nhóm 6 dự án 1</span>
-                                        </div>
-                                        <h2 class="post-title">
-                                            <a href="blog.html">Tiêu đề 1</a>
-                                        </h2>
-                                        <p class="desc-content">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making...</p>
-                                    </div>
-                                </div>
+                                <?php endforeach; ?>
                             </div>
                         </div>
                     </div>

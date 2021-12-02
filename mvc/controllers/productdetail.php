@@ -31,6 +31,8 @@ class productdetail extends Controller
         $_SESSION['namesite'] = 'Chi tiết món ăn';
         // print_r($this->product->getproduct_type_id($id));
         $id = $this->product->getProductId($slug);
+        $price = $this->product->getproductdetails($id);
+        $price = $price['price'];
         $this->view(
             "master2",
             [
@@ -41,6 +43,8 @@ class productdetail extends Controller
                 "gallery" => $this->product->get_gallery_image($id),
                 "productdetailattr" => $this->attribute->getproduct_detail_attr($id),
                 "product_type" => $this->product->getproduct_type_id($id),
+                "product_related" => $this->product->productrelated($price,$id),
+
             ]
         );
     }
@@ -53,22 +57,28 @@ class productdetail extends Controller
             foreach ($comments as $cmt) {
                 $output .= '<div class="pro_review mb-5">
                 <div class="review_thumb">
+                    <input type="hidden" class="getidmembercmt" value="' . $cmt['idmember'] . '">
                     <input type="hidden" class="getidcmt" value="' . $cmt['idcmt'] . '">
-                    <img alt="review images" src="/public/assets/images/logo/user.png">
+                    <img alt="review images" src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Clipart.png" width="80px" height="75px">
                 </div>
                 <div class="review_details">
                     <div class="review_info mb-2">
                         <h5>' . $cmt['fullname'] . ' - <span>' . $cmt['date'] . '</span></h5>
                     </div>
-                    <p class="content">' . $cmt['content'] . '</p>
-                    <a class="user_deletecmt"> Xoas</a>
-                    <a class="user_updatecmt"> sửa</a><br/>
+                    <p class="content">' . $cmt['content'] . '</p>';
+                if(isset($_SESSION['user_infor']['user_id'])){
+                    $output.= '    <input type="hidden" class="sessionidmember" value="' .$_SESSION['user_infor']['user_id'] . '">';
+                if($cmt['idmember'] ==  $_SESSION['user_infor']['user_id']){
+                $output.= '
+                    <a class="user_deletecmt edit-user-comment"><i class="fal fa-trash-alt"></i> xóa</a>
+                    <a class="user_updatecmt edit-user-comment"> <i class="far fa-pen"></i> sửa</a><br/>
                 </div>
-                
+                ';}}
+            $output.= '</div>
+            <textarea type="text" class="updatecmt update_comment_style" style="display:none;"> </textarea><span class="spanupdatecmt comment-submit btn obrien-button primary-btn" style="display:none;">Cập nhật</span>
+            
             </div>
-            <input type="text" class="updatecmt" style="display:none;"> <span class="spanupdatecmt" style="display:none;">Cập nhật</span>
-            ';
-            }
+            ';}
         } else {
             $output .= " <p class='noti-cmt'>Sản phẩm này chưa có bình luận nào...</p>";
         }
@@ -120,24 +130,30 @@ class productdetail extends Controller
         }
     }
 
-    function change_price($size)
-    {
-        $size = $this->attribute->getsizedetail('price', $size);
-        $output = number_format($size);
+    function change_price()
+    {   
+        $size = $_POST['size'];
+        $id = $_POST['id'];
+        $price = $this->attribute->getsizedetail('price', $size,$id);
+        $output = number_format($price);
         echo $output;
     }
 
-    function change_oldprice($size)
+    function change_oldprice()
     {
-        $hi = $this->attribute->getsizedetail('price', $size);
-        $hi += 12500;
-        $output = number_format($hi);
+        $size = $_POST['size'];
+        $id = $_POST['id'];
+        $old_price = $this->attribute->getsizedetail('price', $size,$id);
+        $old_price += 12500;
+        $output = number_format($old_price);
         echo $output;
     }
 
-    function change_quantitysize($size)
+    function change_quantitysize()
     {
-        $hi = $this->attribute->getsizedetail('quantity', $size);
+        $id = $_POST['id'];
+        $size = $_POST['size'];
+        $hi = $this->attribute->getsizedetail('quantity', $size,$id);
         echo $hi;
     }
 }

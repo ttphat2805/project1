@@ -1620,8 +1620,8 @@ button,
     height: 20px;
     width: 20px;
     position: absolute;
-    left: -10px;
-    top: 0;
+    left: -12px;
+    top: -2px;
 }
 
 .header-right-area.main-nav>ul>li.mobile-menu-btn a i {
@@ -1749,6 +1749,7 @@ button,
     overflow: hidden;
     max-height: 290px;
     padding: 30px;
+    padding-top: 10px;
 }
 
 .mobile-navigation nav {
@@ -3114,7 +3115,7 @@ button,
 
 .single-product-main-area .comments-reply-area .comment-input textarea,
 .single-product-main-area .comments-reply-area .comment-form-comment textarea {
-    height: 140px;
+    height: 80px;
 }
 
 .single-product-main-area .comments-reply-area label {
@@ -5528,7 +5529,7 @@ button,
 }
 
 .newsletter-area {
-    background: #f2f2f2 url(../images/bg/1-1.jpg) no-repeat scroll center center/cover;
+    background: #f2f2f2 url(../images/banner/home-slider-2.jpg) no-repeat scroll center center/cover;
     height: 430px;
 }
 
@@ -5553,8 +5554,6 @@ button,
     height: 45px;
     line-height: 45px;
     padding-right: 155px;
-    border-color: #1B1B1C !important;
-    background-color: transparent;
 }
 
 @media (max-width: 575px) {
