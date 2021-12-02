@@ -48,7 +48,6 @@ class order extends Controller {
             'total' => $total,
             'cart' => $_SESSION['cart_Item']
         ];
-        var_dump($data);
         $this->ordermethod->insertOder($data);
     }
 }

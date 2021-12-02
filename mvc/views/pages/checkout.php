@@ -199,7 +199,6 @@
         };
 
         function changeQuan ()  {
-            alert('a');
             xa.innerHTML = "";
             let request = new XMLHttpRequest();
             request.open("GET", "https://provinces.open-api.vn/api/d/"+quan.value+"?depth=2")
