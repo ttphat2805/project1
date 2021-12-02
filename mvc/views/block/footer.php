@@ -39,7 +39,7 @@
                     <a href="#" title="End Chat">&#10005;</a>
                 </span>
             </div>
-            <div class="button">...</div>
+            <div class="button"> <i class="fal fa-times-square"></i> </div>
         </div>
         <div class="agent-face">
             <div class="half">

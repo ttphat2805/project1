@@ -218,6 +218,7 @@
                 email = email;
             } else {
                 $('.error-update-email').html('Email không đúng định dạng');
+                $('.error-update-all').html('');
                 $('.error-update-email').css('color', 'red');
                 return;
             }
@@ -228,7 +229,7 @@
             } else {
                 $('.error-update-all').html('');
             }
-            if (mobile.length <= 9 || mobile.length > 11) {
+            if (mobile.length < 10 || mobile.length > 10) {
                 $('.error-update-mobile').html('Số điện thoại không đúng');
                 $('.error-update-mobile').css('color', 'red');
             } else {
@@ -246,12 +247,13 @@
                     full_name: full_name
                 },
                 success: function(data) {
-                    if (data == 'ok') {
-                        alert('ok');
+                    var check = JSON.parse(data);
+                    if (check.type == 'fail') {
+                        $('.error-update-all').html('Cập nhật thất bại');
+                        $('.error-update-all').css('color', 'red');
                     } else {
                         $('.error-update-all').html('Cập nhật thành công');
                         $('.error-update-all').css('color', '#28a745');
-
                     }
                 }
             })

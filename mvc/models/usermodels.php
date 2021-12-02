@@ -8,8 +8,15 @@ class usermodels extends db {
         $query = $this->conn->prepare($sql);
         $query->bindValue(":email", $email, PDO::PARAM_STR);
         $query->execute();
-        // $query->fetchAll(PDO::FETCH_ASSOC);
-        return $query;;
+        $query->fetchAll(PDO::FETCH_ASSOC);
+        return $query->fetchAll();
+    }
+    public function findUserByEmaillogin($email) {
+        $sql = "SELECT * FROM `user_account` WHERE username like :email";
+        $query = $this->conn->prepare($sql);
+        $query->bindValue(":email", $email, PDO::PARAM_STR);
+        $query->execute();
+        return $query;
     }
     public function blockaccount($id) {
         $query = "SELECT * from user_account inner join member on user_account.memberid = member.id where member.id = $id and member.status = 0";

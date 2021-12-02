@@ -114,13 +114,23 @@ class myaccount extends Controller
             }
             $address = filter_var($_POST['address']);
             $mobile = filter_var($_POST['mobile']);
+            if(strlen($mobile) > 10 || strlen($mobile) < 10) {
+                $output = ['type' => 'fail'];
+                $output = json_encode($output);
+                echo $output;
+                return;
+            }
             $check = $this->account->checkexistemailaccount($email, $id);
             if ($check->rowCount() > 0) {
-                echo 'lỗi';
+                $output = ['type' => 'fail'];
+                $output = json_encode($output);
+                echo $output;
                 return;
             } else {
                 $this->account->updatemyaccount($fullname, $mobile, $address, $email, $id);
-                echo 'ok';
+                $output = ['type' => 'success'];
+                $output = json_encode($output);
+                echo $output;
                 return;
             }
         }

@@ -27,6 +27,7 @@ class Admin extends Controller
     {
         if (!isset($_SESSION['user_infor'])) {
             header('Location:' . BASE_URL . '/auth/login');
+            $_SESSION['checkloginadmin'] = 'check';
             exit();
         }
 
