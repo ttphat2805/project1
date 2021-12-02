@@ -902,7 +902,8 @@ class Admin extends Controller
 
     function addChat($id)
     {
-        $in_id = 3;
+        $fullname = $_SESSION['user_infor']['user_name'];
+        $in_id = $this->user->idComment($fullname)['id'];
         if (isset($_POST['send'])) {
             $content = $_POST['content'];
             $this->user->addChat($in_id, $id, $content);
@@ -916,6 +917,5 @@ class Admin extends Controller
             ]
         );
     }
-
     // END chat
 }

@@ -27,12 +27,23 @@
         }
 </style>
     <div class="boxchat">
-        <div class="header">
+    <div class="header">
             <p></p>
         </div>
 
         <div class="middle">
-            <!-- data -->
+            <?php foreach($data['view'] as $row): ?>
+                <?php if($row['in_msg_id'] == 3): ?>
+                    <div class="admin-text">
+                        <p><?=$row['content']?></p>
+                    </div>
+                <?php else: ?>
+                    <div class="admin-text">
+                        <p><?=$row['content']?></p>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+                
 
         </div>
         <form action="" method="post">
