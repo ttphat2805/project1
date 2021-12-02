@@ -78,7 +78,7 @@
                             </table>
                         </div>
                     </div>
-                    <a href="checkout.html" class="btn obrien-button primary-btn d-block">Thanh toán</a>
+                    <a href="<?= BASE_URL ?>/order" class="btn obrien-button primary-btn d-block">Thanh toán</a>
                 </div>
             </div>
         </div>
