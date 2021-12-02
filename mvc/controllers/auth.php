@@ -243,6 +243,7 @@ class Auth extends Controller
             $data['last_name'] = $last_name;
             $data['email'] = $email;
             $data['password'] = $pass;
+            $check = $this->User->findUserByEmaillogin($email);
 
             if ($first_name == '') {
                 $data['first_name_error'] = "Vui lòng nhập họ..";
@@ -256,7 +257,7 @@ class Auth extends Controller
                 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     $data['email_error'] = 'Email không đúng định dạng';
                 } else {
-                    if ($this->User->findUserByEmail($email) >= 1) {
+                    if ($check->rowCount() > 0) {
                         $data['email_error'] = 'Tên đăng nhập đã tồn tại';
                     }
                 }
