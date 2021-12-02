@@ -147,7 +147,7 @@ class Auth extends Controller
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // check user name
             $username = $_POST['email'];
-            $check = $this->User->findUserByEmaillogin($username);
+            $check = $this->User->findUserByEmail($username);
             if ($_POST['email'] != null) {
                 if ($check->rowCount() == 0) {
                     $data['username_error'] = "Tài khoản không tồn tại";
