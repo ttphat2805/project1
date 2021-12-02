@@ -64,13 +64,11 @@
 
                                     <div class="product-title" style="padding-top:10px">
                                         <h4 class="title-2"> <a href="<?php echo BASE_URL ?>/productdetail/show/<?= $item['slug'] ?>"><?= $item['name'] ?></a>
-<<<<<<< HEAD
                                     
                                     </h4>
                                     <?php 
                                     $product_attr = $homepage->getproduct_detail_attr($item['idproduct']);
                                     $attr_id = $homepage->getproduct_type_id($item['idproduct']);
-                                    print_r($attr_id);   
                                     if ($attr_id[0]['attribute_id'] != '') {
                                     ?>
                                         <div class="product-size">
@@ -90,30 +88,6 @@
                                     } else {
                                         echo "<div class='non-size' data-prod='".$attr_id[0]['id']."'></div>";
                                     } ?>
-=======
-
-                                        </h4>
-                                        <?php
-                                        $product_attr = $homepage->getproduct_detail_attr($item['idproduct']);
-                                        $attr_id = $homepage->getproduct_type_id($item['idproduct']);
-                                        if ($attr_id['attribute_id'] !== NULL) {
-                                        ?>
-                                            <div class="product-size">
-                                                <p>Size :</p>
-                                                <?php
-                                                foreach ($product_attr as $size) :
-                                                ?>
-                                                    <input id="prod-size-<?= $size['value'] ?>-<?= $item['idproduct'] ?>" type="radio" name="option1" value="<?= $size['value'] ?>">
-                                                    <label for="prod-size-<?= $size['value'] ?>-<?= $item['idproduct'] ?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
-                                                        <span><?= $size['value'] ?></span>
-                                                    </label>
-                                                <?php
-                                                endforeach;
-                                                ?>
-                                            </div>
-                                        <?php
-                                        } ?>
->>>>>>> main
                                     </div>
                                     <div class="price-box">
                                         <span class="regular-price"><span class="price-view"><?= number_format($item['price']) ?> </span> VNĐ</span>
@@ -122,11 +96,7 @@
                                 </div>
 
                                 <div class="add-action d-flex position-absolute">
-<<<<<<< HEAD
                                     <a title="Add To cart" class="add_to_cart">
-=======
-                                    <a href="" title="Add To cart">
->>>>>>> main
                                         <i class="ion-bag"></i>
                                     </a>
                                     <a class="addtowishlist" title="Add To Wishlist">
@@ -286,8 +256,6 @@
     </div>
 </div>
 <!-- Shop Main Area End Here -->
-<<<<<<< HEAD
-=======
 <script>
     $(document).ready(function() {
         // FETCH PRODUCTS
@@ -348,4 +316,3 @@
         })
     })
 </script>
->>>>>>> main
