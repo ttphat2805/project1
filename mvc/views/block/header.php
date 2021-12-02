@@ -272,7 +272,7 @@
                                 <li class="minicart-wrap">
                                     <a href="#" class="minicart-btn toolbar-btn">
                                     <i class="far fa-shopping-cart"></i>
-                                        <span class="cart-item_count">3</span>
+                                        <span class="cart-item_count"><?php echo $_SESSION['cart_number'] ??'0' ?></span>
                                     </a>
                                     <div class="cart-item-wrapper dropdown-sidemenu dropdown-hover-2">
                                         <div class="single-cart-item">
@@ -325,7 +325,7 @@
                                             <h5>$166.00</h5>
                                         </div>
                                         <div class="cart-links d-flex justify-content-center">
-                                            <a class="obrien-button white-btn" href="cart.html">View cart</a>
+                                            <a class="obrien-button white-btn" href="<?= BASE_URL ?>/cart">View cart</a>
                                             <a class="obrien-button white-btn" href="checkout.html">Checkout</a>
                                         </div>
                                     </div>
