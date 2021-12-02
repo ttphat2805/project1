@@ -30,6 +30,7 @@
 <script src="<?php echo BASE_URL; ?>/public/assets/js/product.js"></script>
 <script src="<?php echo BASE_URL; ?>/public/assets/js/cart.js"></script>
 
+<script src="<?php echo BASE_URL ?>/public/assets/js/quan.js"></script>
 <!-- Chat -->
 <section class="avenue-messenger">
         <div class="menu">

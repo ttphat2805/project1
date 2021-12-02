@@ -12,19 +12,30 @@
                                 <th class="pro-title">Product</th>
                                 <th class="pro-price">Price</th>
                                 <th class="pro-quantity">Quantity</th>
+                                <th>Type</th>
                                 <th class="pro-subtotal">Total</th>
                                 <th class="pro-remove">Remove</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="pro-thumbnail"><a href="#"><img class="img-fluid" src="assets/images/product/small-size/1.jpg" alt="Product" /></a></td>
-                                <td class="pro-title"><a href="#">Product dummy title <br> s / green</a></td>
-                                <td class="pro-price"><span>$295.00</span></td>
+                           
+                            <?php //var_dump($data['list']) ?>
+                            <?php if($data['list']){
+                                    
+                                    $cart_total = 0;?>
+                            <?php for($i=0; $i< count($data['list']); $i++){ ?>
+                                <?php
+                                    // Tinh tong tien san pham
+                                    $cart_total +=   $data['list'][$i]['price']*$data['list'][$i]['quantity']   
+                                ?>
+                                <tr>
+                                <td class="pro-thumbnail"><a href="#"><img class="img-fluid" src="<?= BASE_URL.'/public/assets/images/product/'.$data['list'][$i]['image'] ?>" alt="Product" /></a></td>
+                                <td class="pro-title"><a href="#"><?= $data['list'][$i]['name'] ?></td>
+                                <td class="pro-price"><span><?= $data['list'][$i]['price'] ?></span></td>
                                 <td class="pro-quantity">
                                     <div class="quantity">
-                                        <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" value="0" type="text">
+                                        <div class="cart-plus-minus" data-prod="<?= $data['list'][$i]['id_product_type'] ?>">
+                                            <input class="cart-plus-minus-box" value="<?= $data['list'][$i]['quantity'] ?>" type="text">
                                             <div class="dec qtybutton">-</div>
                                             <div class="inc qtybutton">+</div>
                                             <div class="dec qtybutton"><i class="fa fa-minus"></i></div>
@@ -32,63 +43,16 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="pro-subtotal"><span>$295.00</span></td>
-                                <td class="pro-remove"><a href="#"><i class="ion-trash-b"></i></a></td>
+                                <td><?= $data['list'][$i]['value'] ?></td>
+                                <td class="pro-subtotal"><span><?= $data['list'][$i]['price']*$data['list'][$i]['quantity'] ?></span></td>
+                                <td class="pro-remove"><a ><i class="ion-trash-b"></i></a></td>
                             </tr>
-                            <tr>
-                                <td class="pro-thumbnail"><a href="#"><img class="img-fluid" src="assets/images/product/small-size/2.jpg" alt="Product" /></a></td>
-                                <td class="pro-title"><a href="#">Product title here <br> red</a></td>
-                                <td class="pro-price"><span>$275.00</span></td>
-                                <td class="pro-quantity">
-                                    <div class="quantity">
-                                        <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" value="0" type="text">
-                                            <div class="dec qtybutton">-</div>
-                                            <div class="inc qtybutton">+</div>
-                                            <div class="dec qtybutton"><i class="fa fa-minus"></i></div>
-                                            <div class="inc qtybutton"><i class="fa fa-plus"></i></div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="pro-subtotal"><span>$550.00</span></td>
-                                <td class="pro-remove"><a href="#"><i class="ion-trash-b"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td class="pro-thumbnail"><a href="#"><img class="img-fluid" src="assets/images/product/small-size/3.jpg" alt="Product" /></a></td>
-                                <td class="pro-title"><a href="#">Product dummy title <br> s</a></td>
-                                <td class="pro-price"><span>$295.00</span></td>
-                                <td class="pro-quantity">
-                                    <div class="quantity">
-                                        <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" value="0" type="text">
-                                            <div class="dec qtybutton">-</div>
-                                            <div class="inc qtybutton">+</div>
-                                            <div class="dec qtybutton"><i class="fa fa-minus"></i></div>
-                                            <div class="inc qtybutton"><i class="fa fa-plus"></i></div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="pro-subtotal"><span>$295.00</span></td>
-                                <td class="pro-remove"><a href="#"><i class="ion-trash-b"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td class="pro-thumbnail"><a href="#"><img class="img-fluid" src="assets/images/product/small-size/4.jpg" alt="Product" /></a></td>
-                                <td class="pro-title"><a href="#">Dummy Title</a></td>
-                                <td class="pro-price"><span>$110.00</span></td>
-                                <td class="pro-quantity">
-                                    <div class="quantity">
-                                        <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" value="2" type="text">
-                                            <div class="dec qtybutton">-</div>
-                                            <div class="inc qtybutton">+</div>
-                                            <div class="dec qtybutton"><i class="fa fa-minus"></i></div>
-                                            <div class="inc qtybutton"><i class="fa fa-plus"></i></div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="pro-subtotal"><span>$110.00</span></td>
-                                <td class="pro-remove"><a href="#"><i class="ion-trash-b"></i></a></td>
-                            </tr>
+                            <?php }?>
+                            <?php } else{?>
+                                <tr>
+                                    <td colspan="7">Giỏ hàng của bạn hiện đang trống</td>
+                                </tr>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>
@@ -109,12 +73,12 @@
                                 </tr>
                                 <tr class="total">
                                     <td>Total</td>
-                                    <td class="total-amount">$300</td>
+                                    <td class="total-amount"><?= $cart_total??0 ?></td>
                                 </tr>
                             </table>
                         </div>
                     </div>
-                    <a href="checkout.html" class="btn obrien-button primary-btn d-block">Thanh toán</a>
+                    <a href="<?= BASE_URL ?>/order" class="btn obrien-button primary-btn d-block">Thanh toán</a>
                 </div>
             </div>
         </div>

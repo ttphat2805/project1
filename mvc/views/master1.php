@@ -171,7 +171,7 @@
                                                         <?php
                                                         foreach ($product_attr as $size) :
                                                         ?>
-                                                            <input id="prod-size-<?= $size['value'] ?>-<?= $trend['idproduct'] ?>" type="radio" name="option1" value="<?= $size['value'] ?>">
+                                                            <input id="prod-size-<?=$size['value'] ?>-<?=$item['idproduct'] ?> " type="radio" checked data-prod="<?= $size['id'] ?> " name="option1" value="' . $size['attribute_id'] . '">
                                                             <label for="prod-size-<?= $size['value'] ?>-<?= $trend['idproduct'] ?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
                                                                 <span><?= $size['value'] ?></span>
                                                             </label>
@@ -181,7 +181,7 @@
                                                     </div>
                                                 <?php
 
-                                                } ?>
+                                                } else { echo "<div class='non-size' data-prod='".$attr_id['id']."'></div> ";}?>
                                                 <div class="product-title">
                                                     <h4 class="title-2"> <a href="<?php echo BASE_URL ?>/productdetail/show/<?= $trend['slug'] ?>"><?= $trend['name'] ?></a></h4>
                                                 </div>
@@ -191,7 +191,7 @@
                                                                                     ?> VNĐ</del></span>
                                                 </div>
                                                 <div class="product-action d-flex">
-                                                    <a href="" title="+ Giỏ hàng">
+                                                <a title="+ Giỏ hàng" class="add_to_cart">
                                                         <i class="ion-bag"></i>
                                                     </a>
                                                     <a class="addtowishlist" title="+ Yêu thích">

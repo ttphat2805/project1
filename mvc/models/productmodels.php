@@ -104,7 +104,7 @@ class productmodels extends db
         $query = "SELECT * FROM product_type where product_id = $id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
-        return $stmt->fetch();
+        return $stmt->fetchAll();
     }
 
     function getproduct_home($search)
@@ -230,6 +230,13 @@ class productmodels extends db
         return $stmt;
     }
 
+    public function getProductCart($id) {
+        $sql = 'SELECT a.id, a.price,a.sold,b.name,b.image,c.value FROM `product_type` a INNER JOIN `products` b on a.product_id = b.id LEFT JOIN `attribute` c on a.attribute_id = c.id WHERE a.id = '.$id;
+        $query = $this->conn->prepare($sql);
+        $query->execute();
+
+        return $query->fetch();
+    }
     function filltercategory($id)
     {
         $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.categoryid,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.categoryid = $id and a.status = 1 group by a.id";
