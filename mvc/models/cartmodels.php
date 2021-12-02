@@ -6,5 +6,12 @@ Class cartmodels extends db{
         $stmt->execute([$id]);
         return $stmt->fetchAll();
     }
+
+    function countcart(){
+        $query = "SELECT * FROM orders";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
 }
 ?>

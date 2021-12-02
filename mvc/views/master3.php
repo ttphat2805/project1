@@ -39,9 +39,20 @@
                                 <span class="count bg-success"></span>
                             </div>
                             <div class="profile-name">
-                                <h5 class="mb-0 font-weight-normal">Hi ADMIN
+                                <h5 class="mb-0 font-weight-normal">Hi <b><?= $_SESSION['user_infor']['user_name']
+                                                                            ?></b>
                                 </h5>
-                                <span>Gold Member</span>
+                                <span>
+                                    <?php
+                                    if ($_SESSION['user_infor']['user_role'] == 1) {
+                                        echo 'Admin';
+                                    } else {
+                                        echo 'Superadmin';
+                                    }
+
+                                    ?>
+
+                                </span>
                             </div>
                         </div>
 
@@ -95,7 +106,7 @@
                 </li>
 
                 <li class="nav-item menu-items">
-                    <a class="nav-link" href="<?php echo BASE_URL; ?>/admin/">
+                    <a class="nav-link" href="<?php echo BASE_URL; ?>/admin/member">
                         <span class="menu-icon">
                             <i class="mdi mdi-account-multiple-outline"></i>
                         </span>
@@ -152,11 +163,19 @@
                     </div>
                 </li>
                 <li class="nav-item menu-items">
-                    <a class="nav-link" href="<?php echo BASE_URL; ?>/Admin/showComment">
+                    <a class="nav-link" href="<?php echo BASE_URL; ?>/admin/showcomment">
                         <span class="menu-icon">
                             <i class="mdi mdi-comment-check-outline"></i>
                         </span>
                         <span class="menu-title">Bình luận</span>
+                    </a>
+                </li>
+                <li class="nav-item menu-items">
+                    <a class="nav-link" href="<?php echo BASE_URL; ?>/admin/showblog">
+                        <span class="menu-icon">
+                            <i class="mdi mdi-comment-check-outline"></i>
+                        </span>
+                        <span class="menu-title">Bài viết</span>
                     </a>
                 </li>
                 <li class="nav-item menu-items">

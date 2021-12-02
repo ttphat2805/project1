@@ -170,3 +170,51 @@ input.form-control:focus {
 .radio-close {
     position: absolute;
 }
+
+textarea#editor {
+    height: 500px;
+}
+
+td#hide {
+    white-space: wrap;
+    width: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.italic {
+    font-style: italic;
+}
+
+
+/* PANIGTION */
+
+.input-hidden {
+    position: absolute;
+    left: -9999px;
+}
+
+.flex-panigation {
+    display: flex;
+}
+
+.panigation {
+    flex: 1;
+    cursor: pointer;
+    margin: 40px 5px;
+    background: #191c24;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 16px;
+    color: #fff;
+    height: 35px;
+    width: 40px;
+    display: block;
+    line-height: 35px;
+}
+
+.panigation.active {
+    color: #fff;
+    background: rgba(190, 190, 190, 0.534);
+}

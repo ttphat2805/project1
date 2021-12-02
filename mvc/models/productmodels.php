@@ -8,6 +8,13 @@ class productmodels extends db
         $stmt->execute();
         return $stmt->fetchAll();
     }
+
+    function countproduct(){
+        $query = "SELECT * FROM products";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
     function getattradmin()
     {
         $query = "SELECT a.id as 'idproduct',a.name as 'nameproduct',a.image,a.description,a.status,b.id as 'idproduct_type',b.price,b.quantity,c.name as 'nameattr',c.value FROM products a inner join product_type b on b.product_id = a.id inner join attribute c on b.attribute_id = c.id where b.product_id = a.id";
@@ -22,14 +29,23 @@ class productmodels extends db
         $stmt->execute();
         return $stmt->fetchAll();
     }
+    function productadminpage($productsperpage,$from)
+    {
+        $query = "SELECT a.id as 'idproduct',a.name as 'nameproduct',a.categoryid as 'category_id',a.image,a.description,a.status,b.id as 'idproduct_type',b.price,b.quantity FROM products a inner join product_type b on b.product_id = a.id group by a.id LIMIT $productsperpage OFFSET $from";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
 
     function insertproduct($categoryid, $name, $name_slug, $imageName, $description, $status)
     {
-        $query = "INSERT INTO products(categoryid,name,image,description,status) 
-            values (:categoryid,:name,:imageName,:description,:status)";
+        $query = "INSERT INTO products(categoryid,name,slug,image,description,status) 
+            values (:categoryid,:name,:slug,:imageName,:description,:status)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(":categoryid", $categoryid, PDO::PARAM_INT);
         $stmt->bindValue(":name", $name, PDO::PARAM_STR);
+        $stmt->bindValue(":slug", $name_slug, PDO::PARAM_STR);
         $stmt->bindValue(":imageName", $imageName, PDO::PARAM_STR);
         $stmt->bindValue(":description", $description, PDO::PARAM_STR);
         $stmt->bindValue(":status", $status, PDO::PARAM_INT);
@@ -91,14 +107,20 @@ class productmodels extends db
         return $stmt->fetch();
     }
 
-    function getproduct_home()
+    function getproduct_home($search)
+    {
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.name like '%$search%' and a.status = 1 group by a.id ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+    function getproductsite()
     {
         $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.status = 1 group by a.id ";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
     }
-
     function getproduct_trend()
     {
         $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.status = 1 group by a.id order by views desc limit 10";
@@ -207,4 +229,66 @@ class productmodels extends db
         $stmt->execute();
         return $stmt;
     }
+
+    function filltercategory($id)
+    {
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.categoryid,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.categoryid = $id and a.status = 1 group by a.id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    function productspage($from,$productsperpage,$search)
+    {
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.name like '%$search%' and a.status = 1 group by a.id
+        LIMIT $productsperpage OFFSET $from";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+    function productcatsearch($from,$productsperpage,$search,$id_category)
+    {
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.categoryid,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.categoryid = $id_category and a.name like '%$search%' and a.status = 1 group by a.id
+        LIMIT $productsperpage OFFSET $from";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    function getsearchname($search){
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.name like '%$search%' and a.status = 1 group by a.id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+    function getsearchcategory($search,$id_category){
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.categoryid,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.categoryid = $id_category and a.name like '%$search%' and a.status = 1 group by a.id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+    
+    function productrelated($price,$id){
+        $query = "SELECT a.quantity,b.id as 'idproduct',b.name,b.slug,b.image,b.description,b.views,a.*,c.* FROM product_type a inner join products b on a.product_id = b.id inner join prod_image c on c.productid = b.id where a.price between $price - ($price*20/100) and $price + ($price*20/100)  and a.product_id != $id group by a.product_id limit 5";
+        $pd = $this->conn->prepare($query);
+        $pd->execute();
+        return $pd->fetchAll();
+    }
+
+    // FETPRODUCT - admin 
+    function attribute_product($id)
+    {
+        $query = "SELECT DISTINCT a.id as 'idproduct',b.id as 'idproduct_type',b.price,b.attribute_id, b.quantity,c.name as 'nameattr',c.value FROM products a inner join product_type b on b.product_id = a.id inner join attribute c on b.attribute_id = c.id where b.product_id = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+    function attribute_single($id)
+    {
+        $query = "SELECT DISTINCT a.id as 'idproduct',b.id as 'idproduct_type',b.sold, b.price,b.attribute_id, b.quantity FROM products a inner join product_type b on b.product_id = a.id where b.product_id = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 }
+

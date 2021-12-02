@@ -8,23 +8,21 @@
                     <div class="row">
                         <div class="col-lg-3 col-md-4 col-custom">
                             <div class="myaccount-tab-menu nav" role="tablist">
-                                <a href="#dashboad" class="active" data-toggle="tab"><i class="fa fa-dashboard"></i>
-                                    Dashboard</a>
-                                <a href="#orders" data-toggle="tab"><i class="fa fa-cart-arrow-down"></i>
-                                    Orders</a>
+                                <a href="#cartdetail" class="active" data-toggle="tab"><i class="fa fa-dashboard"></i>
+                                    Đơn hàng</a>
                                 <a href="#wishlist" data-toggle="tab"><i class="fa fa-cloud-download"></i>
                                     Món ăn yêu thích</a>
-                                <a href="#payment-method" data-toggle="tab"><i class="fa fa-credit-card"></i>
-                                    Payment
-                                    Method</a>
-                                <a href="#address-edit" data-toggle="tab"><i class="fa fa-map-marker"></i>
-                                    address</a>
-                                <a href="#account-info" data-toggle="tab"><i class="fa fa-user"></i>
-                                    Đổi mật khẩu
-                                </a>
+                                <a href="#detailaccount" data-toggle="tab"><i class="fas fa-user-plus"></i>
+                                    Tài khoản chi tiết</a>
+                                <?php
+                                if (isset($_SESSION['user_infor']['user_role']) && $_SESSION['user_infor']['user_role'] >= 1) {
+                                ?>
+                                    <a href="<?= BASE_URL ?>/admin"><i class="fas fa-users-cog"></i>
+
+                                        Vào trang admin
+                                    </a>
+                                <?php } ?>
                                 <a href="<?= BASE_URL ?>/auth/logout"><i class="fa fa-sign-out"></i> Đăng xuất</a>
-                                <a href="#account-info" data-toggle="tab"><i class="fa fa-user"></i> Account
-                                    Details</a>
                             </div>
                         </div>
                         <!-- My Account Tab Menu End -->
@@ -33,21 +31,9 @@
                         <div class="col-lg-9 col-md-8 col-custom">
                             <div class="tab-content" id="myaccountContent">
                                 <!-- Single Tab Content Start -->
-                                <div class="tab-pane fade show active" id="dashboad" role="tabpanel">
+                                <div class="tab-pane fade show active" id="cartdetail" role="tabpanel">
                                     <div class="myaccount-content">
-                                        <h3>Dashboard</h3>
-                                        <div class="welcome">
-                                            <p>Hello, <strong>Alex Aya</strong> (If Not <strong>Aya !</strong><a href="login-register.html" class="logout"> Logout</a>)</p>
-                                        </div>
-                                        <p class="mb-0">From your account dashboard. you can easily check & view your recent orders, manage your shipping and billing addresses and edit your password and account details.</p>
-                                    </div>
-                                </div>
-                                <!-- Single Tab Content End -->
-
-                                <!-- Single Tab Content Start -->
-                                <div class="tab-pane fade" id="orders" role="tabpanel">
-                                    <div class="myaccount-content">
-                                        <h3>Orders</h3>
+                                        <h3>Đơn hàng</h3>
                                         <div class="myaccount-table table-responsive text-center">
                                             <table class="table table-bordered">
                                                 <thead class="thead-light">
@@ -86,9 +72,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Single Tab Content End -->
 
-                                <!-- Single Tab Content Start -->
                                 <div class="tab-pane fade" id="wishlist" role="tabpanel">
                                     <div class="myaccount-content">
                                         <h3>Món ăn yêu thích</h3>
@@ -96,18 +80,82 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Single Tab Content End -->
 
-                                <!-- Single Tab Content Start -->
+
+                                <div class="tab-pane fade" id="detailaccount" role="tabpanel">
+                                    <div class="myaccount-content">
+                                        <h3>Chi tiết tài khoản</h3>
+                                        <div class="account-details-form">
+                                            <form method="POST" class="mb-4 parents-form-update">
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-custom">
+                                                        <div class="single-input-item mb-3">
+                                                            <label for="first-name" class="required mb-1">Họ tên</label>
+                                                            <input type="text" id="fullname" value="<?= $data['getmember']['fullname'] ?>" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-custom">
+                                                        <div class="single-input-item mb-3">
+                                                            <label for="last-name" class="required mb-1">Số điện thoại</label>
+                                                            <input type="number" id="mobile" value="<?= $data['getmember']['mobile'] ?>" />
+                                                            <span class="error-update-mobile"></span>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="single-input-item mb-3">
+                                                    <label for="email" class="required mb-1">Địa chỉ Email</label>
+                                                    <input type="email" id="email" value="<?= $data['getmember']['email'] ?>" />
+                                                    <span class="error-update-email"></span>
+                                                </div>
+                                                <div class="single-input-item mb-3">
+                                                    <label for="" class="required mb-1">Địa chỉ</label>
+                                                    <input type="text" id="address" value="<?= $data['getmember']['address'] ?>" />
+                                                </div>
+                                                <span class="error-update-all"></span>
+
+                                                <div class="single-input-item single-item-button mt-3">
+                                                    <div class="btn obrien-button primary-btn btn-center btn-update-account">Cập nhật</div>
+                                                </div>
+                                            </form>
+                                            <h3>Đổi mật khẩu</h3>
+
+                                            <form action="">
+                                                <div class="row">
+                                                    <div class="single-input-item mb-3">
+                                                        <label for="" class="required mb-1">Mật khẩu hiện tại</label>
+                                                        <input type="password" id="password" />
+                                                    </div>
+                                                    <div class="col-lg-6 col-custom">
+                                                        <div class="single-input-item mb-3">
+                                                            <label for="" class="required mb-1">Mật khẩu mới</label>
+                                                            <input type="password" id="newpassword" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-custom">
+                                                        <div class="single-input-item mb-3">
+                                                            <label for="" class="required mb-1">Xác nhận mật khẩu mới</label>
+                                                            <input type="password" id="re-newpassword" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <span class="noti-change-password"></span>
+                                                <div class="single-input-item single-item-button mt-2">
+                                                    <div class="btn obrien-button primary-btn btn-center btn-change-password">Đổi mật khẩu</div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+
                                 <div class="tab-pane fade" id="payment-method" role="tabpanel">
                                     <div class="myaccount-content">
                                         <h3>Payment Method</h3>
                                         <p class="saved-message">You Can't Saved Your Payment Method yet.</p>
                                     </div>
                                 </div>
-                                <!-- Single Tab Content End -->
 
-                                <!-- Single Tab Content Start -->
                                 <div class="tab-pane fade" id="address-edit" role="tabpanel">
                                     <div class="myaccount-content">
                                         <h3>Billing Address</h3>
@@ -120,44 +168,6 @@
                                         <a href="#" class="btn obrien-button-2 primary-color rounded-0"><i class="fa fa-edit mr-2"></i>Edit Address</a>
                                     </div>
                                 </div>
-                                <!-- Single Tab Content End -->
-
-                                <!-- Single Tab Content Start -->
-                                <div class="tab-pane fade" id="account-info" role="tabpanel">
-                                    <div class="myaccount-content">
-                                        <h3>Đổi mật khẩu</h3>
-                                        <div class="account-details-form">
-                                            <form enctype="" method="post" role="">
-                                                <div class="row">
-                                                    <div class="single-input-item mb-3">
-                                                        <label for="display-name" class="required mb-1">Địa chỉ Email</label>
-                                                        <input type="email" name="email" id="display-name" placeholder="Nhập email..." />
-                                                        <span class="text-danger error"><?php echo $data['data']['username_error'] ?></span>
-                                                    </div>
-                                                    <div class="single-input-item mb-3">
-                                                        <label for="password" class="required mb-1">Mật khẩu cũ</label>
-                                                        <input type="password" name="pass" placeholder="Nhập mật khẩu...">
-                                                        <span class="text-danger error"><?php echo $data['data']['pass_error'] ?></span>
-                                                    </div>
-                                                    <div class="single-input-item mb-3">
-                                                        <label for="display-name" class="required mb-1">Mật khẩu mới</label>
-                                                        <input type="password" name="newpass" placeholder="Nhập mật khẩu mới...">
-                                                        <span class="text-danger error"><?php echo $data['data']['newpass_error'] ?></span>
-                                                    </div>
-                                                    <div class="single-input-item mb-3">
-                                                        <label for="display-name" class="required mb-1">Xác nhận mật khẩu</label>
-                                                        <input type="password" name="confirm_pass" placeholder="Xác nhận mật khẩu...">
-                                                        <span class="text-danger error"><?php echo $data['data']['confirmpass_error'] ?></span>
-                                                    </div>
-
-                                            </form>
-                                            <div class="single-input-item single-item-button">
-                                                <button id="btn_changepw" class="btn obrien-button primary-btn">Đổi mật khẩu</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
                     </div>
@@ -169,6 +179,112 @@
 
 <script>
     $(document).ready(function() {
+        // VALIDATE EXIST EMAIL
+
+        $('#email').keyup(function() {
+            let email = $('#email').val();
+            var pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            var text = $('.error-update-email');
+            if (email.match(pattern)) {
+                $('#email').css('border', '1px solid #28a745');
+            } else {
+                $('#email').css('border', '1px solid red');
+            }
+            $.ajax({
+                url: "<?= BASE_URL ?>/myaccount/checkexistemail",
+                method: "POST",
+                data: {
+                    'action': 'checkexist',
+                    'email': email,
+                },
+                success: function(data) {
+                    text.html(data);
+                    text.css('color', 'red');
+                },
+            });
+        })
+
+        // UPDATE ACCOUNT
+
+        $(document).on('click', '.btn-update-account', function() {
+            let parent = $(this).parents('.parents-form-update');
+            let full_name = parent.find('#fullname').val();
+            let mobile = parent.find('#mobile').val();
+            let email = parent.find('#email').val();
+            let address = parent.find('#address').val();
+            var pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+            if (email.match(pattern)) {
+                email = email;
+            } else {
+                $('.error-update-email').html('Email không đúng định dạng');
+                $('.error-update-email').css('color', 'red');
+                return;
+            }
+            if (full_name == "" || mobile == "" || email == "" || address == "") {
+                $('.error-update-all').html('Bạn cần nhập đầy đủ thông tin');
+                $('.error-update-all').css('color', 'red');
+                return;
+            } else {
+                $('.error-update-all').html('');
+            }
+            if (mobile.length <= 9 || mobile.length > 11) {
+                $('.error-update-mobile').html('Số điện thoại không đúng');
+                $('.error-update-mobile').css('color', 'red');
+            } else {
+                $('.error-update-mobile').html('');
+            }
+
+            $.ajax({
+                url: "<?= BASE_URL ?>/myaccount/updateaccount",
+                type: "POST",
+                data: {
+                    action: 'update',
+                    email: email,
+                    mobile: mobile,
+                    address: address,
+                    full_name: full_name
+                },
+                success: function(data) {
+                    if (data == 'ok') {
+                        alert('ok');
+                    } else {
+                        $('.error-update-all').html('Cập nhật thành công');
+                        $('.error-update-all').css('color', '#28a745');
+
+                    }
+                }
+            })
+
+        })
+
+
+        // CHANGE PASSWORD
+        $(document).on('click', '.btn-change-password', function() {
+            let password = $('#password').val();
+            let newpassword = $('#newpassword').val();
+            let re_newpassword = $('#re-newpassword').val();
+            $.ajax({
+                url: "<?= BASE_URL ?>/myaccount/changepassword",
+                method: "POST",
+                data: {
+                    action: 'update',
+                    password: password,
+                    newpassword: newpassword,
+                    re_newpassword: re_newpassword,
+                },
+                success: function(data) {
+                    $('.noti-change-password').html(data);
+                    $('.noti-change-password').css('color', 'red');
+
+                },
+            });
+        })
+
+
+
+
+
         function fetch_wishlist() {
             // show product in wishlist
             $.ajax({
