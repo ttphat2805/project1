@@ -31,7 +31,56 @@ class cart extends Controller
     }
 
     public function addcart($id) {
-        echo $id;
+        $product_type_id = $_POST['option1'];
+        $quantity = $_POST['quantity'];
+        $this_product = $this->product->getProductCart($product_type_id);
+
+        $Item = [
+            'id_product_type' => $product_type_id,
+            'id_attr' => '',
+            'quantity' => $quantity
+        ];
+        if (isset($_SESSION['cart_Item'])) {
+            $index = count($_SESSION['cart_Item']);
+            $test = false;
+            for($i=0;$i<$index;$i++) {
+                if($_SESSION['cart_Item'][$i]['id_product_type'] == $Item['id_product_type']) {
+                    $_SESSION['cart_Item'][$i]['quantity'] +=1;
+                    $_SESSION['cart_Item'][$i]['total'] = $_SESSION['cart_Item'][$i]['quantity']*$_SESSION['cart_Item'][$i]['price'];
+                    $test = true;
+                }
+            }
+
+            if ($test == false) {
+                $Item_cart = $this->product->getProductCart($Item['id_product_type']);
+                $Item['price'] = $Item_cart['price'];
+                $Item['sold'] = $Item_cart['sold'];
+                $Item['name'] = $Item_cart['name'];
+                $Item['image'] = $Item_cart['image'];
+                $Item['value'] = $Item_cart['value'];
+                $Item['total'] = $Item['quantity'] * floatval($Item['price']);
+                $_SESSION['cart_Item'][$index] = $Item;
+            }
+
+        } else {
+            // use id product_type to get product info and storange in session cart_Item
+            $Item_cart = $this->product->getProductCart($Item['id_product_type']);
+            $Item['price'] = $Item_cart['price'];
+            $Item['sold'] = $Item_cart['sold'];
+            $Item['name'] = $Item_cart['name'];
+            $Item['image'] = $Item_cart['image'];
+            $Item['value'] = $Item_cart['value'];
+            $Item['total'] = $Item['quantity']*floatval($Item['price']);
+            
+            $_SESSION['cart_Item'][0] = $Item;
+        
+        }
+        $_SESSION['cart_number'] += $Item['quantity'];
+
+        header("Location: ".BASE_URL.'/cart');
+        // unset($_SESSION['cart_number']);
+        // unset($_SESSION['cart_Item']);
+
     }
 
     public function addToCart() {

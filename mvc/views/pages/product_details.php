@@ -58,12 +58,9 @@
                     </div>
 
                     <div class="col-lg-7 col-custom">
-                        <?php var_dump($data['productdetailattr'][0]); ?>
+                        <?php var_dump($data['product_type']); ?>
                         <form action="<?= BASE_URL ?>/cart/addcart/<?= $data['productdetails']['idproduct'] ?>" method="post">
-                            <input type="hidden" class="valueid" name="" value="<?= $data['productdetails']['idproduct'] ?>">
-                            
-                                <input type="hidden" id="value_idproduct" value="<?= $data['productdetails']['idproduct'] ?>">
-                                <input type="hidden" value="<?= $data['productdetails']['name'] ?>">
+
                                 <div class="product-summery position-relative">
                                     <div class="product-head mb-3">
                                         <h2 class="product-title">
@@ -95,14 +92,15 @@
 
                                     ?>
                                         <div class="product-meta">
+                                            
                                             <div class="product-size mb-4">
                                                 
                                                 <p>Size :</p>
                                                 <?php
                                                 foreach ($data['productdetailattr'] as $size) :
-                                                    echo 'a';
+                                                    
                                                 ?>
-                                                    <input id="prod-size-<?= $size['value'] ?>" type="radio" name="option1" value="<?= $size['value'] ?>">
+                                                    <input id="prod-size-<?= $size['value'] ?>" type="radio"checked data-prod="<?= $size['id']?> " name="option1" value="<?= $size['id'] ?>" placeholder="aax">
                                                     <label for="prod-size-<?= $size['value'] ?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
                                                         <span><?= $size['value'] ?></span>
                                                     </label>
@@ -117,11 +115,15 @@
                                         </button> -->
 
                                         </div>
-                                    <?php echo 'a'; endif; ?>
+                                    <?php 
+                                        else:
+                                            echo "<input type='hidden' name='option1' value='".$data['product_type'][0]['id']."'";
+                                           // $output .= "<div class='non-size' data-prod='".$attr_id['id']."'></div>";
+                                 endif; ?>
                                     <div class="quantity-with_btn mb-4">
                                         <div class="quantity">
                                             <div class="cart-plus-minus">
-                                                <input class="cart-plus-minus-box" value="0" type="text">
+                                                <input class="cart-plus-minus-box" name="quantity" value="1" type="text">
                                                 <div class="dec qtybutton">-</div>
                                                 <div class="inc qtybutton">+</div>
                                             </div>
