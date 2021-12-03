@@ -365,7 +365,7 @@ Messages
 .messages {
     flex: 1 1 auto;
     background-color: #fff;
-    overflow: hidden;
+    overflow-y: scroll;
     position: relative;
     width: 100%;
 }
@@ -529,12 +529,17 @@ Messages
 Message Box
 --------------------*/
 
+.button-close-chat i {
+    color: #E98C81;
+}
+
 .message-box {
     flex: 0 1 42px;
     width: 90%;
     background: #fff;
     margin: 2px auto;
-    padding: 10px;
+    padding: 12px;
+    overflow: hidden;
     position: relative;
     border-radius: 20px;
     height: 14px;
@@ -542,14 +547,17 @@ Message Box
 }
 
 .message-box .message-input {
+    position: absolute;
+    top: 8px;
+    left: 13px;
     background: none;
     border: none;
     outline: none !important;
     resize: none;
     font-size: 15px;
     height: 24px;
-    margin: 0;
-    padding: 0;
+    margin: -5px;
+    padding: -6px;
     padding-right: 20px;
     width: 265px;
     color: #444;
@@ -562,7 +570,7 @@ Message Box
 .message-box .message-submit {
     position: absolute;
     z-index: 1;
-    top: 9px;
+    top: 1px;
     right: 10px;
     color: #4A90E2;
     border: none;
@@ -571,6 +579,7 @@ Message Box
     text-transform: uppercase;
     line-height: 1;
     padding: 6px 10px;
+    padding-top: 10px;
     border-radius: 5px;
     outline: none !important;
     transition: background 0.2s ease;
