@@ -367,7 +367,6 @@ Messages
     background-color: #fff;
     overflow: hidden;
     position: relative;
-    overflow-y: scroll;
     width: 100%;
 }
 
@@ -535,10 +534,10 @@ Message Box
     width: 90%;
     background: #fff;
     margin: 2px auto;
-    padding: 5px 10px;
+    padding: 10px;
     position: relative;
     border-radius: 20px;
-    height: 32px;
+    height: 14px;
     border: 1px solid #ccc;
 }
 
@@ -556,14 +555,6 @@ Message Box
     color: #444;
 }
 
-.button-close-chat {
-    padding: 5px;
-}
-
-.button-close-chat i {
-    color: #E98C81;
-}
-
 .message-box textarea:focus:-webkit-placeholder {
     color: transparent;
 }
@@ -571,6 +562,7 @@ Message Box
 .message-box .message-submit {
     position: absolute;
     z-index: 1;
+    top: 9px;
     right: 10px;
     color: #4A90E2;
     border: none;
