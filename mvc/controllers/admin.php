@@ -367,7 +367,7 @@ class Admin extends Controller
                 $page = $_POST['page'];
             }
             $totalproduct = count($product);
-            $productsperpage = 4;
+            $productsperpage = 6;
             $from = ($page - 1) * $productsperpage;
             $totalPage = ceil($totalproduct / $productsperpage);
             $result = $this->product->productadminpage($productsperpage, $from);
@@ -447,7 +447,7 @@ class Admin extends Controller
                             <div class="pd_page flex-panigation">';
                 for ($i = 1; $i <= $totalPage; $i++) {
                     $output .= '<input type="radio" name="page" class="input-hidden" id="' . $i . '" value ="' . $i . '"> </input>
-                                                <label class="panigation';
+                                        <label class="panigation';
                     if ($i == $page) $output .= ' active';
                     else {
                         $output .= '';
@@ -455,8 +455,8 @@ class Admin extends Controller
                     $output .= '"for="' . $i . '">' . $i . '</label>';
                 }
                 $output .= '
-                            </div></div>
-                        ';
+                </div></div>
+                ';
             }
             echo $output;
         }

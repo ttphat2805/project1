@@ -109,7 +109,7 @@ class productmodels extends db
 
     function getproduct_home($search)
     {
-        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.name like '%$search%' and a.status = 1 group by a.id ";
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where $search and a.status = 1 group by a.id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
@@ -240,7 +240,7 @@ class productmodels extends db
 
     function productspage($from,$productsperpage,$search)
     {
-        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.name like '%$search%' and a.status = 1 group by a.id
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where $search and a.status = 1 group by a.id
         LIMIT $productsperpage OFFSET $from";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -248,7 +248,7 @@ class productmodels extends db
     }
     function productcatsearch($from,$productsperpage,$search,$id_category)
     {
-        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.categoryid,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.categoryid = $id_category and a.name like '%$search%' and a.status = 1 group by a.id
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.categoryid,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.categoryid = $id_category and $search and a.status = 1 group by a.id
         LIMIT $productsperpage OFFSET $from";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -262,7 +262,7 @@ class productmodels extends db
         return $stmt->fetchAll();
     }
     function getsearchcategory($search,$id_category){
-        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.categoryid,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.categoryid = $id_category and a.name like '%$search%' and a.status = 1 group by a.id";
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.categoryid,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.categoryid = $id_category and $search and a.status = 1 group by a.id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();

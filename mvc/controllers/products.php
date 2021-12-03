@@ -27,11 +27,15 @@ class products extends Controller
         
         $output = "";
         $url = BASE_URL;
-
+        $conditions = "";
         if(!isset($_POST['search'])){
-            $search = ' ';
+            $conditions = '';
         }else{
-            $search = $_POST['search'];
+            $search = explode(" ", $_POST['search']);
+            foreach($search as $word){
+                $conditions .= "a.name LIKE '%".$word."%' OR ";
+            }
+            $conditions = substr($conditions, 0, -4);
         }
 
         if(!isset($_POST['page'])){
@@ -41,21 +45,21 @@ class products extends Controller
         }
         if(isset($_POST['id_category'])){
             $id_category = $_POST['id_category'];
-            $products = $this->product->getsearchcategory($search,$id_category);
+            $products = $this->product->getsearchcategory($conditions,$id_category);
         }else{
-            $products = $this->product->getproduct_home($search);
+            $products = $this->product->getproduct_home($conditions);
         }
         
         $totalproduct = count($products);
-        $productsperpage = 3;
+        $productsperpage = 9;
         $prev = ($page - 1);
         $next = ($page + 1);
         $from = ($page - 1) * $productsperpage;
         $totalPage = ceil($totalproduct / $productsperpage);
         if(isset($_POST['id_category'])){
-            $result = $this->product->productcatsearch($from,$productsperpage,$search,$id_category);
+            $result = $this->product->productcatsearch($from,$productsperpage,$conditions,$id_category);
         }else{
-            $result = $this->product->productspage($from,$productsperpage,$search);
+            $result = $this->product->productspage($from,$productsperpage,$conditions);
         }
         if(count($result) > 0){
             foreach ($result as $item) {
@@ -142,7 +146,7 @@ class products extends Controller
                 <div class="pd_page flex-panigation">';
                     if($prev != 0){
                         $output .= '
-                            <input type="radio" name="page"class="input-hidden" id="'.$prev.'" value="'.$prev.'"> </input>
+                            <input type="radio" name="page" class="input-hidden" id="'.$prev.'" value="'.$prev.'"> </input>
                             
                             <label class="panigation" for="'.$prev.'">
                         <i class="ion-ios-arrow-thin-left arrow-css"></i>

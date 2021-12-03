@@ -57,33 +57,6 @@
 
                                     <div class="product-title" style="padding-top:10px">
                                         <h4 class="title-2"> <a href="<?php echo BASE_URL ?>/productdetail/show/<?= $item['slug'] ?>"><?= $item['name'] ?></a>
-<<<<<<< HEAD
-                                    
-                                    </h4>
-                                    <?php 
-                                    $product_attr = $homepage->getproduct_detail_attr($item['idproduct']);
-                                    $attr_id = $homepage->getproduct_type_id($item['idproduct']);
-                                    print_r($attr_id);   
-                                    if ($attr_id[0]['attribute_id'] != '') {
-                                    ?>
-                                        <div class="product-size">
-                                            <p>Size :</p>
-                                            <?php
-                                            foreach ($product_attr as $size) :
-                                            ?>
-                                                <input id="prod-size-<?= $size['value'] ?>-<?= $item['idproduct'] ?>" type="radio" checked name="option1" data-prod="<?= $size['id'] ?>" value="<?= $size['attribute_id'] ?> ">
-                                                <label for="prod-size-<?= $size['value'] ?>-<?= $item['idproduct'] ?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
-                                                    <span><?= $size['value'] ?></span>
-                                                </label>
-                                            <?php
-                                            endforeach;
-                                            ?>
-                                        </div>
-                                    <?php
-                                    } else {
-                                        echo "<div class='non-size' data-prod='".$attr_id[0]['id']."'></div>";
-                                    } ?>
-=======
 
                                         </h4>
                                         <?php
@@ -106,7 +79,6 @@
                                             </div>
                                         <?php
                                         } ?>
->>>>>>> main
                                     </div>
                                     <div class="price-box">
                                         <span class="regular-price"><span class="price-view"><?= number_format($item['price']) ?> </span> VNĐ</span>
@@ -115,11 +87,7 @@
                                 </div>
 
                                 <div class="add-action d-flex position-absolute">
-<<<<<<< HEAD
-                                    <a title="Add To cart" class="add_to_cart">
-=======
                                     <a href="" title="Add To cart">
->>>>>>> main
                                         <i class="ion-bag"></i>
                                     </a>
                                     <a class="addtowishlist" title="Add To Wishlist">
@@ -192,14 +160,12 @@
                             <h3 class="widget-title">Danh mục</h3>
                             <!-- Widget Menu Start -->
                             <nav>
-                                <ul class="mobile-menu p-0 m-0 parent-category">
+                                <ul class="mobile-menu p-0 m-0 parent-category click-cate">
                                     <?php
                                     foreach ($data['category'] as $category) {
                                     ?>
-                                        <li class="menu-item-has-children single-category"><a href="" class="btn-category"><?= $category['name'] ?>
-                                            </a>
-                                            <input type="hidden" class="get-id-category" value="<?= $category['id'] ?>">
-                                        </li>
+                                            <label class="btn-category" for="<?= $category['id'] ?>"><?= $category['name'] ?></label>
+                                            <input type="radio" name="category" id="<?= $category['id'] ?>" class="get-id-category input-hidden" value="<?= $category['id'] ?>">
                                     <?php } ?>
                                 </ul>
                             </nav>
@@ -281,15 +247,12 @@
     </div>
 </div>
 <!-- Shop Main Area End Here -->
-<<<<<<< HEAD
-=======
 <script>
     $(document).ready(function() {
         function fetchproducts() {
             let page = $('input[name="page"]:checked').val();
             var search = $('.search-products').val();
-            let parent = $(this).parents('.single-category');
-            let id_category = parent.find('.get-id-category').val();
+            var id_category = $('.get-id-category:checked').val();
             $.ajax({
                 url: "<?= BASE_URL ?>/products/fetchproducts",
                 method: "POST",
@@ -316,8 +279,8 @@
         // SEARCH PRODUCTS
         $('.search-products').keyup(function() {
             var search = $('.search-products').val();
-            let parent = $(this).parents('.single-category');
-            let id_category = parent.find('.get-id-category').val();
+            var id_category = $('.get-id-category:checked').val();
+            alert(page);
             $.ajax({
                 url: "<?= BASE_URL ?>/products/fetchproducts",
                 method: "POST",
@@ -333,13 +296,9 @@
         })
 
         // FILLTER CATEGORY
-
-        $('.btn-category').click(function(e) {
-            e.preventDefault();
+        $('.click-cate').click(function() {   
             var search = $('.search-products').val();
-
-            let parent = $(this).parents('.single-category');
-            let id_category = parent.find('.get-id-category').val();
+            var id_category = $('.get-id-category:checked').val();
             $.ajax({
                 url: "<?= BASE_URL ?>/products/fetchproducts",
                 method: "POST",
@@ -347,7 +306,6 @@
                     'action': 'filletcategory',
                     'id_category': id_category,
                     'search': search,
-
                 },
                 success: function(data) {
                     $(".row.shop_wrapper").html(data);
@@ -383,4 +341,3 @@
         })
     })
 </script>
->>>>>>> main

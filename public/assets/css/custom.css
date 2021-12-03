@@ -253,8 +253,6 @@ a.ahrefactive.active {
     margin: 10px;
 }
 
-.member-text p {}
-
 .member-text p {
     display: inline-block;
     border-radius: 10px;
@@ -948,6 +946,37 @@ screen and (max-width: 450px) {
 
 /* CSS  PANIGATION*/
 
+.status-order {
+    text-align: center;
+    padding: 10px 7px;
+    border-radius: 5px;
+    border: 1px solid transparent;
+}
+
+.status-order.no_progress {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.status-order.progressed {
+    color: #212529;
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+.status-order.progresss {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.status-order.processing {
+    color: #fff;
+    background-color: blue;
+    border-color: blue;
+}
+
 .product-content {
     height: 120px;
     position: relative;
@@ -1126,4 +1155,44 @@ screen and (max-width: 450px) {
     position: relative;
     left: 50%;
     transform: translateX(-50%)
+}
+
+.modal-header {
+    padding: 0;
+}
+
+.modal-custom {
+    position: fixed;
+    top: -100%;
+    transform: translateX(-50%);
+}
+
+.modal-custom.active {
+    transition: .1s;
+    top: 15%;
+    left: 18%;
+    transform: translateY(-10%);
+}
+
+.product-image-1 {
+    height: 320px;
+}
+
+.fix-height {
+    height: 160px;
+}
+
+.fix-height-1 {
+    height: 500px;
+}
+
+.btn-category {
+    display: block;
+    font-size: 16px;
+    color: #252525;
+    text-transform: capitalize;
+    line-height: 18px;
+    padding: 10px 0;
+    font-weight: 600;
+    cursor: pointer;
 }

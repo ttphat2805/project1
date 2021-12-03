@@ -57,3 +57,40 @@
         </div>
     </form>
 </div>
+
+
+
+<section class="avenue-messenger">
+    <div class="menu">
+        <div class="items">
+            <span>
+                <a href="#" title="Minimize">&mdash;</a><br>
+                <a href="#" title="End Chat">&#10005;</a>
+            </span>
+        </div>
+        <div class="button button-close-chat"> <i class="fal fa-times"></i> </div>
+    </div>
+    <div class="agent-face">
+        <div class="half">
+            <img class="agent circle" src="<?= BASE_URL ?>/public/assets/images/logo/logo.png" alt="Jesse Tino">
+        </div>
+    </div>
+    <div class="chat">
+        <div class="chat-title">
+            <b>
+                <h1>Admin</h1>
+            </b>
+            <b>
+                <h2>G6'Food</h2>
+            </b>
+        </div>
+        <div class="messages">
+            <!-- data here -->
+        </div>
+        <div class="message-box">
+            <textarea type="text" id="content" class="message-input" placeholder="Type message..."></textarea>
+            <button type="submit" id="insert_chat" class="message-submit">Gửi</button>
+        </div>
+    </div>
+    </div>
+</section>

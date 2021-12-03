@@ -234,7 +234,10 @@
             sendMsg(msg);
         }
     });
-    selectMsg();
+
+    setInterval(function(){
+        selectMsg();
+    }, 1000);
 });
 $('.button-close-chat').click(function() {
     $('.avenue-messenger').removeClass('active');
