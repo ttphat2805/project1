@@ -133,15 +133,14 @@ class Auth extends Controller
 
     public function login()
     {
-        $_SESSION['namesite'] = "Đăng nhập";
-        // $google_client = $this->createClientGoogleObject();
-        // $google_login_url = $google_client->createAuthUrl();
+        $google_client = $this->createClientGoogleObject();
+        $google_login_url = $google_client->createAuthUrl();
         $data = [
             "username" => '',
             "pass" => '',
             "username_error" => '',
             "pass_error" => '',
-            // 'google_login_url' => $google_login_url
+            'google_login_url' => $google_login_url
         ];
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {

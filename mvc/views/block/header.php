@@ -75,9 +75,15 @@
                                         }
                                 ?>
                                 <li class="minicart-wrap">
+<<<<<<< HEAD
                                     <a href="" class="minicart-btn toolbar-btn">
                                     <i class="far fa-shopping-cart"></i>
                                         <span class="cart-item_count">3</span>
+=======
+                                    <a href="#" class="minicart-btn toolbar-btn">
+                                        <i class="ion-bag"></i>
+                                        <span class="cart-item_count"><?php echo $_SESSION['cart_number'] ??'0' ?></span>
+>>>>>>> nghi
                                     </a>
                                     <div class="cart-item-wrapper dropdown-sidemenu dropdown-hover-2">
                                         <div class="single-cart-item">
@@ -266,6 +272,7 @@
                                                 </ul>
                                             </div>
                                     </li>
+<<<<<<< HEAD
                                 <?php
                                         }
                                 ?>
@@ -278,6 +285,31 @@
                                         <div class="single-cart-item">
                                             <div class="cart-img">
                                                 <a href="cart.html"><img src="<?php echo BASE_URL; ?>/public/assets/images/cart/1.jpg" alt=""></a>
+=======
+                                    <?php
+                                    }
+                                    ?>
+                                    <li class="minicart-wrap">
+                                        <a href="#" class="minicart-btn toolbar-btn">
+                                            <i class="ion-bag"></i>
+                                            <span class="cart-item_count"><?php echo $_SESSION['cart_number'] ?? 0 ?></span>
+                                        </a>
+                                        <div class="cart-item-wrapper dropdown-sidemenu dropdown-hover-2">
+                                            <div class="single-cart-item">
+                                                <div class="cart-img">
+                                                    <a href="cart.html"><img src="<?php echo BASE_URL; ?>/public/assets/images/cart/1.jpg" alt=""></a>
+                                                </div>
+                                                <div class="cart-text">
+                                                    <h5 class="title"><a href="cart.html">11. Product with video - navy</a></h5>
+                                                    <div class="cart-text-btn">
+                                                        <div class="cart-qty">
+                                                            <span>1×</span>
+                                                            <span class="cart-price">$98.00</span>
+                                                        </div>
+                                                        <button type="button"><i class="ion-trash-b"></i></button>
+                                                    </div>
+                                                </div>
+>>>>>>> nghi
                                             </div>
                                             <div class="cart-text">
                                                 <h5 class="title"><a href="cart.html">11. Product with video - navy</a></h5>

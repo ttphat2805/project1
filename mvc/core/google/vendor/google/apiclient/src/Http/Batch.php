@@ -174,7 +174,7 @@ EOF;
           $response = new Response(
               $status,
               $partHeaders,
-              Psr7\Utils::streamFor($partBody)
+              Psr7\stream_for($partBody)
           );
 
           // Need content id.
