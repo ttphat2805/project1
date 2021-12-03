@@ -19,6 +19,7 @@ class myaccount extends Controller
     }
     function Show()
     {
+        $_SESSION['namesite'] = "Tài khoản";
         $id = $_SESSION['user_infor']['user_id'];
         $this->view(
             "master2",
