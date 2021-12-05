@@ -35,7 +35,7 @@
                         $query = "SELECT * FROM product_type where product_id = $id";
                         $stmt = $this->conn->prepare($query);
                         $stmt->execute();
-                        return $stmt->fetch();
+                        return $stmt->fetchAll();
                     }
                 }
                 $homepage = new homepage();
@@ -160,14 +160,12 @@
                             <h3 class="widget-title">Danh mục</h3>
                             <!-- Widget Menu Start -->
                             <nav>
-                                <ul class="mobile-menu p-0 m-0 parent-category">
+                                <ul class="mobile-menu p-0 m-0 parent-category click-cate">
                                     <?php
                                     foreach ($data['category'] as $category) {
                                     ?>
-                                        <li class="menu-item-has-children single-category"><a href="" class="btn-category"><?= $category['name'] ?>
-                                            </a>
-                                            <input type="hidden" class="get-id-category" value="<?= $category['id'] ?>">
-                                        </li>
+                                            <label class="btn-category" for="<?= $category['id'] ?>"><?= $category['name'] ?></label>
+                                            <input type="radio" name="category" id="<?= $category['id'] ?>" class="get-id-category input-hidden" value="<?= $category['id'] ?>">
                                     <?php } ?>
                                 </ul>
                             </nav>
@@ -254,8 +252,7 @@
         function fetchproducts() {
             let page = $('input[name="page"]:checked').val();
             var search = $('.search-products').val();
-            let parent = $(this).parents('.single-category');
-            let id_category = parent.find('.get-id-category').val();
+            var id_category = $('.get-id-category:checked').val();
             $.ajax({
                 url: "<?= BASE_URL ?>/products/fetchproducts",
                 method: "POST",
@@ -282,8 +279,8 @@
         // SEARCH PRODUCTS
         $('.search-products').keyup(function() {
             var search = $('.search-products').val();
-            let parent = $(this).parents('.single-category');
-            let id_category = parent.find('.get-id-category').val();
+            var id_category = $('.get-id-category:checked').val();
+            alert(page);
             $.ajax({
                 url: "<?= BASE_URL ?>/products/fetchproducts",
                 method: "POST",
@@ -299,13 +296,9 @@
         })
 
         // FILLTER CATEGORY
-
-        $('.btn-category').click(function(e) {
-            e.preventDefault();
+        $('.click-cate').click(function() {   
             var search = $('.search-products').val();
-
-            let parent = $(this).parents('.single-category');
-            let id_category = parent.find('.get-id-category').val();
+            var id_category = $('.get-id-category:checked').val();
             $.ajax({
                 url: "<?= BASE_URL ?>/products/fetchproducts",
                 method: "POST",
@@ -313,7 +306,6 @@
                     'action': 'filletcategory',
                     'id_category': id_category,
                     'search': search,
-
                 },
                 success: function(data) {
                     $(".row.shop_wrapper").html(data);

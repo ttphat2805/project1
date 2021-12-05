@@ -39,7 +39,7 @@
                     <a href="#" title="End Chat">&#10005;</a>
                 </span>
             </div>
-            <div class="button">...</div>
+            <div class="button button-close-chat"> <i class="fal fa-times"></i> </div>
         </div>
         <div class="agent-face">
             <div class="half">
@@ -55,7 +55,7 @@
                 </div>
                 <div class="message-box">
                     <textarea type="text" id="content" class="message-input" placeholder="Type message..."></textarea>
-                    <button type="submit" id="insert_chat" class="message-submit">Send</button>
+                    <button type="submit" id="insert_chat" class="message-submit">Gửi</button>
                 </div>
             </div>
         </div>
@@ -219,6 +219,8 @@
             type: 'POST',
             success:function(data){
                 $('.messages').html(data);
+                $('.messages').animate({scrollTop: $('.messages').scrollHeight});
+
             }
         })
     }
@@ -226,12 +228,18 @@
         e.preventDefault();
         msg = $('#content').val();
         if (msg == "") {
-            alert('chưa nhập tin nhắn');
+            alert('Chưa nhập tin nhắn');
             return;
         } else {
             sendMsg(msg);
         }
     });
-    selectMsg();
+
+    setInterval(function(){
+        selectMsg();
+    }, 1000);
 });
+$('.button-close-chat').click(function() {
+    $('.avenue-messenger').removeClass('active');
+})
 </script>

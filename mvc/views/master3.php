@@ -94,7 +94,7 @@
                     </div>
                 </li>
                 <li class="nav-item nav-category">
-                    <span class="nav-link">Navigation</span>
+                    <span class="nav-link"></span>
                 </li>
                 <li class="nav-item menu-items">
                     <a class="nav-link" href="<?php echo BASE_URL; ?>/admin/show">
@@ -176,6 +176,14 @@
                             <i class="mdi mdi-comment-check-outline"></i>
                         </span>
                         <span class="menu-title">Bài viết</span>
+                    </a>
+                </li>
+                <li class="nav-item menu-items">
+                    <a class="nav-link" href="<?php echo BASE_URL; ?>/admin/showchat">
+                        <span class="menu-icon">
+                            <i class="mdi mdi-comment-check-outline"></i>
+                        </span>
+                        <span class="menu-title">Chat</span>
                     </a>
                 </li>
                 <li class="nav-item menu-items">

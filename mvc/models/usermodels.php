@@ -8,8 +8,15 @@ class usermodels extends db {
         $query = $this->conn->prepare($sql);
         $query->bindValue(":email", $email, PDO::PARAM_STR);
         $query->execute();
-        // $query->fetchAll(PDO::FETCH_ASSOC);
-        return $query;;
+        $query->fetchAll(PDO::FETCH_ASSOC);
+        return $query->fetchAll();
+    }
+    public function findUserByEmaillogin($email) {
+        $sql = "SELECT * FROM `user_account` WHERE username like :email";
+        $query = $this->conn->prepare($sql);
+        $query->bindValue(":email", $email, PDO::PARAM_STR);
+        $query->execute();
+        return $query;
     }
     public function blockaccount($id) {
         $query = "SELECT * from user_account inner join member on user_account.memberid = member.id where member.id = $id and member.status = 0";
@@ -78,7 +85,7 @@ class usermodels extends db {
     public function findFacebookAccount($id) {
         $sql = "select * from `facebook_account` where `facebook_id` like :id";
         $query = $this->conn->prepare($sql);
-        $query->bindValue(":id",$id,PDO::PARAM_INT);
+        $query->bindValue(":id",$id,PDO::PARAM_STR);
         $query->execute();
 
         return $query->rowCount();
@@ -118,9 +125,10 @@ class usermodels extends db {
     }
 
     public function getInforSocailAcccount($id, $table) {
+
         $table_name = $table.'_account';
         $table_id = $table.'_id';
-        $sql = "select B.id, B.fullname, B.mobile, B.email from `$table_name` A inner join `member` B on A.memberid = B.id where A.$table_id = $id ";
+        $sql = "select B.id, B.fullname, B.mobile, B.email from `$table_name` A inner join `member` B on A.memberid = B.id where A.$table_id like $id ";
         $query = $this->conn->prepare($sql);
         $query->execute();
 

@@ -146,7 +146,7 @@ class Auth extends Controller
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // check user name
             $username = $_POST['email'];
-            $check = $this->User->findUserByEmail($username);
+            $check = $this->User->findUserByEmaillogin($username);
             if ($_POST['email'] != null) {
                 if ($check->rowCount() == 0) {
                     $data['username_error'] = "Tài khoản không tồn tại";
@@ -157,7 +157,6 @@ class Auth extends Controller
                     if($blockaccount > 0){
                         $data['username_error'] = "Tài khoản này đã bị khóa";
                     return $this->view('master2', ['pages' => 'signin', 'data' => $data]);
-
                     }
                 }
                 
@@ -180,9 +179,18 @@ class Auth extends Controller
                     $_SESSION['user_infor']['user_phone'] = $user_infor[0]['mobile'];
                     $_SESSION['user_infor']['user_email'] = $user_infor[0]['email'];
                     $_SESSION['user_infor']['user_role'] = $user_infor[0]['role'];
-
-                    header("Location: " . BASE_URL);
-                    
+                    if(isset($_SESSION['checkloginadmin'])){
+                        if($_SESSION['user_infor']['user_role'] >= 1){
+                            header("Location: " . BASE_URL."/admin");
+                            unset($_SESSION['checkloginadmin']);
+                            return;
+                        }else{
+                            $data['username_error'] = 'Tài khoản này không phải là admin';
+                        }
+                       
+                    }else{
+                        header("Location: " . BASE_URL);
+                    }
                 } else {
                     $data['pass_error'] = "Sai mật khẩu";
                 }
@@ -201,6 +209,7 @@ class Auth extends Controller
     public function logout()
     {
        unset($_SESSION['user_infor']);
+       unset($_SESSION['checkloginadmin']);
        $_SESSION['toastr-code'] = "success";
        $_SESSION['toastr-noti'] = "Đã đăng xuất";
        header('Location: ' . BASE_URL);
@@ -233,6 +242,7 @@ class Auth extends Controller
             $data['last_name'] = $last_name;
             $data['email'] = $email;
             $data['password'] = $pass;
+            $check = $this->User->findUserByEmaillogin($email);
 
             if ($first_name == '') {
                 $data['first_name_error'] = "Vui lòng nhập họ..";
@@ -246,7 +256,7 @@ class Auth extends Controller
                 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     $data['email_error'] = 'Email không đúng định dạng';
                 } else {
-                    if ($this->User->findUserByEmail($email) >= 1) {
+                    if ($check->rowCount() > 0) {
                         $data['email_error'] = 'Tên đăng nhập đã tồn tại';
                     }
                 }
