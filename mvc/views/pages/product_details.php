@@ -60,7 +60,7 @@
                     <div class="col-lg-7 col-custom">
                         <?php //var_dump($data['product_type']); ?>
                         <form action="<?= BASE_URL ?>/cart/addcart/<?= $data['productdetails']['idproduct'] ?>" method="post">
-
+                        <input type="hidden" class="valueid" value="<?= $data['productdetails']['idproduct'] ?>">
                                 <div class="product-summery position-relative">
                                     <div class="product-head mb-3">
                                         <h2 class="product-title">
