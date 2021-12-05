@@ -100,16 +100,10 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Peter</td>
-                                <td>53275534</td>
-                                <td>16 May 2017</td>
-                                <td><label class="badge badge-success">Completed</label></td>
-                            </tr>
-                            <tr>
-                                <td>Dave</td>
-                                <td>53275535</td>
-                                <td>20 May 2017</td>
-                                <td><label class="badge badge-warning">In progress</label></td>
+                                <td>#</td>
+                                <td>Tên</td>
+                                <td>Hình</td>
+                                <td>Giá</td>
                             </tr>
                         </tbody>
                     </table>

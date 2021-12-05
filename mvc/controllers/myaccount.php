@@ -19,16 +19,58 @@ class myaccount extends Controller
     }
     function Show()
     {
+        $_SESSION['namesite'] = "Tài khoản";
         $id = $_SESSION['user_infor']['user_id'];
         $this->view(
             "master2",
             [
                 "pages" => "myaccount",
                 "getmember" => $this->account->getmember($id),
+                "order" => $this->account->accountshop($id),
+
             ]
         );
     }
 
+
+    function orderaccount()
+    {
+        $url = BASE_URL;
+        $output = "";
+        $idorder = $_POST['idorder'];
+        $order = $this->account->order_product($idorder);
+        $count = 1;
+        $output .= '
+        <h3 class="text-center mb-3">Chi tiết</h3>
+        <div class="myaccount-table table-responsive text-center">
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th>#</th>
+                    <th>Tên</th>
+                    <th>Ảnh</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                </tr>
+            </thead>
+            <tbody>
+        ';
+        foreach ($order as $item) :
+            $output .= '
+            <tr>
+                <td>' . $count++ . '</td>
+                <td>' . $item['name'] . '</td>
+                <td width="20%"> <img src="' . $url . '/public/assets/images/product/' . $item['image'] . '" alt="Order product"> </td>
+                <td>' .number_format($item['price'])  . '</td>
+                <td>' . $item['quantity'] . '</td>
+            </tr>
+            ';
+        endforeach;
+        $output .= '</tbody>
+        </table>
+        </div>';
+        echo $output;
+    }
 
     function insertwishlist()
     {
@@ -114,13 +156,23 @@ class myaccount extends Controller
             }
             $address = filter_var($_POST['address']);
             $mobile = filter_var($_POST['mobile']);
+            if (strlen($mobile) > 10 || strlen($mobile) < 10) {
+                $output = ['type' => 'fail'];
+                $output = json_encode($output);
+                echo $output;
+                return;
+            }
             $check = $this->account->checkexistemailaccount($email, $id);
             if ($check->rowCount() > 0) {
-                echo 'lỗi';
+                $output = ['type' => 'fail'];
+                $output = json_encode($output);
+                echo $output;
                 return;
             } else {
                 $this->account->updatemyaccount($fullname, $mobile, $address, $email, $id);
-                echo 'ok';
+                $output = ['type' => 'success'];
+                $output = json_encode($output);
+                echo $output;
                 return;
             }
         }
@@ -152,11 +204,10 @@ class myaccount extends Controller
                 $user = $this->user->checkpassworduser($id);
                 if (password_verify($password, $user['password']) == false) {
                     echo 'Mật khẩu không chính xác';
-                } else{
-                    if(strlen($newpassword) < 6){
+                } else {
+                    if (strlen($newpassword) < 6) {
                         echo 'Mật khẩu phải lớn hơn 6 kí tự';
-                    }
-                    else if ($newpassword === $re_newpassword) {
+                    } else if ($newpassword === $re_newpassword) {
                         $this->user->changePassword($id, $newpassword);
                         echo 'Thành công';
                     } else {

@@ -38,35 +38,42 @@
                                             <table class="table table-bordered">
                                                 <thead class="thead-light">
                                                     <tr>
-                                                        <th>Order</th>
-                                                        <th>Date</th>
-                                                        <th>Status</th>
-                                                        <th>Total</th>
+                                                        <th>Đơn hàng</th>
+                                                        <th>Ngày đặt hàng</th>
+                                                        <th>Trạng thái</th>
+                                                        <th>Tổng tiền</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>Aug 22, 2018</td>
-                                                        <td>Pending</td>
-                                                        <td>$3000</td>
-                                                        <td><a href="cart.html" class="btn obrien-button-2 primary-color rounded-0">View</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>July 22, 2018</td>
-                                                        <td>Approved</td>
-                                                        <td>$200</td>
-                                                        <td><a href="cart.html" class="btn obrien-button-2 primary-color rounded-0">View</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>3</td>
-                                                        <td>June 12, 2019</td>
-                                                        <td>On Hold</td>
-                                                        <td>$990</td>
-                                                        <td><a href="cart.html" class="btn obrien-button-2 primary-color rounded-0">View</a></td>
-                                                    </tr>
+                                                    <?php foreach ($data['order'] as $order) : ?>
+                                                        <tr>
+                                                            <td>G6-0<?= $order['id'] ?></td>
+                                                            <td>
+                                                                <?= $order['orderDate'] ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php
+                                                                switch ($order['status']) {
+                                                                    case '1':
+                                                                        echo '<span class="status-order no_progress">Chưa xử lý</span>';
+                                                                        break;
+                                                                    case '2':
+                                                                        echo '<span class="status-order processing">Đang xử lý</span>';
+                                                                        break;
+                                                                    case '3':
+                                                                        echo '<span class="status-order progresss">Đang giao hàng</span>';
+                                                                        break;
+                                                                    case '4':
+                                                                        echo '<span class="status-order progressed">Đã giao hàng</span>';
+                                                                        break;
+                                                                }
+                                                                ?>
+                                                            </td>
+                                                            <td><?= number_format($order['total']) ?> VNĐ</td>
+                                                            <td><span class="btn obrien-button-2 primary-color rounded-2 info-order-product">Chi tiết</span></td>
+                                                        </tr>
+                                                    <?php endforeach; ?>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -176,6 +183,28 @@
         </div>
     </div>
 </div>
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal-custom" id="info-order-product">
+    <div style="max-width: 1000px !important" role="document">
+        <div class="modal-content">
+            <div class="modal-header pd-0">
+                <button type="button" class="close close-modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" action="">
+                <div class="modal-body render-db">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="obrien-button black-btn close-modal">Đóng</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 <script>
     $(document).ready(function() {
@@ -198,8 +227,13 @@
                     'email': email,
                 },
                 success: function(data) {
-                    text.html(data);
-                    text.css('color', 'red');
+                    if(data == 'hi'){
+
+                    }else{
+                        text.html(data);
+                        text.css('color', 'red');
+                    }
+                 
                 },
             });
         })
@@ -218,6 +252,7 @@
                 email = email;
             } else {
                 $('.error-update-email').html('Email không đúng định dạng');
+                $('.error-update-all').html('');
                 $('.error-update-email').css('color', 'red');
                 return;
             }
@@ -228,7 +263,7 @@
             } else {
                 $('.error-update-all').html('');
             }
-            if (mobile.length <= 9 || mobile.length > 11) {
+            if (mobile.length < 10 || mobile.length > 10) {
                 $('.error-update-mobile').html('Số điện thoại không đúng');
                 $('.error-update-mobile').css('color', 'red');
             } else {
@@ -246,12 +281,13 @@
                     full_name: full_name
                 },
                 success: function(data) {
-                    if (data == 'ok') {
-                        alert('ok');
+                    var check = JSON.parse(data);
+                    if (check.type == 'fail') {
+                        $('.error-update-all').html('Cập nhật thất bại');
+                        $('.error-update-all').css('color', 'red');
                     } else {
                         $('.error-update-all').html('Cập nhật thành công');
                         $('.error-update-all').css('color', '#28a745');
-
                     }
                 }
             })
@@ -281,9 +317,28 @@
             });
         })
 
-
-
-
+        // MODAL ORDER
+        $('.close-modal').click(function() {
+            $('.modal-custom').removeClass('active');
+        })
+        $('.info-order-product').click(function() {
+            $tr = $(this).closest('tr');
+            let data = $tr.children("td").map(function() {
+                return $(this).text();
+            }).get();
+            let idorder = data[0].slice(4)
+            $.ajax({
+                url: '<?= BASE_URL ?>/myaccount/orderaccount',
+                type: 'POST',
+                data: {
+                    idorder: idorder
+                },
+                success: function(data) {
+                    $(".render-db").html(data);
+                    $('.modal-custom').addClass("active");
+                }
+            })
+        })
 
         function fetch_wishlist() {
             // show product in wishlist
