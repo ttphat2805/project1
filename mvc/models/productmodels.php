@@ -231,7 +231,7 @@ class productmodels extends db
     }
 
     public function getProductCart($id) {
-        $sql = 'SELECT a.id, a.price,a.sold,b.name,b.image,c.value FROM `product_type` a INNER JOIN `products` b on a.product_id = b.id LEFT JOIN `attribute` c on a.attribute_id = c.id WHERE a.id = '.$id;
+        $sql = 'SELECT a.id, a.price,a.sold,b.name,b.image,c.value, a.quantity FROM `product_type` a INNER JOIN `products` b on a.product_id = b.id LEFT JOIN `attribute` c on a.attribute_id = c.id WHERE a.id = '.$id;
         $query = $this->conn->prepare($sql);
         $query->execute();
 

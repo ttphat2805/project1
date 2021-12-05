@@ -58,7 +58,7 @@
                     </div>
 
                     <div class="col-lg-7 col-custom">
-                        <?php var_dump($data['product_type']); ?>
+                        <?php //var_dump($data['product_type']); ?>
                         <form action="<?= BASE_URL ?>/cart/addcart/<?= $data['productdetails']['idproduct'] ?>" method="post">
 
                                 <div class="product-summery position-relative">
@@ -118,7 +118,7 @@
                                     <div class="quantity-with_btn mb-4">
                                         <div class="quantity">
                                             <div class="cart-plus-minus">
-                                                <input class="cart-plus-minus-box" name="quantity" value="1" type="text">
+                                                <input class="cart-plus-minus-box" name="quantity" value="1" type="text" data-max="<?= $data['productdetails']['quantity'] ?>">
                                                 <div class="dec qtybutton">-</div>
                                                 <div class="inc qtybutton">+</div>
                                             </div>

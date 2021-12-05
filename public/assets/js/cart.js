@@ -115,4 +115,11 @@ $(document).ready(() => {
             })
         }
     })
+    $(document).on('change','.cart-plus-minus-box', function () {
+        let value = $(this).val();
+        let max_value = $(this).attr('data-max');
+        if(value > max_value) {
+            $(this).val(max_value);
+        }
+    })
 })
