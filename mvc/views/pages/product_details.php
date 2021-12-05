@@ -61,6 +61,9 @@
                         <?php //var_dump($data['product_type']); ?>
                         <form action="<?= BASE_URL ?>/cart/addcart/<?= $data['productdetails']['idproduct'] ?>" method="post">
                         <input type="hidden" class="valueid" value="<?= $data['productdetails']['idproduct'] ?>">
+                        <form action="<?= BASE_URL ?>/cart/addcart/<?= $data['productdetails']['idproduct'] ?>" method="post" class="parent_productid">
+                                <input type="hidden" id="value_idproduct" value="<?= $data['productdetails']['idproduct'] ?>">
+                                <input type="hidden" value="<?= $data['productdetails']['name'] ?>">
                                 <div class="product-summery position-relative">
                                     <div class="product-head mb-3">
                                         <h2 class="product-title">

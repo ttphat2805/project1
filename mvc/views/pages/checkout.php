@@ -8,7 +8,7 @@
         height: 40px;
     }
 </style>
-<?php var_dump($_SESSION['user_infor']) ?>
+<?php var_dump($_SESSION['cart_Item']) ?>
         <!-- Checkout Area Start Here -->
         <div class="checkout-area">
             <div class="container container-default-2 custom-container">
@@ -19,19 +19,18 @@
                             <h3>Bạn đã có mã giảm giá? <span id="showcoupon">Nhấn vào đây để nhập code</span></h3>
                             <div id="checkout_coupon" class="coupon-checkout-content">
                                 <div class="coupon-info">
-                                    <form action="#">
+                                    
                                         <p class="checkout-coupon">
-                                            <input placeholder="Coupon code" type="text">
+                                            <input placeholder="Coupon code" type="text" name='cou'>
                                             <input class="coupon-inner_btn" value="Apply Coupon" type="submit">
                                         </p>
-                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-12 col-12">
+                    <div class="col-lg-6 col-12">
                         <form action="<?= BASE_URL ?>/order/create" method="post">
                             <div class="checkbox-form">
                                 <h3>Chi Tiết Hóa Đơn</h3>
@@ -128,9 +127,93 @@
                             </div>
                         </form>
                     </div>
-                    <!-- <div class="col-lg-6 col-12">
-                        
-                    </div> -->
+                    <div class="col-lg-6 col-12">
+                        <div class="your-order">
+                            <h3>Your order</h3>
+                            <div class="your-order-table table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="cart-product-name">Product</th>
+                                            <th class="cart-product-total">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                        <?php foreach ($_SESSION['cart_Item'] as $item) { $total =0; $total += $item['total'];  ?>
+                                            <tr class="cart_item">
+                                            <td class="cart-product-name"> <?= $item['name'] ?><strong class="product-quantity">
+                                                × <?= $item['quantity'] ?></strong></td>
+                                            <td class="cart-product-total text-center"><span class="amount"><?= number_format($item['total']) ?></span></td>
+                                        </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="cart-subtotal">
+                                            <th>Cart Subtotal</th>
+                                            <td class="text-center"><span class="amount">£215.00</span></td>
+                                        </tr>
+                                        <tr class="order-total">
+                                            <th>Order Total</th>
+                                            <td class="text-center"><strong><span class="amount"><?= number_format($total) ?> VNĐ</span></strong></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="payment-method">
+                                <div class="payment-accordion">
+                                    <!-- <div id="accordion">
+                                        <div class="card">
+                                            <div class="card-header" id="#payment-1">
+                                                <h5 class="panel-title mb-2">
+                                                    <a href="#" class="" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                        Direct Bank Transfer.
+                                                    </a>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                                <div class="card-body mb-2 mt-2">
+                                                    <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="#payment-2">
+                                                <h5 class="panel-title mb-2">
+                                                    <a href="#" class="collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                        Cheque Payment
+                                                    </a>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                                <div class="card-body mb-2 mt-2">
+                                                    <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="#payment-3">
+                                                <h5 class="panel-title mb-2">
+                                                    <a href="#" class="collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                        PayPal
+                                                    </a>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseThree" class="collapse" data-parent="#accordion">
+                                                <div class="card-body mb-2 mt-2">
+                                                    <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <!-- <div class="order-button-payment">
+                                        <input value="Place order" type="submit">
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    
+                    </div>
                 </div>
             </div>
         </div>
@@ -159,12 +242,7 @@
             
        
     
-        var tinh = document.getElementById("tinh");
-       var quan = document.getElementById("quan");
-       var xa = document.getElementById("phuong");
-       var list_tinh = "";
-       var list_quan = "";
-       var list_phuong = "";
+       
         var requests = new XMLHttpRequest();
         requests.open("GET", "https://provinces.open-api.vn/api/p/");
         requests.send();
@@ -173,24 +251,31 @@
             let response = requests.response;
             response = JSON.parse(response);
             for(let i=0; i<Object.keys(response).length; i++){
-                list_tinh +="<option value="+response[i].code+">"+response[i].name+"</option>";
+                list_tinh +="<option value='"+response[i].name+"' data-code='"+response[i].code+"'>"+response[i].name+"</option>";
             }
             $("#tinh").html(list_tinh)
         }
+        var tinh = document.getElementById("tinh");
+       var quan = document.getElementById("quan");
+       var xa = document.getElementById("phuong");
+       var list_tinh = "";
+       var list_quan = "";
+       var list_phuong = "";
         function changeTinh(){
             quan.innerHTML = "";           
             let request = new XMLHttpRequest();
-            request.open("GET", "https://provinces.open-api.vn/api/p/"+tinh.value+"?depth=2");
+            let code_tinh = $("#tinh option:selected").data('code');
+            request.open("GET", "https://provinces.open-api.vn/api/p/"+code_tinh+"?depth=2");
             request.send();
             request.onload = ()=>{
-                alert(request.response)
                 let response = request.response;
                 response = JSON.parse(response);
 
                 for(let i=0;i<response.districts.length; i++){
                                 
                     let opt = document.createElement('option');
-                    opt.value = response.districts[i].code;
+                    opt.value = response.districts[i].name;
+                    opt.dataset.code = response.districts[i].code;
                     opt.innerHTML = response.districts[i].name;
                     quan.append(opt);
                 }
@@ -201,7 +286,8 @@
         function changeQuan ()  {
             xa.innerHTML = "";
             let request = new XMLHttpRequest();
-            request.open("GET", "https://provinces.open-api.vn/api/d/"+quan.value+"?depth=2")
+            let code_quan = $("#quan option:selected").data('code');
+            request.open("GET", "https://provinces.open-api.vn/api/d/"+code_quan+"?depth=2")
             request.send();
             request.onload = () => {
                 let response = request.response;
@@ -209,7 +295,8 @@
                 for( let i=0; i< response.wards.length; i++){
                     
                     let opt = document.createElement('option');
-                    opt.value = response.wards[i].code;
+                    opt.value = response.wards[i].name;
+                    opt.dataset.code = response.wards[i].code;
                     opt.innerHTML = response.wards[i].name;
                     xa.append(opt);
                 }

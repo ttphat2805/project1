@@ -45,7 +45,18 @@ class cart extends Controller
             $test = false;
             for($i=0;$i<$index;$i++) {
                 if($_SESSION['cart_Item'][$i]['id_product_type'] == $Item['id_product_type']) {
+                    $old_quanlity = $_SESSION['cart_Item'][$i]['quantity'];
                     $_SESSION['cart_Item'][$i]['quantity'] += $quantity;
+                    
+                    if($_SESSION['cart_Item'][$i]['quantity'] > $this_product['quantity']) {
+                        $_SESSION['cart_Item'][$i]['quantity'] = $this_product['quantity'];
+                        $Item['quantity'] = $this_product['quantity'];
+                        $_SESSION['cart_number'] -= $old_quanlity;
+                        $_SESSION['cart_number'] += $Item['quantity'];
+                        $_SESSION['cart_Item'][$i]['total'] = $_SESSION['cart_Item'][$i]['quantity']*$_SESSION['cart_Item'][$i]['price'];
+                        header("Location: ".BASE_URL.'/cart');
+                        exit();
+                    }
                     $_SESSION['cart_Item'][$i]['total'] = $_SESSION['cart_Item'][$i]['quantity']*$_SESSION['cart_Item'][$i]['price'];
                     $test = true;
                 }
@@ -77,8 +88,8 @@ class cart extends Controller
         }
         $_SESSION['cart_number'] += $Item['quantity'];
 
-       // header("Location: ".BASE_URL.'/cart');
-        // unset($_SESSION['cart_number']);
+        header("Location: ".BASE_URL.'/cart');
+        //   unset($_SESSION['cart_number']);
         // unset($_SESSION['cart_Item']);
 
     }
