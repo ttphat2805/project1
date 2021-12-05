@@ -15,8 +15,8 @@ class ordermethod extends db
         //     values (".$data['method'].",".$data['memberid'].",".$data['total'].",".$data['name'].",".$data['address'].",".$data['email'].",".$data['phone'].",".$data['note'].");
         // ";
         $sql = "
-            insert into `orders` (`ordermethod_id`,`member_id`,`total`,`fullname`,`address`,`email`,`mobile`,`note`) 
-            values (:method,:memberid,:total,:name,:address,:email,:phone,:note);";
+            insert into `orders` (`ordermethod_id`,`member_id`,`total`,`fullname`,`address`,`email`,`mobile`,`note`,`coupon_id`) 
+            values (:method,:memberid,:total,:name,:address,:email,:phone,:note,:coupon_id);";
             
         echo $sql;
         $query = $this->conn->prepare($sql);
@@ -28,6 +28,7 @@ class ordermethod extends db
         $query->bindValue(":email", $data['email'], PDO::PARAM_STR);
         $query->bindValue(":phone", $data['phone'], PDO::PARAM_STR);
         $query->bindValue(":note", $data['note'], PDO::PARAM_STR);
+        $query->bindValue(":coupon_id",$data['coupon'], PDO::PARAM_STR);
         $query->execute();
 
         $sql2 = "select LAST_INSERT_ID() as id from `orders`";

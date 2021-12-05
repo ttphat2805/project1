@@ -1,4 +1,6 @@
-<?php 
+<?php
+
+use PHPMailer\PHPMailer\POP3;
 
 class order extends Controller {
 
@@ -32,11 +34,8 @@ class order extends Controller {
         $email = $_POST['email'];
         $phone = $_POST['phone'];
         $note = $_POST['note'];
-        $total = 0;
-        foreach($_SESSION['cart_Item'] as $item){
-            $total += floatval($item['total']);
-            
-        }
+        $total = $_POST['total'];
+        
         $data = [
             'memberid' => $_SESSION['user_infor']['user_id'],
             'name' => $name,
@@ -46,7 +45,8 @@ class order extends Controller {
             'phone' => $phone,
             'note' =>$note,
             'total' => $total,
-            'cart' => $_SESSION['cart_Item']
+            'cart' => $_SESSION['cart_Item'],
+            'coupon' => $_POST['coupon']
         ];
         $this->ordermethod->insertOder($data);
     }

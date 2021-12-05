@@ -8,7 +8,12 @@
         height: 40px;
     }
 </style>
-<?php var_dump($_SESSION['cart_Item']) ?>
+<?php 
+$total =0;
+    foreach ($_SESSION['cart_Item'] as $item) { 
+        $total += floatval($item['total']); 
+    }
+?>
         <!-- Checkout Area Start Here -->
         <div class="checkout-area">
             <div class="container container-default-2 custom-container">
@@ -21,9 +26,12 @@
                                 <div class="coupon-info">
                                     
                                         <p class="checkout-coupon">
-                                            <input placeholder="Coupon code" type="text" name='cou'>
-                                            <input class="coupon-inner_btn" value="Apply Coupon" type="submit">
+                                            <input id="coupon_code" placeholder="Coupon code" type="text" name='cou'>
+                                            <input type="hidden" id="total_bill" value="<?= $total ?>">
+                                            <input type="hidden" id="user_id" value="<?= $_SESSION['user_infor']['user_id'] ?>">
+                                            <input class="coupon-inner_btn" value="Check Coupon" type="submit">
                                         </p>
+                                        <span class="text-warning coupon_error"></span>
                                 </div>
                             </div>
                         </div>
@@ -32,6 +40,8 @@
                 <div class="row">
                     <div class="col-lg-6 col-12">
                         <form action="<?= BASE_URL ?>/order/create" method="post">
+                            <input type="hidden" class="total" name="total" value="<?= $total ?>">
+                            <input type="hidden" class="coupon_code" name="coupon" id="">
                             <div class="checkbox-form">
                                 <h3>Chi Tiết Hóa Đơn</h3>
                                 <div class="row">
@@ -140,7 +150,7 @@
                                     </thead>
                                     <tbody>
                                         
-                                        <?php foreach ($_SESSION['cart_Item'] as $item) { $total =0; $total += $item['total'];  ?>
+                                        <?php foreach ($_SESSION['cart_Item'] as $item) { ?>
                                             <tr class="cart_item">
                                             <td class="cart-product-name"> <?= $item['name'] ?><strong class="product-quantity">
                                                 × <?= $item['quantity'] ?></strong></td>
@@ -148,14 +158,18 @@
                                         </tr>
                                         <?php } ?>
                                     </tbody>
-                                    <tfoot>
+                                    <tfoot class="tfoot">
                                         <tr class="cart-subtotal">
                                             <th>Cart Subtotal</th>
-                                            <td class="text-center"><span class="amount">£215.00</span></td>
+                                            <td class="text-center"><span class="amount subtotal">£215.00</span></td>
+                                        </tr>
+                                        <tr class="cart-subtotal">
+                                            <th>Tiền ship</th>
+                                            <td class="text-center"><span class="amount tienship">0 VNĐ</span></td>
                                         </tr>
                                         <tr class="order-total">
                                             <th>Order Total</th>
-                                            <td class="text-center"><strong><span class="amount"><?= number_format($total) ?> VNĐ</span></strong></td>
+                                            <td class="text-center"><strong><span class="amount total"><?= number_format($total) ?> VNĐ</span></strong></td>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -240,9 +254,38 @@
         <!-- Footer Area Start Here -->
         <script>
             
-       
+    // check coupon
+         $('.coupon-inner_btn').click(function () {
+             let coupon_code = $('#coupon_code').val();
+             let total_bill = $('#total_bill').val();
+             let user_id = $('#user_id').val();
+             $.ajax({
+                 url: "<?= BASE_URL ?>/coupon/check",
+                 type: "POST",
+                 dataType: 'html',
+                 data: {
+                     coupon_code : coupon_code,
+                     total_bill: total_bill,
+                     user_id : user_id
+                 }
+                }).done( function (result){
+                    //$(".coupon_error").html(result)
+                     result = JSON.parse(result);
+                     console.log(result);
+                     if(result.alert != 'success') {
+                         $(".coupon_error").html(result.alert);
+                     }else {
+                        $(".coupon_error").html('');
+                    }
+                    $('.subtotal').html(result.old_price+" - tiền giảm giá");
+                    $('.total').html(result.new_price);
+                    $('.total').val(result.new_price);
+                    $('.coupon_code').val(result.coupon);
+                 })
+         })                                      
     
-       
+
+    //    select address
         var requests = new XMLHttpRequest();
         requests.open("GET", "https://provinces.open-api.vn/api/p/");
         requests.send();
@@ -270,7 +313,8 @@
             request.onload = ()=>{
                 let response = request.response;
                 response = JSON.parse(response);
-
+                // tính tiền ship cho đơn hàng
+                tienship(code_tinh);
                 for(let i=0;i<response.districts.length; i++){
                                 
                     let opt = document.createElement('option');
@@ -303,5 +347,23 @@
             }
         }
 
-    
+        var total_root = $(".total").val();
+                total_root = parseFloat(total_root);
+
+        function tienship ($codetinh) {
+            if($codetinh == 79) {
+                let tien_ship = 30000;
+                let new_total = total_root + tien_ship;
+                $(".tienship").html(new Intl.NumberFormat().format(tien_ship) + "VNĐ");
+                $('.total').val(new_total);
+
+                $('.total').html(new Intl.NumberFormat().format(new_total));
+            } else {
+                let tien_ship = 40000;
+                let new_total = parseFloat(total_root) + tien_ship;
+                $(".tienship").html(new Intl.NumberFormat().format(tien_ship) + "VNĐ");
+                $('.total').val(new_total);
+                $('.total').html(new_total);
+            }
+        }
         </script>
