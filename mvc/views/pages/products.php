@@ -235,9 +235,9 @@
 
         // SEARCH PRODUCTS
         $('.search-products').keyup(function() {
+            let page = $('input[name="page"]:checked').val();
             var search = $('.search-products').val();
             var id_category = $('.get-id-category:checked').val();
-            alert(page);
             $.ajax({
                 url: "<?= BASE_URL ?>/products/fetchproducts",
                 method: "POST",
