@@ -97,42 +97,27 @@ class cart extends Controller
     {
 
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            if (!isset($_POST['data_attr'])  || !isset($_POST['data_id_prod_type'])) {
-                $_SESSION['toastr-code'] = "warning";
-                $_SESSION['toastr-noti'] = "Vui lòng chọn size đầy đủ";
-            } else {
-                $data_attr = $_POST['data_attr'];
-                $data_id_prod_type = $_POST['data_id_prod_type'];
+            $data_attr = $_POST['data_attr'];
+            $data_id_prod_type = $_POST['data_id_prod_type'];
 
 
-                $Item = [
-                    'id_product_type' => $data_id_prod_type,
-                    'id_attr' => $data_attr,
-                    'quantity' => 1
-                ];
-                if (isset($_SESSION['cart_Item'])) {
-                    $index = count($_SESSION['cart_Item']);
-                    $test = false;
-                    for ($i = 0; $i < $index; $i++) {
-                        if ($_SESSION['cart_Item'][$i]['id_product_type'] == $Item['id_product_type']) {
-                            $_SESSION['cart_Item'][$i]['quantity'] += 1;
-                            $_SESSION['cart_Item'][$i]['total'] = $_SESSION['cart_Item'][$i]['quantity'] * $_SESSION['cart_Item'][$i]['price'];
-                            $test = true;
-                        }
+            $Item = [
+                'id_product_type' => $data_id_prod_type,
+                'id_attr' => $data_attr,
+                'quantity' => 1
+            ];
+            if (isset($_SESSION['cart_Item'])) {
+                $index = count($_SESSION['cart_Item']);
+                $test = false;
+                for ($i = 0; $i < $index; $i++) {
+                    if ($_SESSION['cart_Item'][$i]['id_product_type'] == $Item['id_product_type']) {
+                        $_SESSION['cart_Item'][$i]['quantity'] += 1;
+                        $_SESSION['cart_Item'][$i]['total'] = $_SESSION['cart_Item'][$i]['quantity'] * $_SESSION['cart_Item'][$i]['price'];
+                        $test = true;
                     }
+                }
 
-                    if ($test == false) {
-                        $Item_cart = $this->product->getProductCart($Item['id_product_type']);
-                        $Item['price'] = $Item_cart['price'];
-                        $Item['sold'] = $Item_cart['sold'];
-                        $Item['name'] = $Item_cart['name'];
-                        $Item['image'] = $Item_cart['image'];
-                        $Item['value'] = $Item_cart['value'];
-                        $Item['total'] = $Item['quantity'] * floatval($Item['price']);
-                        $_SESSION['cart_Item'][$index] = $Item;
-                    }
-                } else {
-                    // use id product_type to get product info and storange in session cart_Item
+                if ($test == false) {
                     $Item_cart = $this->product->getProductCart($Item['id_product_type']);
                     $Item['price'] = $Item_cart['price'];
                     $Item['sold'] = $Item_cart['sold'];
@@ -140,15 +125,25 @@ class cart extends Controller
                     $Item['image'] = $Item_cart['image'];
                     $Item['value'] = $Item_cart['value'];
                     $Item['total'] = $Item['quantity'] * floatval($Item['price']);
-
-                    $_SESSION['cart_Item'][0] = $Item;
+                    $_SESSION['cart_Item'][$index] = $Item;
                 }
-                $_SESSION['cart_number'] += 1;
-                // unset($_SESSION['cart_Item']);
-                // unset($_SESSION['cart_number']);
-                echo $_SESSION['cart_number'];
-                //echo json_encode($_SESSION['cart_Item']);
+            } else {
+                // use id product_type to get product info and storange in session cart_Item
+                $Item_cart = $this->product->getProductCart($Item['id_product_type']);
+                $Item['price'] = $Item_cart['price'];
+                $Item['sold'] = $Item_cart['sold'];
+                $Item['name'] = $Item_cart['name'];
+                $Item['image'] = $Item_cart['image'];
+                $Item['value'] = $Item_cart['value'];
+                $Item['total'] = $Item['quantity'] * floatval($Item['price']);
+
+                $_SESSION['cart_Item'][0] = $Item;
             }
+            $_SESSION['cart_number'] += 1;
+            // unset($_SESSION['cart_Item']);
+            // unset($_SESSION['cart_number']);
+            echo $_SESSION['cart_number'];
+            //echo json_encode($_SESSION['cart_Item']);
         }
     }
 

@@ -82,9 +82,6 @@ $(document).ready(() => {
         if (this_product.find(".product-size input").length > 0) {
             let data_attr = this_product.find(".product-size input:checked").val();
             let data_id_prod_type = this_product.find(".product-size input:checked").attr('data-prod');
-            if (empty(data_attr)) {
-                alert("hu");
-            }
             $.ajax({
                 url: "http://localhost/project1/cart/addToCart",
                 type: "POST",
