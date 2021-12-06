@@ -10,13 +10,19 @@ class ordermethod extends db
     }
 
     public function insertOder($data) {
-        // $sql = "
-        //     insert into `orders` (`ordermethod_id`,`member_id`,`total`,`fullname`,`address`,`email`,`mobile`,`note`) 
-        //     values (".$data['method'].",".$data['memberid'].",".$data['total'].",".$data['name'].",".$data['address'].",".$data['email'].",".$data['phone'].",".$data['note'].");
-        // ";
-        $sql = "
+        
+        var_dump($data['coupon']);
+        if($data['coupon']) {
+            $sql = "
             insert into `orders` (`ordermethod_id`,`member_id`,`total`,`fullname`,`address`,`email`,`mobile`,`note`,`coupon_id`) 
-            values (:method,:memberid,:total,:name,:address,:email,:phone,:note,:coupon_id);";
+            values (:method,:memberid,:total,:name,:address,:email,:phone,:note,".$data['coupon'].");";
+        } else {
+            $sql = "
+            insert into `orders` (`ordermethod_id`,`member_id`,`total`,`fullname`,`address`,`email`,`mobile`,`note`) 
+            values (:method,:memberid,:total,:name,:address,:email,:phone,:note);";
+        }
+        var_dump($data['coupon']);
+       
             
         $query = $this->conn->prepare($sql);
         $query->bindValue(":method", $data['method'], PDO::PARAM_INT);
@@ -27,7 +33,7 @@ class ordermethod extends db
         $query->bindValue(":email", $data['email'], PDO::PARAM_STR);
         $query->bindValue(":phone", $data['phone'], PDO::PARAM_STR);
         $query->bindValue(":note", $data['note'], PDO::PARAM_STR);
-        $query->bindValue(":coupon_id",$data['coupon'], PDO::PARAM_STR);
+       // $query->bindValue(":coupon_id",$data['coupon'], PDO::PARAM_INT);
         $query->execute();
 
         $sql2 = "select LAST_INSERT_ID() as id from `orders`";
@@ -42,7 +48,12 @@ class ordermethod extends db
         }
         $sql3 = rtrim($sql3, ", ");
         $query = $this->conn->prepare($sql3);
-        $query->execute();
+        if($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+
 
     }
 }

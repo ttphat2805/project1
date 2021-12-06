@@ -279,7 +279,7 @@
                                                 <?php
                                                 foreach ($product_attr as $size) :
                                                 ?>
-                                                    <input id="prod-size-<?= $size['value'] ?>-<?= $item['idproduct'] ?>" type="radio" name="option1" value="<?= $size['value'] ?>">
+                                                    <input id="prod-size-<?= $size['value'] ?>-<?= $item['idproduct'] ?>" type="radio" checked data-prod="<?= $size['id'] ?> " name="option1" value="<?= $size['value'] ?>">
                                                     <label for="prod-size-<?= $size['value'] ?>-<?= $item['idproduct'] ?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
                                                         <span><?= $size['value'] ?></span>
                                                     </label>
@@ -288,7 +288,8 @@
                                                 ?>
                                             </div>
                                         <?php
-                                        } ?>
+                                        }  else { echo "<div class='non-size' data-prod='".$attr_id['id']."'></div> ";}?> 
+                                        
                                         <div class="product-action d-flex">
                                                     <a title="+ Giỏ hàng" class="add_to_cart">
                                                         <i class="ion-bag"></i>

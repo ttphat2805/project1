@@ -106,7 +106,7 @@
                                             ?>
                                         <div class="cart-price-total d-flex justify-content-between">
                                             <h5>Total :</h5>
-                                            <h5><?= number_format($total) ?>VNĐ</h5>
+                                            <h5><?php if(isset($total)) number_format($total) ?>VNĐ</h5>
                                         </div>
                                         <div class="cart-links d-flex justify-content-center">
                                             <a class="obrien-button white-btn" href="<?= BASE_URL ?>/cart">giỏ hàng</a>
@@ -235,7 +235,7 @@
                                             ?>
                                         <div class="cart-price-total d-flex justify-content-between">
                                             <h5>Total :</h5>
-                                            <h5><?= number_format($total) ?>VNĐ</h5>
+                                            <h5><?php if(isset($total)) number_format($total) ?>VNĐ</h5>
                                         </div>
                                         <div class="cart-links d-flex justify-content-center">
                                             <a class="obrien-button white-btn" href="<?= BASE_URL ?>/cart">giỏ hàng</a>
