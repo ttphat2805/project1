@@ -15,7 +15,7 @@ class order extends Controller {
 
     public function Show () {
 
-        $_SESSION['namesite'] = 'đặt hàng';
+        $_SESSION['namesite'] = 'Đặt hàng';
 
         $method = $this->ordermethod->getOderMethod();
         return   $this->view(
