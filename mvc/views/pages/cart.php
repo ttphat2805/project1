@@ -8,13 +8,13 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th class="pro-thumbnail">Image</th>
-                                <th class="pro-title">Product</th>
-                                <th class="pro-price">Price</th>
-                                <th class="pro-quantity">Quantity</th>
-                                <th>Type</th>
-                                <th class="pro-subtotal">Total</th>
-                                <th class="pro-remove">Remove</th>
+                                <th class="pro-thumbnail">Ảnh</th>
+                                <th class="pro-title">Tên</th>
+                                <th class="pro-price">Giá</th>
+                                <th class="pro-quantity">Số lượng</th>
+                                <th>Loại</th>
+                                <th class="pro-subtotal">Tổng</th>
+                                <th class="pro-remove">Xóa</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -64,16 +64,12 @@
                 <!-- Cart Calculation Area -->
                 <div class="cart-calculator-wrapper">
                     <div class="cart-calculate-items">
-                        <h3>Cart Totals</h3>
+                        <h3>Tổng giỏ hàng</h3>
                         <div class="table-responsive">
                             <table class="table">
-                                <tr>
-                                    <td>Sub Total</td>
-                                    <td>$230</td>
-                                </tr>
                                 <tr class="total">
-                                    <td>Total</td>
-                                    <td class="total-amount"><?= $cart_total??0 ?></td>
+                                    <td>Tổng tiền</td>
+                                    <td class="total-amount"><?=( $cart_total??0 )?></td>
                                 </tr>
                             </table>
                         </div>

@@ -18,7 +18,6 @@ class ordermethod extends db
             insert into `orders` (`ordermethod_id`,`member_id`,`total`,`fullname`,`address`,`email`,`mobile`,`note`,`coupon_id`) 
             values (:method,:memberid,:total,:name,:address,:email,:phone,:note,:coupon_id);";
             
-        echo $sql;
         $query = $this->conn->prepare($sql);
         $query->bindValue(":method", $data['method'], PDO::PARAM_INT);
         $query->bindValue(":memberid", $data['memberid'], PDO::PARAM_INT);
@@ -36,14 +35,12 @@ class ordermethod extends db
         $query->execute();
 
         $id_order = $query->fetch()['id'];
-        echo $id_order;
         $sql3 = "INSERT INTO `orderdetail`(`product_type_id`, `order_id`, `quantity`, `price`, `attr_value`) VALUES
         ";
         foreach($data['cart'] as $item) {
             $sql3 .= "(".$item['id_product_type'].",$id_order,".$item['quantity'].",".$item['total'].",'".$item['value']."'),";
         }
         $sql3 = rtrim($sql3, ", ");
-        echo $sql3;
         $query = $this->conn->prepare($sql3);
         $query->execute();
 

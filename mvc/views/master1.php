@@ -191,7 +191,7 @@
                                                                                     ?> VNĐ</del></span>
                                                 </div>
                                                 <div class="product-action d-flex">
-                                                <a title="+ Giỏ hàng" class="add_to_cart">
+                                                    <a title="+ Giỏ hàng" class="add_to_cart">
                                                         <i class="ion-bag"></i>
                                                     </a>
                                                     <a class="addtowishlist" title="+ Yêu thích">
@@ -290,13 +290,13 @@
                                         <?php
                                         } ?>
                                         <div class="product-action d-flex">
-                                            <a href="" title="+ Giỏ hàng">
-                                                <i class="ion-bag"></i>
-                                            </a>
-                                            <a class="addtowishlist" title="+ Yêu thích">
-                                                <i class="fal fa-heart"></i>
-                                            </a>
-                                        </div>
+                                                    <a title="+ Giỏ hàng" class="add_to_cart">
+                                                        <i class="ion-bag"></i>
+                                                    </a>
+                                                    <a class="addtowishlist" title="+ Yêu thích">
+                                                        <i class="fal fa-heart"></i>
+                                                    </a>
+                                                </div>
                                     </div>
 
                                 </div>

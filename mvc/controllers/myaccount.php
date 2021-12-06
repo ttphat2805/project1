@@ -201,19 +201,35 @@ class myaccount extends Controller
             $newpassword = $_POST['newpassword'];
             $re_newpassword = $_POST['re_newpassword'];
             if (empty($password) || empty($newpassword) || empty($re_newpassword)) {
-                echo 'Nhập đầy đủ thông tin';
+                $output = ['type' => 'nhapdaydu'];
+                $output = json_encode($output);
+                echo $output;
+                return;
             } else {
                 $user = $this->user->checkpassworduser($id);
                 if (password_verify($password, $user['password']) == false) {
-                    echo 'Mật khẩu không chính xác';
+                    $output = ['type' => 'khongchinhxac'];
+                    $output = json_encode($output);
+                    echo $output;
+                    return;
                 } else {
                     if (strlen($newpassword) < 6) {
-                        echo 'Mật khẩu phải lớn hơn 6 kí tự';
+                        $output = ['type' => '6kitu'];
+                        $output = json_encode($output);
+                        echo $output;
+                        return;
                     } else if ($newpassword === $re_newpassword) {
                         $this->user->changePassword($id, $newpassword);
-                        echo 'Thành công';
+                        $output = ['type' => 'thanhcong'];
+                        $output = json_encode($output);
+                        echo $output;
+                        return;
                     } else {
-                        echo 'Mật khẩu xác nhận không khớp';
+                        $this->user->changePassword($id, $newpassword);
+                        $output = ['type' => 'khongkhop'];
+                        $output = json_encode($output);
+                        echo $output;
+                        return;
                     }
                 }
             }

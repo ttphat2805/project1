@@ -50,13 +50,13 @@ $total =0;
                                     </div>
                                     <div class="col-md-6">
                                         <div class="checkout-form-list">
-                                            <label>First Name <span class="required">*</span></label>
+                                            <label> Tên <span class="required">*</span></label>
                                             <input placeholder="" name="ho" type="text" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="checkout-form-list">
-                                            <label>Last Name <span class="required">*</span></label>
+                                            <label>Họ <span class="required">*</span></label>
                                             <input placeholder="" name="ten" type="text" required>
                                         </div>
                                     </div>
@@ -102,13 +102,13 @@ $total =0;
                                     </div>
                                     <div class="col-md-6">
                                         <div class="checkout-form-list">
-                                            <label>Email Address <span class="required">*</span></label>
+                                            <label>Email <span class="required">*</span></label>
                                             <input placeholder="" name="email" type="email" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="checkout-form-list">
-                                            <label>Phone <span class="required">*</span></label>
+                                            <label>Số điện thoại <span class="required">*</span></label>
                                             <input type="text" name="phone" required>
                                         </div>
                                     </div>
@@ -117,17 +117,10 @@ $total =0;
                                     </div>
                                 </div>
                                 <div class="different-address">
-                                    <div class="ship-different-title">
-                                        <div>
-                                            <input id="ship-box" type="checkbox">
-                                            <label for="ship-box">Ship to a different address?</label>
-                                        </div>
-                                    </div>
-                                    
                                     <div class="order-notes mt-3">
                                         <div class="checkout-form-list checkout-form-list-2">
                                             <label>Ghi chú</label>
-                                            <textarea id="checkout-mess" name="note" cols="30" rows="10" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+                                            <textarea id="checkout-mess" name="note" cols="30" rows="10" placeholder="Ghi chú vào đây.."></textarea>
                                         </div>
                                     </div>
                                     <button class="col-md-12" style="background-color: #e1e1e1; height:40px" type="submit">
@@ -139,13 +132,13 @@ $total =0;
                     </div>
                     <div class="col-lg-6 col-12">
                         <div class="your-order">
-                            <h3>Your order</h3>
+                            <h3>Đơn hàng của bạn</h3>
                             <div class="your-order-table table-responsive">
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th class="cart-product-name">Product</th>
-                                            <th class="cart-product-total">Total</th>
+                                            <th class="cart-product-name">Sản phẩm</th>
+                                            <th class="cart-product-total">Tổng</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -160,16 +153,19 @@ $total =0;
                                     </tbody>
                                     <tfoot class="tfoot">
                                         <tr class="cart-subtotal">
-                                            <th>Cart Subtotal</th>
-                                            <td class="text-center"><span class="amount subtotal">£215.00</span></td>
+                                            <th>Tạm tính</th>
+                                            <td class="text-center">
+                                            <span class="amount subtotal">
+                                            <?= number_format($total) ?> 
+                                            </span></td>
                                         </tr>
                                         <tr class="cart-subtotal">
-                                            <th>Tiền ship</th>
+                                            <th>Tiền Ship</th>
                                             <td class="text-center"><span class="amount tienship">0 VNĐ</span></td>
                                         </tr>
                                         <tr class="order-total">
-                                            <th>Order Total</th>
-                                            <td class="text-center"><strong><span class="amount total"><?= number_format($total) ?> VNĐ</span></strong></td>
+                                            <th>Tổng tiền</th>
+                                            <td class="text-center"><strong><span class="amount total"><?= number_format($total) ?> </span></strong></td>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -231,27 +227,6 @@ $total =0;
                 </div>
             </div>
         </div>
-        <!-- Checkout Area End Here -->
-        <!-- Support Area Start Here -->
-        <div class="support-area">
-            <div class="container container-default custom-area">
-                <div class="row">
-                    <div class="col-lg-12 col-custom">
-                        <div class="support-wrapper d-flex">
-                            <div class="support-content">
-                                <h1 class="title">Need Help ?</h1>
-                                <p class="desc-content">Call our support 24/7 at 01234-567-890</p>
-                            </div>
-                            <div class="support-button d-flex align-items-center">
-                                <a class="obrien-button primary-btn" href="contact-us.html">Contact now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Support Area End Here -->
-        <!-- Footer Area Start Here -->
         <script>
             
     // check coupon
@@ -269,6 +244,7 @@ $total =0;
                      user_id : user_id
                  }
                 }).done( function (result){
+                    console.log(result);
                     //$(".coupon_error").html(result)
                      result = JSON.parse(result);
                      console.log(result);
@@ -277,10 +253,15 @@ $total =0;
                      }else {
                         $(".coupon_error").html('');
                     }
-                    $('.subtotal').html(result.old_price+" - tiền giảm giá");
-                    $('.total').html(result.new_price);
-                    $('.total').val(result.new_price);
-                    $('.coupon_code').val(result.coupon);
+                    if(result.discount === undefined){
+                        $('.subtotal').html(result.old_price+ " VNĐ");
+                    }else{
+                        $('.subtotal').html(result.old_price+ "  - " +result.discount+" ");
+                        $('.total').html(result.new_price);
+                        $('.total').val(result.new_price);
+                        $('.coupon_code').val(result.coupon);
+                    }
+                 
                  })
          })                                      
     

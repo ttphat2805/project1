@@ -28,6 +28,7 @@ class order extends Controller {
     }
 
     public function create() {
+        $_SESSION['namesite'] = 'Đặt hàng thành công';
         $name = $_POST['ho'].' '.$_POST['ten'];
         $address = $_POST['tinh'].' '.$_POST['quan'].' '.$_POST['phuong'];
         $method = $_POST['method'];
@@ -49,5 +50,11 @@ class order extends Controller {
             'coupon' => $_POST['coupon']
         ];
         $this->ordermethod->insertOder($data);
+        return   $this->view(
+            "master2",
+            [
+                "pages" => "order-success",
+            ]
+        );
     }
 }

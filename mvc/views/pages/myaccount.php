@@ -318,9 +318,23 @@
                     re_newpassword: re_newpassword,
                 },
                 success: function(data) {
-                    $('.noti-change-password').html(data);
-                    $('.noti-change-password').css('color', 'red');
-
+                    var check = JSON.parse(data);
+                    if (check.type == 'nhapdaydu') {
+                        $('.noti-change-password').html("Nhập đầy đủ thông tin");
+                        $('.noti-change-password').css('color', 'red');
+                    } else if(check.type == 'khongchinhxac') {
+                        $('.noti-change-password').html('Mật khẩu không chính xác');
+                        $('.noti-change-password').css('color', 'red');
+                    } else if(check.type == '6kitu'){
+                        $('.noti-change-password').html("Mật khẩu phải lớn hơn 6 kí tự");
+                        $('.noti-change-password').css('color', 'red');
+                    } else if(check.type == 'thanhcong'){
+                        $('.noti-change-password').html("Đổi mật khẩu thành công");
+                        $('.noti-change-password').css('color', '#28a745');
+                    }else{
+                        $('.noti-change-password').html("Mật khẩu xác nhận không khớp");
+                        $('.noti-change-password').css('color', 'red');
+                    }
                 },
             });
         })
