@@ -102,7 +102,7 @@
                                             </div>
                                         </div>
                                         <?php
-                                                }}
+                                            }}
                                             ?>
                                         <div class="cart-price-total d-flex justify-content-between">
                                             <h5>Total :</h5>

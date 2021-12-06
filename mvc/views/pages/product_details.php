@@ -127,7 +127,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="add-to_cart mb-4">
+                                    <div class="add-to_cart mb-4 mt-3">
                                         <input type="submit" value="Mua ngay" name="btn_submit" class="btn obrien-button primary-btn" href="">
                                         <a class="btn obrien-button-2 treansparent-color pt-0 pb-0 addwishlistdetail">+ Yêu thích</a>
                                     </div>

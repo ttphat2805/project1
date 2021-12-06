@@ -977,6 +977,10 @@ screen and (max-width: 450px) {
     border-color: #ffc107;
 }
 
+.main-content {
+    overflow: hidden;
+}
+
 .status-order.progresss {
     color: #fff;
     background-color: #28a745;
