@@ -15,8 +15,13 @@
     <link rel="stylesheet" href=" <?php echo BASE_URL; ?>/public/assetsadmin/vendors/flag-icon-css/css/flag-icon.min.css">
     <link rel="stylesheet" href=" <?php echo BASE_URL; ?>/public/assetsadmin/css/style.css">
     <link rel="stylesheet" href=" <?php echo BASE_URL; ?>/public/assetsadmin/css/custom.css">
+    <link rel="stylesheet" href=" <?php echo BASE_URL; ?>/public/assetsadmin/css/table.css">
 
+    
+ 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  
 
     <!-- End layout styles -->
 
@@ -45,7 +50,7 @@
                                 <span>
                                     <?php
                                     if ($_SESSION['user_infor']['user_role'] == 1) {
-                                        echo 'Admin';
+                                        echo 'admin';
                                     } else {
                                         echo 'Superadmin';
                                     }
@@ -55,53 +60,31 @@
                                 </span>
                             </div>
                         </div>
-
+                        <?php
+                        class orderstt extends db
+                        {
+                            function sttorder($id)
+                            {
+                                $query = "SELECT COUNT(*) as 'count' FROM orders WHERE status = ?";
+                                $stmt = $this->conn->prepare($query);
+                                $stmt->execute([$id]);
+                                return $stmt->fetch()['count'];
+                            }
+                        }
+                        $orderstt = new orderstt();
+                        ?>
                         <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
-                        <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
-                            <a href="#" class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <div class="preview-icon bg-dark rounded-circle">
-                                        <i class="mdi mdi-settings text-primary"></i>
-                                    </div>
-                                </div>
-                                <div class="preview-item-content">
-                                    <p class="preview-subject ellipsis mb-1 text-small">Account settings</p>
-                                </div>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <div class="preview-icon bg-dark rounded-circle">
-                                        <i class="mdi mdi-onepassword  text-info"></i>
-                                    </div>
-                                </div>
-                                <div class="preview-item-content">
-                                    <p class="preview-subject ellipsis mb-1 text-small">Change Password</p>
-                                </div>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <div class="preview-icon bg-dark rounded-circle">
-                                        <i class="mdi mdi-calendar-today text-success"></i>
-                                    </div>
-                                </div>
-                                <div class="preview-item-content">
-                                    <p class="preview-subject ellipsis mb-1 text-small">To-do list</p>
-                                </div>
-                            </a>
-                        </div>
                     </div>
                 </li>
                 <li class="nav-item nav-category">
                     <span class="nav-link"></span>
                 </li>
                 <li class="nav-item menu-items">
-                    <a class="nav-link" href="<?php echo BASE_URL; ?>/admin/show">
+                    <a class="nav-link" href="<?php echo BASE_URL; ?>/admin/homepage">
                         <span class="menu-icon">
                             <i class="mdi mdi-speedometer"></i>
                         </span>
-                        <span class="menu-title">Dashboard</span>
+                        <span class="menu-title">Tổng quan</span>
                     </a>
                 </li>
 
@@ -145,6 +128,7 @@
                         <span class="menu-title">Mã giảm giá</span>
                     </a>
                 </li>
+
                 <li class="nav-item menu-items">
                     <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
                         <span class="menu-icon">
@@ -155,10 +139,10 @@
                     </a>
                     <div class="collapse" id="auth">
                         <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link" href="<?php echo BASE_URL ?>/Admin/showOrder/1">Chưa xử lý</a></li>
-                            <li class="nav-item"> <a class="nav-link" href="<?php echo BASE_URL ?>/Admin/showOrder/2">Đang xử lý</a></li>
-                            <li class="nav-item"> <a class="nav-link" href="<?php echo BASE_URL ?>/Admin/showOrder/3">Đang giao hàng</a></li>
-                            <li class="nav-item"> <a class="nav-link" href="<?php echo BASE_URL ?>/Admin/showOrder/4">Đã giao hàng</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="<?php echo BASE_URL ?>/admin/order/unprogress">Chưa xử lý (<?= $orderstt->sttorder('1') ?>)</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="<?php echo BASE_URL ?>/admin/order/processing"> Đang xử lý (<?= $orderstt->sttorder('2') ?>)</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="<?php echo BASE_URL ?>/admin/order/progress">Đang giao hàng (<?= $orderstt->sttorder('3') ?>)</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="<?php echo BASE_URL ?>/admin/order/progressed">Đã giao hàng (<?= $orderstt->sttorder('4') ?>)</a></li>
                         </ul>
                     </div>
                 </li>
@@ -223,47 +207,6 @@
                         </li>
                     </ul>
                     <ul class="navbar-nav navbar-nav-right">
-                        <li class="nav-item dropdown d-none d-lg-block">
-                            <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" data-toggle="dropdown" aria-expanded="false" href="#">+ Create New Project</a>
-                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="createbuttonDropdown">
-                                <h6 class="p-3 mb-0">Projects</h6>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item preview-item">
-                                    <div class="preview-thumbnail">
-                                        <div class="preview-icon bg-dark rounded-circle">
-                                            <i class="mdi mdi-file-outline text-primary"></i>
-                                        </div>
-                                    </div>
-                                    <div class="preview-item-content">
-                                        <p class="preview-subject ellipsis mb-1">Software Development</p>
-                                    </div>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item preview-item">
-                                    <div class="preview-thumbnail">
-                                        <div class="preview-icon bg-dark rounded-circle">
-                                            <i class="mdi mdi-web text-info"></i>
-                                        </div>
-                                    </div>
-                                    <div class="preview-item-content">
-                                        <p class="preview-subject ellipsis mb-1">UI Development</p>
-                                    </div>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item preview-item">
-                                    <div class="preview-thumbnail">
-                                        <div class="preview-icon bg-dark rounded-circle">
-                                            <i class="mdi mdi-layers text-danger"></i>
-                                        </div>
-                                    </div>
-                                    <div class="preview-item-content">
-                                        <p class="preview-subject ellipsis mb-1">Software Testing</p>
-                                    </div>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <p class="p-3 mb-0 text-center">See all projects</p>
-                            </div>
-                        </li>
                         <li class="nav-item nav-settings d-none d-lg-block">
                             <a class="nav-link" href="#">
                                 <i class="mdi mdi-view-grid"></i>
@@ -274,123 +217,34 @@
                                 <i class="mdi mdi-email"></i>
                                 <span class="count bg-success"></span>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
-                                <h6 class="p-3 mb-0">Messages</h6>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item preview-item">
-                                    <div class="preview-thumbnail">
-                                        <img src=" <?php echo BASE_URL; ?>/public/assetsadmin/images/faces/face4.jpg" alt="image" class="rounded-circle profile-pic">
-                                    </div>
-                                    <div class="preview-item-content">
-                                        <p class="preview-subject ellipsis mb-1">Mark send you a message</p>
-                                        <p class="text-muted mb-0"> 1 Minutes ago </p>
-                                    </div>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item preview-item">
-                                    <div class="preview-thumbnail">
-                                        <img src=" <?php echo BASE_URL; ?>/public/assetsadmin/images/faces/face2.jpg" alt="image" class="rounded-circle profile-pic">
-                                    </div>
-                                    <div class="preview-item-content">
-                                        <p class="preview-subject ellipsis mb-1">Cregh send you a message</p>
-                                        <p class="text-muted mb-0"> 15 Minutes ago </p>
-                                    </div>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item preview-item">
-                                    <div class="preview-thumbnail">
-                                        <img src=" <?php echo BASE_URL; ?>/public/assetsadmin/images/faces/face3.jpg" alt="image" class="rounded-circle profile-pic">
-                                    </div>
-                                    <div class="preview-item-content">
-                                        <p class="preview-subject ellipsis mb-1">Profile picture updated</p>
-                                        <p class="text-muted mb-0"> 18 Minutes ago </p>
-                                    </div>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <p class="p-3 mb-0 text-center">4 new messages</p>
-                            </div>
                         </li>
                         <li class="nav-item dropdown border-left">
                             <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
                                 <i class="mdi mdi-bell"></i>
                                 <span class="count bg-danger"></span>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-                                <h6 class="p-3 mb-0">Notifications</h6>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item preview-item">
-                                    <div class="preview-thumbnail">
-                                        <div class="preview-icon bg-dark rounded-circle">
-                                            <i class="mdi mdi-calendar text-success"></i>
-                                        </div>
-                                    </div>
-                                    <div class="preview-item-content">
-                                        <p class="preview-subject mb-1">Event today</p>
-                                        <p class="text-muted ellipsis mb-0"> Just a reminder that you have an event today </p>
-                                    </div>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item preview-item">
-                                    <div class="preview-thumbnail">
-                                        <div class="preview-icon bg-dark rounded-circle">
-                                            <i class="mdi mdi-settings text-danger"></i>
-                                        </div>
-                                    </div>
-                                    <div class="preview-item-content">
-                                        <p class="preview-subject mb-1">Settings</p>
-                                        <p class="text-muted ellipsis mb-0"> Update dashboard </p>
-                                    </div>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item preview-item">
-                                    <div class="preview-thumbnail">
-                                        <div class="preview-icon bg-dark rounded-circle">
-                                            <i class="mdi mdi-link-variant text-warning"></i>
-                                        </div>
-                                    </div>
-                                    <div class="preview-item-content">
-                                        <p class="preview-subject mb-1">Launch Admin</p>
-                                        <p class="text-muted ellipsis mb-0"> New admin wow! </p>
-                                    </div>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <p class="p-3 mb-0 text-center">See all notifications</p>
-                            </div>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                                 <div class="navbar-profile">
                                     <img class="img-xs rounded-circle" src="http://windows79.com/wp-content/uploads/2021/02/Thay-the-hinh-dai-dien-tai-khoan-nguoi-dung-mac.png" alt="">
-                                    <p class="mb-0 d-none d-sm-block navbar-profile-name">Admin</p>
+                                    <p class="mb-0 d-none d-sm-block navbar-profile-name">admin</p>
                                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                                 </div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
-                                <h6 class="p-3 mb-0">Profile</h6>
+                                <h6 class="p-3 mb-0">Thông tin</h6>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item preview-item">
-                                    <div class="preview-thumbnail">
-                                        <div class="preview-icon bg-dark rounded-circle">
-                                            <i class="mdi mdi-settings text-success"></i>
-                                        </div>
-                                    </div>
-                                    <div class="preview-item-content">
-                                        <p class="preview-subject mb-1">Settings</p>
-                                    </div>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item preview-item">
+                                <a class="dropdown-item preview-item" href="<?php echo BASE_URL; ?>/auth/logout">
                                     <div class="preview-thumbnail">
                                         <div class="preview-icon bg-dark rounded-circle">
                                             <i class="mdi mdi-logout text-danger"></i>
                                         </div>
                                     </div>
                                     <div class="preview-item-content">
-                                        <p class="preview-subject mb-1">Log out</p>
+                                        <p class="preview-subject mb-1">Đăng xuất</p>
                                     </div>
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                <p class="p-3 mb-0 text-center">Advanced settings</p>
                             </div>
                         </li>
                     </ul>
@@ -413,6 +267,7 @@
             </div>
         </div>
     </div>
+
 </body>
 
 </html>

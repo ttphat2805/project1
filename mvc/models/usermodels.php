@@ -284,4 +284,10 @@ class usermodels extends db {
         $result->execute();
         return $result->fetchAll();
     }
+
+    function deletechat($id){
+        $query = "DELETE FROM chat where in_msg_id = $id";
+        $result = $this->conn->prepare($query);
+        $result->execute();
+    }
 }

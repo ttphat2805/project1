@@ -68,4 +68,10 @@ Class attributemodels extends db{
         return $stmt->fetch()[$table];
     }
 
+    function checkattribute($id){
+        $query = "SELECT a.id as 'id' FROM product_type a inner join attribute b on a.attribute_id = b.id where b.id = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
 }

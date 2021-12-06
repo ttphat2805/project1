@@ -68,28 +68,28 @@
         ]'>
                     <div class="slide-item slide-1 bg-position slide-bg-1 animation-style-01">
                         <div class="slider-content">
-                            <h4 class="slider-small-title">Cold processed organic fruit</h4>
-                            <h2 class="slider-large-title">Fresh Avocado</h2>
+                            <h4 class="slider-small-title">Cập nhật mỗi ngày</h4>
+                            <h2 class="slider-large-title">Pizza ngon ngất ngây</h2>
                             <div class="slider-btn">
-                                <a class="obrien-button black-btn" href="shop.html">Shop Now</a>
+                                <a class="obrien-button black-btn" href="<?=BASE_URL?>/products">Mua ngay</a>
                             </div>
                         </div>
                     </div>
                     <div class="slide-item slide-2 bg-position slide-bg-1 animation-style-01">
                         <div class="slider-content">
-                            <h4 class="slider-small-title">Healthy life with</h4>
-                            <h2 class="slider-large-title">Natural Organic</h2>
+                            <h4 class="slider-small-title">Đảm bảo sức khỏe</h4>
+                            <h2 class="slider-large-title">Combo khuyến mãi</h2>
                             <div class="slider-btn">
-                                <a class="obrien-button black-btn" href="shop.html">Shop Now</a>
+                                <a class="obrien-button black-btn" href="<?=BASE_URL?>/products">Mua ngay</a>
                             </div>
                         </div>
                     </div>
                     <div class="slide-item slide-3 bg-position slide-bg-1 animation-style-01">
                         <div class="slider-content">
-                            <h4 class="slider-small-title">Healthy life with</h4>
-                            <h2 class="slider-large-title">Natural Organic</h2>
+                            <h4 class="slider-small-title">Đảm bảo an toàn</h4>
+                            <h2 class="slider-large-title">Giờ vàng nhanh tay</h2>
                             <div class="slider-btn">
-                                <a class="obrien-button black-btn" href="shop.html">Shop Now</a>
+                                <a class="obrien-button black-btn" href="<?=BASE_URL?>/products">Mua ngay</a>
                             </div>
                         </div>
                     </div>
@@ -227,7 +227,7 @@
                             <div class="banner-flash-content d-flex flex-column align-items-center justify-content-center h-100">
                                 <h2 class="deal-head text-uppercase">Black Friday</h2>
                                 <h3 class="deal-title text-uppercase">Giảm giá lên đến 20%</h3>
-                                <a href="shop.html" class="obrien-button primary-btn">Mua ngay</a>
+                                <a href="<?=BASE_URL?>/products" class="obrien-button primary-btn">Mua ngay</a>
                                 <div class="countdown-wrapper d-flex justify-content-center" data-countdown="2021/12/15"></div>
                             </div>
                         </div>
@@ -356,7 +356,7 @@
                                     <div class="single-blog">
                                         <div class="single-blog-thumb">
                                             <a href="<?= BASE_URL ?>/blogdetail/show/<?= $blog['slug'] ?>">
-                                                <img src="<?= BASE_URL ?>/public/assets/images/blog/<?= $blog['image'] ?>" alt="Blog Image">
+                                                <img src="<?= BASE_URL ?>/public/assets/images/blog/<?= $blog['image'] ?>" alt="Blog Image" class="fix-height-blog">
                                             </a>
                                         </div>
                                         <div class="single-blog-content position-relative">

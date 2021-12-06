@@ -51,10 +51,9 @@
                         ?>
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    <input type="checkbox" name="size_value[]" id="<?= $size['value']?>"class="form-check-input" value="<?= $size['id'] ?>"><?= $size['value'] ?></label>
+                                    <input type="checkbox" name="size_value[]" id="<?= $size['value']?>"class="form-check-input click-input" value="<?= $size['id'] ?>"><?= $size['value'] ?></label>
                             </div>
                         <?php }?>
-                        <input type="button" value="Áp dụng" class="btn btn-secondary btn-rounded" id="btn_apply_attr">
                     </div>
                     <div class="form-group table_attr_hide" style="display:none;">
                         <table class="table table-basic">
@@ -109,7 +108,7 @@
 
         }
     })
-    $('#btn_apply_attr').on('click', function() {
+    $('.click-input').on('click', function() {
         $('.table_attr_hide').show();
 
         var input_checkbox = $('.form-check-input');

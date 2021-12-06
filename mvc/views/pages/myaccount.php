@@ -17,7 +17,7 @@
                                 <?php
                                 if (isset($_SESSION['user_infor']['user_role']) && $_SESSION['user_infor']['user_role'] >= 1) {
                                 ?>
-                                    <a href="<?= BASE_URL ?>/admin"><i class="fas fa-users-cog"></i>
+                                    <a href="<?= BASE_URL ?>/admin/homepage"><i class="fas fa-users-cog"></i>
 
                                         Vào trang admin
                                     </a>
@@ -36,6 +36,9 @@
                                         <h3>Đơn hàng</h3>
                                         <div class="myaccount-table table-responsive text-center">
                                             <table class="table table-bordered">
+                                                    <?php
+                                                    if($data['order']->rowCount() > 0){
+                                                    ?>
                                                 <thead class="thead-light">
                                                     <tr>
                                                         <th>Đơn hàng</th>
@@ -46,6 +49,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                   
                                                     <?php foreach ($data['order'] as $order) : ?>
                                                         <tr>
                                                             <td>G6-0<?= $order['id'] ?></td>
@@ -74,6 +78,10 @@
                                                             <td><span class="btn obrien-button-2 primary-color rounded-2 info-order-product">Chi tiết</span></td>
                                                         </tr>
                                                     <?php endforeach; ?>
+                                                    <?php } else{?>
+                                                        <p class="none-order">Chưa có đơn hàng nào <i class="fal fa-cart-plus"></i></p>
+                                                        <a href="<?=BASE_URL?>/products"class="btn obrien-button-2 primary-color mt-3">Mua hàng</a>
+                                                        <?php }?>
                                                 </tbody>
                                             </table>
                                         </div>

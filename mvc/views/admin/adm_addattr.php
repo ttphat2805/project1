@@ -26,7 +26,7 @@
                     </div>
 
                     <input type="submit" value="Thêm" name="btn__submit" class="btn btn-primary">
-                    <a href="<?php echo BASE_URL ?>/admin/showcategory" class="btn btn-dark">Trở về</a>
+                    <a href="<?php echo BASE_URL ?>/admin/showattr" class="btn btn-dark">Trở về</a>
                 </form>
             </div>
         </div>

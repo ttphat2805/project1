@@ -16,7 +16,6 @@
                                 <th>#</th>
                                 <!-- <th>Tên</th> -->
                                 <th>Mã</th>
-                                <th>Loại</th>
                                 <th>Giảm giá</th>
                                 <th>Tối thiểu</th>
                                 <th>Số lượng</th>
@@ -34,7 +33,6 @@
                                     <td><?= $count++ ?></td>
                                     <!-- <td><?= $item['name'] ?></td> -->
                                     <td><?= $item['code'] ?></td>
-                                    <td><?= $item['type'] == 0 ? '<label class="badge badge-info">Bằng tiền</label>' : '<label class="badge badge-info">%</label>' ?></td>
                                     <td><?= $item['discout'] ?></td>
                                     <td><?= $item['min_order'] ?></td>
                                     <td><?= $item['quantity'] ?></td>

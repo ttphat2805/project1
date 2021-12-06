@@ -13,5 +13,20 @@ Class cartmodels extends db{
         $stmt->execute();
         return $stmt->rowCount();
     }
+
+    function toporder(){
+        $query = "SELECT b.quantity,b.price,d.name,d.image FROM orders a inner join orderdetail b on a.id=b.order_id
+        join product_type c on b.product_type_id = c.id join products d on c.product_id = d.id where a.status = 4 LIMIT 5";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    function sale(){
+        $query = "SELECT SUM(total) as 'total' FROM `orders` WHERE status = 4";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
 }
 ?>

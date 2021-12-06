@@ -2545,12 +2545,9 @@ button,
 }
 
 .sidebar-product .image {
-    width: 80px;
-    -webkit-flex-basis: 80px;
-    -ms-flex-preferred-size: 80px;
-    flex-basis: 80px;
+    width: 120px;
     background-color: #d8d8d8;
-    margin-right: 15px;
+    margin-right: 10px;
 }
 
 .sidebar-product .image img {
@@ -2558,10 +2555,7 @@ button,
 }
 
 .sidebar-product .product-content {
-    width: calc(100% - 80px);
-    -webkit-flex-basis: calc(100% - 80px);
-    -ms-flex-preferred-size: calc(100% - 80px);
-    flex-basis: calc(100% - 80px);
+    width: calc(100% - 100px);
     font-size: 13px;
 }
 

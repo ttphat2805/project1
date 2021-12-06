@@ -30,9 +30,6 @@ class Chat extends Controller
                 $fullname = $_SESSION['user_infor']['user_name'];
                 $in_id = $this->user->idComment($fullname)['id'];
                 $this->user->addChat($in_id,$out_id,$content);
-            }else{
-                $_SESSION['toastr-code'] = "warning";
-                $_SESSION['toastr-noti'] = "Đăng nhập để";
             }
             
         }
@@ -61,7 +58,7 @@ class Chat extends Controller
                 }
             }
         }else{
-            $output .= "đăng nhập để chửi lộn với admin nè bạn";
+            $output .=' <p class="chat-with-admin">Đăng nhập để nhắn tin với cửa hàng</p> ';
             
         }
         

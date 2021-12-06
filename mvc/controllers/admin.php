@@ -30,7 +30,14 @@ class Admin extends Controller
             $_SESSION['checkloginadmin'] = 'check';
             exit();
         }
-
+    }
+    function homepage()
+    {
+        if (!isset($_SESSION['user_infor'])) {
+            header('Location:' . BASE_URL . '/auth/login');
+            $_SESSION['checkloginadmin'] = 'check';
+            exit();
+        }
         $this->view(
             "master3",
             [
@@ -38,23 +45,9 @@ class Admin extends Controller
                 "countproduct" => $this->product->countproduct(),
                 "countcomments" => $this->user->countcomment(),
                 "countmember" => $this->account->countmember(),
-                "countcart" => $this->cart->countcart(),
+                "toporder" => $this->cart->toporder(),
+                "sale" => $this->cart->sale(),
 
-
-            ]
-        );
-    }
-    function homepage()
-    {
-        if (!isset($_SESSION['user_infor'])) {
-            header('Location:' . BASE_URL . '/auth/login');
-            exit();
-        }
-
-        $this->view(
-            "master3",
-            [
-                "pages" => "adm_homepage",
             ]
         );
     }
@@ -239,7 +232,6 @@ class Admin extends Controller
                 $_SESSION['toastr-noti'] = "Đã tồn tại tên này";
             } else {
                 $name_slug = change_slug($name);
-                echo $name_slug;
                 $categoryid = $_POST['categoryid'];
                 if (isset($_POST['price'])) {
                     $price = $_POST['price'];
@@ -256,54 +248,49 @@ class Admin extends Controller
                 if (in_array($ext, $extension)) {
                     $imageName = time() . '_' . $imageName;
                     move_uploaded_file($imageTemp, $store . $imageName);
-                    $this->product->insertproduct($categoryid, $name, $name_slug, $imageName, $description, $status);
                 } else {
                     $_SESSION['toastr-code'] = "warning";
                     $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
                     header('Location: ' . BASE_URL . '/admin/addproduct');
                     exit();
                 }
+                $this->product->insertproduct($categoryid, $name, $name_slug, $imageName, $description, $status);
                 $product_id = $this->product->selectidproduct();
-
+                if (!isset($galleryName)) {
+                    foreach ($_FILES['gallery']['tmp_name'] as $key => $value) {
+                        $galleryName = $_FILES['gallery']['name'][$key];
+                        $galleryTemp = $_FILES['gallery']['tmp_name'][$key];
+                        $ext = pathinfo($galleryName, PATHINFO_EXTENSION);
+                        $final_image = '';
+                        if (!in_array($ext, $extension)) {
+                            $_SESSION['toastr-code'] = "warning";
+                            $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
+                            header('Location: ' . BASE_URL . '/admin/addproduct');
+                            exit();
+                        } else {
+                            $newgalleryName = time() . '_' . $galleryName;
+                            move_uploaded_file($galleryTemp, $store . $newgalleryName);
+                            $final_image = $newgalleryName;
+                            $this->product->insertlistimg($product_id, $final_image);
+                        }
+                    }
+                }
                 if (isset($_POST['size_value'])) {
                     $size_value = $_POST['size_value'];
                     foreach ($size_value as $key => $value) {
                         $price_value = $_POST['price_attribute'][$key];
                         $quantity_attr = $_POST['quantity_attribute'][$key];
-
                         $this->product->insertproduct_type_attr($value, $product_id, $price_value, $quantity_attr);
                     }
                 } else {
                     $this->product->insertproduct_type($product_id, $price, $quantity);
                 }
 
-                if (!isset($galleryName)) {
-                    foreach ($_FILES['gallery']['tmp_name'] as $key => $value) {
-                        $galleryName = $_FILES['gallery']['name'][$key];
-                        $galleryTemp = $_FILES['gallery']['tmp_name'][$key];
-                        $ext = pathinfo($galleryName, PATHINFO_EXTENSION);
-                        // echo $ext.'duoi file';
-                        // print_r($galleryName);
-                        $final_image = '';
-
-                        if (in_array($ext, $extension)) {
-                            $newgalleryName = time() . '_' . $galleryName;
-                            move_uploaded_file($galleryTemp, $store . $newgalleryName);
-                            $final_image = $newgalleryName;
-                            $this->product->insertlistimg($product_id, $final_image);
-                        } else {
-                            $_SESSION['toastr-code'] = "warning";
-                            $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
-                            header('Location: ' . BASE_URL . '/admin/addproduct');
-                            exit();
-                        }
-                    }
-
-                    $_SESSION['toastr-code'] = "success";
-                    $_SESSION['toastr-noti'] = "Thêm thành công";
-                    header('Location: ' . BASE_URL . '/admin/showproduct');
-                    exit();
-                }
+                
+                $_SESSION['toastr-code'] = "success";
+                $_SESSION['toastr-noti'] = "Thêm thành công";
+                header('Location: ' . BASE_URL . '/admin/showproduct');
+                exit();
             }
         }
 
@@ -402,7 +389,7 @@ class Admin extends Controller
                     }
                 endforeach;
                 foreach ($attr_prod as $price) :
-                    $output .= '' . $price['value'] . ': ' . $price['price'] . ' VNĐ <br/>';
+                    $output .= '' . $price['value'] . ': ' . number_format($price['price']) . ' VNĐ <br/>';
                 endforeach;
 
                 $output .=  '</td>
@@ -440,10 +427,9 @@ class Admin extends Controller
             $output .= '
             </tbody>
             </table>';
-            // END FOREACH
             if ($totalproduct > $productsperpage) {
                 $output .= '
-                            <div style="display: flex; justify-content:center; ">
+                            <div style="display: flex; justify-content:center;" class="click-page">
                             <div class="pd_page flex-panigation">';
                 for ($i = 1; $i <= $totalPage; $i++) {
                     $output .= '<input type="radio" name="page" class="input-hidden" id="' . $i . '" value ="' . $i . '"> </input>
@@ -468,6 +454,12 @@ class Admin extends Controller
             $name = $_POST['name'];
             $name_slug = change_slug($name);
             $check = $this->category->checkexistname('products', $name, $id);
+            $checkorder = $this->product->checkproductorder($id);
+            // if ($checkorder > 0) {
+            //     $_SESSION['toastr-code'] = "warning";
+            //     $_SESSION['toastr-noti'] = "Sản phảm này đã tồn tại trong đơn hàng";
+            //     header('Location: ' . BASE_URL . '/admin/infoproduct/' . $id);
+            // } else
             if ($check != 0) {
                 $_SESSION['toastr-code'] = "warning";
                 $_SESSION['toastr-noti'] = "Đã tồn tại sản phẩm này";
@@ -492,12 +484,12 @@ class Admin extends Controller
                         $_SESSION['toastr-code'] = "warning";
                         $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
                         header('Location: ' . BASE_URL . '/admin/infoproduct/' . $id);
+                        return;
                     }
                 }
-                if ($categoryid !== 19) {
+                if ($categoryid != 19) {
                     $this->product->delete_product_type($id);
-                }
-                if ($categoryid == 19) {
+                } else {
                     $size_value = $_POST['size_value'];
                     $this->product->delete_product_type($id);
                     foreach ($size_value as $key => $value) {
@@ -506,14 +498,12 @@ class Admin extends Controller
                         $this->product->insertproduct_type_attr($value, $id, $price_value, $quantity_attr);
                     }
                 }
-                if ($_POST['price'] != 0) {
+                if ($_POST['price'] != "") {
                     $price = $_POST['price'];
                     $quantity = $_POST['quantity'];
                     $this->product->insertproduct_type($id, $price, $quantity);
                 }
-
-                // $this->product->delete_image($id);
-                if (!empty($_FILES['gallery'])) {
+                if (($_FILES['gallery']['name'][0]) !== "") {
                     foreach ($_FILES['gallery']['tmp_name'] as $key => $value) {
                         $galleryName = $_FILES['gallery']['name'][$key];
                         $galleryTemp = $_FILES['gallery']['tmp_name'][$key];
@@ -521,17 +511,20 @@ class Admin extends Controller
                         $final_image = '';
                         if (in_array($ext, $extension)) {
                             $newgalleryName = time() . '_' . $galleryName;
-                            // echo $newgalleryName;
                             move_uploaded_file($galleryTemp, $store . $newgalleryName);
                             $final_image = $newgalleryName;
                             $this->product->insertlistimg($id, $final_image);
+                        } else {
+                            $_SESSION['toastr-code'] = "warning";
+                            $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
+                            header('Location: ' . BASE_URL . '/admin/infoproduct/' . $id);
+                            return;
                         }
                     }
                 }
                 $_SESSION['toastr-code'] = "success";
                 $_SESSION['toastr-noti'] = "Cập nhật thành công";
                 header('Location: ' . BASE_URL . '/admin/infoproduct/' . $id);
-                exit();
             }
         }
     }
@@ -540,13 +533,21 @@ class Admin extends Controller
 
     function deleteproduct($id)
     {
-        $this->product->delete_product('prod_image', 'productid', $id);
-        $this->product->delete_product('product_type', 'product_id', $id);
-        $this->product->delete_product('products', 'id', $id);
-        $_SESSION['toastr-code'] = "success";
-        $_SESSION['toastr-noti'] = "Xóa thành công";
-        header('Location: ' . BASE_URL . '/admin/showproduct');
-        exit();
+        $check = $this->product->checkproductorder($id);
+        if ($check > 0) {
+            $_SESSION['toastr-code'] = "warning";
+            $_SESSION['toastr-noti'] = "Sản phảm này đã tồn tại trong đơn hàng";
+            header('Location: ' . BASE_URL . '/admin/showproduct');
+            exit();
+        } else {
+            $this->product->delete_product('prod_image', 'productid', $id);
+            $this->product->delete_product('product_type', 'product_id', $id);
+            $this->product->delete_product('products', 'id', $id);
+            $_SESSION['toastr-code'] = "success";
+            $_SESSION['toastr-noti'] = "Xóa thành công";
+            header('Location: ' . BASE_URL . '/admin/showproduct');
+            exit();
+        }
     }
     // END - PRODUCT
 
@@ -569,6 +570,12 @@ class Admin extends Controller
         if (isset($_POST['btn__submit'])) {
             $name_value = $_POST['name_value'];
             $attr_value = $_POST['attr_value'];
+            if ($attr_value == "") {
+                $_SESSION['toastr-code'] = "error";
+                $_SESSION['toastr-noti'] = "Không được bỏ trống giá trị";
+                header('Location: ' . BASE_URL . '/admin/addattribute');
+                exit();
+            }
             $this->attribute->insertattribute($name_value, $attr_value);
             $_SESSION['toastr-code'] = "success";
             $_SESSION['toastr-noti'] = "Thêm thành công";
@@ -601,6 +608,15 @@ class Admin extends Controller
     {
         if (isset($_POST['btn__submit'])) {
             $id = $_POST['id'];
+            $attribute_id = $this->attribute->getproduct_type();
+            foreach ($attribute_id as $item) {
+                if ($item['attribute_id'] === $id) {
+                    $_SESSION['toastr-code'] = "error";
+                    $_SESSION['toastr-noti'] = "Không thể cập nhật, đã có sản phẩm chứa thuộc tính này";
+                    header('Location: ' . BASE_URL . '/admin/showattr');
+                    exit();
+                }
+            }
             $name = $_POST['name_value'];
             $value = $_POST['attr_value'];
             $this->attribute->updateattribute($name, $value, $id);
@@ -652,22 +668,21 @@ class Admin extends Controller
         if (isset($_POST['btn__submit'])) {
             $name = $_POST['name'];
             $code = $_POST['code'];
-            $type = $_POST['type'];
             $discout = $_POST['coupon_value'];
             $quantity = $_POST['quantity'];
-            $min_order = $_POST['min_order'];
+            $min_order = $_POST['min_order_new'];
             $date_created = $_POST['date_created'];
             $date_out = $_POST['date_out'];
             $status = $_POST['status'];
-            if ($name == '' || $code == '' || $type == '' || $discout == '' || $quantity == '' || $min_order == '' || $date_created == '' || $date_out == '') {
+            if ($name == '' || $code == '' || $discout == '' || $quantity == '' || $min_order == '' || $date_created == '' || $date_out == '') {
                 $_SESSION['toastr-code'] = "info";
                 $_SESSION['toastr-noti'] = "Vui lòng nhập đầy đủ thông tin";
             } else {
-                $this->coupon->insertcoupon($name, $code, $discout, $type, $min_order, $quantity, $date_created, $date_out, $status);
-
+                $this->coupon->insertcoupon($name, $code, $discout, $min_order, $quantity, $date_created, $date_out, $status);
                 $_SESSION['toastr-code'] = "success";
                 $_SESSION['toastr-noti'] = "Thêm thành công mã giảm giá";
                 header('Location: ' . BASE_URL . '/admin/showcoupon');
+                exit();
             }
         }
 
@@ -700,18 +715,17 @@ class Admin extends Controller
             $id = $_POST['id'];
             $name = $_POST['name'];
             $code = $_POST['code'];
-            $type = $_POST['type'];
             $discout = $_POST['coupon_value'];
             $quantity = $_POST['quantity'];
-            $min_order = $_POST['min_order'];
+            $min_order = $_POST['min_order_new'];
             $date_created = $_POST['date_created'];
             $date_out = $_POST['date_out'];
             $status = $_POST['status'];
-            if ($name == '' || $code == '' || $type == '' || $discout == '' || $quantity == '' || $min_order == '' || $date_created == '' || $date_out == '') {
+            if ($name == '' || $code == ''  || $discout == '' || $quantity == '' || $min_order == '' || $date_created == '' || $date_out == '') {
                 $_SESSION['toastr-code'] = "info";
                 $_SESSION['toastr-noti'] = "Vui lòng nhập đầy đủ thông tin";
             } else {
-                $this->coupon->updatecoupon($name, $code, $type, $discout, $min_order, $quantity, $date_created, $date_out, $status, $id);
+                $this->coupon->updatecoupon($name, $code, $discout, $min_order, $quantity, $date_created, $date_out, $status, $id);
 
                 $_SESSION['toastr-code'] = "success";
                 $_SESSION['toastr-noti'] = "Cập nhật thành công";
@@ -742,6 +756,82 @@ class Admin extends Controller
 
     // END - COUPON
 
+
+    // START - ORDER
+    function order($stt)
+    {
+        $_SESSION['status_back_order'] = $stt;
+        $status = 1;
+        $title = "";
+        switch ($stt) {
+            case 'unprogress':
+                $title = "Đơn hàng chưa xử lý";
+                $status = 1;
+                break;
+            case 'processing':
+                $title = "Đơn hàng đang xử lý";
+                $status = 2;
+                break;
+            case 'progress':
+                $title = "Đơn hàng đang giao";
+                $status = 3;
+                break;
+            case 'progressed':
+                $title = "Đơn hàng đã giao";
+                $status = 4;
+                break;
+        }
+
+
+        $this->view("master3", [
+            "pages" => "adm_showorder",
+            "order" => $this->account->status_order($status),
+            "title" => $title,
+            "status" => $status,
+        ]);
+    }
+
+    public function orderdetail($id)
+    {
+
+        $this->view(
+            "master3",
+            [
+                "pages" => "adm_orderdetail",
+                "inforder" => $this->account->infoOder($id),
+                "orderpd" => $this->account->order_pd($id),
+                "codeorder" => $id,
+            ]
+        );
+    }
+    function update_orderdetail()
+    {
+        if (isset($_POST['btn__submit'])) {
+            $id = $_POST['id'];
+            $status = $_POST['status'];
+            $this->account->update_orderdetail($status, $id);
+            $_SESSION['toastr-code'] = "success";
+            $_SESSION['toastr-noti'] = "Cập nhật thành công";
+            header('Location:' . BASE_URL . '/admin/orderdetail/' . $id);
+            exit();
+        }
+    }
+
+    function deleteorder($id)
+    {
+        if (isset($id)) {
+            $this->account->deleteOrderdetail($id);
+            $this->account->deleteOrder($id);
+            $_SESSION['toastr-code'] = "success";
+            $_SESSION['toastr-noti'] = "Đã xóa";
+            header('Location:' . BASE_URL . '/admin/order/progressed');
+            exit();
+        }
+    }
+
+    // END - ORDER
+
+
     // COMMENT
 
     function showcomment()
@@ -755,6 +845,12 @@ class Admin extends Controller
         );
     }
 
+
+    function fetchcomment()
+    {
+        $result = $this->user->showcommentadmin();
+        echo json_encode($result);
+    }
     function infocomment($id)
     {
 
@@ -889,6 +985,7 @@ class Admin extends Controller
     // END BLOG
 
     // show chat
+    // show chat
     function showchat()
     {
         $this->view(
@@ -902,20 +999,56 @@ class Admin extends Controller
 
     function addChat($id)
     {
+        $out_id = $id;
         $fullname = $_SESSION['user_infor']['user_name'];
         $in_id = $this->user->idComment($fullname)['id'];
         if (isset($_POST['send'])) {
             $content = $_POST['content'];
-            $this->user->addChat($in_id, $id, $content);
+            $this->user->addChat($in_id, $out_id, $content);
         }
 
         $this->view(
             "master3",
             [
                 "pages" => "adm_addchat",
+                "id" => $id,
                 "view" => $this->user->view($in_id, $id),
             ]
         );
+    }
+
+    function SelectMsg($id)
+    {
+        $output = "";
+        $out_id = $id;
+        $fullname = $_SESSION['user_infor']['user_name'];
+        $in_id = $this->user->idComment($fullname)['id'];
+        $result = $this->user->view($in_id, $out_id);
+
+        foreach ($result as $row) {
+            if ($row['out_msg_id'] != 3) {
+                $output .= '
+                              <div class="member-text">
+                                  <p>' . $row['content'] . '</p>
+                              </div>';
+            } else {
+                $output .= '<div class="admin-text"> 
+                                  <p>' . $row['content'] . '</p> 
+                              </div>
+                              ';
+            }
+        }
+        echo $output;
+    }
+
+
+    function deletechat($id)
+    {
+        $this->user->deletechat($id);
+        $_SESSION['toastr-code'] = "success";
+        $_SESSION['toastr-noti'] = "Xóa thành công";
+        header('Location:' . BASE_URL . '/admin/showchat');
+        exit();
     }
     // END chat
 }

@@ -34,8 +34,8 @@
                                     <div class="sidebar-body">
                                         <?php foreach ($data['getblogdifferent'] as $item) { ?>
                                             <div class="sidebar-product align-items-center">
-                                                <a href="product-details.html" class="image">
-                                                    <img src="<?= BASE_URL ?>/public/assets/images/blog/<?= $item['image'] ?>" alt="blog">
+                                                <a href="<?= BASE_URL ?>/blogdetail/show/<?= $item['slug'] ?>" class="image mb-5">
+                                                    <img src="<?= BASE_URL ?>/public/assets/images/blog/<?= $item['image'] ?>" alt="blog" class="fix-height-blogdetail">
                                                 </a>
                                                 <div class="product-content">
                                                     <div class="product-title">

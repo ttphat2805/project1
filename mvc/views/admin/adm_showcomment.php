@@ -10,7 +10,7 @@
                 </h4> -->
                 </p>
                 <div class="table-responsive">
-                    <table class="table">
+                    <table id="table" class="table">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -45,5 +45,4 @@
             </div>
         </div>
     </div>
-
 </div>

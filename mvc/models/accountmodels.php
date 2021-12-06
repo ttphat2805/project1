@@ -48,7 +48,7 @@ class accountmodels extends db
 
     function getwishlist($id_member)
     {
-        $query = "SELECT a.member_id,a.product_id as 'prodidwl',b.*,c.price,c.quantity from product_wishlist a inner join products b on a.product_id = b.id inner join product_type c on b.id = c.product_id  where a.member_id = $id_member group by c.product_id";
+        $query = "SELECT b.slug,a.member_id,a.product_id as 'prodidwl',b.*,c.price,c.quantity from product_wishlist a inner join products b on a.product_id = b.id inner join product_type c on b.id = c.product_id  where a.member_id = $id_member group by c.product_id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
@@ -83,7 +83,7 @@ class accountmodels extends db
         WHERE a.member_id = $id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
-        return $stmt->fetchAll();
+        return $stmt;
     }
     //  a: bảng member -- b: bảng orders -- c:bảng ordermethod -- d:bảng products
 
@@ -105,5 +105,48 @@ class accountmodels extends db
         $stmt = $this->conn->prepare($query);
         $stmt->execute([$id]);
         return $stmt->fetchAll();
+    }
+
+    public function status_order($status)
+    {
+        $query = "SELECT a.id, a.member_id, a.status, 
+        DATE(`a`.`created_at`) as 'orderdate', b.fullname FROM orders a INNER JOIN member b ON a.member_id = b.id  WHERE a.status = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$status]);
+        return $stmt->fetchAll();
+    }
+
+    public function infoOder($id)
+    {
+        $query = "SELECT a.fullname as 'fullnamemember',a.mobile as 'mobilemember',a.address as 'addressmember',
+        a.email as 'emailmember',b.*,c.name as 'nameordermethod' FROM member a 
+        inner join orders b on a.id = b.member_id join ordermethod c on b.ordermethod_id = c.id  
+        where b.id= ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$id]);
+        return $stmt->fetch();
+    }
+
+    public function order_pd($id){
+        $query = "SELECT b.quantity,b.price,d.name,d.image FROM orders a inner join orderdetail b on a.id=b.order_id
+        join product_type c on b.product_type_id = c.id join products d on c.product_id = d.id where a.id= ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$id]);
+        return $stmt->fetchAll();
+    }
+    public function update_orderdetail($status,$id){
+        $query = "UPDATE orders set status = ? where id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt ->execute([$status,$id]);
+    }
+    public function deleteOrder($id){
+        $query = "DELETE FROM orders where id = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt ->execute();
+    }
+    public function deleteOrderdetail($id){
+        $query = "DELETE FROM orderdetail where order_id = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt ->execute();
     }
 }

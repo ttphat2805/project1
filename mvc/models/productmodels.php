@@ -36,6 +36,13 @@ class productmodels extends db
         $stmt->execute();
         return $stmt->fetchAll();
     }
+    function fettest()
+    {
+        $query = "SELECT a.id as 'idproduct',a.name as 'nameproduct',a.categoryid as 'category_id',a.image,a.description,a.status,b.id as 'idproduct_type',b.price,b.quantity FROM products a inner join product_type b on b.product_id = a.id group by a.id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 
 
     function insertproduct($categoryid, $name, $name_slug, $imageName, $description, $status)
@@ -116,14 +123,14 @@ class productmodels extends db
     }
     function getproductsite()
     {
-        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.status = 1 group by a.id LIMIT 6";
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.status = 1 group by a.id LIMIT 8";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
     }
     function getproduct_trend()
     {
-        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.status = 1 group by a.id order by views desc limit 10";
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.status = 1 group by a.id order by views desc limit 5";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
@@ -289,6 +296,13 @@ class productmodels extends db
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
+    }
+
+    function checkproductorder($id) {
+        $query = "SELECT a.product_type_id FROM orderdetail a INNER JOIN product_type b ON b.id = a.product_type_id WHERE b.product_id = $id";
+        $result = $this->conn->prepare($query);
+        $result->execute();
+        return $result->rowCount();
     }
 }
 

@@ -32,7 +32,7 @@ $attr = new showproduct();
                 </h4>
                 </p>
                 <div class="table-responsive">
-                    <!-- <table class="table">
+                    <table id="table" class="table">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -66,7 +66,7 @@ $attr = new showproduct();
                                             }
                                         endforeach;
                                         foreach ($attr_prod as $price) :
-                                            echo $price['value'] . ': ' . $price['price'] . ' VNĐ <br/>';
+                                            echo $price['value'] . ': ' . number_format($price['price']) . ' VNĐ <br/>';
                                         endforeach;
                                         ?>
                                     </td>
@@ -99,7 +99,7 @@ $attr = new showproduct();
                             endforeach;
                             ?>
                         </tbody>
-                    </table> -->
+                    </table>
                 </div>
             </div>
         </div>
@@ -107,26 +107,5 @@ $attr = new showproduct();
 </div>
 
 <script>
-    function fetchproducts() {
-        let page = $('input[name="page"]:checked').val();
 
-        $.ajax({
-            url: "<?= BASE_URL ?>/admin/fetchproduct",
-            method: "POST",
-            data: {
-                'action': 'adm_fetchproduct',
-                'page': page,
-
-            },
-            success: function(data) {
-                $(".table-responsive").html(data);
-            },
-        });
-    }
-
-    fetchproducts();
-
-    $(document).on('click', '.pd_page', function() {
-        fetchproducts();
-    })
 </script>

@@ -193,7 +193,6 @@
         unset($_SESSION['toastr-noti']);
     }
     ?>
-    <?php echo "let SITE_URL = '" . BASE_URL . "';"; ?>
 </script>
 
 <script>
@@ -235,9 +234,9 @@
         }
     });
 
-    setInterval(function(){
-        selectMsg();
-    }, 1000);
+    // setInterval(function(){
+    //     selectMsg();
+    // }, 1000);
 });
 $('.button-close-chat').click(function() {
     $('.avenue-messenger').removeClass('active');

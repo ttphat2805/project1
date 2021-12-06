@@ -23,22 +23,10 @@
                             </button>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="" class="label__css">Tính năng mã</label>
-                        <select name="type" id="input_select_coupon" class="form-control">
-                            <option hidden>-----Chọn tính năng mã-----</option>
-                            <option value="0" <?=$data['infocoupon']['type'] == 0 ? 'selected' : ''?>>Giảm theo tiền</option>
-                            <option value="1" <?=$data['infocoupon']['type'] == 1 ? 'selected' : ''?>>Giảm theo phần trăm (%)</option>
-                        </select>
-                    </div>
-                    <div class="form-group value1">
-                        <label for="" class="label__css">Số (%) giảm</label>
-                        <input type="number" name="coupon_value" value="<?=$data['infocoupon']['discout']?>" placeholder="Số (%) giảm" class="form-control" id="value1">
-                    </div>
-                    <div class="form-group value2" style="display:none;">
+                    <div class="form-group value2">
                         <label for="" class="label__css">Số tiền giảm</label>
                         <input type="text" name="" value="<?=$data['infocoupon']['discout']?>" id="discout" class="form-control" placeholder="Số tiền giảm">
-                        <input hidden type="number" value="<?=$data['infocoupon']['discout']?>" id="value2" name="" class="acp_value">
+                        <input hidden type="number" value="<?=$data['infocoupon']['discout']?>" id="value2" name="coupon_value" class="acp_value">
                     </div>
                     <div class="form-group">
                         <label for="" class="label__css">Số lượng</label>
@@ -61,8 +49,8 @@
                     <div class="form-group">
                         <label for="" class="label__css">Trạng thái</label><br />
                         <div class="wrapper">
-                            <input type="radio" name="status" id="option-1" value="1" checked>
-                            <input type="radio" name="status" id="option-2" value="2">
+                        <input type="radio" name="status" id="option-1" value="1" <?= $data['infocoupon']['status'] == 1 ? 'checked' : '' ?>>
+                            <input type="radio" name="status" id="option-2" value="0" <?= $data['infocoupon']['status'] == 0 ? 'checked' : '' ?>>
                             <label for="option-1" class="option option-1">
                                 <div class="dot"></div>
                                 <span>Active</span>
@@ -89,29 +77,6 @@
             });
         });
 
-
-        $('#input_select_coupon').change(function(e) {
-            var input_select = $('#input_select_coupon').val();
-            if (input_select == '0') {
-                $('.value2').show();
-                $('#value2').attr({
-                    name: 'coupon_value',
-                });
-                $('.value1').hide();
-                $('#value1').attr({
-                    name: '',
-                });
-            } else {
-                $('.value1').show();
-                $('#value1').attr({
-                    name: 'coupon_value',
-                });
-                $('.value2').hide();
-                $('#value2').attr({
-                    name: '',
-                });
-            }
-        })
 
         $("#discout").on('keyup', function() {
             var n = parseInt($(this).val().replace(/\D/g, ''), 10);

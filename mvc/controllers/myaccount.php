@@ -61,7 +61,7 @@ class myaccount extends Controller
                 <td>' . $count++ . '</td>
                 <td>' . $item['name'] . '</td>
                 <td width="20%"> <img src="' . $url . '/public/assets/images/product/' . $item['image'] . '" alt="Order product"> </td>
-                <td>' .number_format($item['price'])  . '</td>
+                <td>' . number_format($item['price'])  . '</td>
                 <td>' . $item['quantity'] . '</td>
             </tr>
             ';
@@ -120,7 +120,9 @@ class myaccount extends Controller
                 <tbody>
                     <tr>
                         <td width="20%">
+                        <a href="' . $url . '/productdetail/show/' . $item['slug'] . '">
                             <img src="' . $url . '/public/assets/images/product/' . $item['image'] . '" alt="">
+                            </a>
                         </td>
                         <td width="50%">' . $item['name'] . '</td>
                         <td width="20%">' . number_format($item['price']) . ' VNĐ </td>

@@ -31,7 +31,7 @@ class blog extends Controller
                 $page = $_POST['page'];
             }
             $totalblog = count($blog);
-            $blogperpage = 1;
+            $blogperpage = 9;
             $from = ($page - 1) * $blogperpage;
             $totalPage = ceil($totalblog / $blogperpage);
             $result = $this->blog->blogperpage($blogperpage, $from);
@@ -41,7 +41,7 @@ class blog extends Controller
                 <div class="single-blog">
                     <div class="single-blog-thumb">
                         <a href="' . $url . '/blogdetail/show/' . $blog['slug'] . '">
-                            <img src="' . $url . '/public/assets/images/blog/' . $blog['image'] . '" alt="Blog Image">
+                            <img src="' . $url . '/public/assets/images/blog/' . $blog['image'] . '" alt="Blog Image" class="fix-height-blog">
                         </a>
                     </div>
                     <div class="single-blog-content position-relative">

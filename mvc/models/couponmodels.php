@@ -1,10 +1,10 @@
 <?php
 class couponmodels extends db
 {
-    function insertcoupon($name, $code, $discout, $type, $min_order, $quantity, $date_created, $date_out, $status)
+    function insertcoupon($name, $code, $discout, $min_order, $quantity, $date_created, $date_out, $status)
     {
-        $query = "INSERT INTO coupon(name,code,discout,type,min_order,quantity,created_at,date_out,status)
-        values ('$name','$code','$discout','$type','$min_order','$quantity','$date_created','$date_out','$status')";
+        $query = "INSERT INTO coupon(name,code,discout,min_order,quantity,created_at,date_out,status)
+        values ('$name','$code','$discout','$min_order','$quantity','$date_created','$date_out','$status')";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
     }
@@ -26,11 +26,11 @@ class couponmodels extends db
     }
 
 
-    function updatecoupon($name, $code, $type, $discout, $min_order, $quantity, $date_created, $date_out, $status, $id)
+    function updatecoupon($name, $code, $discout, $min_order, $quantity, $date_created, $date_out, $status, $id)
     {
-        $query = "UPDATE coupon set name = ?,code = ?,discout = ?,type = ?,min_order = ?, quantity = ?,status = ?,created_at = ?,date_out = ? where id = ?";
+        $query = "UPDATE coupon set name = ?,code = ?,discout = ?,min_order = ?, quantity = ?,status = ?,created_at = ?,date_out = ? where id = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->execute([$name, $code, $discout, $type, $min_order, $quantity, $status, $date_created, $date_out, $id]);
+        $stmt->execute([$name, $code, $discout, $min_order, $quantity, $status, $date_created, $date_out, $id]);
     }
 
     function delcoupon($id){

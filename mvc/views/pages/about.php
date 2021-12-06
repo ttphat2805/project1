@@ -69,7 +69,7 @@
         <div class="row">
             <div class="col-lg-12 col-custom">
                 <div class="obrien-slider" data-slick-options='{
-                    "slidesToShow": 5,
+                    "slidesToShow": 4,
                     "slidesToScroll": 1,
                     "infinite": true,
                     "arrows": false,
@@ -100,20 +100,26 @@
                     </div>
                     <div class="brand-logo-item">
                         <a href="">
-                            <img src="https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/10/logo_svg.svg" alt="Brand Logo">
+                            <img src="https://demo2wpopal.b-cdn.net/xocora/wp-content/uploads/2021/11/logo.svg" alt="Brand Logo">
                         </a>
                     </div>
 
                     <div class="brand-logo-item">
                         <a href="">
-                            <img src="https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/10/logo_svg.svg" alt="Brand Logo">
+                            <img src="https://demo2wpopal.b-cdn.net/ecolive/wp-content/uploads/2021/10/logo.svg" alt="Brand Logo">
                         </a>
                     </div>
                     <div class="brand-logo-item">
                         <a href="">
-                            <img src="https://demo2wpopal.b-cdn.net/poco/wp-content/uploads/2020/10/logo_svg.svg" alt="Brand Logo">
+                            <img src="http://foodeli.bdiakcml8h-e92498n216kr.p.runcloud.link/wp-content/uploads/2021/03/@2x-logo-black-300x88.png" alt="Brand Logo">
                         </a>
                     </div>
+                    <div class="brand-logo-item">
+                        <a href="">
+                            <img src="https://radiustheme.com/demo/wordpress/themes/ranna/wp-content/themes/ranna/assets/img/logo-dark.png" alt="Brand Logo">
+                        </a>
+                    </div>
+            
                 </div>
             </div>
         </div>

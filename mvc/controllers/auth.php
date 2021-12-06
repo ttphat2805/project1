@@ -106,8 +106,6 @@ class Auth extends Controller
                     $_SESSION['user_infor']['user_email'] = $user_social_account_info[0]['email'];
                     $_SESSION['user_infor']['user_role'] = $user_social_account_info[0]['role'];
 
-                    $_SESSION['toastr-code'] = "success";
-                    $_SESSION['toastr-noti'] = "đăng nhập thành công";
                     header("Location: " . BASE_URL);
                     exit();
                 } else {
@@ -118,8 +116,6 @@ class Auth extends Controller
                     $_SESSION['user_infor']['user_email'] = $user_social_account_info[0]['email'];
                     $_SESSION['user_infor']['user_role'] = $user_social_account_info[0]['role'];
 
-                    $_SESSION['toastr-code'] = "success";
-                    $_SESSION['toastr-noti'] = "Đăng nhập thành công";
                     header("Location: " . BASE_URL);
                 }
             } catch (Exception $e) {
@@ -133,6 +129,7 @@ class Auth extends Controller
 
     public function login()
     {
+        $_SESSION['namesite'] = "Đăng nhập";
         $google_client = $this->createClientGoogleObject();
         $google_login_url = $google_client->createAuthUrl();
         $data = [
@@ -181,7 +178,7 @@ class Auth extends Controller
                     $_SESSION['user_infor']['user_role'] = $user_infor[0]['role'];
                     if(isset($_SESSION['checkloginadmin'])){
                         if($_SESSION['user_infor']['user_role'] >= 1){
-                            header("Location: " . BASE_URL."/admin");
+                            header("Location: " . BASE_URL."/admin/homepage");
                             unset($_SESSION['checkloginadmin']);
                             return;
                         }else{

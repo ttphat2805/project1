@@ -9,7 +9,7 @@
                     Thêm sản phẩm
                 </h4>
                 <!-- <p class="card-description"> Basic form layout </p> -->
-                <form class="forms-sample" novalidate action="<?php echo BASE_URL?>/admin/updateproduct" method="POST" enctype="multipart/form-data">
+                <form class="forms-sample" novalidate action="<?php echo BASE_URL ?>/admin/updateproduct" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <input type="hidden" name="id" value="<?php echo $data['product']['id'] ?>">
                         <label for="" class="label__css">Danh mục</label>
@@ -34,7 +34,7 @@
                     </div>
                     <div class="form-group input_price">
                         <label for="" class="label__css ">Giá</label>
-                        <input type="number" min="10" name="price" value="<?php echo $data['product_type']['price'] ?>" class="form-control">
+                        <input type="number" min="10" name="price" value="<?php echo $data['product_type']['price'] ?>" class="form-control hide_dis">
                     </div>
                     <div class="form-group">
                         <label for="" class="label__css">Ảnh</label><br />
@@ -43,20 +43,19 @@
 
                     </div>
                     <div class="form-group">
-                                                                    
                         <label for="" class="label__css">Thư viện ảnh</label><br />
                         <div class="gallery_img">
                         </div>
                         <input type="file" name="gallery[]" multiple class="form-control">
-                        
+                      
                     </div>
                     <div class="form-group input_quantity">
                         <label for="" class="label__css">Số lượng</label>
-                        <input type="number" min="10" name="quantity" class="form-control" value="<?php echo $data['product_type']['quantity'] ?>">
+                        <input type="number" min="10" name="quantity" class="form-control hide_dis" value="<?php echo $data['product_type']['quantity'] ?>">
                     </div>
                     <div class="form-group">
                         <label for="" class="label__css">Mô tả</label>
-                        <textarea name="description" id="" cols="50" rows="2" class="form-control"><?php echo $data['product']['description'] ?></textarea>
+                        <textarea name="description" id="" cols="50" rows="5" class="form-control"><?php echo $data['product']['description'] ?></textarea>
                     </div>
                     <div class="form-group flex-input input_size_attr">
                         <label for="" class="label__css mt-2">Size:</label>
@@ -66,12 +65,15 @@
                             <div class="form-check">
                                 <label class="form-check-label">
                                     <input type="hidden" name="checkkkk" value="1">
-                                    <input type="checkbox" name="size_value[]" id="<?= $size_all['value'] ?>" class="form-check-input" value="<?= $size_all['id'] ?>" <?php foreach ($data['size'] as $size) {                                                                   if ($size['attribute_id'] == $size_all['id']) {                                                                   echo 'checked';
-                                    };}
-                                ?>><?= $size_all['value'] ?></label>
+                                    <input type="checkbox" name="size_value[]" id="<?= $size_all['value'] ?>" class="form-check-input click-input" value="<?= $size_all['id'] ?>" <?php foreach ($data['size'] as $size) {
+                                                                                                                                                                            if ($size['attribute_id'] == $size_all['id']) {
+                                                                                                                                                                                echo 'checked';
+                                                                                                                                                                            };
+                                                                                                                                                                        }
+                                                                                                                                                                        ?>><?= $size_all['value'] ?></label>
                             </div>
                         <?php } ?>
-                        <input type="button" value="Áp dụng" class="btn btn-secondary btn-rounded" id="btn_apply_attr">
+                        <input type="button" value="Hiện" class="btn btn-secondary btn-rounded" id="btn_apply_attr">
                     </div>
                     <div class="form-group table_attr_hide">
                         <table class="table table-basic">
@@ -90,8 +92,8 @@
                     <div class="form-group">
                         <label for="" class="label__css">Trạng thái</label><br />
                         <div class="wrapper">
-                            <input type="radio" name="status" id="option-1" value="1" checked>
-                            <input type="radio" name="status" id="option-2" value="0">
+                            <input type="radio" name="status" id="option-1" value="1" <?= $data['product']['status'] == 1 ? 'checked' : '' ?>>
+                            <input type="radio" name="status" id="option-2" value="0" <?= $data['product']['status'] == 0 ? 'checked' : '' ?>>
                             <label for="option-1" class="option option-1">
                                 <div class="dot"></div>
                                 <span>Active</span>
@@ -113,6 +115,7 @@
     var category = $('#select_category').val();
     if (category == 19) {
         $('.input_price').hide();
+        $('.hide_dis').attr("disabled", true);
         $('.input_quantity').hide();
         $('.input_size_attr').show();
     } else {
@@ -120,22 +123,63 @@
         $('.input_quantity').show();
         $('.input_size_attr').hide();
         $('.table_attr_hide').hide();
-
     }
     $('#select_category').change(function() {
         var category = $('#select_category').val();
         if (category == 19) {
             $('.input_price').hide();
             $('.input_quantity').hide();
+            $('.hide_dis').attr("disabled", true);
             $('.input_size_attr').show();
         } else {
             $('.input_price').show();
             $('.input_quantity').show();
+            $('.hide_dis').attr("disabled", false);
             $('.input_size_attr').hide();
             $('.table_attr_hide').hide();
         }
     })
 
+    $('.click-input').on('click', function() {
+        $('.table_attr_hide').show();
+
+        var input_checkbox = $('.form-check-input');
+        var arraySize = [];
+        var table_tbody_js = $('.table_tbody_js');
+        for (var i = 0; i < input_checkbox.length; i++) {
+            if (input_checkbox[i].checked === true) {
+                var value_checkbox = input_checkbox[i].id;
+                var value_sizes = input_checkbox[i].value;
+                if (!arraySize.includes(value_checkbox)) {
+                    arraySize.push([value_checkbox, value_sizes]);
+                }
+            }
+        }
+
+
+        <?php
+        echo "let sizes = '" . json_encode($data['size']) . "';";
+        ?>
+        sizes = JSON.parse(sizes);
+
+        var Size = '';
+        for (var i = 0; i < arraySize.length; i++) {
+            var values = ['', ''];
+            if (i <= sizes.length - 1) {
+                // if(sizes[i].attribute_id == arraySize[i][1] ) { 
+                values = [sizes[i].price, sizes[i].quantity];
+                // }}
+            }
+            Size += `<tr>
+                    <td>${arraySize[i][0]}</td>
+                    <td><input type="number" name="price_attribute[]"  value="${values[0]}" class="form-control id="css_custom-hide"></td>
+                    <td><input type="number"  name="quantity_attribute[]" value="${values[1]}"  class="form-control id="css_custom-hide"></td>
+                    </tr>`
+        }
+        table_tbody_js.html(Size);
+        <?php
+        ?>
+    })
     $('#btn_apply_attr').on('click', function() {
         $('.table_attr_hide').show();
 
@@ -147,24 +191,24 @@
                 var value_checkbox = input_checkbox[i].id;
                 var value_sizes = input_checkbox[i].value;
                 if (!arraySize.includes(value_checkbox)) {
-                    arraySize.push([value_checkbox,value_sizes]);
+                    arraySize.push([value_checkbox, value_sizes]);
                 }
             }
-        }   
+        }
 
 
-        <?php 
+        <?php
         echo "let sizes = '" . json_encode($data['size']) . "';";
         ?>
         sizes = JSON.parse(sizes);
 
         var Size = '';
         for (var i = 0; i < arraySize.length; i++) {
-            var values = ['',''];
-            if(i <= sizes.length-1){
-            // if(sizes[i].attribute_id == arraySize[i][1] ) { 
-                values = [sizes[i].price,sizes[i].quantity];
-            // }}
+            var values = ['', ''];
+            if (i <= sizes.length - 1) {
+                // if(sizes[i].attribute_id == arraySize[i][1] ) { 
+                values = [sizes[i].price, sizes[i].quantity];
+                // }}
             }
             Size += `<tr>
                     <td>${arraySize[i][0]}</td>
@@ -173,13 +217,13 @@
                     </tr>`
         }
         table_tbody_js.html(Size);
-        <?php 
+        <?php
         ?>
     })
 
-    function load_gallery(){
-            var id = $('input[name="id"]').val();
-            $.ajax({
+    function load_gallery() {
+        var id = $('input[name="id"]').val();
+        $.ajax({
             url: `<?= BASE_URL ?>/admin/load_gallery/${id}`,
             method: "POST",
             data: {
@@ -189,20 +233,21 @@
                 console.log(data);
                 $('.gallery_img').html(data);
             }
-            });
+        });
     }
     load_gallery();
-    function getIdimg(){
-            let idimg= $('input[name="closegallery"]:checked').val();
-            $.ajax({
-                url:`<?=BASE_URL?>/admin/delimg/${idimg}`,
-                method:"POST",
-                data:{
-                    'idimg':idimg
-                },
-                success:function(data){
-                    load_gallery();
-                }
-            });
-        }
+
+    function getIdimg() {
+        let idimg = $('input[name="closegallery"]:checked').val();
+        $.ajax({
+            url: `<?= BASE_URL ?>/admin/delimg/${idimg}`,
+            method: "POST",
+            data: {
+                'idimg': idimg
+            },
+            success: function(data) {
+                load_gallery();
+            }
+        });
+    }
 </script>

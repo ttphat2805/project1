@@ -39,6 +39,19 @@
             </div>
         </div>
     </div>
+    <?php
+    class getsttorder extends db
+    {
+        function getorder($id)
+        {
+            $query = "SELECT count(status) as 'count' FROM orders WHERE status = ?";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([$id]);
+            return $stmt->fetch()['count'];
+        }
+    }
+    $homepage = new getsttorder();
+    ?>
     <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
@@ -65,7 +78,7 @@
                 <div class="row">
                     <div class="col-9">
                         <div class="d-flex align-items-center align-self-start">
-                            <h3 class="mb-0"><?= str_pad($data['countcart'], 3, '.0', STR_PAD_RIGHT); ?></h3>
+                            <h3 class="mb-0"><?= number_format($data['sale']['total']) ?> VNĐ</h3>
                             <p class="text-success ml-2 mb-0 font-weight-medium"></p>
                         </div>
                     </div>
@@ -75,7 +88,7 @@
                         </div>
                     </div>
                 </div>
-                <h6 class="text-muted font-weight-normal">Tổng số đơn hàng</h6>
+                <h6 class="text-muted font-weight-normal">Doanh thu bán hàng</h6>
             </div>
         </div>
     </div>
@@ -99,12 +112,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>#</td>
-                                <td>Tên</td>
-                                <td>Hình</td>
-                                <td>Giá</td>
-                            </tr>
+                            <?php
+                            $count = 1;
+                            foreach ($data['toporder'] as $item) : ?>
+                                <tr>
+                                    <td><?= $count++ ?></td>
+                                    <td><?= $item['name'] ?></td>
+                                    <td width="20%"> <img src="<?= BASE_URL ?>/public/assets/images/product/<?= $item['image'] ?>" alt="Order product"> </td>
+                                    <td><?= number_format($item['price']) ?> VNĐ</td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -114,27 +131,83 @@
     <div class="col-md-4 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Transaction History</h4>
+                <h4 class="card-title">Thống kê đơn hàng</h4>
                 <canvas id="transaction-history" class="transaction-chart"></canvas>
-                <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
-                    <div class="text-md-center text-xl-left">
-                        <h6 class="mb-1">Transfer to Paypal</h6>
-                        <p class="text-muted mb-0">07 Jan 2019, 09:12AM</p>
-                    </div>
-                    <div class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
-                        <h6 class="font-weight-bold mb-0">$236</h6>
-                    </div>
-                </div>
-                <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
-                    <div class="text-md-center text-xl-left">
-                        <h6 class="mb-1">Tranfer to Stripe</h6>
-                        <p class="text-muted mb-0">07 Jan 2019, 09:12AM</p>
-                    </div>
-                    <div class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
-                        <h6 class="font-weight-bold mb-0">$593</h6>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
-</div>
+
+    <script>
+        window.addEventListener('load', function() {
+            if ($("#transaction-history").length) {
+                var areaData = {
+                    labels: ["Chưa xử lý", "Đang xử lý", "Đang giao hàng", "Đã giao hàng"],
+                    datasets: [{
+                        data: [<?= $homepage->getorder('1'); ?>, <?= $homepage->getorder('2'); ?>, <?= $homepage->getorder('3'); ?>, <?= $homepage->getorder('4'); ?>],
+                        backgroundColor: [
+                            "#dc3545", "#28a745", "#0984e3","#ffc107"
+                        ]
+                    }]
+                };
+                var areaOptions = {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    segmentShowStroke: false,
+                    cutoutPercentage: 70,
+                    elements: {
+                        arc: {
+                            borderWidth: 0.5
+                        }
+                    },
+                    legend: {
+                        display: true
+                    },
+                    tooltips: {
+                        enabled: true
+                    }
+                }
+                var transactionhistoryChartPlugins = {
+                    beforeDraw: function(chart) {
+                        var width = chart.chart.width,
+                            height = chart.chart.height,
+                            ctx = chart.chart.ctx;
+
+                        ctx.restore();
+                        var fontSize = 1;
+                        ctx.font = fontSize + "rem sans-serif";
+                        ctx.textAlign = 'left';
+                        ctx.textBaseline = "middle";
+                        ctx.fillStyle = "#ffffff";
+
+                        var text = "",
+                            textX = Math.round((width - ctx.measureText(text).width) / 2),
+                            textY = height / 2.4;
+
+                        ctx.fillText(text, textX, textY);
+
+                        ctx.restore();
+                        var fontSize = 0.75;
+                        ctx.font = fontSize + "rem sans-serif";
+                        ctx.textAlign = 'left';
+                        ctx.textBaseline = "middle";
+                        ctx.fillStyle = "#6c7293";
+
+                        var texts = "",
+                            textsX = Math.round((width - ctx.measureText(text).width) / 1.93),
+                            textsY = height / 1.7;
+
+                        ctx.fillText(texts, textsX, textsY);
+                        ctx.save();
+                    }
+                }
+                var transactionhistoryChartCanvas = $("#transaction-history").get(0).getContext("2d");
+                var transactionhistoryChart = new Chart(transactionhistoryChartCanvas, {
+                    type: 'doughnut',
+                    data: areaData,
+                    options: areaOptions,
+                    plugins: transactionhistoryChartPlugins
+                });
+            }
+        })
+    </script>

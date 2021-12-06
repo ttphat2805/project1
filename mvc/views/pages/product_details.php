@@ -13,7 +13,7 @@
                         "swipe": false,
                         "asNavFor": ".pd-slider-nav"
                         }'>
-                                <div class="single-image border background-zoom" onmousemove="zoom(event)" style="background-image: url('<?php echo BASE_URL ?>/public/assets/images/product/<?= $data['productdetails']['image'] ?>')">
+                                <div class="single-image border background-zoom">
                                     <div class="single-image border">
                                         <a href="">
                                             <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $data['productdetails']['image'] ?>" alt="Product" class="fix-height-1">
@@ -24,7 +24,7 @@
                                 <?php
                                 foreach ($data['gallery'] as $img) :
                                 ?>
-                                    <div class="single-image border background-zoom" onmousemove="zoom(event)" style="background-image: url('<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery'] ?>')">
+                                    <div class="single-image border background-zoom">
                                         <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery'] ?>" alt="Product" class="fix-height-1">
                                     </div>
                                 <?php endforeach; ?>
