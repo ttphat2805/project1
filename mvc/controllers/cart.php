@@ -150,7 +150,8 @@ class cart extends Controller
     public function modify()
     {
         $id_prod_type = $_POST['id_product_type'];
-
+        $this_product = $this->product->getproductTypeByProductTypeId($id_prod_type);
+        
         if ($_POST['method'] == 'dec') {
             for ($i = 0; $i < count($_SESSION['cart_Item']); $i++) {
                 if ($_SESSION['cart_Item'][$i]['id_product_type'] == $id_prod_type) {
@@ -174,9 +175,18 @@ class cart extends Controller
         } elseif ($_POST['method'] == 'inc') {
             for ($i = 0; $i < count($_SESSION['cart_Item']); $i++) {
                 if ($_SESSION['cart_Item'][$i]['id_product_type'] == $id_prod_type) {
+                    $old_quanlity = $_SESSION['cart_Item'][$i]['quantity'];
                     $_SESSION['cart_Item'][$i]['quantity'] += 1;
-                    $_SESSION['cart_Item'][$i]['total'] = $_SESSION['cart_Item'][$i]['price'] * $_SESSION['cart_Item'][$i]['quantity'];
                     $_SESSION['cart_number'] += 1;
+                    if ($_SESSION['cart_Item'][$i]['quantity'] > $this_product[0]['quantity']) {
+                        
+                        $_SESSION['cart_Item'][$i]['quantity'] = $this_product[0]['quantity'];
+                        $_SESSION['cart_number'] -= $old_quanlity;
+                        $_SESSION['cart_number'] += $this_product[0]['quantity'];
+                
+                    }
+                    $_SESSION['cart_Item'][$i]['total'] = $_SESSION['cart_Item'][$i]['price'] * $_SESSION['cart_Item'][$i]['quantity'];
+                    
                     $result = [
                         'price' => $_SESSION['cart_Item'][$i]['price'],
                         'quantity' => $_SESSION['cart_Item'][$i]['quantity'],
@@ -185,7 +195,7 @@ class cart extends Controller
                     ];
                     $result = json_encode($result);
                     echo $result;
-
+                    // session_destroy();
                     exit();
                 }
             }

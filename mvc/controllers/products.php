@@ -80,11 +80,19 @@ class products extends Controller
                 if ($attr_id['attribute_id'] !== NULL) :
                     $output .= '<div class="product-size animate-size mb-2">
                             <p>Size :</p>';
-                    foreach ($product_attr as $size) :
-                            $output .= '   <input id="prod-size-' . $size['value'] . '-' . $item['idproduct'] . '" type="radio" checked data-prod='. $size['id'] .' name="option1" value="' . $size['attribute_id'] . '">
+                    foreach ($product_attr as $key => $size) :
+                            if ($key == 0) {
+                                $output .= '   <input id="prod-size-' . $size['value'] . '-' . $item['idproduct'] . '" type="radio" name="option1"  data-prod='. $size['id'] .' value="' . $size['attribute_id'] . '" checked>
+                                    <label for="prod-size-' . $size['value'] . '-' . $item['idproduct'] . '" class="sd btn-value-size" id="' . $size['value'] . '">
+                                        <span>' . $size['value'] . '</span>
+                                    </label>';    
+                            } else {
+                                $output .= '   <input id="prod-size-' . $size['value'] . '-' . $item['idproduct'] . '" type="radio" name="option1"  data-prod='. $size['id'] .' value="' . $size['attribute_id'] . '" checked>
                                     <label for="prod-size-' . $size['value'] . '-' . $item['idproduct'] . '" class="sd btn-value-size" id="' . $size['value'] . '">
                                         <span>' . $size['value'] . '</span>
                                     </label>';
+                            }
+                            
                         endforeach;
                         $output .= '</div>';
                     else:

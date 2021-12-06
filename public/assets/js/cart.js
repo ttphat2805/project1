@@ -65,7 +65,7 @@ $(document).ready(() => {
         }).done(function(ketqua) {
             result = JSON.parse(ketqua);
             console.log(result);
-            // $(".cart-plus-minus-box").val(result.quantity);
+             $(".cart-plus-minus-box").val(result.quantity);
             this_product.parent().find(".pro-subtotal span").html(result.total);
             total = parseFloat($(".total-amount").text()) + parseFloat(result.price);
             $(".total-amount").html(total);
