@@ -2,18 +2,21 @@
 
 use PHPMailer\PHPMailer\POP3;
 
-class order extends Controller {
+class order extends Controller
+{
 
     public function __construct()
     {
-        if(!isset($_SESSION['user_infor'])){
-            header("Location: ".BASE_URL.'/auth/login');
+        if (!isset($_SESSION['user_infor'])) {
+            header("Location: " . BASE_URL . '/auth/login');
         }
 
         $this->ordermethod = $this->model('ordermethod');
+        $this->coupon = $this->model('couponmodels');
     }
 
-    public function Show () {
+    public function Show()
+    {
 
         $_SESSION['namesite'] = 'Đặt hàng';
 
@@ -27,15 +30,17 @@ class order extends Controller {
         );
     }
 
-    public function create() {
+    public function create()
+    {
         $_SESSION['namesite'] = 'Đặt hàng thành công';
-        $name = $_POST['ho'].' '.$_POST['ten'];
-        $address = $_POST['tinh'].' '.$_POST['quan'].' '.$_POST['phuong'];
+        $name = $_POST['ho'] . ' ' . $_POST['ten'];
+        $address = $_POST['tinh'] . ' ' . $_POST['quan'] . ' ' . $_POST['phuong'];
         $method = $_POST['method'];
         $email = $_POST['email'];
         $phone = $_POST['phone'];
         $note = $_POST['note'];
         $total = $_POST['total'];
+        $idcoupon = $_POST['coupon'];
         $data = [
             'memberid' => $_SESSION['user_infor']['user_id'],
             'name' => $name,
@@ -43,23 +48,27 @@ class order extends Controller {
             'method' => $method,
             'email' => $email,
             'phone' => $phone,
-            'note' =>$note,
+            'note' => $note,
             'total' => $total,
             'cart' => $_SESSION['cart_Item'],
-            'coupon' => $_POST['coupon']
+            'coupon' => $idcoupon,
         ];
-        
-        if($this->ordermethod->insertOder($data) === true){
+
+
+        if ($this->ordermethod->insertOder($data) === true) {
+            foreach ($_SESSION['cart_Item'] as $soluong) {
+                $this->coupon->updatequantityproducttype($soluong['quantity'], $soluong['id_product_type']);
+            }
             unset($_SESSION['cart_Item']);
             unset($_SESSION['cart_number']);
         } else {
-            echo 'fali';
+            echo '';
         }
-        // return   $this->view(
-        //     "master2",
-        //     [
-        //         "pages" => "order-success",
-        //     ]
-        // );
+        return   $this->view(
+            "master2",
+            [
+                "pages" => "order-success",
+            ]
+        );
     }
 }

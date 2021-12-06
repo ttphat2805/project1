@@ -64,4 +64,17 @@ class couponmodels extends db
         $query->fetch();
         return $query->rowCount();
     }
+
+    public function updatequantitycoupon($id){
+        $query = "UPDATE coupon set quantity = quantity - 1, used = used + 1 where id = $id";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+    }
+    public function updatequantityproducttype($soluong,$id){
+        $query = "UPDATE product_type set quantity = quantity - $soluong, sold = sold + $soluong where id = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+    }
+
 }

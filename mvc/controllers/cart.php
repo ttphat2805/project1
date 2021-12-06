@@ -139,7 +139,11 @@ class cart extends Controller
 
                 $_SESSION['cart_Item'][0] = $Item;
             }
-            $_SESSION['cart_number'] += 1;
+            if(isset($_SESSION['cart_number'])){
+                $_SESSION['cart_number']+=1;
+            }else{
+                $_SESSION['cart_number'] = 1;
+            }
             // unset($_SESSION['cart_Item']);
             // unset($_SESSION['cart_number']);
             echo $_SESSION['cart_number'];

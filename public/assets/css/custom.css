@@ -987,6 +987,10 @@ screen and (max-width: 450px) {
     border-color: #28a745;
 }
 
+.custom-button-cart {
+    font-size: 14px;
+}
+
 .status-order.processing {
     color: #fff;
     background-color: blue;

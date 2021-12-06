@@ -11,7 +11,6 @@ class ordermethod extends db
 
     public function insertOder($data) {
         
-        var_dump($data['coupon']);
         if($data['coupon']) {
             $sql = "
             insert into `orders` (`ordermethod_id`,`member_id`,`total`,`fullname`,`address`,`email`,`mobile`,`note`,`coupon_id`) 
@@ -21,7 +20,6 @@ class ordermethod extends db
             insert into `orders` (`ordermethod_id`,`member_id`,`total`,`fullname`,`address`,`email`,`mobile`,`note`) 
             values (:method,:memberid,:total,:name,:address,:email,:phone,:note);";
         }
-        var_dump($data['coupon']);
        
             
         $query = $this->conn->prepare($sql);
