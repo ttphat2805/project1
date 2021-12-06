@@ -48,8 +48,10 @@ class order extends Controller {
             'cart' => $_SESSION['cart_Item'],
             'coupon' => $_POST['coupon']
         ];
-        $this->ordermethod->insertOder($data);
-        unset($_SESSION['cart_Item']);
+        $check = $this->ordermethod->insertOder($data);
+        if($check == true){
+            unset($_SESSION['cart_Item']);
+        }
         return   $this->view(
             "master2",
             [
