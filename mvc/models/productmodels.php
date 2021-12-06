@@ -114,6 +114,14 @@ class productmodels extends db
         return $stmt->fetchAll();
     }
 
+    function getproductTypeByProductTypeId($id)
+    {
+        $query = "SELECT * FROM product_type where id = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
     function getproduct_home($search)
     {
         $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where $search and a.status = 1 group by a.id";

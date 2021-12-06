@@ -171,7 +171,7 @@
                                                         <?php
                                                         foreach ($product_attr as $size) :
                                                         ?>
-                                                            <input id="prod-size-<?=$size['value'] ?>-<?=$item['idproduct'] ?> " type="radio" checked data-prod="<?= $size['id'] ?> " name="option1" value="' . $size['attribute_id'] . '">
+                                                            <input id="prod-size-<?=$size['value'] ?>-<?=$trend['idproduct'] ?> " type="radio" checked data-prod="<?= $size['id'] ?> " name="option1" value="' . $size['attribute_id'] . '">
                                                             <label for="prod-size-<?= $size['value'] ?>-<?= $trend['idproduct'] ?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
                                                                 <span><?= $size['value'] ?></span>
                                                             </label>
