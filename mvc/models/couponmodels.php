@@ -25,6 +25,14 @@ class couponmodels extends db
         return $stmt->fetch();
     }
 
+    function getCoupon($code)
+    {
+        $query = "SELECT * FROM coupon where code = '$code'";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
 
     function updatecoupon($name, $code, $discout, $min_order, $quantity, $date_created, $date_out, $status, $id)
     {
@@ -37,5 +45,23 @@ class couponmodels extends db
         $query = "DELETE from coupon where id=$id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
+    }
+
+    // Nghi code
+    public function findCoupon ($code) {
+        $sql = "select * from `coupon` where code = '$code'";
+        $query = $this->conn->prepare($sql);
+        $query->execute();
+        $query->fetch();
+
+        return $query->rowCount();        
+    }
+
+    public function checkCouponUser($user_id, $coupon) {
+        $sql = "select * from `coupon` a inner join `orders` b on a.id = b.coupon_id where b.member_id = '$user_id' and a.code like '$coupon'";
+        $query = $this->conn->prepare($sql);
+        $query->execute();
+        $query->fetch();
+        return $query->rowCount();
     }
 }
