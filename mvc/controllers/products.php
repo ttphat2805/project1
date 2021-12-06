@@ -8,6 +8,8 @@ class products extends Controller
     {
         $this->product = $this->model("productmodels");
         $this->category = $this->model("categorymodels");
+        $this->cart = $this->model("cartmodels");
+
     }
     function Show()
     {
@@ -18,6 +20,7 @@ class products extends Controller
             [
                 "pages" => "products",
                 "category" => $this->category->getcategory(),
+                "toporder" => $this->cart->toporder('4'),
             ]
         );
     }

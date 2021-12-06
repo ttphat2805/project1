@@ -45,7 +45,7 @@ class Admin extends Controller
                 "countproduct" => $this->product->countproduct(),
                 "countcomments" => $this->user->countcomment(),
                 "countmember" => $this->account->countmember(),
-                "toporder" => $this->cart->toporder(),
+                "toporder" => $this->cart->toporder('4'),
                 "sale" => $this->cart->sale(),
 
             ]
