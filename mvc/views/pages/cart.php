@@ -35,7 +35,7 @@
                                 <td class="pro-quantity">
                                     <div class="quantity">
                                         <div class="cart-plus-minus" data-prod="<?= $data['list'][$i]['id_product_type'] ?>">
-                                            <input class="cart-plus-minus-box" value="<?= $data['list'][$i]['quantity'] ?>" type="text">
+                                            <input class="cart-plus-minus-box" value="<?= $data['list'][$i]['quantity'] ?>" type="text" disabled ?>">
                                             <div class="dec qtybutton">-</div>
                                             <div class="inc qtybutton">+</div>
                                             <div class="dec qtybutton"><i class="fa fa-minus"></i></div>

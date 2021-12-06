@@ -501,7 +501,5 @@ $('.box-sms').click(function() {
     } else {
         $('.avenue-messenger').removeClass('active');
         return checkhideshowsms = 1;
-
     }
-
 })

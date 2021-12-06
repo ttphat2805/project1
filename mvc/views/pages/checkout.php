@@ -8,7 +8,12 @@
         height: 40px;
     }
 </style>
-<?php var_dump($_SESSION['user_infor']) ?>
+<?php 
+$total =0;
+    foreach ($_SESSION['cart_Item'] as $item) { 
+        $total += floatval($item['total']); 
+    }
+?>
         <!-- Checkout Area Start Here -->
         <div class="checkout-area">
             <div class="container container-default-2 custom-container">
@@ -19,20 +24,24 @@
                             <h3>Bạn đã có mã giảm giá? <span id="showcoupon">Nhấn vào đây để nhập code</span></h3>
                             <div id="checkout_coupon" class="coupon-checkout-content">
                                 <div class="coupon-info">
-                                    <form action="#">
+                                    
                                         <p class="checkout-coupon">
-                                            <input placeholder="Coupon code" type="text">
-                                            <input class="coupon-inner_btn" value="Apply Coupon" type="submit">
+                                            <input id="coupon_code" placeholder="Coupon code" type="text" name='cou'>
+                                            <input type="hidden" id="total_bill" value="<?= $total ?>">
+                                            <input type="hidden" id="user_id" value="<?= $_SESSION['user_infor']['user_id'] ?>">
+                                            <input class="coupon-inner_btn" value="Check Coupon" type="submit">
                                         </p>
-                                    </form>
+                                        <span class="text-warning coupon_error"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-12 col-12">
+                    <div class="col-lg-6 col-12">
                         <form action="<?= BASE_URL ?>/order/create" method="post">
+                            <input type="hidden" class="total" name="total" value="<?= $total ?>">
+                            <input type="hidden" class="coupon_code" name="coupon" id="">
                             <div class="checkbox-form">
                                 <h3>Chi Tiết Hóa Đơn</h3>
                                 <div class="row">
@@ -128,9 +137,97 @@
                             </div>
                         </form>
                     </div>
-                    <!-- <div class="col-lg-6 col-12">
-                        
-                    </div> -->
+                    <div class="col-lg-6 col-12">
+                        <div class="your-order">
+                            <h3>Your order</h3>
+                            <div class="your-order-table table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="cart-product-name">Product</th>
+                                            <th class="cart-product-total">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                        <?php foreach ($_SESSION['cart_Item'] as $item) { ?>
+                                            <tr class="cart_item">
+                                            <td class="cart-product-name"> <?= $item['name'] ?><strong class="product-quantity">
+                                                × <?= $item['quantity'] ?></strong></td>
+                                            <td class="cart-product-total text-center"><span class="amount"><?= number_format($item['total']) ?></span></td>
+                                        </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                    <tfoot class="tfoot">
+                                        <tr class="cart-subtotal">
+                                            <th>Cart Subtotal</th>
+                                            <td class="text-center"><span class="amount subtotal">£215.00</span></td>
+                                        </tr>
+                                        <tr class="cart-subtotal">
+                                            <th>Tiền ship</th>
+                                            <td class="text-center"><span class="amount tienship">0 VNĐ</span></td>
+                                        </tr>
+                                        <tr class="order-total">
+                                            <th>Order Total</th>
+                                            <td class="text-center"><strong><span class="amount total"><?= number_format($total) ?> VNĐ</span></strong></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="payment-method">
+                                <div class="payment-accordion">
+                                    <!-- <div id="accordion">
+                                        <div class="card">
+                                            <div class="card-header" id="#payment-1">
+                                                <h5 class="panel-title mb-2">
+                                                    <a href="#" class="" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                        Direct Bank Transfer.
+                                                    </a>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                                <div class="card-body mb-2 mt-2">
+                                                    <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="#payment-2">
+                                                <h5 class="panel-title mb-2">
+                                                    <a href="#" class="collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                        Cheque Payment
+                                                    </a>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                                <div class="card-body mb-2 mt-2">
+                                                    <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="#payment-3">
+                                                <h5 class="panel-title mb-2">
+                                                    <a href="#" class="collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                        PayPal
+                                                    </a>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseThree" class="collapse" data-parent="#accordion">
+                                                <div class="card-body mb-2 mt-2">
+                                                    <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <!-- <div class="order-button-payment">
+                                        <input value="Place order" type="submit">
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    
+                    </div>
                 </div>
             </div>
         </div>
@@ -157,14 +254,38 @@
         <!-- Footer Area Start Here -->
         <script>
             
-       
+    // check coupon
+         $('.coupon-inner_btn').click(function () {
+             let coupon_code = $('#coupon_code').val();
+             let total_bill = $('#total_bill').val();
+             let user_id = $('#user_id').val();
+             $.ajax({
+                 url: "<?= BASE_URL ?>/coupon/check",
+                 type: "POST",
+                 dataType: 'html',
+                 data: {
+                     coupon_code : coupon_code,
+                     total_bill: total_bill,
+                     user_id : user_id
+                 }
+                }).done( function (result){
+                    //$(".coupon_error").html(result)
+                     result = JSON.parse(result);
+                     console.log(result);
+                     if(result.alert != 'success') {
+                         $(".coupon_error").html(result.alert);
+                     }else {
+                        $(".coupon_error").html('');
+                    }
+                    $('.subtotal').html(result.old_price+" - tiền giảm giá");
+                    $('.total').html(result.new_price);
+                    $('.total').val(result.new_price);
+                    $('.coupon_code').val(result.coupon);
+                 })
+         })                                      
     
-        var tinh = document.getElementById("tinh");
-       var quan = document.getElementById("quan");
-       var xa = document.getElementById("phuong");
-       var list_tinh = "";
-       var list_quan = "";
-       var list_phuong = "";
+
+    //    select address
         var requests = new XMLHttpRequest();
         requests.open("GET", "https://provinces.open-api.vn/api/p/");
         requests.send();
@@ -173,24 +294,32 @@
             let response = requests.response;
             response = JSON.parse(response);
             for(let i=0; i<Object.keys(response).length; i++){
-                list_tinh +="<option value="+response[i].code+">"+response[i].name+"</option>";
+                list_tinh +="<option value='"+response[i].name+"' data-code='"+response[i].code+"'>"+response[i].name+"</option>";
             }
             $("#tinh").html(list_tinh)
         }
+        var tinh = document.getElementById("tinh");
+       var quan = document.getElementById("quan");
+       var xa = document.getElementById("phuong");
+       var list_tinh = "";
+       var list_quan = "";
+       var list_phuong = "";
         function changeTinh(){
             quan.innerHTML = "";           
             let request = new XMLHttpRequest();
-            request.open("GET", "https://provinces.open-api.vn/api/p/"+tinh.value+"?depth=2");
+            let code_tinh = $("#tinh option:selected").data('code');
+            request.open("GET", "https://provinces.open-api.vn/api/p/"+code_tinh+"?depth=2");
             request.send();
             request.onload = ()=>{
-                alert(request.response)
                 let response = request.response;
                 response = JSON.parse(response);
-
+                // tính tiền ship cho đơn hàng
+                tienship(code_tinh);
                 for(let i=0;i<response.districts.length; i++){
                                 
                     let opt = document.createElement('option');
-                    opt.value = response.districts[i].code;
+                    opt.value = response.districts[i].name;
+                    opt.dataset.code = response.districts[i].code;
                     opt.innerHTML = response.districts[i].name;
                     quan.append(opt);
                 }
@@ -199,10 +328,10 @@
         };
 
         function changeQuan ()  {
-            alert('a');
             xa.innerHTML = "";
             let request = new XMLHttpRequest();
-            request.open("GET", "https://provinces.open-api.vn/api/d/"+quan.value+"?depth=2")
+            let code_quan = $("#quan option:selected").data('code');
+            request.open("GET", "https://provinces.open-api.vn/api/d/"+code_quan+"?depth=2")
             request.send();
             request.onload = () => {
                 let response = request.response;
@@ -210,12 +339,31 @@
                 for( let i=0; i< response.wards.length; i++){
                     
                     let opt = document.createElement('option');
-                    opt.value = response.wards[i].code;
+                    opt.value = response.wards[i].name;
+                    opt.dataset.code = response.wards[i].code;
                     opt.innerHTML = response.wards[i].name;
                     xa.append(opt);
                 }
             }
         }
 
-    
+        var total_root = $(".total").val();
+                total_root = parseFloat(total_root);
+
+        function tienship ($codetinh) {
+            if($codetinh == 79) {
+                let tien_ship = 30000;
+                let new_total = total_root + tien_ship;
+                $(".tienship").html(new Intl.NumberFormat().format(tien_ship) + "VNĐ");
+                $('.total').val(new_total);
+
+                $('.total').html(new Intl.NumberFormat().format(new_total));
+            } else {
+                let tien_ship = 40000;
+                let new_total = parseFloat(total_root) + tien_ship;
+                $(".tienship").html(new Intl.NumberFormat().format(tien_ship) + "VNĐ");
+                $('.total').val(new_total);
+                $('.total').html(new_total);
+            }
+        }
         </script>

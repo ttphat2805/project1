@@ -16,7 +16,7 @@
                         <div class="col-lg-8 col-xl-7 position-static d-none d-lg-block col-custom">
                             <nav class="main-nav d-flex justify-content-center">
                                 <ul class="nav">
-                                <li>
+                                    <li>
                                         <a class="ahrefactive" href="<?= BASE_URL ?>/">
                                             <span class="menu-text">Trang chủ</span>
                                         </a>
@@ -33,7 +33,7 @@
 
                                     </li>
                                     <li>
-                                        <a  class="ahrefactive" href="<?=BASE_URL?>/blog">
+                                        <a class="ahrefactive" href="<?= BASE_URL ?>/blog">
                                             <span class="menu-text"> Tin tức</span>
                                         </a>
 
@@ -80,103 +80,37 @@
                                         <span class="cart-item_count"><?php echo $_SESSION['cart_number'] ??'0' ?></span>
                                     </a>
                                     <div class="cart-item-wrapper dropdown-sidemenu dropdown-hover-2">
-                                        <div class="single-cart-item">
+                                        
+                                        <?php if(isset($_SESSION['cart_Item'])){
+                                            $total = 0;
+                                                foreach( $_SESSION['cart_Item'] as $item) {
+                                                    $total += $item['total'];
+                                                ?>  
+                                                    <div class="single-cart-item">
                                             <div class="cart-img">
-                                                <a href="cart.html"><img src="https://xpressrow.com/html/frudbaz/assets/img/shop/cart/img_01.jpg" alt=""></a>
+                                                <a href="cart.html"><img src="<?= BASE_URL.'/public/assets/images/product/'.$item['image'] ?>" alt=""></a>
                                             </div>
                                             <div class="cart-text">
-                                                <h5 class="title"><a href="cart.html">Sản phẩm 1</a></h5>
+                                                <h5 class="title"><a href="cart.html"><?= $item['name'] ?></a></h5>
                                                 <div class="cart-text-btn">
                                                     <div class="cart-qty">
-                                                        <span>1×</span>
-                                                        <span class="cart-price">$98.00</span>
+                                                        <span><?= $item['quantity'] ?>×</span>
+                                                        <span class="cart-price"><?= number_format($item['total']) ?>VNĐ</span>
                                                     </div>
-                                                    <button type="button"><i class="ion-trash-b"></i></button>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="single-cart-item">
-                                            <div class="cart-img">
-                                                <a href="cart.html"><img src="https://xpressrow.com/html/frudbaz/assets/img/shop/cart/img_01.jpg" alt=""></a>
-                                            </div>
-                                            <div class="cart-text">
-                                                <h5 class="title"><a href="cart.html">Sản phẩm 1</a></h5>
-                                                <div class="cart-text-btn">
-                                                    <div class="cart-qty">
-                                                        <span>1×</span>
-                                                        <span class="cart-price">$98.00</span>
-                                                    </div>
-                                                    <button type="button"><i class="ion-trash-b"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="single-cart-item">
-                                            <div class="cart-img">
-                                                <a href="cart.html"><img src="https://xpressrow.com/html/frudbaz/assets/img/shop/cart/img_01.jpg" alt=""></a>
-                                            </div>
-                                            <div class="cart-text">
-                                                <h5 class="title"><a href="cart.html">Sản phẩm 1</a></h5>
-                                                <div class="cart-text-btn">
-                                                    <div class="cart-qty">
-                                                        <span>1×</span>
-                                                        <span class="cart-price">$98.00</span>
-                                                    </div>
-                                                    <button type="button"><i class="ion-trash-b"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="single-cart-item">
-                                            <div class="cart-img">
-                                                <a href="cart.html"><img src="https://xpressrow.com/html/frudbaz/assets/img/shop/cart/img_01.jpg" alt=""></a>
-                                            </div>
-                                            <div class="cart-text">
-                                                <h5 class="title"><a href="cart.html">Sản phẩm 1</a></h5>
-                                                <div class="cart-text-btn">
-                                                    <div class="cart-qty">
-                                                        <span>1×</span>
-                                                        <span class="cart-price">$98.00</span>
-                                                    </div>
-                                                    <button type="button"><i class="ion-trash-b"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="single-cart-item">
-                                            <div class="cart-img">
-                                                <a href="cart.html"><img src="https://xpressrow.com/html/frudbaz/assets/img/shop/cart/img_01.jpg" alt=""></a>
-                                            </div>
-                                            <div class="cart-text">
-                                                <h5 class="title"><a href="cart.html">Sản phẩm 1</a></h5>
-                                                <div class="cart-text-btn">
-                                                    <div class="cart-qty">
-                                                        <span>1×</span>
-                                                        <span class="cart-price">$98.00</span>
-                                                    </div>
-                                                    <button type="button"><i class="ion-trash-b"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="single-cart-item">
-                                            <div class="cart-img">
-                                                <a href="cart.html"><img src="https://xpressrow.com/html/frudbaz/assets/img/shop/cart/img_01.jpg" alt=""></a>
-                                            </div>
-                                            <div class="cart-text">
-                                                <h5 class="title"><a href="cart.html">Sản phẩm 1</a></h5>
-                                                <div class="cart-text-btn">
-                                                    <div class="cart-qty">
-                                                        <span>1×</span>
-                                                        <span class="cart-price">$98.00</span>
-                                                    </div>
-                                                    <button type="button"><i class="ion-trash-b"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <?php
+                                                }}
+                                            ?>
                                         <div class="cart-price-total d-flex justify-content-between">
                                             <h5>Total :</h5>
-                                            <h5>$166.00</h5>
+                                            <h5><?= number_format($total) ?>VNĐ</h5>
                                         </div>
                                         <div class="cart-links d-flex justify-content-center">
                                             <a class="obrien-button white-btn" href="<?= BASE_URL ?>/cart">giỏ hàng</a>
-                                            <a class="obrien-button white-btn" href="checkout.html">Thanh toán</a>
+                                            <a class="obrien-button white-btn" href="<?= BASE_URL ?>/order">Thanh toán</a>
                                         </div>
                                     </div>
                                 </li>
@@ -227,7 +161,7 @@
 
                                     </li>
                                     <li>
-                                        <a class="ahrefactive" href="<?=BASE_URL?>/blog">
+                                        <a class="ahrefactive" href="<?= BASE_URL ?>/blog">
                                             <span class="menu-text"> Tin tức</span>
                                         </a>
 
@@ -271,62 +205,41 @@
                                 ?>
                                 <li class="minicart-wrap">
                                     <a href="#" class="minicart-btn toolbar-btn">
-                                    <i class="far fa-shopping-cart"></i>
-                                        <span class="cart-item_count"><?php echo $_SESSION['cart_number'] ??'0' ?></span>
+                                        <i class="far fa-shopping-cart"></i>
+                                        <span class="cart-item_count"><?php echo $_SESSION['cart_number'] ?? '0' ?></span>
                                     </a>
                                     <div class="cart-item-wrapper dropdown-sidemenu dropdown-hover-2">
-                                        <div class="single-cart-item">
+                                        
+                                        <?php if(isset($_SESSION['cart_Item'])){
+                                            $total = 0;
+                                                foreach( $_SESSION['cart_Item'] as $item) {
+                                                    $total += $item['total'];
+                                                ?>  
+                                                    <div class="single-cart-item">
                                             <div class="cart-img">
-                                                <a href="cart.html"><img src="<?php echo BASE_URL; ?>/public/assets/images/cart/1.jpg" alt=""></a>
+                                                <a href="cart.html"><img src="<?= BASE_URL.'/public/assets/images/product/'.$item['image'] ?>" alt=""></a>
                                             </div>
                                             <div class="cart-text">
-                                                <h5 class="title"><a href="cart.html">11. Product with video - navy</a></h5>
+                                                <h5 class="title"><a href="cart.html"><?= $item['name'] ?></a></h5>
                                                 <div class="cart-text-btn">
                                                     <div class="cart-qty">
-                                                        <span>1×</span>
-                                                        <span class="cart-price">$98.00</span>
+                                                        <span><?= $item['quantity'] ?>×</span>
+                                                        <span class="cart-price"><?= number_format($item['total']) ?>VNĐ</span>
                                                     </div>
-                                                    <button type="button"><i class="ion-trash-b"></i></button>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="single-cart-item">
-                                            <div class="cart-img">
-                                                <a href="cart.html"><img src="<?php echo BASE_URL; ?>/public/assets/images/cart/2.jpg" alt=""></a>
-                                            </div>
-                                            <div class="cart-text">
-                                                <h5 class="title"><a href="cart.html" title="10. This is the large title for testing large title and there is an image for testing - white">10. This is the large title for testing...</a></h5>
-                                                <div class="cart-text-btn">
-                                                    <div class="cart-qty">
-                                                        <span>1×</span>
-                                                        <span class="cart-price">$98.00</span>
-                                                    </div>
-                                                    <button type="button"><i class="ion-trash-b"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="single-cart-item">
-                                            <div class="cart-img">
-                                                <a href="cart.html"><img src="assets/images/cart/3.jpg" alt=""></a>
-                                            </div>
-                                            <div class="cart-text">
-                                                <h5 class="title"><a href="cart.html">1. New and sale badge product - s / red</a></h5>
-                                                <div class="cart-text-btn">
-                                                    <div class="cart-qty">
-                                                        <span>1×</span>
-                                                        <span class="cart-price">$98.00</span>
-                                                    </div>
-                                                    <button type="button"><i class="ion-trash-b"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <?php
+                                                }}
+                                            ?>
                                         <div class="cart-price-total d-flex justify-content-between">
                                             <h5>Total :</h5>
-                                            <h5>$166.00</h5>
+                                            <h5><?= number_format($total) ?>VNĐ</h5>
                                         </div>
                                         <div class="cart-links d-flex justify-content-center">
-                                            <a class="obrien-button white-btn" href="<?= BASE_URL ?>/cart">View cart</a>
-                                            <a class="obrien-button white-btn" href="checkout.html">Checkout</a>
+                                            <a class="obrien-button white-btn" href="<?= BASE_URL ?>/cart">giỏ hàng</a>
+                                            <a class="obrien-button white-btn" href="<?= BASE_URL ?>/order">Thanh toán</a>
                                         </div>
                                     </div>
                                 </li>
@@ -407,7 +320,7 @@
 
                             </li>
                             <li>
-                                <a class="ahrefactive" href="<?=BASE_URL?>/blog">
+                                <a class="ahrefactive" href="<?= BASE_URL ?>/blog">
                                     <span class="menu-text"> Tin tức</span>
                                 </a>
 

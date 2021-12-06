@@ -32,7 +32,7 @@ class Chat extends Controller
                 $this->user->addChat($in_id,$out_id,$content);
             }else{
                 $_SESSION['toastr-code'] = "warning";
-                $_SESSION['toastr-noti'] = "đăng nhập đi thằng lzz";
+                $_SESSION['toastr-noti'] = "Đăng nhập để";
             }
             
         }

@@ -16,7 +16,7 @@
                                 <div class="single-image border background-zoom" onmousemove="zoom(event)" style="background-image: url('<?php echo BASE_URL ?>/public/assets/images/product/<?= $data['productdetails']['image'] ?>')">
                                     <div class="single-image border">
                                         <a href="">
-                                            <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $data['productdetails']['image'] ?>" alt="Product">
+                                            <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $data['productdetails']['image'] ?>" alt="Product" class="fix-height-1">
                                         </a>
                                     </div>
                                 </div>
@@ -25,7 +25,7 @@
                                 foreach ($data['gallery'] as $img) :
                                 ?>
                                     <div class="single-image border background-zoom" onmousemove="zoom(event)" style="background-image: url('<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery'] ?>')">
-                                        <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery'] ?>" alt="Product">
+                                        <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery'] ?>" alt="Product" class="fix-height-1">
                                     </div>
                                 <?php endforeach; ?>
                             </div>
@@ -44,13 +44,13 @@
                         ]'>
 
                                 <div class="single-thumb border">
-                                    <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?php echo $data['productdetails']['image'] ?>" alt="Product thumnail">
+                                    <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?php echo $data['productdetails']['image'] ?>" class="fix-height" alt="Product thumnail">
                                 </div>
                                 <?php
                                 foreach ($data['gallery'] as $img) :
                                 ?>
                                     <div class="single-thumb border">
-                                        <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery'] ?>" alt="Product thumnail">
+                                        <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $img['gallery'] ?>" alt="Product thumnail" class="fix-height">
                                     </div>
                                 <?php endforeach; ?>
                             </div>
@@ -58,9 +58,12 @@
                     </div>
 
                     <div class="col-lg-7 col-custom">
-                        <?php var_dump($data['product_type']); ?>
+                        <?php //var_dump($data['product_type']); ?>
                         <form action="<?= BASE_URL ?>/cart/addcart/<?= $data['productdetails']['idproduct'] ?>" method="post">
-
+                        <input type="hidden" class="valueid" value="<?= $data['productdetails']['idproduct'] ?>">
+                        <form action="<?= BASE_URL ?>/cart/addcart/<?= $data['productdetails']['idproduct'] ?>" method="post" class="parent_productid">
+                                <input type="hidden" id="value_idproduct" value="<?= $data['productdetails']['idproduct'] ?>">
+                                <input type="hidden" value="<?= $data['productdetails']['name'] ?>">
                                 <div class="product-summery position-relative">
                                     <div class="product-head mb-3">
                                         <h2 class="product-title">
@@ -118,7 +121,7 @@
                                     <div class="quantity-with_btn mb-4">
                                         <div class="quantity">
                                             <div class="cart-plus-minus">
-                                                <input class="cart-plus-minus-box" name="quantity" value="1" type="text">
+                                                <input class="cart-plus-minus-box" name="quantity" value="1" type="text" data-max="<?= $data['productdetails']['quantity'] ?>">
                                                 <div class="dec qtybutton">-</div>
                                                 <div class="inc qtybutton">+</div>
                                             </div>
