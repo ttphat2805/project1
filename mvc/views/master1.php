@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>G6FOOD</title>
+    <title>G6Grain</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo BASE_URL; ?>/public/assets/images/logoweb.png">
@@ -68,8 +68,8 @@
         ]'>
                     <div class="slide-item slide-1 bg-position slide-bg-1 animation-style-01">
                         <div class="slider-content">
-                            <h4 class="slider-small-title">Cập nhật mỗi ngày</h4>
-                            <h2 class="slider-large-title">Pizza ngon ngất ngây</h2>
+                            <h4 class="slider-small-title">Ăn sạch sống lành</h4>
+                            <h2 class="slider-large-title">100% Tự nhiên - hữu cơ</h2>
                             <div class="slider-btn">
                                 <a class="obrien-button black-btn" href="<?=BASE_URL?>/products">Mua ngay</a>
                             </div>
@@ -78,7 +78,7 @@
                     <div class="slide-item slide-2 bg-position slide-bg-1 animation-style-01">
                         <div class="slider-content">
                             <h4 class="slider-small-title">Đảm bảo sức khỏe</h4>
-                            <h2 class="slider-large-title">Combo khuyến mãi</h2>
+                            <h2 class="slider-large-title">Ngon - nguyên chất</h2>
                             <div class="slider-btn">
                                 <a class="obrien-button black-btn" href="<?=BASE_URL?>/products">Mua ngay</a>
                             </div>
@@ -86,8 +86,8 @@
                     </div>
                     <div class="slide-item slide-3 bg-position slide-bg-1 animation-style-01">
                         <div class="slider-content">
-                            <h4 class="slider-small-title">Đảm bảo an toàn</h4>
-                            <h2 class="slider-large-title">Giờ vàng nhanh tay</h2>
+                            <h4 class="slider-small-title">Tự nhiên an toàn</h4>
+                            <h2 class="slider-large-title">Thuần khiết - bổ dưỡng</h2>
                             <div class="slider-btn">
                                 <a class="obrien-button black-btn" href="<?=BASE_URL?>/products">Mua ngay</a>
                             </div>
@@ -186,9 +186,9 @@
                                                     <h4 class="title-2"> <a href="<?php echo BASE_URL ?>/productdetail/show/<?= $trend['slug'] ?>"><?= $trend['name'] ?></a></h4>
                                                 </div>
                                                 <div class="product-price">
-                                                    <span class="regular-price "><?= number_format($trend['price']); ?> VNĐ</span>
+                                                    <span class="regular-price "><?= number_format($trend['price']); ?>đ</span>
                                                     <span class="old-price"><del><?= number_format($trend['price'] + 12500);
-                                                                                    ?> VNĐ</del></span>
+                                                                                    ?>đ</del></span>
                                                 </div>
                                                 <div class="product-action d-flex">
                                                     <a title="+ Giỏ hàng" class="add_to_cart">
@@ -220,7 +220,7 @@
                     <div class="row">
                         <div class="col-md-5 col-lg-6 text-center col-custom">
                             <div class="banner-thumb h-100 d-flex justify-content-center align-items-center">
-                                <img src="https://xpressrow.com/html/frudbaz/assets/img/offer/offer_img.png" alt="Banner Thumb">
+                                <img src="https://onlyorganic.com.vn/photos/7/Only_Organic_Banana_Blueberry___quinoa_120g.png" alt="Banner Thumb">
                             </div>
                         </div>
                         <div class="col-md-7 col-lg-6 text-center justify-content-center col-custom">
@@ -266,8 +266,8 @@
                                             <h4 class="title-2"> <a href="<?php echo BASE_URL ?>/productdetail/show/<?= $item['slug'] ?>"><?= $item['name'] ?></a></h4>
                                         </div>
                                         <div class="product-price">
-                                            <span class="regular-price"><span class="price-view"><?= number_format($item['price']) ?> </span> VNĐ</span>
-                                            <span class="old-price"><del class="oldprice-view"><?= number_format($item['price'] + 12500) ?></del>VNĐ</span>
+                                            <span class="regular-price"><span class="price-view"><?= number_format($item['price']) ?></span>đ</span>
+                                            <span class="old-price"><del class="oldprice-view"><?= number_format($item['price'] + 12500) ?></del>đ</span>
                                         </div>
                                         <?php
                                         $product_attr = $homepage->getproduct_detail_attr($item['idproduct']);
@@ -366,7 +366,7 @@
                                                 <span><?= $month ?></span>
                                             </div>
                                             <div class="post-meta">
-                                                <span class="author">Tác giả: G6'Food</span>
+                                                <span class="author">Tác giả: G6Grain</span>
                                             </div>
                                             <h2 class="post-title ">
                                                 <a href="<?= BASE_URL ?>/blogdetail/show/<?= $blog['slug'] ?>"><?= $blog['title'] ?></a>

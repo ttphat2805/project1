@@ -405,14 +405,13 @@
                 data: {
                 },
                 success: function(data) {
-                    console.log(data);
                     $(".show_mini_cart").html(data);
                 },
             });
         }
-    setInterval(function(){
-        fetchminicart();
-    }, 1000);
+    // setInterval(function(){
+    //     fetchminicart();
+    // }, 1000);
     })
 
 </script>

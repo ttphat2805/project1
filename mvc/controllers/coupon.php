@@ -26,7 +26,7 @@ class coupon extends Controller {
             $this_coupon = $this->coupon->getCoupon($coupon_code);
         }
         if ($total_bill < $this_coupon['min_order']) {
-            $output = 'Hóa đơn của bạn phải lớn hơn '.number_format($this_coupon['min_order']).'VNĐ';
+            $output = 'Hóa đơn của bạn phải lớn hơn '.number_format($this_coupon['min_order']).'đ';
         }
         elseif ($this_coupon['quantity'] == 0){
             $output = "Mã giảm giá này đã hết lượt dùng";

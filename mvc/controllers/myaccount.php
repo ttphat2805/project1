@@ -125,7 +125,7 @@ class myaccount extends Controller
                             </a>
                         </td>
                         <td width="50%">' . $item['name'] . '</td>
-                        <td width="20%">' . number_format($item['price']) . ' VNĐ </td>
+                        <td width="20%">' . number_format($item['price']) . 'đ </td>
                         <td class="pro-remove"><a class="btn_del_wishlist" id="' . $item['prodidwl'] . '">
                         <i class="ion-trash-b"></i>
                         </a></td>

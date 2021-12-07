@@ -1,10 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Quicksand:wght@300;400;500;600;700&display=swap');
 body {
     font-size: 15px;
     line-height: 1.6;
     font-weight: 400;
     color: #303030;
-    font-family: "Roboto", sans-serif;
+    font-family: "Quicksand", Helvetica, Arial, sans-serif;
     scroll-behavior: smooth;
 }
 
@@ -14,7 +14,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: "Roboto", sans-serif;
+    font-family: "Quicksand", Helvetica, Arial, sans-serif;
     color: #1B1B1C;
     font-weight: 700;
     margin: 0;
@@ -610,7 +610,7 @@ button,
 
 .countdown-wrapper .single-countdown .single-countdown_time {
     font-size: 40px;
-    font-family: "Roboto", sans-serif;
+    font-family: "Quicksand", Helvetica, Arial, sans-serif;
     font-weight: 600;
     line-height: 40px;
     color: #1B1B1C;
@@ -625,7 +625,7 @@ button,
 .countdown-wrapper .single-countdown .single-countdown_text {
     font-size: 22px;
     line-height: 22px;
-    font-family: "Roboto", sans-serif;
+    font-family: "Quicksand", Helvetica, Arial, sans-serif;
     font-weight: 600;
     color: #1B1B1C;
 }
@@ -668,7 +668,7 @@ button,
 
 .countdown-wrapper.countdown-style-2 .single-countdown .single-countdown_time {
     font-size: 14px;
-    font-family: "Roboto", sans-serif;
+    font-family: "Quicksand", Helvetica, Arial, sans-serif;
     font-weight: 500;
     line-height: 16px;
     color: #ffffff;
@@ -678,7 +678,7 @@ button,
 .countdown-wrapper.countdown-style-2 .single-countdown .single-countdown_text {
     font-size: 14px;
     line-height: 16px;
-    font-family: "Roboto", sans-serif;
+    font-family: "Quicksand", Helvetica, Arial, sans-serif;
     font-weight: 500;
     color: #ffffff;
 }
@@ -1251,7 +1251,7 @@ button,
 
 .header-top-area .header-top-wrapper .header-top-button a {
     font-size: 14px;
-    font-family: "Roboto", sans-serif;
+    font-family: "Quicksand", Helvetica, Arial, sans-serif;
     padding: 5px 20px;
     margin-left: 15px;
     background-color: #E98C81;
@@ -1354,8 +1354,8 @@ button,
     display: block;
     padding: 8px 17px;
     font-size: 15px;
-    font-family: "Roboto", sans-serif;
-    font-weight: 600;
+    font-family: "Quicksand", Helvetica, Arial, sans-serif;
+    font-weight: bold;
     line-height: 18px;
 }
 
@@ -1395,7 +1395,7 @@ button,
     -ms-flex-pack: justify;
     justify-content: space-between;
     text-transform: capitalize;
-    font-family: "Roboto", sans-serif;
+    font-family: "Quicksand", Helvetica, Arial, sans-serif;
     line-height: 18px;
     position: relative;
     color: #454545;
@@ -1472,7 +1472,7 @@ button,
 .mega-menu .menu-colum ul li .mega-menu-text {
     position: relative;
     font-size: 18px;
-    font-family: "Roboto", sans-serif;
+    font-family: "Quicksand", Helvetica, Arial, sans-serif;
     display: table-caption;
     padding: 0px 20px 0px 0px;
     margin: 0px 0px 10px 20px;
@@ -1492,7 +1492,7 @@ button,
 .mega-menu .menu-colum ul li a {
     padding: 10px 20px;
     display: block;
-    font-family: "Roboto", sans-serif;
+    font-family: "Quicksand", Helvetica, Arial, sans-serif;
     line-height: 20px;
     color: #454545;
     font-size: 14px;
@@ -2565,7 +2565,7 @@ button,
     font-weight: 600;
     display: inline-block;
     margin-bottom: 3px;
-    font-family: "Roboto", sans-serif;
+    font-family: "Quicksand", Helvetica, Arial, sans-serif;
 }
 
 .sidebar-product .product-content .title-2:hover {
@@ -3002,7 +3002,7 @@ button,
     color: #ffffff;
     background-color: #1B1B1C;
     font-size: 18px;
-    font-family: "Roboto", sans-serif;
+    font-family: "Quicksand", Helvetica, Arial, sans-serif;
     border-color: #1B1B1C;
     border-radius: 0px;
 }
@@ -4700,7 +4700,7 @@ button,
     display: inline-block;
     font-size: 14px;
     font-weight: 400;
-    font-family: "Roboto", sans-serif;
+    font-family: "Quicksand", Helvetica, Arial, sans-serif;
     letter-spacing: 0.025em;
     padding: 8px 25px;
     text-transform: capitalize;
@@ -5259,7 +5259,7 @@ button,
     top: 30px;
     left: 30px;
     background: #1B1B1C;
-    font-family: "Roboto", sans-serif;
+    font-family: "Quicksand", Helvetica, Arial, sans-serif;
     font-weight: 500;
     font-size: 12px;
     height: 20px;
@@ -5320,7 +5320,7 @@ button,
     -ms-transform: translateX(-20px);
     transform: translateX(-20px);
     font-size: 22px;
-    font-family: "Roboto", sans-serif;
+    font-family: "Quicksand", Helvetica, Arial, sans-serif;
     margin-right: 15px;
 }
 
@@ -5523,7 +5523,7 @@ button,
 }
 
 .newsletter-area {
-    background: #f2f2f2 url(../images/banner/home-slider-2.jpg) no-repeat scroll center center/cover;
+    background: #f2f2f2 url(../images/banner/home-slider-2.png) no-repeat scroll center center/cover;
     height: 430px;
 }
 
@@ -5956,7 +5956,7 @@ button,
 .breadcrumbs-area .breadcrumb-content ul li a {
     font-size: 18px;
     color: #1B1B1C;
-    font-family: "Roboto", sans-serif;
+    font-family: "Quicksand", Helvetica, Arial, sans-serif;
     font-weight: 400;
     line-height: 1;
 }

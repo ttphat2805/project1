@@ -53,7 +53,7 @@
                 <h1>Admin</h1>
             </b>
             <b>
-                <h2>G6'Food</h2>
+                <h2>G6Grain</h2>
             </b>
         </div>
         <div class="messages">
@@ -78,7 +78,7 @@
                                 <img src="<?php echo BASE_URL; ?>/public/assets/images/logo/footer.png" widget="150px" height="130px" alt="Logo Image">
                             </a>
                         </div>
-                        <p class="desc-content">G6' Food là cửa hàng bán các sản phẩm dinh dưỡng hàng ngày tốt nhất của bạn. Bạn cần loại dinh dưỡng nào, bạn có thể lấy ở đây</p>
+                        <p class="desc-content">G6Grain là cửa hàng bán các sản phẩm dinh dưỡng hàng ngày tốt nhất của bạn. Bạn cần loại dinh dưỡng nào, bạn có thể lấy ở đây</p>
                         <div class="social-links">
                             <ul class="d-flex">
                                 <li>

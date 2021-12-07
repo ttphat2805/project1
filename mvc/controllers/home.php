@@ -51,7 +51,7 @@ class Home extends Controller
                         <div class="cart-text-btn">
                             <div class="cart-qty">
                                 <span>' . $item['quantity'] . '×</span>
-                                <span class="cart-price">' . number_format($item['total']) . 'VNĐ</span>
+                                <span class="cart-price">' . number_format($item['total']) . 'đ</span>
                             </div>
                         </div>
                     </div>
@@ -67,7 +67,7 @@ class Home extends Controller
         } else {
             $output .= '';
         }
-        $output .= 'VNĐ</h5>
+        $output .= 'đ</h5>
         </div>
         <div class="cart-links d-flex justify-content-center">
             <a class="obrien-button white-btn custom-button-cart" href="' . $url . '/cart">giỏ hàng</a>
