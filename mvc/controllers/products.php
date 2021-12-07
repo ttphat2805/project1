@@ -8,6 +8,8 @@ class products extends Controller
     {
         $this->product = $this->model("productmodels");
         $this->category = $this->model("categorymodels");
+        $this->cart = $this->model("cartmodels");
+
     }
     function Show()
     {
@@ -18,6 +20,7 @@ class products extends Controller
             [
                 "pages" => "products",
                 "category" => $this->category->getcategory(),
+                "toporder" => $this->cart->toporder('4'),
             ]
         );
     }
@@ -65,7 +68,7 @@ class products extends Controller
             foreach ($result as $item) {
                 $product_attr = $this->product->getproducts_detail_attr($item['idproduct']);
                 $attr_id = $this->product->getproducts_type_id($item['idproduct']);
-                $output .= '<div class="col-custom product-area col-lg-4 col-md-6 col-sm-6">
+                $output .= '<div class="col-custom product-area product-last col-lg-4 col-md-6 col-sm-6">
                 <div class="single-product position-relative">
                 <input type="hidden" class="idproduct" value="' . $item['idproduct'] . '">
                     <div class="product-image">
@@ -99,8 +102,8 @@ class products extends Controller
                         $output .= "<div class='non-size' data-prod='".$attr_id['id']."'></div>";
                     endif;
                     $output .= '<div class="product-price">
-                                <span class="regular-price ">' . number_format($item['price']) . ' VNĐ</span>
-                                <span class="old-price"><del>' . number_format($item['price']) . ' VNĐ</del></span>
+                                <span class="regular-price ">' . number_format($item['price']) . 'đ</span>
+                                <span class="old-price"><del>' . number_format($item['price']+12500) . 'đ</del></span>
                             </div>
                             
                             <div class="product-action d-flex position-absolute">
@@ -118,8 +121,8 @@ class products extends Controller
                             <h4 class="title-2"> <a href="' . $url . '/productdetail/show/' . $item['slug'] . '">' . $item['name'] . '</a></h4>
                         </div>
                         <div class="product-price">
-                            <span class="regular-price ">' . number_format($item['price']) . ' VNĐ</span>
-                            <span class="old-price"><del>' . number_format($item['price']) . ' VNĐ</del></span>
+                            <span class="regular-price ">' . number_format($item['price']) . 'đ</span>
+                            <span class="old-price"><del>' . number_format($item['price']) . 'đ</del></span>
                         </div>';
                 if ($attr_id['attribute_id'] !== NULL) :
                     $output .= '<div class="product-size animate-size list mb-2">
@@ -135,8 +138,8 @@ class products extends Controller
                         $output .= "<div class='non-size' data-prod='".$attr_id['id']."'></div>";
                     endif;
                     $output .= '<div class="product-price">
-                                <span class="regular-price ">' . number_format($item['price']) . ' VNĐ</span>
-                                <span class="old-price"><del>' . number_format($item['price']) . ' VNĐ</del></span>
+                                <span class="regular-price ">' . number_format($item['price']) . 'đ</span>
+                                <span class="old-price"><del>' . number_format($item['price']) . 'đ</del></span>
                             </div>
                             
                             <div class="product-action d-flex position-absolute">

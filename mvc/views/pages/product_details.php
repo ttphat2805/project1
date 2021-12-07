@@ -71,8 +71,8 @@
                                         </h2>
                                     </div>
                                     <div class="price-box mb-2">
-                                        <span class="regular-price"><span class="price-view"><?= number_format($data['productdetails']['price']) ?> </span> VNĐ</span>
-                                        <span class="old-price"><del class="oldprice-view"><?= number_format($data['productdetails']['price'] + 12500) ?></del>VNĐ</span>
+                                        <span class="regular-price"><span class="price-view"><?= number_format($data['productdetails']['price']) ?></span>đ</span>
+                                        <span class="old-price"><del class="oldprice-view"><?= number_format($data['productdetails']['price'] + 12500) ?></del>đ</span>
                                     </div>
                                     <div class="product-rating mb-3">
                                         <i class="fa fa-star"></i>
@@ -127,7 +127,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="add-to_cart mb-4">
+                                    <div class="add-to_cart mb-4 mt-3">
                                         <input type="submit" value="Mua ngay" name="btn_submit" class="btn obrien-button primary-btn" href="">
                                         <a class="btn obrien-button-2 treansparent-color pt-0 pb-0 addwishlistdetail">+ Yêu thích</a>
                                     </div>
@@ -299,9 +299,9 @@
                                                 <h4 class="title-2"> <a href="<?php echo BASE_URL ?>/productdetail/show/<?= $trend['slug'] ?>"><?= $trend['name'] ?></a></h4>
                                             </div>
                                             <div class="product-price">
-                                                <span class="regular-price "><?= number_format($trend['price']); ?> VNĐ</span>
+                                                <span class="regular-price "><?= number_format($trend['price']); ?>đ</span>
                                                 <span class="old-price"><del><?= number_format($trend['price'] + 12500);
-                                                                                ?> VNĐ</del></span>
+                                                                                ?>đ</del></span>
                                             </div>
                                             <div class="product-action d-flex">
                                                 <a href="" title="+ Giỏ hàng">

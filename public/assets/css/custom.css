@@ -66,7 +66,7 @@ a.ahrefactive.active {
     margin-top: 5px;
     margin-right: 2px;
     background: #fff;
-    width: 35px;
+    width: 50px;
     height: 30px;
     line-height: 30px;
     position: relative;
@@ -75,6 +75,10 @@ a.ahrefactive.active {
     font-weight: 500;
     text-align: center;
     cursor: pointer;
+}
+
+.product-last:last-child {
+    padding-bottom: 60px;
 }
 
 
@@ -977,10 +981,18 @@ screen and (max-width: 450px) {
     border-color: #ffc107;
 }
 
+.main-content {
+    overflow: hidden;
+}
+
 .status-order.progresss {
     color: #fff;
     background-color: #28a745;
     border-color: #28a745;
+}
+
+.custom-button-cart {
+    font-size: 14px;
 }
 
 .status-order.processing {
@@ -1160,8 +1172,8 @@ screen and (max-width: 450px) {
 }
 
 .modal-custom {
-    position: fixed;
-    top: -100%;
+    position: absolute;
+    top: -200%;
     transform: translateX(-50%);
 }
 

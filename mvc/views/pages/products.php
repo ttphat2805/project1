@@ -176,69 +176,24 @@
                         <div class="widget-list widget-mb-4">
                             <h3 class="widget-title">Món ăn nổi bật</h3>
                             <div class="sidebar-body">
+                                <?php
+                                foreach ($data['toporder'] as $top):
+                                ?>
                                 <div class="sidebar-product align-items-center">
-                                    <a href="product-details.html" class="image">
-                                        <img src="assets/images/product/small-product/1.jpg" alt="product">
+                                    <a href="<?=BASE_URL?>/productdetail/show/<?=$top['slug']?>" class="image">
+                                    <img src="<?php echo BASE_URL ?>/public/assets/images/product/<?= $top['image'] ?>" alt="">
                                     </a>
                                     <div class="product-content">
                                         <div class="product-title">
-                                            <h4 class="title-2"> <a href="product-details.html">Product dummy name</a></h4>
+                                            <h4 class="title-2"> <a href="<?=BASE_URL?>/productdetail/show/<?=$top['slug']?>"><?=$top['name']?></a></h4>
                                         </div>
                                         <div class="price-box">
-                                            <span class="regular-price ">$80.00</span>
-                                            <span class="old-price"><del>$90.00</del></span>
-                                        </div>
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
+                                            <span class="regular-price "><?=number_format($top['price']) ?>đ</span>
+                                            <span class="old-price"><del class="oldprice-view"><?= number_format($top['price'] + 12500) ?></del>đ</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="sidebar-product align-items-center">
-                                    <a href="product-details.html" class="image">
-                                        <img src="assets/images/product/small-product/2.jpg" alt="product">
-                                    </a>
-                                    <div class="product-content">
-                                        <div class="product-title">
-                                            <h4 class="title-2"> <a href="product-details.html">Product dummy title</a></h4>
-                                        </div>
-                                        <div class="price-box">
-                                            <span class="regular-price ">$50.00</span>
-                                            <span class="old-price"><del>$60.00</del></span>
-                                        </div>
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-half-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="sidebar-product align-items-center">
-                                    <a href="product-details.html" class="image">
-                                        <img src="assets/images/product/small-product/3.jpg" alt="product">
-                                    </a>
-                                    <div class="product-content">
-                                        <div class="product-title">
-                                            <h4 class="title-2"> <a href="product-details.html">Product title here</a></h4>
-                                        </div>
-                                        <div class="price-box">
-                                            <span class="regular-price ">$40.00</span>
-                                            <span class="old-price"><del>$50.00</del></span>
-                                        </div>
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-half-o"></i>
-                                            <i class="fa fa-star-half-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                    </div>
-                                </div>
+                                <?php endforeach; ?>
                             </div>
                         </div>
                     </div>
@@ -280,9 +235,9 @@
 
         // SEARCH PRODUCTS
         $('.search-products').keyup(function() {
+            let page = $('input[name="page"]:checked').val();
             var search = $('.search-products').val();
             var id_category = $('.get-id-category:checked').val();
-            alert(page);
             $.ajax({
                 url: "<?= BASE_URL ?>/products/fetchproducts",
                 method: "POST",

@@ -14,9 +14,9 @@ Class cartmodels extends db{
         return $stmt->rowCount();
     }
 
-    function toporder(){
-        $query = "SELECT b.quantity,b.price,d.name,d.image FROM orders a inner join orderdetail b on a.id=b.order_id
-        join product_type c on b.product_type_id = c.id join products d on c.product_id = d.id where a.status = 4 LIMIT 5";
+    function toporder($limit){
+        $query = "SELECT b.quantity,b.price,d.name,d.slug,d.image FROM orders a inner join orderdetail b on a.id=b.order_id
+        join product_type c on b.product_type_id = c.id join products d on c.product_id = d.id where a.status = 4 LIMIT $limit";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();

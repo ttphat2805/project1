@@ -82,8 +82,8 @@
         }
     });
 
-    // setInterval(function(){
-    //     selectMsg();
-    // }, 1000);
+    setInterval(function(){
+        selectMsg();
+    }, 1000);
 });
 </script>

@@ -1,6 +1,9 @@
 <header class="main-header-area">
     <!-- Header Top Area End Here -->
     <!-- Main Header Area Start -->
+    <?php
+    // session_destroy();
+    ?>
     <div class="main-header">
         <div class="container container-default custom-area">
             <div class="row">
@@ -72,46 +75,60 @@
                                             </div>
                                     </li>
                                 <?php
+                                            //  session_destroy();
                                         }
                                 ?>
                                 <li class="minicart-wrap">
                                     <a href="#" class="minicart-btn toolbar-btn">
                                         <i class="ion-bag"></i>
-                                        <span class="cart-item_count"><?php echo $_SESSION['cart_number'] ??'0' ?></span>
+                                        <span class="cart-item_count"><?php
+                                                                        if (isset($_SESSION['cart_number'])) {
+                                                                            echo $_SESSION['cart_number'];
+                                                                        } else {
+                                                                            echo '0';
+                                                                        }
+                                                                        ?></span>
                                     </a>
-                                    <div class="cart-item-wrapper dropdown-sidemenu dropdown-hover-2">
-                                        
-                                        <?php if(isset($_SESSION['cart_Item'])){
+                                    <div class="cart-item-wrapper dropdown-sidemenu dropdown-hover-2 show_mini_cart">
+
+                                        <!-- <?php if (isset($_SESSION['cart_Item'])) {
                                             $total = 0;
-                                                foreach( $_SESSION['cart_Item'] as $item) {
-                                                    $total += $item['total'];
-                                                ?>  
-                                                    <div class="single-cart-item">
-                                            <div class="cart-img">
-                                                <a href="cart.html"><img src="<?= BASE_URL.'/public/assets/images/product/'.$item['image'] ?>" alt=""></a>
-                                            </div>
-                                            <div class="cart-text">
-                                                <h5 class="title"><a href="cart.html"><?= $item['name'] ?></a></h5>
-                                                <div class="cart-text-btn">
-                                                    <div class="cart-qty">
-                                                        <span><?= $item['quantity'] ?>×</span>
-                                                        <span class="cart-price"><?= number_format($item['total']) ?>VNĐ</span>
+                                            foreach ($_SESSION['cart_Item'] as $item) {
+                                                $total += $item['total'];
+                                        ?>
+                                                <div class="single-cart-item">
+                                                    <div class="cart-img">
+                                                        <a href="cart.html"><img src="<?= BASE_URL . '/public/assets/images/product/' . $item['image'] ?>" alt=""></a>
                                                     </div>
-                                                    
+                                                    <div class="cart-text">
+                                                        <h5 class="title"><a href="cart.html"><?= $item['name'] ?></a></h5>
+                                                        <div class="cart-text-btn">
+                                                            <div class="cart-qty">
+                                                                <span><?= $item['quantity'] ?>×</span>
+                                                                <span class="cart-price"><?= number_format($item['total']) ?>VNĐ</span>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
                                         <?php
-                                                }}
-                                            ?>
+                                            }
+                                        }
+                                        ?>
                                         <div class="cart-price-total d-flex justify-content-between">
-                                            <h5>Total :</h5>
-                                            <h5><?php if(isset($total)) number_format($total) ?>VNĐ</h5>
+                                            <h5>Tổng :</h5>
+                                            <h5><?php
+                                                if (isset($total)) {
+                                                    echo number_format($total);
+                                                } else {
+                                                    echo '';
+                                                }
+                                                ?>VNĐ</h5>
                                         </div>
                                         <div class="cart-links d-flex justify-content-center">
-                                            <a class="obrien-button white-btn" href="<?= BASE_URL ?>/cart">giỏ hàng</a>
-                                            <a class="obrien-button white-btn" href="<?= BASE_URL ?>/order">Thanh toán</a>
-                                        </div>
+                                            <a class="obrien-button white-btn custom-button-cart" href="<?= BASE_URL ?>/cart">giỏ hàng</a>
+                                            <a class="obrien-button white-btn custom-button-cart" href="<?= BASE_URL ?>/order">Thanh toán</a>
+                                        </div> -->
                                     </div>
                                 </li>
                                 <li class="mobile-menu-btn d-lg-none">
@@ -205,42 +222,55 @@
                                 ?>
                                 <li class="minicart-wrap">
                                     <a href="#" class="minicart-btn toolbar-btn">
-                                        <i class="far fa-shopping-cart"></i>
-                                        <span class="cart-item_count"><?php echo $_SESSION['cart_number'] ?? '0' ?></span>
+                                        <i class="ion-bag"></i>
+                                        <span class="cart-item_count"><?php
+                                                                        if (isset($_SESSION['cart_number'])) {
+                                                                            echo $_SESSION['cart_number'];
+                                                                        } else {
+                                                                            echo '0';
+                                                                        }
+                                                                        ?></span>
                                     </a>
-                                    <div class="cart-item-wrapper dropdown-sidemenu dropdown-hover-2">
-                                        
-                                        <?php if(isset($_SESSION['cart_Item'])){
+                                    <div class="cart-item-wrapper dropdown-sidemenu dropdown-hover-2 show_mini_cart">
+<!-- 
+                                        <?php if (isset($_SESSION['cart_Item'])) {
                                             $total = 0;
-                                                foreach( $_SESSION['cart_Item'] as $item) {
-                                                    $total += $item['total'];
-                                                ?>  
-                                                    <div class="single-cart-item">
-                                            <div class="cart-img">
-                                                <a href="cart.html"><img src="<?= BASE_URL.'/public/assets/images/product/'.$item['image'] ?>" alt=""></a>
-                                            </div>
-                                            <div class="cart-text">
-                                                <h5 class="title"><a href="cart.html"><?= $item['name'] ?></a></h5>
-                                                <div class="cart-text-btn">
-                                                    <div class="cart-qty">
-                                                        <span><?= $item['quantity'] ?>×</span>
-                                                        <span class="cart-price"><?= number_format($item['total']) ?>VNĐ</span>
+                                            foreach ($_SESSION['cart_Item'] as $item) {
+                                                $total += $item['total'];
+                                        ?>
+                                                <div class="single-cart-item">
+                                                    <div class="cart-img">
+                                                        <a href="#"><img src="<?= BASE_URL . '/public/assets/images/product/' . $item['image'] ?>" alt=""></a>
                                                     </div>
-                                                    
+                                                    <div class="cart-text">
+                                                        <h5 class="title"><a href="#"><?= $item['name'] ?></a></h5>
+                                                        <div class="cart-text-btn">
+                                                            <div class="cart-qty">
+                                                                <span><?= $item['quantity'] ?>×</span>
+                                                                <span class="cart-price"><?= number_format($item['total']) ?>VNĐ</span>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
                                         <?php
-                                                }}
-                                            ?>
+                                            }
+                                        }
+                                        ?>
                                         <div class="cart-price-total d-flex justify-content-between">
-                                            <h5>Total :</h5>
-                                            <h5><?php if(isset($total)) number_format($total) ?>VNĐ</h5>
+                                            <h5>Tổng :</h5>
+                                            <h5><?php
+                                                if (isset($total)) {
+                                                    echo number_format($total);
+                                                } else {
+                                                    echo '';
+                                                }
+                                                ?>VNĐ</h5>
                                         </div>
                                         <div class="cart-links d-flex justify-content-center">
-                                            <a class="obrien-button white-btn" href="<?= BASE_URL ?>/cart">giỏ hàng</a>
-                                            <a class="obrien-button white-btn" href="<?= BASE_URL ?>/order">Thanh toán</a>
-                                        </div>
+                                            <a class="obrien-button white-btn custom-button-cart" href="<?= BASE_URL ?>/cart">giỏ hàng</a>
+                                            <a class="obrien-button white-btn custom-button-cart" href="<?= BASE_URL ?>/order">Thanh toán</a>
+                                        </div> -->
                                     </div>
                                 </li>
                                 <li class="mobile-menu-btn d-lg-none">
@@ -365,3 +395,23 @@
 <button class="box-sms">
     <i class="fal fa-comment-dots"></i>
 </button>
+
+<script>
+    $(document).ready(function() {
+        function fetchminicart() {
+            $.ajax({
+                url: "<?= BASE_URL ?>/home/fetminicart",
+                method: "POST",
+                data: {
+                },
+                success: function(data) {
+                    $(".show_mini_cart").html(data);
+                },
+            });
+        }
+    // setInterval(function(){
+    //     fetchminicart();
+    // }, 1000);
+    })
+
+</script>

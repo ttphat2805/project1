@@ -33,34 +33,39 @@
 <script src="<?php echo BASE_URL ?>/public/assets/js/quan.js"></script>
 <!-- Chat -->
 <section class="avenue-messenger">
-        <div class="menu">
-            <div class="items">
-                <span>
-                    <a href="#" title="Minimize">&mdash;</a><br>
-                    <a href="#" title="End Chat">&#10005;</a>
-                </span>
-            </div>
-            <div class="button button-close-chat"> <i class="fal fa-times"></i> </div>
+    <div class="menu">
+        <div class="items">
+            <span>
+                <a href="#" title="Minimize">&mdash;</a><br>
+                <a href="#" title="End Chat">&#10005;</a>
+            </span>
         </div>
-        <div class="agent-face">
-            <div class="half">
-                <img class="agent circle" src="<?=BASE_URL?>/public/assets/images/logo/logo.png" alt="Jesse Tino"></div>
-            </div>
-            <div class="chat">
-                <div class="chat-title">
-                   <b><h1>Admin</h1></b> 
-                 <b><h2>G6'Food</h2></b>   
-                </div>
-                <div class="messages">
-                    <!-- data here -->
-                </div>
-                <div class="message-box">
-                    <textarea type="text" id="content" class="message-input" placeholder="Type message..."></textarea>
-                    <button type="submit" id="insert_chat" class="message-submit">Gửi</button>
-                </div>
-            </div>
+        <div class="button button-close-chat"> <i class="fal fa-times"></i> </div>
+    </div>
+    <div class="agent-face">
+        <div class="half">
+            <img class="agent circle" src="<?= BASE_URL ?>/public/assets/images/logo/logo.png" alt="Jesse Tino">
         </div>
-    </section>
+    </div>
+    <div class="chat">
+        <div class="chat-title">
+            <b>
+                <h1>Admin</h1>
+            </b>
+            <b>
+                <h2>G6Grain</h2>
+            </b>
+        </div>
+        <div class="messages">
+            <!-- data here -->
+        </div>
+        <div class="message-box">
+            <textarea type="text" id="content" class="message-input" placeholder="Type message..."></textarea>
+            <button type="submit" id="insert_chat" class="message-submit">Gửi</button>
+        </div>
+    </div>
+    </div>
+</section>
 
 <footer class="footer-area">
     <div class="footer-widget-area">
@@ -73,7 +78,7 @@
                                 <img src="<?php echo BASE_URL; ?>/public/assets/images/logo/footer.png" widget="150px" height="130px" alt="Logo Image">
                             </a>
                         </div>
-                        <p class="desc-content">G6' Food là cửa hàng bán các sản phẩm dinh dưỡng hàng ngày tốt nhất của bạn. Bạn cần loại dinh dưỡng nào, bạn có thể lấy ở đây</p>
+                        <p class="desc-content">G6Grain là cửa hàng bán các sản phẩm dinh dưỡng hàng ngày tốt nhất của bạn. Bạn cần loại dinh dưỡng nào, bạn có thể lấy ở đây</p>
                         <div class="social-links">
                             <ul class="d-flex">
                                 <li>
@@ -120,12 +125,12 @@
                     <div class="single-footer-widget">
                         <h2 class="widget-title">Liên kết</h2>
                         <ul class="widget-list">
-                            <li><a href="<?=BASE_URL?>">Trang chủ</a></li>
-                            <li><a href="<?=BASE_URL?>/about">Giới thiệu</a></li>
+                            <li><a href="<?= BASE_URL ?>">Trang chủ</a></li>
+                            <li><a href="<?= BASE_URL ?>/about">Giới thiệu</a></li>
 
-                            <li><a href="<?=BASE_URL?>/products">Cửa hàng</a></li>
+                            <li><a href="<?= BASE_URL ?>/products">Cửa hàng</a></li>
                             <li><a href="shop.html">Tin tức</a></li>
-                            <li><a href="<?=BASE_URL?>/contact">Liên hệ</a></li>
+                            <li><a href="<?= BASE_URL ?>/contact">Liên hệ</a></li>
                         </ul>
                     </div>
                 </div>
@@ -198,48 +203,51 @@
 
 <script>
     $(document).ready(function() {
-    function sendMsg(msg){
-        $.ajax({
-            url: `<?= BASE_URL ?>/chat/sendMsg/`,
-            type: 'POST',
-            data: {
-                'content': msg,
-                'send': 'abc'
-            },
-            success:function(data){
-                console.log(data);
-                selectMsg();
-                $('#content').val('');
+        function sendMsg(msg) {
+            $.ajax({
+                url: `<?= BASE_URL ?>/chat/sendMsg/`,
+                type: 'POST',
+                data: {
+                    'content': msg,
+                    'send': 'abc'
+                },
+                success: function(data) {
+                    console.log(data);
+                    selectMsg();
+                    $('#content').val('');
+                }
+            });
+        }
+
+        function selectMsg() {
+            $.ajax({
+                url: `<?= BASE_URL ?>/chat/SelectMsg/`,
+                type: 'POST',
+                success: function(data) {
+                    $('.messages').html(data);
+                    $('.messages').animate({
+                        scrollTop: $('.messages').scrollHeight
+                    });
+
+                }
+            })
+        }
+        $('#insert_chat').click(function(e) {
+            e.preventDefault();
+            msg = $('#content').val();
+            if (msg == "") {
+                alert('Chưa nhập tin nhắn');
+                return;
+            } else {
+                sendMsg(msg);
             }
         });
-    }
-    function selectMsg(){
-        $.ajax({
-            url: `<?= BASE_URL ?>/chat/SelectMsg/`,
-            type: 'POST',
-            success:function(data){
-                $('.messages').html(data);
-                $('.messages').animate({scrollTop: $('.messages').scrollHeight});
 
-            }
-        })
-    }
-    $('#insert_chat').click(function(e){
-        e.preventDefault();
-        msg = $('#content').val();
-        if (msg == "") {
-            alert('Chưa nhập tin nhắn');
-            return;
-        } else {
-            sendMsg(msg);
-        }
+        setInterval(function() {
+            selectMsg();
+        }, 1000);
     });
-
-    // setInterval(function(){
-    //     selectMsg();
-    // }, 1000);
-});
-$('.button-close-chat').click(function() {
-    $('.avenue-messenger').removeClass('active');
-})
+    $('.button-close-chat').click(function() {
+        $('.avenue-messenger').removeClass('active');
+    })
 </script>

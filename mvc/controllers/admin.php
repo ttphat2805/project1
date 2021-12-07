@@ -45,7 +45,7 @@ class Admin extends Controller
                 "countproduct" => $this->product->countproduct(),
                 "countcomments" => $this->user->countcomment(),
                 "countmember" => $this->account->countmember(),
-                "toporder" => $this->cart->toporder(),
+                "toporder" => $this->cart->toporder('4'),
                 "sale" => $this->cart->sale(),
 
             ]
@@ -385,11 +385,11 @@ class Admin extends Controller
                 ';
                 foreach ($attr_single as $size_single) :
                     if ($size_single['attribute_id'] === NULL) {
-                        $output .= '' . number_format($size_single['price']) . ' VNĐ';
+                        $output .= '' . number_format($size_single['price']) . 'đ';
                     }
                 endforeach;
                 foreach ($attr_prod as $price) :
-                    $output .= '' . $price['value'] . ': ' . number_format($price['price']) . ' VNĐ <br/>';
+                    $output .= '' . $price['value'] . ': ' . number_format($price['price']) . 'đ <br/>';
                 endforeach;
 
                 $output .=  '</td>

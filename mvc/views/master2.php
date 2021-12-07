@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>G6FOOD</title>
+    <title>G6Grain</title>
     <meta name="robots" content="noindex, follow" />
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -31,7 +31,6 @@
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/plugins/nice-select.min.css">
     <!-- Magnific Popup -->
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/plugins/magnific-popup.css">
-
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/style.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/custom.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
