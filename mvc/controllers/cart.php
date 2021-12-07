@@ -181,13 +181,14 @@ class cart extends Controller
                     if ($_SESSION['cart_Item'][$i]['quantity'] > $this_product[0]['quantity']) {
                         
                         $_SESSION['cart_Item'][$i]['quantity'] = $this_product[0]['quantity'];
-                        $_SESSION['cart_number'] -= $old_quanlity;
+                        $_SESSION['cart_number'] -= $old_quanlity+1;
                         $_SESSION['cart_number'] += $this_product[0]['quantity'];
                 
                     }
                     $_SESSION['cart_Item'][$i]['total'] = $_SESSION['cart_Item'][$i]['price'] * $_SESSION['cart_Item'][$i]['quantity'];
                     
                     $result = [
+                        'old' => $old_quanlity,
                         'price' => $_SESSION['cart_Item'][$i]['price'],
                         'quantity' => $_SESSION['cart_Item'][$i]['quantity'],
                         'total' => $_SESSION['cart_Item'][$i]['total'],

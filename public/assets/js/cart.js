@@ -2,13 +2,14 @@ $(document).ready(() => {
     /**
      * xóa khỏi giỏ hàng
      */
+    const url = "http://localhost/"
     $(document).on('click', '.pro-remove', function(e) {
             e.preventDefault();
             let this_product = $(this).parents('tr');
             let id_product_type = $(this).parents('tr').find('.cart-plus-minus').attr('data-prod');
 
             $.ajax({
-                url: "http://localhost/project1/cart/remove",
+                url: url+"project1/cart/remove",
                 type: "POST",
                 dataType: "html",
                 data: {
@@ -31,7 +32,7 @@ $(document).ready(() => {
         let id_product_type = this_product.find(".cart-plus-minus").attr("data-prod");
 
         $.ajax({
-            url: "http://localhost/project1/cart/modify",
+            url: url+"project1/cart/modify",
             type: "POST",
             dataType: "html",
             data: {
@@ -55,7 +56,7 @@ $(document).ready(() => {
         let id_product_type = this_product.find(".cart-plus-minus").attr("data-prod");
 
         $.ajax({
-            url: "http://localhost/project1/cart/modify",
+            url: url+"project1/cart/modify",
             type: "POST",
             dataType: "html",
             data: {
@@ -65,7 +66,7 @@ $(document).ready(() => {
         }).done(function(ketqua) {
             result = JSON.parse(ketqua);
             console.log(result);
-             $(".cart-plus-minus-box").val(result.quantity);
+            this_product.find('.cart-plus-minus-box').val(result.quantity);
             this_product.parent().find(".pro-subtotal span").html(result.total);
             total = parseFloat($(".total-amount").text()) + parseFloat(result.price);
             $(".total-amount").html(total);
@@ -83,7 +84,7 @@ $(document).ready(() => {
             let data_attr = this_product.find(".product-size input:checked").val();
             let data_id_prod_type = this_product.find(".product-size input:checked").attr('data-prod');
             $.ajax({
-                url: "http://localhost/project1/cart/addToCart",
+                url: url+"project1/cart/addToCart",
                 type: "POST",
                 dataType: "html",
                 data: {
@@ -97,7 +98,7 @@ $(document).ready(() => {
         } else {
             let data_id_prod_type = this_product.find(".non-size").attr("data-prod");
             $.ajax({
-                url: "http://localhost/project1/cart/addToCart",
+                url: url+"project1/cart/addToCart",
                 type: "POST",
                 dataType: "html",
                 data: {
