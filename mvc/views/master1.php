@@ -98,6 +98,12 @@
             <?php
             class homepage extends db
             {
+                function checkwishlist($idmember,$idproduct){
+                    $query = "SELECT id from product_wishlist where member_id = ? and product_id = ?";
+                    $stmt = $this->conn->prepare($query);
+                    $stmt->execute([$idmember,$idproduct]);
+                    return $stmt->rowCount();
+                }
                 function getproduct_detail_attr($id)
                 {
                     $query = "SELECT a.*,b.id as 'idattr',b.value,b.name from attribute b inner join product_type a on b.id = a.attribute_id where a.product_id = $id";
@@ -165,6 +171,12 @@
                                                 $product_attr = $homepage->getproduct_detail_attr($trend['idproduct']);
 
                                                 $attr_id = $homepage->getproduct_type_id($trend['idproduct']);
+                                                // check wishlish
+                                                if(isset($_SESSION['user_infor'])){
+                                                    $check_wishlish = $homepage->checkwishlist($_SESSION['user_infor']['user_id'],$trend['idproduct']);
+                                                } else {
+                                                    $check_wishlish =0;
+                                                }
                                                 if ($attr_id['attribute_id'] !== NULL) {
                                                 ?>
                                                     <div class="product-size animate-size mb-2">
@@ -197,13 +209,21 @@
                                                     <a title="+ Giỏ hàng" class="add_to_cart">
                                                         <i class="ion-bag"></i>
                                                     </a>
-
-                                                    <a class="addtowishlist fetchwishlist" title="+ Yêu thích">
+                                                    <?php if($check_wishlish >0 ) {?>
+                                                        <a class="addtowishlist fetchwishlist" title="+ Yêu thích">
+                                                        <i class="fal fa-heart" style="color: #E98C81;"></i>
+                                                    </a>
+                                                    <?php } else { ?>
+                                                        <a class="addtowishlist fetchwishlist" title="+ Yêu thích">
                                                         <i class="fal fa-heart"></i>
                                                     </a>
-                                                    <a class="addtowishlist fetchwishlist" title="+ Yêu thích">
+                                                    <?php } ?>
+                                                    <!-- <a class="addtowishlist fetchwishlist" title="+ Yêu thích">
+                                                        <i class="fal fa-heart"></i>
+                                                    </a> -->
+                                                    <!-- <a class="addtowishlist fetchwishlist" title="+ Yêu thích">
                                                         <i class="fas fa-heart"></i>
-                                                    </a>
+                                                    </a> -->
                                                 </div>
                                             </div>
 
@@ -401,6 +421,9 @@
             $('.addtowishlist').click(function() {
                 let parent = $(this).parents('.single-product');
                 let id_product = parent.find('.idproduct').val();
+                let heart = parent.find('.addtowishlist i');
+            
+
                 $.ajax({
                     url: "<?= BASE_URL ?>/myaccount/insertwishlist",
                     method: "POST",
@@ -414,17 +437,20 @@
                         } else {
                             let noti = JSON.parse(data);
                             toastr[noti.code](noti.noti);
+                            if(noti.code == "success") {
+                                heart.css('color','#E98C81');
+                            }
                         }
                     }
                 });
             })
 
-            $('.addtowishlist').click(function() {
-                let parent = $(this).parents('.single-product');
-                let id_product = parent.find('.idproduct');
-                console.log(id_product);
+            // $('.addtowishlist').click(function() {
+            //     let parent = $(this).parents('.single-product');
+            //     let id_product = parent.find('.idproduct');
+            //     console.log(id_product);
 
-            })
+            // })
 
         })
     </script>
