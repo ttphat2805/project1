@@ -197,8 +197,12 @@
                                                     <a title="+ Giỏ hàng" class="add_to_cart">
                                                         <i class="ion-bag"></i>
                                                     </a>
+
                                                     <a class="addtowishlist fetchwishlist" title="+ Yêu thích">
                                                         <i class="fal fa-heart"></i>
+                                                    </a>
+                                                    <a class="addtowishlist fetchwishlist" title="+ Yêu thích">
+                                                        <i class="fas fa-heart"></i>
                                                     </a>
                                                 </div>
                                             </div>
@@ -413,6 +417,13 @@
                         }
                     }
                 });
+            })
+
+            $('.addtowishlist').click(function() {
+                let parent = $(this).parents('.single-product');
+                let id_product = parent.find('.idproduct');
+                console.log(id_product);
+
             })
 
         })
