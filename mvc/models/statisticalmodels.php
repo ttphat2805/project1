@@ -24,7 +24,7 @@ class statisticalmodels extends db {
     }
 
     function countcomment(){
-        $query = "SELECT count(a.product_id) as 'count',b.name from comments a INNER JOIN products b on a.product_id = b.id GROUP by a.product_id;";
+        $query = "SELECT count(a.product_id) as 'count',b.name from comments a INNER JOIN products b on a.product_id = b.id GROUP by a.product_id order by count(a.product_id) desc limit 3";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();

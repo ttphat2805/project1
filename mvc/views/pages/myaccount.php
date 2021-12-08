@@ -92,6 +92,7 @@
                                     <div class="myaccount-content">
                                         <h3>Món ăn yêu thích</h3>
                                         <div class="myaccount-table table-responsive text-center" id="js_wishlist_get">
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -168,19 +169,6 @@
                                     <div class="myaccount-content">
                                         <h3>Payment Method</h3>
                                         <p class="saved-message">You Can't Saved Your Payment Method yet.</p>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade" id="address-edit" role="tabpanel">
-                                    <div class="myaccount-content">
-                                        <h3>Billing Address</h3>
-                                        <address>
-                                            <p><strong>Alex Aya</strong></p>
-                                            <p>1355 Market St, Suite 900 <br>
-                                                San Francisco, CA 94103</p>
-                                            <p>Mobile: (123) 456-7890</p>
-                                        </address>
-                                        <a href="#" class="btn obrien-button-2 primary-color rounded-0"><i class="fa fa-edit mr-2"></i>Edit Address</a>
                                     </div>
                                 </div>
                             </div>
@@ -375,6 +363,8 @@
         fetch_wishlist();
         $(document).on("click", ".btn_del_wishlist", function(e) {
             let id_product = $(this).attr("id");
+            let parent = $(this).parent('tr');
+            console.log(parent)
             $.ajax({
                 url: "<?= BASE_URL ?>/myaccount/deletewishlist",
                 method: "POST",

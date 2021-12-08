@@ -106,18 +106,19 @@ class myaccount extends Controller
         $output = "";
         $check = $this->account->getwishlist($this->id);
         if ($check->rowCount() > 0) {
+            $output .= '<table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th>Hình ảnh</th>
+                    <th>Tên</th>
+                    <th>Giá</th>
+                    <th>Xóa</th>
+                </tr>
+            </thead>
+            <tbody>';
             $fetchwishlist = $check->fetchAll();
             foreach ($fetchwishlist as $item) {
-                $output .= '<table class="table table-bordered">
-                <thead class="thead-light">
-                    <tr>
-                        <th>Hình ảnh</th>
-                        <th>Tên</th>
-                        <th>Giá</th>
-                        <th>Xóa</th>
-                    </tr>
-                </thead>
-                <tbody>
+                $output .= '
                     <tr>
                         <td width="20%">
                         <a href="' . $url . '/productdetail/show/' . $item['slug'] . '">
@@ -130,11 +131,12 @@ class myaccount extends Controller
                         <i class="ion-trash-b"></i>
                         </a></td>
                     </tr>
-                </tbody>
-            </table>';
+';
             }
         } else {
-            $output .= '<p class="noti-wishlist">Chưa có món ăn nào được yêu thích <i class="fal fa-star-shooting"></i></p>';
+            $output .= '<p class="noti-wishlist">Chưa có món ăn nào được yêu thích <i class="fal fa-star-shooting"></i></p>
+            </tbody>
+            </table>';
         }
         echo $output;
     }

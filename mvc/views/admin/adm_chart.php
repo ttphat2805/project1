@@ -43,7 +43,7 @@
             <div class="col-lg-6 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Số lượng bình luận</h4>
+                        <h4 class="card-title">Top 3 sản phẩm có bình luận nhiều nhất</h4>
                         <canvas id="barChart" style="height:230px"></canvas>
                     </div>
                 </div>
