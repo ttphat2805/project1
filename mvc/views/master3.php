@@ -16,9 +16,10 @@
     <link rel="stylesheet" href=" <?php echo BASE_URL; ?>/public/assetsadmin/css/style.css">
     <link rel="stylesheet" href=" <?php echo BASE_URL; ?>/public/assetsadmin/css/custom.css">
     <link rel="stylesheet" href=" <?php echo BASE_URL; ?>/public/assetsadmin/css/table.css">
+    <link rel="stylesheet" href=" <?php echo BASE_URL; ?>/public/assetsadmin/css/chart.css">
 
-    
- 
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
   
@@ -171,7 +172,7 @@
                     </a>
                 </li>
                 <li class="nav-item menu-items">
-                    <a class="nav-link" href="">
+                    <a class="nav-link" href="<?php echo BASE_URL?>/admin/chart">
                         <span class="menu-icon">
                             <i class="mdi mdi-chart-line"></i>
                         </span>

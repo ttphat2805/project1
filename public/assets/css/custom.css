@@ -1138,6 +1138,12 @@ screen and (max-width: 450px) {
     border: 1px solid #e1e1e1;
 }
 
+.social-share a i {
+    font-size: 28px;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+
 .custom-textarea:focus {
     border: #E98C81 1px solid;
 }

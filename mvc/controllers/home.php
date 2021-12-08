@@ -75,4 +75,18 @@ class Home extends Controller
         </div>';
         echo $output;
     }
+
+    function checkwishlist() {
+        if(isset($_POST['action'])){
+            $output = "";
+            $idmember = $_SESSION['user_infor']['user_id'];
+            $idproduct = $_POST['product_id'];
+            $check = $this->product->checkwishlist($idmember,$idproduct);
+            if($check > 0){
+                echo '1';
+            }else{
+                echo '0';
+            }
+        }
+    }
 }

@@ -71,7 +71,7 @@
                             <h4 class="slider-small-title">Ăn sạch sống lành</h4>
                             <h2 class="slider-large-title">100% Tự nhiên - hữu cơ</h2>
                             <div class="slider-btn">
-                                <a class="obrien-button black-btn" href="<?=BASE_URL?>/products">Mua ngay</a>
+                                <a class="obrien-button black-btn" href="<?= BASE_URL ?>/products">Mua ngay</a>
                             </div>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                             <h4 class="slider-small-title">Đảm bảo sức khỏe</h4>
                             <h2 class="slider-large-title">Ngon - nguyên chất</h2>
                             <div class="slider-btn">
-                                <a class="obrien-button black-btn" href="<?=BASE_URL?>/products">Mua ngay</a>
+                                <a class="obrien-button black-btn" href="<?= BASE_URL ?>/products">Mua ngay</a>
                             </div>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
                             <h4 class="slider-small-title">Tự nhiên an toàn</h4>
                             <h2 class="slider-large-title">Thuần khiết - bổ dưỡng</h2>
                             <div class="slider-btn">
-                                <a class="obrien-button black-btn" href="<?=BASE_URL?>/products">Mua ngay</a>
+                                <a class="obrien-button black-btn" href="<?= BASE_URL ?>/products">Mua ngay</a>
                             </div>
                         </div>
                     </div>
@@ -163,6 +163,7 @@
                                             <div class="product-content">
                                                 <?php
                                                 $product_attr = $homepage->getproduct_detail_attr($trend['idproduct']);
+
                                                 $attr_id = $homepage->getproduct_type_id($trend['idproduct']);
                                                 if ($attr_id['attribute_id'] !== NULL) {
                                                 ?>
@@ -171,7 +172,7 @@
                                                         <?php
                                                         foreach ($product_attr as $size) :
                                                         ?>
-                                                            <input id="prod-size-<?=$size['value'] ?>-<?=$trend['idproduct'] ?> " type="radio" checked data-prod="<?= $size['id'] ?> " name="option1" value="' . $size['attribute_id'] . '">
+                                                            <input id="prod-size-<?= $size['value'] ?>-<?= $trend['idproduct'] ?> " type="radio" checked data-prod="<?= $size['id'] ?> " name="option1" value="' . $size['attribute_id'] . '">
                                                             <label for="prod-size-<?= $size['value'] ?>-<?= $trend['idproduct'] ?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
                                                                 <span><?= $size['value'] ?></span>
                                                             </label>
@@ -181,7 +182,9 @@
                                                     </div>
                                                 <?php
 
-                                                } else { echo "<div class='non-size' data-prod='".$attr_id['id']."'></div> ";}?>
+                                                } else {
+                                                    echo "<div class='non-size' data-prod='" . $attr_id['id'] . "'></div> ";
+                                                } ?>
                                                 <div class="product-title">
                                                     <h4 class="title-2"> <a href="<?php echo BASE_URL ?>/productdetail/show/<?= $trend['slug'] ?>"><?= $trend['name'] ?></a></h4>
                                                 </div>
@@ -194,7 +197,7 @@
                                                     <a title="+ Giỏ hàng" class="add_to_cart">
                                                         <i class="ion-bag"></i>
                                                     </a>
-                                                    <a class="addtowishlist" title="+ Yêu thích">
+                                                    <a class="addtowishlist fetchwishlist" title="+ Yêu thích">
                                                         <i class="fal fa-heart"></i>
                                                     </a>
                                                 </div>
@@ -227,7 +230,7 @@
                             <div class="banner-flash-content d-flex flex-column align-items-center justify-content-center h-100">
                                 <h2 class="deal-head text-uppercase">Black Friday</h2>
                                 <h3 class="deal-title text-uppercase">Giảm giá lên đến 20%</h3>
-                                <a href="<?=BASE_URL?>/products" class="obrien-button primary-btn">Mua ngay</a>
+                                <a href="<?= BASE_URL ?>/products" class="obrien-button primary-btn">Mua ngay</a>
                                 <div class="countdown-wrapper d-flex justify-content-center" data-countdown="2021/12/15"></div>
                             </div>
                         </div>
@@ -288,16 +291,18 @@
                                                 ?>
                                             </div>
                                         <?php
-                                        }  else { echo "<div class='non-size' data-prod='".$attr_id['id']."'></div> ";}?> 
-                                        
+                                        } else {
+                                            echo "<div class='non-size' data-prod='" . $attr_id['id'] . "'></div> ";
+                                        } ?>
+
                                         <div class="product-action d-flex">
-                                                    <a title="+ Giỏ hàng" class="add_to_cart">
-                                                        <i class="ion-bag"></i>
-                                                    </a>
-                                                    <a class="addtowishlist" title="+ Yêu thích">
-                                                        <i class="fal fa-heart"></i>
-                                                    </a>
-                                                </div>
+                                            <a title="+ Giỏ hàng" class="add_to_cart">
+                                                <i class="ion-bag"></i>
+                                            </a>
+                                            <a class="addtowishlist" title="+ Yêu thích">
+                                                <i class="fal fa-heart"></i>
+                                            </a>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -307,10 +312,10 @@
                         ?>
                     </div>
                     <div class="btn_all_prod">
-                        <a href="<?=BASE_URL?>/products" class="obrien-button primary-btn">
-                    Xem tất cả
+                        <a href="<?= BASE_URL ?>/products" class="obrien-button primary-btn">
+                            Xem tất cả
                         </a>
-            </div>
+                    </div>
                 </div>
             </div>
 
@@ -388,6 +393,7 @@
 
     <script>
         $(document).ready(function() {
+
             $('.addtowishlist').click(function() {
                 let parent = $(this).parents('.single-product');
                 let id_product = parent.find('.idproduct').val();
@@ -408,6 +414,7 @@
                     }
                 });
             })
+
         })
     </script>
 </body>

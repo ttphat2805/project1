@@ -2,8 +2,17 @@
  <script src=" <?php echo BASE_URL; ?>/public/assetsadmin/vendors/chart.js/Chart.min.js"></script>
  <script src=" <?php echo BASE_URL; ?>/public/assetsadmin/vendors/progressbar.js/progressbar.min.js"></script>
  <script src=" <?php echo BASE_URL; ?>/public/assetsadmin/js/off-canvas.js"></script>
+ <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
  <script src=" <?php echo BASE_URL; ?>/public/assetsadmin/js/hoverable-collapse.js"></script>
  <script src=" <?php echo BASE_URL; ?>/public/assetsadmin/js/misc.js"></script>
+ <script src=" <?php echo BASE_URL; ?>/public/assetsadmin/js/morris.min.js"></script>
+ <!-- <script src=" <?php echo BASE_URL; ?>/public/assetsadmin/js/chart.js"></script> -->
+
+ <script src=" <?php echo BASE_URL; ?>/public/assetsadmin/js/raphael.js"></script>
+
+ <script src=" <?php echo BASE_URL; ?>/public/assetsadmin/js/"></script>
+
+
  <script src=" <?php echo BASE_URL; ?>/public/assetsadmin/js/settings.js"></script>
  <script src=" <?php echo BASE_URL; ?>/public/assetsadmin/js/todolist.js"></script>
  <script src=" <?php echo BASE_URL; ?>/public/assetsadmin/js/dashboard.js"></script>
@@ -25,6 +34,22 @@
  </footer>
  <script>
      $(document).ready(function() {
+        $( function() {
+        $( "#datepicker" ).datepicker({
+            prevText: "Tháng trước",
+            nextText: "Tháng sau",
+            dateFormat : "yy-mm-dd",
+            dayNamesMin : ["Thứ 2","Thứ 3","Thứ 4","Thứ 5","Thứ 6","Thứ 7","Chủ Nhật"],
+            duration : "slow",
+        });
+        $( "#datepicker2" ).datepicker({
+            prevText: "Tháng trước",
+            nextText: "Tháng sau",
+            dateFormat : "yy-mm-dd",
+            dayNamesMin : ["Thứ 2","Thứ 3","Thứ 4","Thứ 5","Thứ 6","Thứ 7","Chủ Nhật"],
+            duration : "slow",
+        });
+        } );
          $("#table").DataTable({
              lengthMenu: [7, 14, 21],
              language: {

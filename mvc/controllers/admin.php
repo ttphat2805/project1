@@ -1,16 +1,7 @@
 <?php
 class Admin extends Controller
 {
-    public $category;
-    public $product;
-    public $member;
-    public $cart;
-    public $attribute;
-    public $coupon;
-    public $user;
-    public $blog;
-
-
+    public $category, $product, $member, $cart, $attribute, $coupon, $user, $blog;
 
     function __construct()
     {
@@ -22,6 +13,7 @@ class Admin extends Controller
         $this->user = $this->model("usermodels");
         $this->account = $this->model("accountmodels");
         $this->blog = $this->model("blogmodels");
+        $this->chart = $this->model("statisticalmodels");
     }
     function show()
     {
@@ -286,7 +278,7 @@ class Admin extends Controller
                     $this->product->insertproduct_type($product_id, $price, $quantity);
                 }
 
-                
+
                 $_SESSION['toastr-code'] = "success";
                 $_SESSION['toastr-noti'] = "Thêm thành công";
                 header('Location: ' . BASE_URL . '/admin/showproduct');
@@ -1051,4 +1043,48 @@ class Admin extends Controller
         exit();
     }
     // END chat
+
+    function chart()
+    {
+        $this->view(
+            "master3",
+            [
+                "pages" => "adm_chart",
+                "countproduct" =>$this->chart->productincat(),
+                "countcomment" =>$this->chart->countcomment(),
+
+            ]
+        );
+    }
+
+    function chartdate()
+    {
+
+        if (isset($_POST['action'])) {
+            $fromdate = $_POST['fromdate'];
+            $todate = $_POST['todate'];
+            $result = $this->chart->filterbydate($fromdate, $todate);
+            foreach ($result as $value) {
+                $chart_data[] = array(
+                    'quantity' => $value['quantity'],
+                    'total' => $value['total'],
+                    'date' => $value['created_at'],
+                );
+            }
+            echo json_encode($chart_data);
+        }
+    }
+
+    function getorderdays()
+    {
+        $result = $this->chart->chartdays();
+        foreach ($result as $value) {
+            $chart_data[] = array(
+                'quantity' => $value['quantity'],
+                'total' => $value['total'],
+                'date' => $value['created_at'],
+            );
+        }
+        echo json_encode($chart_data);
+    }
 }

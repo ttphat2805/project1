@@ -319,5 +319,11 @@ class productmodels extends db
         $result->execute();
         return $result->rowCount();
     }
+    function checkwishlist($idmember,$idproduct){
+        $query = "SELECT id from product_wishlist where member_id = ? and product_id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$idmember,$idproduct]);
+        return $stmt->rowCount();
+    }
 }
 

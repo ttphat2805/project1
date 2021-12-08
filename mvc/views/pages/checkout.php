@@ -43,7 +43,7 @@ $total =0;
                             <input type="hidden" class="total" name="total" value="<?= $total ?>">
                             <input type="hidden" class="coupon_code" name="coupon" id="">
                             <div class="checkbox-form">
-                                <h3>Chi Tiết Hóa Đơn</h3>
+                                <h3>Thanh toán</h3>
                                 <div class="row">
                                     <div class="col-md-12">
                                         
