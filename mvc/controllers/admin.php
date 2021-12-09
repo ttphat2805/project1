@@ -326,7 +326,7 @@ class Admin extends Controller
                 "gallery" => $this->product->getimgproduct($id),
                 "size" => $this->attribute->getinfoSize($id),
                 "size_all" => $this->attribute->getSize(),
-                "product_type" => $this->product->getproduct_type_id($id),
+                "product_type" => $this->product->getproduct_type_id_admin($id),
             ]
         );
     }

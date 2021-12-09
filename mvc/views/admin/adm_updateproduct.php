@@ -47,7 +47,6 @@
                         <div class="gallery_img">
                         </div>
                         <input type="file" name="gallery[]" multiple class="form-control">
-                      
                     </div>
                     <div class="form-group input_quantity">
                         <label for="" class="label__css">Số lượng</label>

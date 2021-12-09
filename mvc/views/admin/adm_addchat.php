@@ -54,7 +54,6 @@
                 'send': 'abc'
             },
             success:function(data){
-                console.log(data);
                 selectMsg();
                 $('#content').val('');
             }

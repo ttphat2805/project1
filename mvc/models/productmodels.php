@@ -76,6 +76,13 @@ class productmodels extends db
         $stmt->execute();
     }
 
+    
+    function updateproduct_type($product_id, $price_attr, $quantity_attr)
+    {
+        $query = "UPDATE product_type SET price = ?,quantity = ? WHERE product_id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$price_attr,$quantity_attr,$product_id]);
+    }
     function insertlistimg($id, $final_image)
     {
         $query = "INSERT INTO prod_image(productid,gallery) values ('$id','$final_image')";
@@ -112,6 +119,13 @@ class productmodels extends db
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
+    }
+    function getproduct_type_id_admin($id)
+    {
+        $query = "SELECT * FROM product_type where product_id = $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetch();
     }
 
     function getproductTypeByProductTypeId($id)

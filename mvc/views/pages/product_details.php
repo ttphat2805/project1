@@ -87,7 +87,7 @@
                                     <p class="desc-content mb-5">
                                         <?php echo $data['productdetails']['description'] ?>
                                     </p>
-                                    <div>Số lượng còn lại là: <span class="quantity_view">
+                                    <div class="quantity_remaining">Số lượng còn lại là: <span class="quantity_view">
                                             <?php echo $data['productdetails']['quantity'] ?>
                                         </span></div>
                                     <?php
@@ -98,7 +98,7 @@
                                             
                                             <div class="product-size mb-4">
                                                 
-                                                <p>Size :</p>
+                                                <p>Trọng lượng: </p>
                                                 <?php
                                                 foreach ($data['productdetailattr'] as $size) :
                                                     
@@ -115,9 +115,33 @@
                                         </div>
                                     <?php 
                                         else:
-                                            echo "<input type='hidden' name='option1' value='".$data['product_type'][0]['id']."'";
+                                            echo "<input type='hidden' name='option1' value='".$data['product_type'][0]['id']."'>";
                                            // $output .= "<div class='non-size' data-prod='".$attr_id['id']."'></div>";
                                  endif; ?>
+                                    <div class="box-promotion">
+                                        <p class="box_promotion_header">
+                                                Voucher đặc biệt từ 'G6Grain' (SL có hạn)
+                                        </p>
+                                        <div class="box_promotion_main">
+                                            <ul>
+                                                <li>
+                                                    <p>Nhập mã <strong>G6GRAIN10K&nbsp;</strong>
+                                                    - Giảm 10k cho đơn từ 95k
+                                                </p>
+                                                </li>
+                                                <li>
+                                                    <p>Nhập mã <strong>G6GRAIN20K&nbsp;</strong>
+                                                    - Giảm 20K cho đơn từ 180K
+                                                </p>
+                                                </li>
+                                                <li>
+                                                    <p>Nhập mã <strong>G6GRAIN40K&nbsp;</strong>
+                                                    - Giảm 40K cho đơn từ 360K
+                                                </p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                     <div class="quantity-with_btn mb-4">
                                         <div class="quantity">
                                             <div class="cart-plus-minus">
@@ -280,7 +304,7 @@
                                             if ($attr_id['attribute_id'] !== NULL) {
                                             ?>
                                                 <div class="product-size animate-size mb-2">
-                                                    <p>Size :</p>
+                                                    <p>Trọng lượng: </p>
                                                     <?php
                                                     foreach ($product_attr as $size) :
                                                     ?>

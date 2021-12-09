@@ -11,7 +11,7 @@ class showproduct extends db
     }
     function attribute_single($id)
     {
-        $query = "SELECT DISTINCT a.id as 'idproduct',b.id as 'idproduct_type',b.sold, b.price,b.attribute_id, b.quantity FROM products a inner join product_type b on b.product_id = a.id where b.product_id = $id";
+        $query = "SELECT a.id as 'idproduct',b.id as 'idproduct_type',b.sold, b.price,b.attribute_id, b.quantity FROM products a inner join product_type b on b.product_id = a.id where b.product_id = $id order by b.id desc limit 1";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
@@ -60,9 +60,10 @@ $attr = new showproduct();
                                     <td><?= $item['idproduct'] ?></td>
                                     <td><?= $item['nameproduct'] ?></td>
                                     <td><?php
+                                    
                                         foreach ($attr_single as $size_single) :
                                             if ($size_single['attribute_id'] === NULL) {
-                                                echo  number_format($size_single['price']) . ' VNĐ';
+                                                echo  number_format($size_single['price']) . ' VNĐ <br/>';
                                             }
                                         endforeach;
                                         foreach ($attr_prod as $price) :

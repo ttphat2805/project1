@@ -409,9 +409,9 @@
                 },
             });
         }
-    // setInterval(function(){
-    //     fetchminicart();
-    // }, 1000);
+    setInterval(function(){
+        fetchminicart();
+    }, 1000);
     })
 
 </script>
