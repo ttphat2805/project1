@@ -340,12 +340,11 @@ class Auth extends Controller
                     $mail->Subject = 'New password form G6\'Food';
                     $mail->Body    = 'Đây là mật khẩu mới của bạn <b>' . $new_pass . '</b><br/>
                     Vui lòng không cung cấp mật khẩu này cho bất kì ai !<br/>
-                    <img src="https://lh3.googleusercontent.com/lXkCcoveZoYp1gShpok9dvkzUiZDprUcr8tfJtMg9kySiwEZj22M2SYy4ap_FV5hXqC8vzMtn7uxX2eZ5F9HUN9AbL-u5zfPGsHvdFrAZJcLQabJ64o-Rum8mKqP_8JTUl-6pkz3chUvN37C_8f3bZLK6WtY1rGpOv1XhHkzVfApt7Tgc-0nvfUz8aCirX9XYOgOigWQ4F7z9U1MIeiqaDk2i-g0HEoy0nIJH192qoVJemCjJRgfC2qehIoVCmSSguMMKoMg0agS4DYHqekebBKgnEgP2SISH58ats3qqbJmoWumCFbjvPooDS9qVH1eyJcVMbNgx4VE7jTsQI08pd73xn7p2Qi-KROvSFp-KaKQSR9dQqJxyE6V6WqwufGd6C4TkNYdozuI7u1zgAYssC1fDXXmFBKvRaEhdBTzvAPCv_b3A7SjakFlIX3vnpFIcMuiNYPAtSCE82sWAT-Inf1F9padI_nnU1F8CPADvGtBzGBdtfpGFf6oQGrCvW1sUlTJ-A4WJ2zSnQDfT8Jd1hW8-l5KgqYqTKLlPBPB2fYMlh-H_soq6Z8bR6ucxm5y56oZGYb09KUsVTCxxhz202FraOlhqQTa_aXY8ulPNWo5u7Q2LBXjtH3Q7xBQxHZL2Dl_mmrj8vy3n-3iYOnhYlOFNDOMdmLXTUMkWz59ptH9vqRWd18KQch6e-1Ib92Iy-0tHlkESrGoNVF5YmoFDXo=s500-no?authuser=0" width="300px" height="300px">
                     ';
                     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
                     $mail->send();
-                    $this->User->changePassword($email, $new_pass);
+                    $this->User->forgetpassword($email, $new_pass);
                 } catch (Exception $e) {
                     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
                 }

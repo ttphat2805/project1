@@ -66,7 +66,6 @@
             success:function(data){
                 $('.messages').html(data);
                 $('.messages').animate({scrollTop: $('.messages').scrollHeight});
-
             }
         })
     }

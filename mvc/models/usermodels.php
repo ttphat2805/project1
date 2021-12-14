@@ -66,13 +66,17 @@ class usermodels extends db {
     public function changePassword($id,$newpassword) {
         $newpass = password_hash($newpassword, PASSWORD_DEFAULT);
         $sql = "UPDATE `user_account` SET `password` = :newpass WHERE `memberid` like $id";
-
         $query = $this->conn->prepare($sql);
         $query->bindValue(":newpass", $newpass, PDO::PARAM_STR);
-
         return $query->execute();
     }
-
+    public function forgetpassword($email,$newpassword) {
+        $newpass = password_hash($newpassword, PASSWORD_DEFAULT);
+        $sql = "UPDATE `user_account` SET `password` = :newpass WHERE `username` like '$email'";
+        $query = $this->conn->prepare($sql);
+        $query->bindValue(":newpass", $newpass, PDO::PARAM_STR);
+        return $query->execute();
+    }
     public function getMemberInforById($id) {
         $sql = 'select * from `member` where `id` like :id';
         $query = $this->conn->prepare($sql);
