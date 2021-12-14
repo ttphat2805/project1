@@ -36,6 +36,7 @@
                         <label for="" class="label__css">Số tiền tối thiểu</label>
                         <input type="text" id="min_order" value="<?=$data['infocoupon']['min_order']?>" name="min_order" class="form-control">
                         <input hidden type="number" id="min_order_new" value="<?=$data['infocoupon']['min_order']?>" name="min_order_new" class="form-control">
+                        <span class="noti-min-order"></span>
 
                     </div>
                     <div class="form-group">
@@ -91,7 +92,15 @@
 
 
         $("#min_order").on('keyup', function() {
+            var discount = $('.acp_value').val();
             var n = parseInt($(this).val().replace(/\D/g, ''), 10);
+            // CHECK MIN ORDER
+            if(discount > n){
+                $('.noti-min-order').html('Đơn hàng tối thiếu phải lớn hơn số tiền giảm giá');
+            }else{
+                $('.noti-min-order').html('');
+            }
+            // FORMAT PRICE
             if (n >= 0) {
                 $('#min_order').val(n.toLocaleString("it-IT"));
                 $('#min_order_new').val(n);

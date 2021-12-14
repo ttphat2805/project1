@@ -15,8 +15,16 @@ Class cartmodels extends db{
     }
 
     function toporder($limit){
-        $query = "SELECT b.quantity,b.price,d.name,d.slug,d.image FROM orders a inner join orderdetail b on a.id=b.order_id
+        $query = "SELECT c.quantity,c.price,d.name,d.slug,d.image FROM orders a inner join orderdetail b on a.id=b.order_id
         join product_type c on b.product_type_id = c.id join products d on c.product_id = d.id where a.status = 4 LIMIT $limit";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    function toporder_stie($limit){
+        $query = "SELECT c.quantity,c.price,d.name,d.slug,d.image FROM orders a inner join orderdetail b on a.id=b.order_id
+        join product_type c on b.product_type_id = c.id join products d on c.product_id = d.id where a.status = 4 and c.quantity > 0 LIMIT $limit";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();

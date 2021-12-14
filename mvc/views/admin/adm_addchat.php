@@ -32,8 +32,8 @@
                 </div>
                 <div class="message-box">
                     <form action="" method="post">
-                        <input type="text"  id="content" name="content" class="message-input" placeholder="Type message...">
-                        <button type="submit" id="insert_chat" name="send" class="message-submit">Send</button>
+                        <input type="text"  id="content" name="content" autocomplete="off" class="message-input" placeholder="Aaa...">
+                        <button type="submit" id="insert_chat" name="send" class="message-submit">Gửi đi</button>
                     </form>
                 </div>
             </div>

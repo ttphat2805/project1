@@ -20,7 +20,7 @@ class products extends Controller
             [
                 "pages" => "products",
                 "category" => $this->category->getcategory(),
-                "toporder" => $this->cart->toporder('4'),
+                "toporder" => $this->cart->toporder_stie('4'),
             ]
         );
     }

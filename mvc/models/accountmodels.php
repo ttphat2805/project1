@@ -106,6 +106,14 @@ class accountmodels extends db
         $stmt->execute([$id]);
         return $stmt->fetchAll();
     }
+    public function unprogress()
+    {
+        $query = "SELECT a.id, a.member_id, a.status, 
+        DATE(`a`.`created_at`) as 'orderdate', b.fullname FROM orders a INNER JOIN member b ON a.member_id = b.id  WHERE a.status = 1";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 
     public function status_order($status)
     {

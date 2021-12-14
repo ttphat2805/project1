@@ -47,13 +47,19 @@ class couponmodels extends db
         $stmt->execute();
     }
 
+    function checkdelcoupon($id){
+        $query = "SELECT used from coupon where id=$id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetch()['used'];
+    }
+
     // Nghi code
     public function findCoupon ($code) {
         $sql = "select * from `coupon` where code = '$code'";
         $query = $this->conn->prepare($sql);
         $query->execute();
         $query->fetch();
-
         return $query->rowCount();        
     }
 

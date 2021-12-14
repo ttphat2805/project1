@@ -1,25 +1,15 @@
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-<!-- jQuery JS -->
 
 <script src="<?php echo BASE_URL; ?>/public/assets/js/vendor/jquery-3.5.1.min.js"></script>
-<!-- jQuery Migrate JS -->
 <script src="<?php echo BASE_URL; ?>/public/assets/js/vendor/jQuery-migrate-3.3.0.min.js"></script>
-<!-- Modernizer JS -->
 <script src="<?php echo BASE_URL; ?>/public/assets/js/vendor/modernizr-2.8.3.min.js"></script>
-<!-- Bootstrap JS -->
 <script src="<?php echo BASE_URL; ?>/public/assets/js/vendor/bootstrap.bundle.min.js"></script>
-<!-- Slick Slider JS -->
 <script src="<?php echo BASE_URL; ?>/public/assets/js/plugins/slick.min.js"></script>
-<!-- Countdown JS -->
 <script src="<?php echo BASE_URL; ?>/public/assets/js/plugins/jquery.countdown.min.js"></script>
-<!-- Ajax JS -->
 <script src="<?php echo BASE_URL; ?>/public/assets/js/plugins/jquery.ajaxchimp.min.js"></script>
-<!-- Jquery Nice Select JS -->
 <script src="<?php echo BASE_URL; ?>/public/assets/js/plugins/jquery.nice-select.min.js"></script>
-<!-- Jquery Ui JS -->
 <script src="<?php echo BASE_URL; ?>/public/assets/js/plugins/jquery-ui.min.js"></script>
-<!-- jquery magnific popup js -->
 <script src="<?php echo BASE_URL; ?>/public/assets/js/plugins/jquery.magnific-popup.min.js"></script>
 
 <!-- Main JS -->
@@ -60,9 +50,13 @@
             <!-- data here -->
         </div>
         <div class="message-box">
-            <textarea type="text" id="content" class="message-input" placeholder="Type message..."></textarea>
-            <button type="submit" id="insert_chat" class="message-submit">Gửi</button>
+            <form action="" method="post">
+
+                <input type="text" id="content" class="message-input" autocomplete="off" placeholder="Aaa...">
+                <button type="submit" id="insert_chat" class="message-submit">Gửi đi</button>
         </div>
+        </form>
+
     </div>
     </div>
 </section>

@@ -33,8 +33,8 @@
                                     <td><?= $count++ ?></td>
                                     <!-- <td><?= $item['name'] ?></td> -->
                                     <td><?= $item['code'] ?></td>
-                                    <td><?= $item['discout'] ?></td>
-                                    <td><?= $item['min_order'] ?></td>
+                                    <td><?= number_format($item['discout'])?>đ</td>
+                                    <td><?= number_format($item['min_order'])?>đ</td>
                                     <td><?= $item['quantity'] ?></td>
                                     <td><?= $item['used'] ?></td>
                                     <td><?= $item['created_at'] ?></td>

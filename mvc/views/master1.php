@@ -255,7 +255,7 @@
                                 <h2 class="deal-head text-uppercase">Black Friday</h2>
                                 <h3 class="deal-title text-uppercase">Giảm giá lên đến 20%</h3>
                                 <a href="<?= BASE_URL ?>/products" class="obrien-button primary-btn">Mua ngay</a>
-                                <div class="countdown-wrapper d-flex justify-content-center" data-countdown="2021/12/15"></div>
+                                <div class="countdown-wrapper d-flex justify-content-center" data-countdown="2021/12/20"></div>
                             </div>
                         </div>
                     </div>

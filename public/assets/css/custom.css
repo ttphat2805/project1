@@ -543,6 +543,10 @@ Messages
 Message Box
 --------------------*/
 
+.address-api {
+    transition: all .2s;
+}
+
 .button-close-chat i {
     color: #E98C81;
 }
@@ -572,8 +576,8 @@ Message Box
     height: 24px;
     margin: -5px;
     padding: -6px;
-    padding-right: 20px;
-    width: 265px;
+    padding: 16px 10px;
+    width: 100%;
     color: #444;
 }
 

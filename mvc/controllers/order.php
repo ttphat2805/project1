@@ -9,23 +9,28 @@ class order extends Controller
     {
         if (!isset($_SESSION['user_infor'])) {
             header("Location: " . BASE_URL . '/auth/login');
+        } else if(empty($_SESSION['cart_Item'])){
+            header("Location: " . BASE_URL . '/products');
         }
-
         $this->ordermethod = $this->model('ordermethod');
         $this->coupon = $this->model('couponmodels');
+        $this->user = $this->model('usermodels');
+
     }
 
     public function Show()
     {
 
-        $_SESSION['namesite'] = 'Đặt hàng';
+        $_SESSION['namesite'] = 'Thanh toán';
+        $idmember = $_SESSION['user_infor']['user_id'];
 
         $method = $this->ordermethod->getOderMethod();
         return   $this->view(
             "master2",
             [
                 "pages" => "checkout",
-                "method" => $method
+                "method" => $method,
+                'infomember' => $this->user->getmemberid($idmember),
             ]
         );
     }
@@ -33,7 +38,8 @@ class order extends Controller
     public function create()
     {
         $_SESSION['namesite'] = 'Đặt hàng thành công';
-        $name = $_POST['ho'] . ' ' . $_POST['ten'];
+        $idmember = $_SESSION['user_infor']['user_id'];
+        $name = $_POST['fullname'];
         $address = $_POST['tinh'] . ' ' . $_POST['quan'] . ' ' . $_POST['phuong'];
         $method = $_POST['method'];
         $email = $_POST['email'];
@@ -42,7 +48,7 @@ class order extends Controller
         $total = $_POST['total'];
         $idcoupon = $_POST['coupon'];
         $data = [
-            'memberid' => $_SESSION['user_infor']['user_id'],
+            'memberid' => $idmember,
             'name' => $name,
             'address' => $address,
             'method' => $method,

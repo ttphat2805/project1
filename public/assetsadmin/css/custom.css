@@ -219,6 +219,22 @@ td#hide {
     background: rgba(190, 190, 190, 0.534);
 }
 
+.noti-min-order {
+    font-size: 14px;
+    color: red;
+}
+
+.btn-new-order {
+    margin-top: 20px;
+    margin-left: 10%;
+    padding: 10px;
+    text-align: center;
+}
+
+.modal-content {
+    background-color: #191c24;
+}
+
 
 /* CHAT */
 
@@ -618,9 +634,8 @@ td#hide {
     font-size: 15px;
     height: 24px;
     margin: -5px;
-    padding: -6px;
-    padding-right: 20px;
-    width: 265px;
+    padding: 16px 10px;
+    width: 100%;
     color: #444;
 }
 

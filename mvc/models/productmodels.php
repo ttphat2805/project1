@@ -145,14 +145,14 @@ class productmodels extends db
     }
     function getproductsite()
     {
-        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.status = 1 group by a.id LIMIT 8";
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.status = 1  and b.quantity > 0 group by a.id LIMIT 8";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
     }
     function getproduct_trend()
     {
-        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.status = 1 group by a.id order by views desc limit 5";
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.status = 1 and b.quantity > 0 group by a.id order by views desc limit 5";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
@@ -276,7 +276,7 @@ class productmodels extends db
 
     function productspage($from,$productsperpage,$search)
     {
-        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where $search and a.status = 1 group by a.id
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where $search and a.status = 1  and b.quantity > 0 group by a.id
         LIMIT $productsperpage OFFSET $from";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -284,7 +284,7 @@ class productmodels extends db
     }
     function productcatsearch($from,$productsperpage,$search,$id_category)
     {
-        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.categoryid,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.categoryid = $id_category and $search and a.status = 1 group by a.id
+        $query = "SELECT a.id as 'idproduct',a.name,a.slug,a.image,a.categoryid,a.description,a.views,b.* FROM product_type b inner join products a on b.product_id = a.id where a.categoryid = $id_category and $search and a.status = 1 and b.quantity > 0 group by a.id
         LIMIT $productsperpage OFFSET $from";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();

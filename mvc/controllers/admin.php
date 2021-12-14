@@ -39,7 +39,7 @@ class Admin extends Controller
                 "countmember" => $this->account->countmember(),
                 "toporder" => $this->cart->toporder('4'),
                 "sale" => $this->cart->sale(),
-
+                "order" => $this->account->unprogress(),
             ]
         );
     }
@@ -669,6 +669,9 @@ class Admin extends Controller
             if ($name == '' || $code == '' || $discout == '' || $quantity == '' || $min_order == '' || $date_created == '' || $date_out == '') {
                 $_SESSION['toastr-code'] = "info";
                 $_SESSION['toastr-noti'] = "Vui lòng nhập đầy đủ thông tin";
+            } else if ($discout > $min_order) {
+                $_SESSION['toastr-code'] = "warning";
+                $_SESSION['toastr-noti'] = "Đơn hàng tối thiếu phải lớn hơn số tiền giảm giá";
             } else {
                 $this->coupon->insertcoupon($name, $code, $discout, $min_order, $quantity, $date_created, $date_out, $status);
                 $_SESSION['toastr-code'] = "success";
@@ -705,32 +708,44 @@ class Admin extends Controller
     {
         if (isset($_POST['btn__submit'])) {
             $id = $_POST['id'];
-            $name = $_POST['name'];
-            $code = $_POST['code'];
-            $discout = $_POST['coupon_value'];
-            $quantity = $_POST['quantity'];
-            $min_order = $_POST['min_order_new'];
-            $date_created = $_POST['date_created'];
-            $date_out = $_POST['date_out'];
-            $status = $_POST['status'];
-            if ($name == '' || $code == ''  || $discout == '' || $quantity == '' || $min_order == '' || $date_created == '' || $date_out == '') {
-                $_SESSION['toastr-code'] = "info";
-                $_SESSION['toastr-noti'] = "Vui lòng nhập đầy đủ thông tin";
-            } else {
-                $this->coupon->updatecoupon($name, $code, $discout, $min_order, $quantity, $date_created, $date_out, $status, $id);
-
-                $_SESSION['toastr-code'] = "success";
-                $_SESSION['toastr-noti'] = "Cập nhật thành công";
+            $check = $this->coupon->checkdelcoupon($id);
+            if ($check > 0) {
+                $_SESSION['toastr-code'] = "warning";
+                $_SESSION['toastr-noti'] = "Mã giảm giá đã được sử dụng không thể cập nhật";
                 header('Location: ' . BASE_URL . '/admin/showcoupon');
+            } else {
+                $name = $_POST['name'];
+                $code = $_POST['code'];
+                $discout = $_POST['coupon_value'];
+                $quantity = $_POST['quantity'];
+                $min_order = $_POST['min_order_new'];
+                $date_created = $_POST['date_created'];
+                $date_out = $_POST['date_out'];
+                $status = $_POST['status'];
+                if ($name == '' || $code == ''  || $discout == '' || $quantity == '' || $min_order == '' || $date_created == '' || $date_out == '') {
+                    $_SESSION['toastr-code'] = "info";
+                    $_SESSION['toastr-noti'] = "Vui lòng nhập đầy đủ thông tin";
+                } else {
+                    $this->coupon->updatecoupon($name, $code, $discout, $min_order, $quantity, $date_created, $date_out, $status, $id);
+                    $_SESSION['toastr-code'] = "success";
+                    $_SESSION['toastr-noti'] = "Cập nhật thành công";
+                    header('Location: ' . BASE_URL . '/admin/showcoupon');
+                }
             }
         }
     }
 
     function deletecoupon($id)
     {
-        $this->coupon->delcoupon($id);
-        $_SESSION['toastr-code'] = "success";
-        $_SESSION['toastr-noti'] = "Xóa thành công";
+        $check = $this->coupon->checkdelcoupon($id);
+        if ($check > 0) {
+            $_SESSION['toastr-code'] = "warning";
+            $_SESSION['toastr-noti'] = "Mã giảm giá đã được sử dụng";
+        } else {
+            $this->coupon->delcoupon($id);
+            $_SESSION['toastr-code'] = "success";
+            $_SESSION['toastr-noti'] = "Xóa thành công";
+        }
         header('Location:' . BASE_URL . '/admin/showcoupon');
         exit();
     }
@@ -1050,8 +1065,8 @@ class Admin extends Controller
             "master3",
             [
                 "pages" => "adm_chart",
-                "countproduct" =>$this->chart->productincat(),
-                "countcomment" =>$this->chart->countcomment(),
+                "countproduct" => $this->chart->productincat(),
+                "countcomment" => $this->chart->countcomment(),
 
             ]
         );
