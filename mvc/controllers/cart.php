@@ -119,6 +119,12 @@ class cart extends Controller
 
                 if ($test == false) {
                     $Item_cart = $this->product->getProductCart($Item['id_product_type']);
+                    if($Item_cart['quantity'] == 0) {
+                        $result = ['alert' => 'error'];
+                        $result = json_encode($result);
+                        echo $result;
+                        exit;
+                    }
                     $Item['price'] = $Item_cart['price'];
                     $Item['sold'] = $Item_cart['sold'];
                     $Item['name'] = $Item_cart['name'];

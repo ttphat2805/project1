@@ -2,6 +2,27 @@ $(document).ready(() => {
     /**
      * xóa khỏi giỏ hàng
      */
+    //function hiện thông báo
+    function alertToast(type,message) {
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        toastr[type](message)
+    }
     const url = "http://localhost/"
     $(document).on('click', '.pro-remove', function(e) {
             e.preventDefault();
@@ -79,8 +100,13 @@ $(document).ready(() => {
     */
     $(document).on('click', '.add_to_cart', function() {
         let this_product = $(this).parents(".single-product").children(".product-content")
-
+        
         if (this_product.find(".product-size input").length > 0) {
+           if(this_product.find(".product-size input:checked").length ==0) {
+                
+                alertToast("error","bạn phải chọn size");
+           }
+            else{
             let data_attr = this_product.find(".product-size input:checked").val();
             let data_id_prod_type = this_product.find(".product-size input:checked").attr('data-prod');
             $.ajax({
@@ -92,9 +118,14 @@ $(document).ready(() => {
                     data_id_prod_type: data_id_prod_type
                 }
             }).done(function(ketqua) {
-                // console.log(ketqua);
-                $(".cart-item_count").html(ketqua);
-            })
+                let result = JSON.parse(ketqua);
+                if(result.alert == 'error') {
+                    
+                    alertToast("error","Sản phẩm đã hết hàng");
+                    
+                }else
+                    $(".cart-item_count").html(ketqua);
+            })}
         } else {
             let data_id_prod_type = this_product.find(".non-size").attr("data-prod");
             $.ajax({
@@ -106,10 +137,13 @@ $(document).ready(() => {
                     data_id_prod_type: data_id_prod_type
                 }
             }).done(function(ketqua) {
-                // console.log('a')
-                // console.log(JSON.parse(ketqua))
-
-                $(".cart-item_count").html(ketqua);
+                
+                let result = JSON.parse(ketqua);
+                if(result.alert == 'error') {
+                    alertToast("error","bạn phải chọn size");
+                    
+                }else
+                    $(".cart-item_count").html(ketqua);
             })
         }
     })
