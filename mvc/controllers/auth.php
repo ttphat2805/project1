@@ -21,7 +21,7 @@ class Auth extends Controller
         if (isset($_GET['code'])) {
             $secret = "cae98d72b03cd738ceca1dace2ec6d75";
             $client_id = '4520117901402470';
-            $redirect_url = BASE_URL . "/auth/facebooklogin";
+            $redirect_url = FB_RIDERECTURL;
             $code = $_GET['code'];
             $facebook_access_token_url = "https://graph.facebook.com/v12.0/oauth/access_token?client_id=$client_id&redirect_uri=$redirect_url&client_secret=$secret&code=$code";
             $call = curl_init();
@@ -79,7 +79,7 @@ class Auth extends Controller
         $client = new Google_Client();
         $client->setClientId('370384614506-q53opk025rn27pqrqci8q1kajv691985.apps.googleusercontent.com');
         $client->setClientSecret('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');
-        $client->setRedirectUri('http://localhost/project1/auth/verifyTokenGG');
+        $client->setRedirectUri(GG_RIDERECTURL);
         $client->setAccessType('offline');
         $client->addScope('profile');
         $client->addScope('email');
