@@ -13,7 +13,7 @@ class products extends Controller
     }
     function Show()
     {
-        $_SESSION['namesite'] = "Các món ăn";
+        $_SESSION['namesite'] = "Các sản phẩm";
 
         $this->view(
             "master2",

@@ -134,7 +134,7 @@ class myaccount extends Controller
 ';
             }
         } else {
-            $output .= '<p class="noti-wishlist">Chưa có món ăn nào được yêu thích <i class="fal fa-star-shooting"></i></p>
+            $output .= '<p class="noti-wishlist">Chưa có sản phẩm nào được yêu thích <i class="fal fa-star-shooting"></i></p>
             </tbody>
             </table>';
         }

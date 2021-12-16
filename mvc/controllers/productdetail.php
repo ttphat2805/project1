@@ -28,7 +28,7 @@ class productdetail extends Controller
 
     function show($slug)
     {
-        $_SESSION['namesite'] = 'Chi tiết món ăn';
+        $_SESSION['namesite'] = 'Chi tiết sản phẩm';
         // print_r($this->product->getproduct_type_id($id));
         $id = $this->product->getProductId($slug);
         $price = $this->product->getproductdetails($id);

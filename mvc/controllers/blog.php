@@ -9,6 +9,7 @@ class blog extends Controller
     }
     function Show()
     {
+        $_SESSION['namesite'] = "Tin tức";
         $this->view(
             "master2",
             [

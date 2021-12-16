@@ -44,6 +44,7 @@
     $(document).ready(function() {
     var id = window.location.href;
     var param = id.split('/');
+    param = param[param.length - 1];
     function sendMsg(msg){
         $.ajax({
             url: id,
@@ -61,7 +62,7 @@
     }
     function selectMsg(){
         $.ajax({
-            url: `<?= BASE_URL ?>/admin/SelectMsg/` + param[6],
+            url: `<?= BASE_URL ?>/admin/SelectMsg/` + param,
             type: 'POST',
             success:function(data){
                 $('.messages').html(data);
