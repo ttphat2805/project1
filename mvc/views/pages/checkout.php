@@ -23,7 +23,7 @@
         line-height: 20px;
         display: inline-block;
         color: #000;
-        font-weight:400;
+        font-weight: 400;
     }
 
     [type="radio"]:checked+label:before,
@@ -112,7 +112,7 @@ foreach ($_SESSION['cart_Item'] as $item) {
                             </div>
                             <p>
                                 <input type="radio" id="test1" class="click-radio-address" value="1" name="radio-group" checked>
-                                <label for="test1">Địa chỉ hiện tại</label>
+                                <label for="test1">Địa chỉ (mặc định)</label>
                             </p>
                             <p>
                                 <input type="radio" id="test2" class="click-radio-address" value="2" name="radio-group">
@@ -121,30 +121,30 @@ foreach ($_SESSION['cart_Item'] as $item) {
                             <div class="adress-row">
                                 <div class="address mt-2">
                                     <label>Địa chỉ <span class="required">*</span></label>
-                                    <textarea cols="" rows="2" class="border rounded-0 w-100 custom-textarea input-area"  name="address" id="" placeholder="Địa chỉ"><?=$data['infomember']['address']?></textarea>
+                                    <textarea cols="" rows="2" readonly class="border rounded-0 w-100 custom-textarea input-area" name="address" id="" placeholder="Địa chỉ"><?= $data['infomember']['address'] ?></textarea>
                                 </div>
                                 <div class="address-api" style="display:none">
                                     <div class="col-md-12">
                                         <div class="checkout-form-list">
                                             <label>Tỉnh/ Thành <span class="required">*</span></label><br>
-                                            <select name="tinh" id="tinh" onchange="changeTinh()" class="tinh" >
-                                                <option >Chọn Tỉnh/Thành</option>
+                                            <select name="tinh" id="tinh" onchange="changeTinh()" class="tinh">
+                                                <option>Chọn Tỉnh/Thành</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="checkout-form-list">
                                             <label>Quận Huyện <span class="required">*</span></label>
-                                            <select name="quan" id="quan" onchange="changeQuan()" class="tinh" >
-                                                <option ></option>
+                                            <select name="quan" id="quan" onchange="changeQuan()" class="tinh">
+                                                <option></option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="checkout-form-list">
                                             <label>Xã/Phường <span class="required">*</span></label>
-                                            <select name="phuong" id="phuong" class="tinh" >
-                                                <option ></option>
+                                            <select name="phuong" id="phuong" class="tinh">
+                                                <option></option>
                                             </select>
                                         </div>
                                     </div>
@@ -292,17 +292,17 @@ foreach ($_SESSION['cart_Item'] as $item) {
     var address = $(".textarea-address").val();
     //tienship(0,address);
     // CHECK ADDRESS
-    $('.click-radio-address').click(function(){
+    $('.click-radio-address').click(function() {
         let value_address = $(this).val();
-         address = "";
-        if(value_address == 2){
+        address = "";
+        if (value_address == 2) {
             $('.address').remove();
             $('.address-api').show();
-        }else{
+        } else {
             $('.address-api').hide();
             let div_adress = `<div class="address mt-2">
                                     <label>Địa chỉ <span class="required">*</span></label>
-                                    <textarea cols="" rows="2" class=" textarea-address border rounded-0 w-100 custom-textarea input-area" name="address" id="" placeholder="Địa chỉ"><?=$data['infomember']['address']?></textarea>
+                                    <textarea cols="" rows="2" readonly class=" textarea-address border rounded-0 w-100 custom-textarea input-area" name="address" id="" placeholder="Địa chỉ"><?= $data['infomember']['address'] ?></textarea>
                                 </div>`;
             $('.adress-row').append(div_adress);
             address = $(".textarea-address").val();
@@ -414,32 +414,31 @@ foreach ($_SESSION['cart_Item'] as $item) {
     total_root = parseFloat(total_root);
 
     function tienship($codetinh = 0, ten_tinh = "") {
-        if(ten_tinh != "") {
+        if (ten_tinh != "") {
             ten_tinh = ten_tinh.toLocaleLowerCase();
-            if(ten_tinh.includes("hồ chí minh") == true) {
-                let tien_ship = 30000;
+            if (ten_tinh.includes('hồ chí minh') == true || ten_tinh.includes('ho chi minh') == true || ten_tinh.includes('hcm') == true) {
+                let tien_ship = 20000;
                 let new_total = total_root + tien_ship;
                 $(".tienship").html(new Intl.NumberFormat().format(tien_ship) + "VNĐ");
                 $('.total').val(new_total);
 
                 $('.total').html(new Intl.NumberFormat().format(new_total));
             }
-        }
-        else{
-         if ($codetinh == 79) {
-            let tien_ship = 30000;
-            let new_total = total_root + tien_ship;
-            $(".tienship").html(new Intl.NumberFormat().format(tien_ship) + "VNĐ");
-            $('.total').val(new_total);
-
-            $('.total').html(new Intl.NumberFormat().format(new_total));
         } else {
-            let tien_ship = 40000;
-            let new_total = parseFloat(total_root) + tien_ship;
-            $(".tienship").html(new Intl.NumberFormat().format(tien_ship) + "VNĐ");
-            $('.total').val(new_total);
-            $('.total').html(new_total);
+            if ($codetinh == 79) {
+                let tien_ship = 20000;
+                let new_total = total_root + tien_ship;
+                $(".tienship").html(new Intl.NumberFormat().format(tien_ship) + "VNĐ");
+                $('.total').val(new_total);
+
+                $('.total').html(new Intl.NumberFormat().format(new_total));
+            } else {
+                let tien_ship = 30000;
+                let new_total = parseFloat(total_root) + tien_ship;
+                $(".tienship").html(new Intl.NumberFormat().format(tien_ship) + "VNĐ");
+                $('.total').val(new_total);
+                $('.total').html(new Intl.NumberFormat().format(new_total));
+            }
         }
-    }
     }
 </script>

@@ -58,12 +58,13 @@
                     </div>
 
                     <div class="col-lg-7 col-custom">
-                        <?php //var_dump($data['product_type']); ?>
+                        <?php //var_dump($data['product_type']); 
+                        ?>
                         <form action="<?= BASE_URL ?>/cart/addcart/<?= $data['productdetails']['idproduct'] ?>" method="post">
-                        <input type="hidden" class="valueid" value="<?= $data['productdetails']['idproduct'] ?>">
-                        <form action="<?= BASE_URL ?>/cart/addcart/<?= $data['productdetails']['idproduct'] ?>" method="post" class="parent_productid">
+                            <input type="hidden" class="valueid" value="<?= $data['productdetails']['idproduct'] ?>">
+                            <input type="hidden" class="valueid" value="<?= $data['productdetails']['idproduct'] ?>">
+                            <form action="<?= BASE_URL ?>/cart/addcart/<?= $data['productdetails']['idproduct'] ?>" method="post" class="parent_productid">
                                 <input type="hidden" id="value_idproduct" value="<?= $data['productdetails']['idproduct'] ?>">
-                                <input type="hidden" value="<?= $data['productdetails']['name'] ?>">
                                 <div class="product-summery position-relative">
                                     <div class="product-head mb-3">
                                         <h2 class="product-title">
@@ -91,19 +92,19 @@
                                             <?php echo $data['productdetails']['quantity'] ?>
                                         </span></div>
                                     <?php
-                                     if ($data['product_type'][0]['attribute_id']) :
+                                    if ($data['product_type'][0]['attribute_id']) :
 
                                     ?>
                                         <div class="product-meta">
-                                            
+
                                             <div class="product-size mb-4">
-                                                
+
                                                 <p>Trọng lượng: </p>
                                                 <?php
                                                 foreach ($data['productdetailattr'] as $size) :
-                                                    
+
                                                 ?>
-                                                    <input id="prod-size-<?= $size['value'] ?>" type="radio"checked data-prod="<?= $size['id']?> " name="option1" value="<?= $size['id'] ?>" placeholder="aax">
+                                                    <input id="prod-size-<?= $size['value'] ?>" type="radio" checked data-prod="<?= $size['id'] ?> " name="option1" value="<?= $size['id'] ?>" placeholder="aax">
                                                     <label for="prod-size-<?= $size['value'] ?>" class="sd btn-value-size" id="<?= $size['value'] ?>">
                                                         <span><?= $size['value'] ?></span>
                                                     </label>
@@ -113,31 +114,31 @@
                                             </div>
 
                                         </div>
-                                    <?php 
-                                        else:
-                                            echo "<input type='hidden' name='option1' value='".$data['product_type'][0]['id']."'>";
-                                           // $output .= "<div class='non-size' data-prod='".$attr_id['id']."'></div>";
-                                 endif; ?>
+                                    <?php
+                                    else :
+                                        echo "<input type='hidden' name='option1' value='" . $data['product_type'][0]['id'] . "'>";
+                                    // $output .= "<div class='non-size' data-prod='".$attr_id['id']."'></div>";
+                                    endif; ?>
                                     <div class="box-promotion">
                                         <p class="box_promotion_header">
-                                                Voucher đặc biệt từ 'G6Grain' (SL có hạn)
+                                            Voucher đặc biệt từ 'G6Grain' (SL có hạn)
                                         </p>
                                         <div class="box_promotion_main">
                                             <ul>
                                                 <li>
                                                     <p>Nhập mã <strong>G6GRAIN10K&nbsp;</strong>
-                                                    - Giảm 10k cho đơn từ 95k
-                                                </p>
+                                                        - Giảm 10k cho đơn từ 95k
+                                                    </p>
                                                 </li>
                                                 <li>
                                                     <p>Nhập mã <strong>G6GRAIN20K&nbsp;</strong>
-                                                    - Giảm 20K cho đơn từ 180K
-                                                </p>
+                                                        - Giảm 20K cho đơn từ 180K
+                                                    </p>
                                                 </li>
                                                 <li>
                                                     <p>Nhập mã <strong>G6GRAIN40K&nbsp;</strong>
-                                                    - Giảm 40K cho đơn từ 360K
-                                                </p>
+                                                        - Giảm 40K cho đơn từ 360K
+                                                    </p>
                                                 </li>
                                             </ul>
                                         </div>
@@ -180,7 +181,7 @@
                             <div class="tab-pane fade show active" id="connect-1" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="desc-content">
                                     <p class="">* Mua Pizza size M hoặc L kèm nước uống nguyên giá được giảm 70% cho bánh Pizza thứ 2 cùng size có giá bằng hoặc thấp hơn Pizza thứ nhất.
-                                    * Áp dụng cho Mua Mang Về & Giao Hàng Tận Nơi tất cả các ngày trong tuần.</p>
+                                        * Áp dụng cho Mua Mang Về & Giao Hàng Tận Nơi tất cả các ngày trong tuần.</p>
                                     <p>* Giá: 89K/pizza dòng Favorite (size M). Thêm 20K/pizza và 50K/pizza để nâng lên dòng Premium và Signature.
 
                                         * Giá: 139K/pizza dòng Favorite (size L). Thêm 30K/pizza và 70K/pizza để nâng lên dòng Premium và Signature.
@@ -328,7 +329,7 @@
                                                                                 ?>đ</del></span>
                                             </div>
                                             <div class="product-action d-flex">
-                                                <a href="" title="+ Giỏ hàng">
+                                                <a title="+ Giỏ hàng" class="add_to_cart">
                                                     <i class="ion-bag"></i>
                                                 </a>
                                                 <a class="addtowishlist" title="+ Yêu thích">
@@ -480,6 +481,30 @@
 
                             } else {
                                 fetchcmt();
+                            }
+                        }
+                    });
+                })
+
+                // WISHLIST
+                // WISHLIST
+                $(document).on('click', '.addtowishlist', function() {
+                    let parent = $(this).parents('.single-product');
+                    let id_product = parent.find('.idproduct').val();
+                    // alert(parent);
+                    $.ajax({
+                        url: "<?= BASE_URL ?>/myaccount/insertwishlist",
+                        method: "POST",
+                        data: {
+                            'action': 'addWishList',
+                            'product_id': id_product
+                        },
+                        success: function(data) {
+                            if (data.length > 1000) {
+                                toastr['info']('Vui lòng đăng nhập');
+                            } else {
+                                let noti = JSON.parse(data);
+                                toastr[noti.code](noti.noti);
                             }
                         }
                     });

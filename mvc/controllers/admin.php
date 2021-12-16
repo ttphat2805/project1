@@ -904,10 +904,11 @@ class Admin extends Controller
             $content = $_POST['content'];
             $status = $_POST['status'];
             $check = $this->blog->checkexisttitle($title);
-            if($check == 1){
+            if($check > 0){
                 $_SESSION['toastr-code'] = "warning";
                 $_SESSION['toastr-noti'] = "Đã có tiêu đề bài viết này";
                 header('Location: ' . BASE_URL . '/admin/addblog');
+                exit();
             }else{
                 $extension = array('jpeg', 'jpg', 'png', 'gif', 'webp');
                 $store = "public/assets/images/blog/";
