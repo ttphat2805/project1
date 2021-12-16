@@ -1,6 +1,8 @@
 <?php
     define('BASE_URL','http://localhost/project1');
     //define('BASE_URL','https://nghi.test/project1');
+    define("FB_RIDERECTURL",'https://nghi.test/project1/auth/facebooklogin');
+    define("GG_RIDERECTURL",'http://localhost/project1/auth/verifyTokenGG');
 
     function change_slug($str) {
         $str = trim(mb_strtolower($str));

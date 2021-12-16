@@ -68,5 +68,12 @@ Class blogmodels extends db{
         $stmt = $this->conn->prepare($query);
         $stmt->execute([$image, $id]);
     }
+
+    function checkexisttitle($title,$id = 0){
+        $query = "SELECT * FROM blog WHERE title = $title and id != $id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
 }
 ?>

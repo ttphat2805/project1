@@ -903,27 +903,31 @@ class Admin extends Controller
             $description = $_POST['description'];
             $content = $_POST['content'];
             $status = $_POST['status'];
-            // exit();
-            //     //Xử lý phần ảnh!!!!
-            $extension = array('jpeg', 'jpg', 'png', 'gif', 'webp');
-            $store = "public/assets/images/blog/";
-            $imageName = $_FILES['image']['name'];
-            $imageTemp = $_FILES['image']['tmp_name'];
-            $ext = pathinfo($imageName, PATHINFO_EXTENSION);
-            if (in_array($ext, $extension)) {
-                $imageName = time() . '_' . $imageName;
-                move_uploaded_file($imageTemp, $store . $imageName);
-                $this->blog->insertblog($title, $title_slug, $description, $content, $imageName, $status);
-            } else {
+            $check = $this->blog->checkexisttitle($title);
+            if($check == 1){
                 $_SESSION['toastr-code'] = "warning";
-                $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
+                $_SESSION['toastr-noti'] = "Đã có tiêu đề bài viết này";
                 header('Location: ' . BASE_URL . '/admin/addblog');
-                exit();
+            }else{
+                $extension = array('jpeg', 'jpg', 'png', 'gif', 'webp');
+                $store = "public/assets/images/blog/";
+                $imageName = $_FILES['image']['name'];
+                $imageTemp = $_FILES['image']['tmp_name'];
+                $ext = pathinfo($imageName, PATHINFO_EXTENSION);
+                if (in_array($ext, $extension)) {
+                    $imageName = time() . '_' . $imageName;
+                    move_uploaded_file($imageTemp, $store . $imageName);
+                    $this->blog->insertblog($title, $title_slug, $description, $content, $imageName, $status);
+                    $_SESSION['toastr-code'] = "success";
+                    $_SESSION['toastr-noti'] = "Thêm thành công";
+                    header('Location: ' . BASE_URL . '/admin/showblog');
+                } else {
+                    $_SESSION['toastr-code'] = "warning";
+                    $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
+                    header('Location: ' . BASE_URL . '/admin/addblog');
+                    exit();
+                }
             }
-            $_SESSION['toastr-code'] = "success";
-            $_SESSION['toastr-noti'] = "Thêm thành công";
-            header('Location: ' . BASE_URL . '/admin/showblog');
-            exit();
         }
 
         $this->view(
@@ -955,28 +959,35 @@ class Admin extends Controller
             $content = $_POST['content'];
             $status = $_POST['status'];
             //     //Xử lý phần ảnh!!!!
-            $extension = array('jpeg', 'jpg', 'png', 'gif', 'webp');
-            $store = "public/assets/images/blog/";
-            $imageName = $_FILES['image']['name'];
-            $imageTemp = $_FILES['image']['tmp_name'];
-            $ext = pathinfo($imageName, PATHINFO_EXTENSION);
-            $this->blog->updateblog($title, $title_slug, $description, $content, $status, $id);
-            if (!empty($imageName)) {
-                if (in_array($ext, $extension)) {
-                    $imageName = time() . '_' . $imageName;
-                    move_uploaded_file($imageTemp, $store . $imageName);
-                    $this->blog->updateimageblog($imageName, $id);
-                } else {
-                    $_SESSION['toastr-code'] = "warning";
-                    $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
-                    header('Location: ' . BASE_URL . '/admin/updateblog');
-                    exit();
+            $check = $this->blog->checkexisttitle($title,$id);
+            if($check == 1){
+                $_SESSION['toastr-code'] = "warning";
+                $_SESSION['toastr-noti'] = "Đã có tiêu đề bài viết này";
+                header('Location: ' . BASE_URL . '/admin/infoblog/' . $id. '');
+            }else{
+                $extension = array('jpeg', 'jpg', 'png', 'gif', 'webp');
+                $store = "public/assets/images/blog/";
+                $imageName = $_FILES['image']['name'];
+                $imageTemp = $_FILES['image']['tmp_name'];
+                $ext = pathinfo($imageName, PATHINFO_EXTENSION);
+                $this->blog->updateblog($title, $title_slug, $description, $content, $status, $id);
+                if (!empty($imageName)) {
+                    if (in_array($ext, $extension)) {
+                        $imageName = time() . '_' . $imageName;
+                        move_uploaded_file($imageTemp, $store . $imageName);
+                        $this->blog->updateimageblog($imageName, $id);
+                    } else {
+                        $_SESSION['toastr-code'] = "warning";
+                        $_SESSION['toastr-noti'] = "File này không phải là file ảnh";
+                        header('Location: ' . BASE_URL . '/admin/infoblog/' . $id. '');
+                        exit();
+                    }
                 }
+                $_SESSION['toastr-code'] = "success";
+                $_SESSION['toastr-noti'] = "Sửa thành công";
+                header('Location: ' . BASE_URL . '/admin/showblog');
+                exit();
             }
-            $_SESSION['toastr-code'] = "success";
-            $_SESSION['toastr-noti'] = "Sửa thành công";
-            header('Location: ' . BASE_URL . '/admin/showblog');
-            exit();
         }
     }
 

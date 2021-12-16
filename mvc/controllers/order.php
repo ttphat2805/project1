@@ -40,7 +40,17 @@ class order extends Controller
         $_SESSION['namesite'] = 'Đặt hàng thành công';
         $idmember = $_SESSION['user_infor']['user_id'];
         $name = $_POST['fullname'];
-        $address = $_POST['tinh'] . ' ' . $_POST['quan'] . ' ' . $_POST['phuong'];
+        if(isset($_POST['address'])) {
+            $address = $_POST['address'];
+        } else {
+            if(empty($_POST['tinh']) || empty($_POST['quan']) || empty($_POST['phuong'])){
+                $_SESSION['toastr-code'] = "warning";
+                $_SESSION['toastr-noti'] = "Bạn phải chọn đầy đủ tỉnh thành";
+                header("Location: ".BASE_URL.'/order');
+                exit;
+            }
+            $address = $_POST['tinh'] . ' ' . $_POST['quan'] . ' ' . $_POST['phuong'];
+        }
         $method = $_POST['method'];
         $email = $_POST['email'];
         $phone = $_POST['phone'];

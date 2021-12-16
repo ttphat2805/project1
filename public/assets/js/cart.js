@@ -86,10 +86,10 @@ $(document).ready(() => {
             }
         }).done(function(ketqua) {
             result = JSON.parse(ketqua);
-            console.log(result);
+            // console.log(result);
             this_product.find('.cart-plus-minus-box').val(result.quantity);
             this_product.parent().find(".pro-subtotal span").html(result.total);
-            total = parseFloat($(".total-amount").text()) + parseFloat(result.price);
+            total = result.total_amount;
             $(".total-amount").html(total);
             $(".cart-item_count").html(result.cart_num);
         })
