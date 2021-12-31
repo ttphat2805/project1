@@ -285,7 +285,6 @@ class Admin extends Controller
                 exit();
             }
         }
-
         $this->view(
             "master3",
             [

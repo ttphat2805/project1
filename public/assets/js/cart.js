@@ -39,7 +39,6 @@ $(document).ready(() => {
             }).done(function(ketqua) {
                 this_product.remove();
                 let result = JSON.parse(ketqua);
-                console.log(result);
                 let total_cart = parseFloat($(".total-amount").text()) - parseFloat(result.total);
                 $(".total-amount").html(total_cart);
                 $(".cart-item_count").html(result.cart_num);
@@ -62,9 +61,8 @@ $(document).ready(() => {
             }
         }).done(function(ketqua) {
             result = JSON.parse(ketqua);
-            console.log(result.total)
-                // $(".cart-plus-minus-box").val(result.quantity);
-            this_product.parent().find(".pro-subtotal span").html(result.total);
+            // $(".cart-plus-minus-box").val(result.quantity);
+            this_product.parent().find(".pro-subtotal span").html(new Intl.NumberFormat().format(result.total));
             console.log(parseFloat($(".total-amount").text()));
             total = $(".total-amount").text() - (result.price);
             $(".total-amount").html(total);
@@ -88,7 +86,7 @@ $(document).ready(() => {
             result = JSON.parse(ketqua);
             // console.log(result);
             this_product.find('.cart-plus-minus-box').val(result.quantity);
-            this_product.parent().find(".pro-subtotal span").html(result.total);
+            this_product.parent().find(".pro-subtotal span").html(new Intl.NumberFormat().format(result.total));
             total = result.total_amount;
             $(".total-amount").html(total);
             $(".cart-item_count").html(result.cart_num);
@@ -150,7 +148,7 @@ $(document).ready(() => {
     $(document).on('change', '.cart-plus-minus-box', function() {
         let value = $(this).val();
         let max_value = $(this).attr('data-max');
-        if (value > max_value) {
+        if (parseFloat(value) > parseFloat(max_value)) {
             $(this).val(max_value);
         }
     })

@@ -104,8 +104,6 @@
             $('.input_quantity').show();
             $('.input_size_attr').hide();
             $('.table_attr_hide').hide();
-
-
         }
     })
     $('.click-input').on('click', function() {

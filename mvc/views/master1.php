@@ -422,8 +422,6 @@
                 let parent = $(this).parents('.single-product');
                 let id_product = parent.find('.idproduct').val();
                 let heart = parent.find('.addtowishlist i');
-            
-
                 $.ajax({
                     url: "<?= BASE_URL ?>/myaccount/insertwishlist",
                     method: "POST",

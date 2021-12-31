@@ -31,7 +31,7 @@
                                 <tr>
                                 <td class="pro-thumbnail"><a href="#"><img class="img-fluid" src="<?= BASE_URL.'/public/assets/images/product/'.$data['list'][$i]['image'] ?>" alt="Product" /></a></td>
                                 <td class="pro-title"><a href="#"><?= $data['list'][$i]['name'] ?></td>
-                                <td class="pro-price"><span><?= $data['list'][$i]['price'] ?></span></td>
+                                <td class="pro-price"><span><?= number_format($data['list'][$i]['price'] )  ?></span></td>
                                 <td class="pro-quantity">
                                     <div class="quantity">
                                         <div class="cart-plus-minus" data-prod="<?= $data['list'][$i]['id_product_type'] ?>">
@@ -44,7 +44,9 @@
                                     </div>
                                 </td>
                                 <td><?= $data['list'][$i]['value'] ?></td>
-                                <td class="pro-subtotal"><span><?= $data['list'][$i]['price']*$data['list'][$i]['quantity'] ?></span></td>
+                                <td class="pro-subtotal"><span><?= 
+                                number_format(    $data['list'][$i]['price']*$data['list'][$i]['quantity'])
+                             ?></span></td>
                                 <td class="pro-remove"><a ><i class="ion-trash-b"></i></a></td>
                             </tr>
                             <?php }?>

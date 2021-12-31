@@ -17,6 +17,7 @@
                                     <input type="email" name="email" placeholder="Nhập email...">
                                     <span class="text-danger error"><?php echo $data['data']['username_error'] ?></span>
                                 </div>
+                                
                                 <div class="single-input-item mb-3">
                                     <input type="password" name="pass" placeholder="Nhập mật khẩu...">
                                     <span class="text-danger error"><?php echo $data['data']['pass_error'] ?></span>

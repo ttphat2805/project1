@@ -81,7 +81,7 @@
             var min_order = $('#min_order_new').val();
             var n = parseInt($(this).val().replace(/\D/g, ''), 10);
             // CHECK MIN ORDER
-            if(min_order !== '' && n > min_order) {
+            if(min_order !== '' && n >= min_order) {
                 $('.noti-min-order').html('Đơn hàng tối thiếu phải lớn hơn số tiền giảm giá');
             }else{
                 $('.noti-min-order').html('');
@@ -97,19 +97,19 @@
         });
         $("#min_order").on('keyup', function() {
             var discount = $('.acp_value').val();
-            var n = parseInt($(this).val().replace(/\D/g, ''), 10);
+            var min_order = parseInt($(this).val().replace(/\D/g, ''), 10);
             // CHECK MIN ORDER
-            if(discount > n){
+            if(min_order <= discount){
                 $('.noti-min-order').html('Đơn hàng tối thiếu phải lớn hơn số tiền giảm giá');
             }else{
                 $('.noti-min-order').html('');
             }
             // FORMAT PRICE
-            if (n >= 0) {
-                $('#min_order').val(n.toLocaleString("it-IT"));
+            if (min_order >= 0) {
+                $('#min_order').val(min_order.toLocaleString("it-IT"));
                 $('#min_order_new').val(n);
             }
-            if (isNaN(n)) {
+            if (isNaN(min_order)) {
                 $('#min_order').val('');
             }
         });

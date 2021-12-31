@@ -10,7 +10,7 @@
                 </h4> -->
                 </p>
                 <div class="table-responsive">
-                <table id="table" class="table">
+                    <table id="table" class="table">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -30,15 +30,15 @@
                                     <td><?= $item['fullname'] ?></td>
                                     <td><?= $item['email'] ?></td>
                                     <td>
-                                    <?php
-                                    if($item['role'] == 1){
-                                        echo '<label class="btn btn-primary btn-fw">Admin</label>';
-                                    }else if($item['role'] == 2){
-                                        echo '<label class="btn btn-info btn-fw">SuperAdmin</label>';
-                                    }else{
-                                        echo '<label class="btn btn-secondary btn-fw">Khách hàng</label>';
-                                    }
-                                    ?>
+                                        <?php
+                                        if ($item['role'] == 1) {
+                                            echo '<label class="btn btn-primary btn-fw">Admin</label>';
+                                        } else if ($item['role'] == 2) {
+                                            echo '<label class="btn btn-info btn-fw">SuperAdmin</label>';
+                                        } else {
+                                            echo '<label class="btn btn-secondary btn-fw">Khách hàng</label>';
+                                        }
+                                        ?>
 
                                     </td>
                                     <td><?= $item['status'] == 1 ? '<label class="badge badge-success">Kích hoạt</label>' : '<label class="badge badge-danger">Ẩn</label>' ?></td>
@@ -57,5 +57,4 @@
             </div>
         </div>
     </div>
-
 </div>

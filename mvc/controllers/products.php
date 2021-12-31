@@ -34,7 +34,9 @@ class products extends Controller
         if(!isset($_POST['search'])){
             $conditions = '';
         }else{
+            $_POST['search'] = trim($_POST['search']);
             $search = explode(" ", $_POST['search']);
+            
             foreach($search as $word){
                 $conditions .= "a.name LIKE '%".$word."%' OR ";
             }
@@ -54,7 +56,7 @@ class products extends Controller
         }
         
         $totalproduct = count($products);
-        $productsperpage = 9;
+        $productsperpage = 6;
         $prev = ($page - 1);
         $next = ($page + 1);
         $from = ($page - 1) * $productsperpage;

@@ -9,7 +9,7 @@
                     Thêm danh mục
                 </h4>
                 <!-- <p class="card-description"> Basic form layout </p> -->
-                <form class="forms-sample" method="POST">
+                <form action="<?=BASE_URL?>/admin/addcategory" class="forms-sample" method="POST">
                     <div class="form-group">
                         <label for="" class="label__css">Tên danh mục</label>
                         <input type="text" name="name" class="form-control">

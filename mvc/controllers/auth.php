@@ -306,7 +306,8 @@ class Auth extends Controller
 
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $email = $_POST['email'];
-            if ($this->User->findUserByEmail($email) == 0) {
+            $check = $this->User->findUserByEmaillogin($email);
+            if ($check->rowCount() == 0) {
                 $data['email_error'] = 'Tên đăng nhập không tồn tại';
             } else {
                 $new_pass = random_int(100000, 999999);

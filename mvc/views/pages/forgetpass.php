@@ -8,7 +8,7 @@
                                 <h2 class="title-4 mb-2">Quên mật khẩu</h2>
                                 <p class="desc-content">Hãy điền vào email của bạn...</p>
                             </div>
-                            <form action="#" method="post">
+                            <form action="" method="post">
                                 <div class="single-input-item mb-3">
                                     <input type="email" name="email" placeholder="Nhập email...">
                                     <span class="text-danger error"><?php echo $data['data']['email_error'] ?></span>
